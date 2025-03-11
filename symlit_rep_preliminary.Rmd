@@ -431,7 +431,6 @@ kable(s2.symlitrep.correct.table.data, caption = "Overview of Performance for St
 
 ```
 
-
 ```{r s2bolddevplot, echo = FALSE, include=T, eval=T, results='asis'}
 
 # aggregate proportion of correct choices and number of trials for each individual
@@ -863,6 +862,7 @@ ggplot()+
 
 
 ```
+
 ```{r symlit_rep_plotcondkdifficulty, eval= F}
 
 # aggregate proportion of correct choices and number of trials for each individual
@@ -896,7 +896,6 @@ difficulty.plot
 # difficulty.plot
 
 ```
-
 
 ```{r symlit_rep_plotcondkdifficulty, eval= F}
 
@@ -935,10 +934,6 @@ difficulty.plot
 
 ```
 
-
-
-
-
 ```{r symlit_rep_plottaskdifficulty, eval= F}
 
 # aggregate proportion of correct choices and number of trials for each individual
@@ -973,7 +968,6 @@ difficulty.plot
 # difficulty.plot
 
 ```
-
 
 
 ```{r symlit_rep_plottaskrt, eval= F}
