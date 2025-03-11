@@ -1,0 +1,22 @@
+SINGLE RAW DATA FILES AND SUBJECTLIST STORED IN:
+Lokal auf PC und Festplatte Backup MPI:
+C:\Users\Kachel.IPE-KACHEL-N\Documents\data\symlit_rep\MetaData
+
+Aufbereitung nach Skript hier:
+C:\Users\Kachel.IPE-KACHEL-N\Documents\data\symlit_rep\MetaData --> 0_dataprocessing.R (11.03.2025)
+
+------------------------------------------------------------------------------------------------------
+
+symlitrep_full_data.rds --> alle Variablen, Geburtstage, Kiga etc --> GIT IGNORE, wird nicht hoch geladen
+
+
+------------------------------------------------------------------------------------------------
+
+ARBEITEN IM WEITEREN MIT:
+symlitrep_final_data.rds --> 
+- ID anonym
+- Geburtstage durch berechnetes Alter ersetzt
+- experimenter anonymisiert
+- Träger und Kita ID nicht mit im Datensatz
+- Daten final mit Subjelctlists abgeglichen: drop und valid immer korrekt
+(Stand 11.03.2025; upload symlit_rep_manuscript)

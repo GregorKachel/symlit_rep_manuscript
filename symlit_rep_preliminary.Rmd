@@ -1,0 +1,1014 @@
+---
+title: "Symlit_Rep - Ongoing Data Collection"
+author: "GK"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+
+```
+
+```{r loaddata&packages, include=FALSE}
+
+symlitrep.data <- readRDS("./symlitrepdata.rds")
+
+# Loading packages 
+# NOTE: this will install these packages on your machine in case they are missing
+if (!require(tidyverse)) install.packages('tidyverse'); library(tidyverse)
+if (!require(knitr)) install.packages('knitr'); library(knitr) # 
+if (!require(kableExtra)) install.packages('kableExtra'); library(kableExtra) # 
+
+if (!require(lsr)) install.packages('lsr'); library(lsr) # Analysis, CohenD
+if (!require(ggthemes)) install.packages('ggthemes'); library(ggthemes) 
+if (!require(lme4)) install.packages('lme4'); library(lme4) 
+
+if (!require(brms)) install.packages('brms'); library(brms) # 
+if (!require(tidybayes)) install.packages('tidybayes'); library(tidybayes) # 
+if (!require(HDInterval)) install.packages('HDInterval'); library(HDInterval) # 
+# library(ggthemes)
+# library(ggplot2)
+
+```
+
+## Participants
+We collected age as a continues predictor aiming to test two children per month of age between the third and seventh birthday. Data collection is ongoing. The best overview of the sample distribution is provided by the plot below.
+
+```{r plot_participants, echo=F}
+
+age.plot.data <- symlitrep.data %>% #select data
+  distinct(subid, .keep_all = TRUE) %>% # select only one line per participant
+  filter(valid == "valid")  %>%
+  mutate(sex = as.factor(sex))  %>%
+  mutate(sex = fct_recode(sex, "female" = "0","male"="1"))
+
+age.plot <- ggplot(age.plot.data, aes(x = agem, fill = sex)) +
+  geom_dotplot(stackgroups = TRUE, binwidth = 1, binpositions = "all")+  
+  coord_cartesian(xlim = c(36, 86), ylim = c(0, 0.1)) +
+  theme_bw() +
+  scale_x_continuous(name = "Alter in Monaten", breaks = seq(36, 84, 12), minor_breaks = seq(36, 84, 1)) +
+  scale_y_continuous(name = "Anzahl", breaks = NULL) +
+  #coord_fixed(ratio=5) +
+  theme(panel.grid.minor.x = element_line(size = 0.25, linetype = 2),
+        panel.grid.major.x = element_line(size = 1, linetype = 1)) +
+    facet_wrap(~ study, ncol = 1)
+age.plot
+
+```
+
+However, see the table for participants demographics split by years of age:
+
+* N = number of children
+* female = number of female children
+* Mean = mean of months in age
+* Min = minimum of months in age
+* MAx = maximum of months in age
+* SD = standard deviation of months in age
+
+```{r table_participants, echo=FALSE, warning=FALSE, results='asis'}
+
+symlitrep.age.table.data  <- symlitrep.data %>% #select data
+  filter(valid == "valid")  %>%
+  distinct(subid, .keep_all = TRUE) %>% # select only one line per participant
+  group_by(study, agecat) %>% 
+  summarize(
+    N = length(subid),
+    female = sum(sexmf=="female"),
+    Mean = round(mean(agem), 2),
+    Min = min(agem),
+    Max = max(agem),
+    SD = round(sd(agem), 2))
+
+
+# delete duplicate labels in age by turning age into character and replacing duplicates
+symlitrep.age.table.data$study <- as.character(symlitrep.age.table.data$study)
+symlitrep.age.table.data$study[duplicated(symlitrep.age.table.data$study)] <- ""
+
+kable(symlitrep.age.table.data, caption = "Overview of Demographic Data" )%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+All participants were recruited in Leipzig, a medium-sized middle-European city, and came from a predominantly white population of middle to high income families. etc etc etc All studies described below were reviewed and approved by an internal ethics committee at the MPI EVA, Leipzig. Data collection took place from December June to November 2022. 
+
+## Drops
+In addition, XX additional children were tested but not included in the main anyleses due to (1) failing to make at least 75% correct choices in the familiarization phase, (2) fuzzyness, (3) technical issues, etc etc. Reasons for exclusions are colour coded in the plot below. 
+
+```{r plot_drops, echo=F}
+
+drop.plot.data <- symlitrep.data %>% #select data
+  distinct(subid, .keep_all = TRUE) %>% # select only one line per participant
+  filter(valid == "drop")
+
+drop.plot <- ggplot(drop.plot.data, aes(x = agem, fill = drop)) +
+  geom_dotplot(stackgroups = TRUE, binwidth = 1, binpositions = "all")+  
+  coord_cartesian(xlim = c(36, 85), ylim = c(0, 0.1)) +
+  theme_bw() +
+  scale_x_continuous(name = "Alter in Monaten", breaks = seq(36, 84, 12), minor_breaks = seq(36, 84, 1)) +
+  scale_y_continuous(name = "Anzahl Drops", breaks = NULL) +
+  #coord_fixed(ratio=5) +
+  theme(panel.grid.minor.x = element_line(size = 0.25, linetype = 2),
+        panel.grid.major.x = element_line(size = 1, linetype = 1)) +
+    facet_wrap(~ study, ncol = 1)
+drop.plot
+
+```
+
+
+## Study 1
+
+### Basic Analyses of Children's Performance
+For some basic analyses we grouped children according to their age in years. The table provides the following tests
+
+* N = number of children
+* trials/N = average number of trials for children
+* Mean = mean of correct choices
+* SD = standard deviation of correct choices
+* p = p-value for a t-test against chance level (50%); for this test data were averaged by individuals
+* t = t statistic for the t-tests. Write like t(16)=8.06 ...nach dem t in Klammern immer einmal weniger als Probanden (N)
+* d = Cohen's D as a measure of effect size for the t-tests
+
+
+```{r s1prepare_overviewtestables, echo = FALSE, include=T, eval=T, results='asis'}
+
+# aggregate proportion of correct choices and number of trials for each individual
+symlitrep.ind.correct.table.data  <- symlitrep.data %>% 
+  filter(valid != "drop" & trial != "NA") %>% 
+  group_by(study, agecat, conditionlong, subid) %>%
+  arrange(study, agecat, conditionlong) %>%
+  summarise("correct" = mean(correct),
+            "trials" = length(valid))
+
+library(scales) 
+# required for rounding pvalues, is part of tidyverse but needs to be loaded again? ## it occurs when functions are overwritten multiple times
+
+# calculate mean, SD, t-test, cohenD; p is rounded by pvalue function in scales package
+s1.symlitrep.correct.table.data <- symlitrep.ind.correct.table.data %>%
+  filter(study=="study1") %>% 
+  group_by(conditionlong, agecat) %>%
+   #arrange(study, age) %>%
+   summarise(N = n_distinct(subid),
+             "trials/N" = round(sum(trials)/n_distinct(subid), 2),
+             "M" = round(mean(correct)*100, 2),
+             "SD" = round(sd(correct)*100, 2),
+             p = pvalue(t.test((correct), mu = 0.5)$p.value, accuracy = .001),
+              df= t.test((correct), mu = 0.5)$parameter,
+             "t(N-1)" = round(t.test((correct), mu = 0.5)$statistic, 2),
+             d = round(cohensD((correct), mu = 0.5), 2)
+             )
+
+
+# # delete duplicate labels in age by turning age into character and replacing duplicates
+# symlitrep.correct.table.data$study <- as.character(symlitrep.correct.table.data$study)
+# symlitrep.correct.table.data$study[duplicated(symlitrep.correct.table.data$study)] <- ""
+
+s1.symlitrep.correct.table.data$conditionlong <- as.character(s1.symlitrep.correct.table.data$conditionlong)
+s1.symlitrep.correct.table.data$conditionlong[duplicated(s1.symlitrep.correct.table.data$conditionlong)] <- ""
+
+kable(s1.symlitrep.correct.table.data, caption = "Overview of Performance for Study 1" )%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+```{r s1bolddevplot, echo = FALSE, include=T, eval=T, results='asis'}
+
+# aggregate proportion of correct choices and number of trials for each individual
+S1.ind.correct.plot.data  <- symlitrep.data %>% 
+  filter(valid != "drop" & trial != "NA" & study == "study1") %>% 
+  group_by(conditionlong, subid, agecat, aged) %>%
+  arrange(conditionlong, subid, agecat, aged) %>%
+  summarise("correct" = round(mean(correct)*100, 2),
+            "trials" = length(valid))
+# 
+# S1.bold.developmnent.plot <- ggplot(S1.ind.correct.plot.data,
+#                     aes(aged/365, correct, colour = conditionlong)) +
+#   geom_hline(yintercept=50, linetype="dashed", color = "black") +
+#   geom_jitter() +
+#   geom_smooth(method=lm, se=T)+
+#   facet_wrap(~ conditionlong, nrow=4)+
+#   theme_minimal()
+#   #theme(legend.position = "none")
+#   # geom_smooth(method = lm, se = FALSE)+
+# S1.bold.developmnent.plot
+# 
+
+s1.facetplot <- ggplot(S1.ind.correct.plot.data, 
+                    aes(agecat, correct, colour = conditionlong)) +
+  geom_hline(yintercept=50, linetype="dashed", color = "black") +
+  geom_boxplot() +
+  #geom_violin() +
+  geom_jitter() +
+  facet_wrap(~ conditionlong, nrow=3)+
+  theme_minimal()
+  #theme(legend.position = "none")
+  # geom_smooth(method = lm, se = FALSE)+
+s1.facetplot
+
+```
+
+### Bayesian Analyses
+Bayesian models were run in Stan (http://mc-stan.org/) and implemented via the function brm of
+the package brms (Bürkner, 2017). We used logistic Bayesian generalized linear mixed models (GLMM) to fit children's responses (0/1) as a function of their absolute age in days, condition (rep, pars, fsim, fcom) and an interaction between trial and task. We use default priors and include trial and sex as fixed effects to be controlled for. Trial number will be added as a random slope within subject.
+Model: correct ~ condition*z.age +z.trial +z.sex +(z.trial|id)-
+•	correct: correct choice (0/1)
+•	z.age: age in days, centered to a mean of 0 
+•	z.trial: trial number, scaled
+•	z.sex: participants' sex (male/female), scaled
+
+The analysis modeled participants binary choices to predict the probability of children interpreting the cues correctly and model how this probability will change as a function of their absolute age in days. We used the model to predict the
+developmental trajectory (with 95% CrI) for each task type. The criterion for settling when children perform above chance with either type of stimuli is the point at which the 95% CrI for a particular trajectory does no longer overlap with a midline demarcating the 50% chance level.
+
+```{r s1_bayes_prep_data, echo = FALSE, include=T, eval=T, results='asis'}
+
+symlitrep.data <- readRDS("./symlitrepdata.rds")
+
+# aggregate proportion of correct choices and number of trials for each individual
+S1.bayes.data  <- symlitrep.data %>% 
+  filter(valid != "drop" & trial != "NA" & study == "study1") %>% 
+  select(condition, subid, sex, aged, correct, trial) %>%
+   mutate(z.trial = scale(trial),
+           z.age = aged - mean(aged),
+           z.sex = scale(as.numeric(sex)))
+
+
+```
+
+```{r S1_bayes_fullmodel, echo=FALSE, include=F, eval=F}
+
+# preregistered: correct ~ task*z.age +z.trial +z.sex +(z.trial|id)
+
+S1.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid), 
+               data=S1.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 5000,
+               cores= 4)
+
+S1.full.bm <- add_criterion(S1.full.bm, c("loo", "waic"))
+
+# Saving the model (to not rerun it every time)
+saveRDS(S1.full.bm, "./models/S1.full.bm.rds")
+
+```
+
+```{r S1_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=T}
+
+# load model from saving rds
+S1.full.bm <- readRDS("./models/S1.full.bm.rds")
+
+nd1 <- tibble(z.age = rep(seq(from = min(S1.bayes.data$z.age), to = max(S1.bayes.data$z.age), length.out = 50),4),
+             condition = c(rep("repr",50), 
+                           rep("pars",50), 
+                           rep("fcom",50), 
+                           rep("fsim",50)), # the four conditions in the data
+             z.sex = rep(0,200),
+             z.trial = rep(0,200))
+
+
+
+
+# here we generate the fitted values based on the model
+# the function fitted() takes in the model and the new dataset and generates a fitted values (inclucing upper and lower 95% CI) for every row in the dataset
+# because our dataset ranges from min age to max age in the data, we get the prediction for the age range in the data 
+# but we could also generate predictions for different ages of course
+f1 <- fitted(S1.full.bm, 
+             newdata = nd1, 
+             re_formula = NA) %>% 
+  # this tells the function to ignore the random effects - in theory, we could generate predictions for specific individuals
+  as_tibble() %>%
+  bind_cols(nd1)%>%
+  mutate(age = z.age + mean(S1.bayes.data$aged)) # convert age back to the original scale by adding the mean of the data
+
+
+# summarize the data to include them in the plot later on
+d1 <- S1.bayes.data%>%
+  group_by(subid, aged, condition)%>%
+  summarise(mean = mean(correct))
+
+```
+
+```{r S1_bayes_plot, echo=FALSE, eval=T}
+
+p1 <- f1 %>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/355.25, 2),
+    monthlabels = as.character(paste(months, "months"))
+    )
+
+S1_plot <- ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d1, aes(x = aged/365, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f1, aes(x = age/365, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p1, aes(x = days/364.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p1, aes(label = months, x = days/364.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p1, aes(label = "months", x = days/364.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+S1_plot
+
+```
+
+```{r S1_mixbayes_plot, echo=FALSE, eval=T}
+# 
+# S1_mixplot <- ggplot()+
+#   geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+#   geom_point(data = d1, aes(x = aged/365, y = mean, col = condition), alpha = .5, shape = 1)+ 
+#   geom_smooth(data = f1, aes(x = age/365, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), stat = "identity", alpha = .4)+
+#  # geom_vline(xintercept = round(f1$Q2.5=0.5), colour = "black", size = .5, alpha = .4) +
+#   theme_minimal()+
+#   scale_color_ptol(name = "condition")+
+#   scale_fill_ptol(name = "condition")+
+#   #facet_grid(~condition)+
+#   labs(x = "Age", y="Proportion Correct")+
+#   ylim(0,1)+
+#   xlim(3,7)+
+#   theme(legend.position = "bottom")
+# 
+# S1_mixplot
+
+
+p1 <- f1 %>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/355.25, 2),
+    monthlabels = as.character(paste(months, "months"))
+    )
+
+ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d1, aes(x = aged/365, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f1, aes(x = age/365, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p1, aes(x = days/364.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p1, aes(label = months, x = days/364.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p1, aes(label = "months", x = days/364.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  #facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+
+
+```
+
+## Study 2
+
+### Basic Analyses of Children's Performance
+For some basic analyses we grouped children according to their age in years. The table provides the following tests
+
+* N = number of children
+* trials/N = average number of trials for children
+* Mean = mean of correct choices
+* SD = standard deviation of correct choices
+not yet as we need more data:
+* p = p-value for a t-test against chance level (50%); for this test data were averaged by individuals
+* t = t statistic for the t-tests. Write like t(16)=8.06 ...nach dem t in Klammern immer einmal weniger als Probanden (N)
+* d = Cohen's D as a measure of effect size for the t-tests
+```{r s2prepare_overviewtestables, echo = FALSE, include=T, eval=T, results='asis'}
+
+#library(coin) 
+library(scales) 
+# install.packages("coin")
+
+# required for rounding pvalues, is part of tidyverse but needs to be loaded again? ## it occurs when functions are overwritten multiple times
+
+# calculate mean, SD, t-test, cohenD; p is rounded by pvalue function in scales package
+s2.symlitrep.correct.table.data <- symlitrep.ind.correct.table.data %>%
+  filter(study=="study2") %>% 
+  group_by(conditionlong, agecat) %>%
+   #arrange(study, age) %>%
+   summarise(N = n_distinct(subid),
+             "trials/N" = round(sum(trials)/n_distinct(subid), 2),
+             "M" = round(mean(correct)*100, 2),
+             "SD" = round(sd(correct)*100, 2),
+             "p(shapiro)" = pvalue(shapiro.test((correct))$p.value, accuracy = .001),
+             "p(wilcox)" = pvalue(wilcox.test((correct), mu = 0.5)$p.value, accuracy = .001),
+             #"r" = round(wilcox_effsize((correct), mu = 0.5), 2),
+             "p(ttest)" = pvalue(t.test((correct), mu = 0.5)$p.value, accuracy = .001),
+             "df"= t.test((correct), mu = 0.5)$parameter,
+             "t(N-1)" = round(t.test((correct), mu = 0.5)$statistic, 2),
+             "d" = round(cohensD((correct), mu = 0.5), 2)
+              )
+
+
+# shapiro.test(data_xls$Größe)
+
+
+# # delete duplicate labels in age by turning age into character and replacing duplicates
+# symlitrep.correct.table.data$study <- as.character(symlitrep.correct.table.data$study)
+# symlitrep.correct.table.data$study[duplicated(symlitrep.correct.table.data$study)] <- ""
+
+s2.symlitrep.correct.table.data$conditionlong <- as.character(s2.symlitrep.correct.table.data$conditionlong)
+s2.symlitrep.correct.table.data$conditionlong[duplicated(s2.symlitrep.correct.table.data$conditionlong)] <- ""
+
+kable(s2.symlitrep.correct.table.data, caption = "Overview of Performance for Study 2" )%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+
+
+```
+
+
+```{r s2bolddevplot, echo = FALSE, include=T, eval=T, results='asis'}
+
+# aggregate proportion of correct choices and number of trials for each individual
+S2.ind.correct.plot.data  <- symlitrep.data %>% 
+  filter(valid != "drop" & trial != "NA" & study == "study2") %>% 
+  group_by(conditionlong, subid, agecat, aged) %>%
+  arrange(conditionlong, subid, agecat, aged) %>%
+  summarise("correct" = round(mean(correct)*100, 2),
+            "trials" = length(valid))
+# 
+# S2.bold.developmnent.plot <- ggplot(S2.ind.correct.plot.data,
+#                     aes(aged/365, correct, colour = conditionlong)) +
+#   geom_hline(yintercept=50, linetype="dashed", color = "black") +
+#   geom_jitter() +
+#   geom_smooth(method=lm, se=T)+
+#   facet_wrap(~ conditionlong, nrow=4)+
+#   theme_minimal()
+#   #theme(legend.position = "none")
+#   # geom_smooth(method = lm, se = FALSE)+
+# S2.bold.developmnent.plot
+# 
+
+
+s2.facetplot <- ggplot(S2.ind.correct.plot.data, 
+                    aes(agecat, correct, colour = conditionlong)) +
+  geom_hline(yintercept=50, linetype="dashed", color = "black") +
+  geom_boxplot() +
+  #geom_violin() +
+  geom_jitter() +
+  facet_wrap(~ conditionlong, nrow=3)+
+  theme_minimal()
+  #theme(legend.position = "none")
+  # geom_smooth(method = lm, se = FALSE)+
+s2.facetplot
+
+
+```
+
+
+### Bayesian Analyses
+Same as above.
+
+```{r s2_bayes_prep_data, echo = FALSE, include=T, eval=T, results='asis'}
+
+symlitrep.data <- readRDS("./symlitrepdata.rds")
+
+# aggregate proportion of correct choices and number of trials for each individual
+S2.bayes.data  <- symlitrep.data %>% 
+  filter(valid != "drop" & trial != "NA" & study == "study2") %>% 
+  select(condition, subid, sex, aged, correct, trial) %>%
+   mutate(z.trial = scale(trial),
+           z.age = aged - mean(aged),
+           z.sex = scale(as.numeric(sex)))
+
+
+```
+
+```{r S2_bayes_fullmodel, echo=FALSE, include=F, eval=F}
+
+# preregistered: correct ~ task*z.age +z.trial +z.sex +(z.trial|id)
+
+S2.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid), 
+               data=S2.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 5000,
+               cores= 4)
+
+S2.full.bm <- add_criterion(S2.full.bm, c("loo", "waic"))
+
+# Saving the model (to not rerun it every time)
+saveRDS(S2.full.bm, "./models/S2.full.bm.rds")
+
+```
+
+```{r S2_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=T}
+
+# load model from saving rds
+S2.full.bm <- readRDS("./models/S2.full.bm.rds")
+
+nd2 <- tibble(z.age = rep(seq(from = min(S2.bayes.data$z.age), to = max(S2.bayes.data$z.age), length.out = 50),4),
+             condition = c(rep("repo",50), 
+                           rep("abpo",50), 
+                           rep("orfe",50), 
+                           rep("orob",50)), # the four conditions in the data
+             z.sex = rep(0,200),
+             z.trial = rep(0,200))
+
+f2 <- fitted(S2.full.bm, 
+             newdata = nd2, 
+             re_formula = NA) %>% 
+  # this tells the function to ignore the random effects - in theory, we could generate predictions for specific individuals
+  as_tibble() %>%
+  bind_cols(nd2)%>%
+  mutate(age = z.age + mean(S2.bayes.data$aged)) # convert age back to the original scale by adding the mean of the data
+
+
+# summarize the data to include them in the plot later on
+d2 <- S2.bayes.data%>%
+  group_by(subid, aged, condition)%>%
+  summarise(mean = mean(correct))
+
+```
+
+```{r S2_bayes_plot, echo=FALSE, eval=T}
+
+
+p2 <- f2 %>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/355.25, 2),
+    monthlabels = as.character(paste(months, "months"))
+    )
+
+ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d2, aes(x = aged/365, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f2, aes(x = age/365, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p2, aes(x = days/364.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p2, aes(label = months, x = days/364.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p2, aes(label = "months", x = days/364.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+
+# 
+# S2_plot <- ggplot()+
+#   geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+#   geom_point(data = d2, aes(x = aged/365, y = mean, col = condition), alpha = .5, shape = 1)+ 
+#   geom_smooth(data = f2, aes(x = age/365, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), stat = "identity", alpha = .4)+
+#  # geom_vline(xintercept = round(f1$Q2.5=0.5), colour = "black", size = .5, alpha = .4) +
+#   theme_minimal()+
+#   scale_color_ptol(name = "condition")+
+#   scale_fill_ptol(name = "condition")+
+#   facet_grid(~condition)+
+#   labs(x = "Age", y="Proportion Correct")+
+#   ylim(0,1)+
+#   xlim(3,7)+
+#   theme(legend.position = "bottom")
+# S2_plot
+
+```
+
+```{r S2_mixbayes_plot, echo=FALSE, eval=T}
+
+p2 <- f2 %>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/355.25, 2),
+    monthlabels = as.character(paste(months, "months"))
+    )
+
+ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d2, aes(x = aged/365, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f2, aes(x = age/365, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p2, aes(x = days/364.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p2, aes(label = months, x = days/364.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p2, aes(label = "months", x = days/364.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  #facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+```
+
+
+
+## Study 3
+### Basic Analyses of Children's Performance
+For some basic analyses we grouped children according to their age in years. The table provides the following tests
+
+* N = number of children
+* trials/N = average number of trials for children
+* Mean = mean of correct choices
+* SD = standard deviation of correct choices
+* p = p-value for a t-test against chance level (50%); for this test data were averaged by individuals
+* t = t statistic for the t-tests. Write like t(16)=8.06 ...nach dem t in Klammern immer einmal weniger als Probanden (N)
+* d = Cohen's D as a measure of effect size for the t-tests
+```{r s3prepare_overviewtestables, echo = FALSE, include=T, eval=T, results='asis'}
+
+library(scales) 
+# required for rounding pvalues, is part of tidyverse but needs to be loaded again? ## it occurs when functions are overwritten multiple times
+
+# calculate mean, SD, t-test, cohenD; p is rounded by pvalue function in scales package
+s3.symlitrep.correct.table.data <- symlitrep.ind.correct.table.data %>%
+  filter(study=="study3") %>% 
+  group_by(conditionlong, agecat) %>%
+   #arrange(study, age) %>%
+   summarise(N = n_distinct(subid),
+             "trials/N" = round(sum(trials)/n_distinct(subid), 2),
+             "M" = round(mean(correct)*100, 2),
+             "SD" = round(sd(correct)*100, 2),
+             p = pvalue(t.test((correct), mu = 0.5)$p.value, accuracy = .001),
+              df= t.test((correct), mu = 0.5)$parameter,
+             "t(N-1)" = round(t.test((correct), mu = 0.5)$statistic, 2),
+             d = round(cohensD((correct), mu = 0.5), 2)
+             )
+
+
+# # delete duplicate labels in age by turning age into character and replacing duplicates
+# symlitrep.correct.table.data$study <- as.character(symlitrep.correct.table.data$study)
+# symlitrep.correct.table.data$study[duplicated(symlitrep.correct.table.data$study)] <- ""
+
+s3.symlitrep.correct.table.data$conditionlong <- as.character(s3.symlitrep.correct.table.data$conditionlong)
+s3.symlitrep.correct.table.data$conditionlong[duplicated(s3.symlitrep.correct.table.data$conditionlong)] <- ""
+
+kable(s3.symlitrep.correct.table.data, caption = "Overview of Performance for Study 3" )%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+
+```
+
+```{r s3bolddevplot, echo = FALSE, include=T, eval=T, results='asis'}
+
+# aggregate proportion of correct choices and number of trials for each individual
+S3.ind.correct.plot.data  <- symlitrep.data %>% 
+  filter(valid != "drop" & trial != "NA" & study == "study3") %>% 
+  group_by(conditionlong, subid, agecat, aged) %>%
+  arrange(conditionlong, subid, agecat, aged) %>%
+  summarise("correct" = round(mean(correct)*100, 2),
+            "trials" = length(valid))
+# 
+# S3.bold.developmnent.plot <- ggplot(S3.ind.correct.plot.data,
+#                     aes(aged/365, correct, colour = conditionlong)) +
+#   geom_hline(yintercept=50, linetype="dashed", color = "black") +
+#   geom_jitter() +
+#   geom_smooth(method=lm, se=T)+
+#   facet_wrap(~ conditionlong, nrow=4)+
+#   theme_minimal()
+#   #theme(legend.position = "none")
+#   # geom_smooth(method = lm, se = FALSE)+
+# S3.bold.developmnent.plot
+
+s3.facetplot <- ggplot(S3.ind.correct.plot.data, 
+                    aes(agecat, correct, colour = conditionlong)) +
+  geom_hline(yintercept=50, linetype="dashed", color = "black") +
+  geom_boxplot() +
+  #geom_violin() +
+  geom_jitter() +
+  facet_wrap(~ conditionlong, nrow=3)+
+  theme_minimal()
+  #theme(legend.position = "none")
+  # geom_smooth(method = lm, se = FALSE)+
+s3.facetplot
+
+
+```
+
+### Bayesian Analyses
+see above. 
+
+```{r s3_bayes_prep_data, echo = FALSE, include=T, eval=T, results='asis'}
+
+symlitrep.data <- readRDS("./symlitrepdata.rds")
+
+# aggregate proportion of correct choices and number of trials for each individual
+S3.bayes.data  <- symlitrep.data %>% 
+  filter(valid != "drop" & trial != "NA" & study == "study3") %>% 
+  select(condition, subid, sex, aged, correct, trial) %>%
+   mutate(z.trial = scale(trial),
+           z.age = aged - mean(aged),
+           z.sex = scale(as.numeric(sex)))
+
+
+```
+
+```{r S3_bayes_fullmodel, echo=FALSE, include=F, eval=F}
+
+# preregistered: correct ~ task*z.age +z.trial +z.sex +(z.trial|id)
+
+S3.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid), 
+               data=S3.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 5000,
+               cores= 4)
+
+S3.full.bm <- add_criterion(S3.full.bm, c("loo", "waic"))
+
+# Saving the model (to not rerun it every time)
+saveRDS(S3.full.bm, "./models/S3.full.bm.rds")
+
+```
+
+```{r S3_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=T}
+
+# load model from saving rds
+S3.full.bm <- readRDS("./models/S3.full.bm.rds")
+
+nd3 <- tibble(z.age = rep(seq(from = min(S3.bayes.data$z.age), to = max(S3.bayes.data$z.age), length.out = 50),4),
+             condition = c(rep("nuob",50), 
+                           rep("nufe",50), 
+                           rep("siob",50), 
+                           rep("sife",50)), # the four conditions in the data
+             z.sex = rep(0,200),
+             z.trial = rep(0,200))
+
+f3 <- fitted(S3.full.bm, 
+             newdata = nd3, 
+             re_formula = NA) %>% 
+  # this tells the function to ignore the random effects - in theory, we could generate predictions for specific individuals
+  as_tibble() %>%
+  bind_cols(nd3)%>%
+  mutate(age = z.age + mean(S3.bayes.data$aged)) # convert age back to the original scale by adding the mean of the data
+
+
+# summarize the data to include them in the plot later on
+d3 <- S3.bayes.data%>%
+  group_by(subid, aged, condition)%>%
+  summarise(mean = mean(correct))
+
+```
+
+```{r S3_bayes_plot, echo=FALSE, eval=T}
+
+# S3_plot <- ggplot()+
+#   geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+#   geom_point(data = d3, aes(x = aged/365, y = mean, col = condition), alpha = .5, shape = 1)+ 
+#   geom_smooth(data = f3, aes(x = age/365, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), stat = "identity", alpha = .4)+
+#  # geom_vline(xintercept = round(f1$Q2.5=0.5), colour = "black", size = .5, alpha = .4) +
+#   theme_minimal()+
+#   scale_color_ptol(name = "condition")+
+#   scale_fill_ptol(name = "condition")+
+#   facet_grid(~condition)+
+#   labs(x = "Age", y="Proportion Correct")+
+#   ylim(0,1)+
+#   xlim(3,7)+
+#   theme(legend.position = "bottom")
+# S3_plot
+
+p3 <- f3 %>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/355.25, 2),
+    monthlabels = as.character(paste(months, "months"))
+    )
+
+ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d3, aes(x = aged/365, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f3, aes(x = age/365, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p3, aes(x = days/364.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p3, aes(label = months, x = days/364.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p3, aes(label = "months", x = days/364.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+
+```
+
+```{r S3_mixbayes_plot, echo=FALSE, eval=T}
+# 
+# S3_mixplot <- ggplot()+
+#   geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+#   geom_point(data = d3, aes(x = aged/365, y = mean, col = condition), alpha = .5, shape = 1)+ 
+#   geom_smooth(data = f3, aes(x = age/365, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), stat = "identity", alpha = .4)+
+#  # geom_vline(xintercept = round(f1$Q2.5=0.5), colour = "black", size = .5, alpha = .4) +
+#   theme_minimal()+
+#   scale_color_ptol(name = "condition")+
+#   scale_fill_ptol(name = "condition")+
+#   #facet_grid(~condition)+
+#   labs(x = "Age", y="Proportion Correct")+
+#   ylim(0,1)+
+#   xlim(3,7)+
+#   theme(legend.position = "bottom")
+# S3_mixplot
+
+
+p3 <- f3 %>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/355.25, 2),
+    monthlabels = as.character(paste(months, "months"))
+    )
+
+ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d3, aes(x = aged/365, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f3, aes(x = age/365, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p3, aes(x = days/364.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p3, aes(label = months, x = days/364.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p3, aes(label = "months", x = days/364.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  # facet_grid(~study)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+
+
+```
+```{r symlit_rep_plotcondkdifficulty, eval= F}
+
+# aggregate proportion of correct choices and number of trials for each individual
+symlit_rep_difficultyplot.data  <- symlitrep.data %>% 
+  filter(valid != "drop" & trial != "NA") %>% 
+  group_by(study, condition, conditionlong, subid, agecat, aged) %>%
+  arrange(conditionlong, subid, agecat, aged) %>%
+  summarise("correct" = round(mean(correct)*100, 2),
+            "trials" = length(valid))
+
+difficulty.plot <- ggplot(symlit_rep_difficultyplot.data, 
+                    aes(x=reorder(condition, -correct), y=correct, colour = conditionlong)) +
+  geom_hline(yintercept=50, linetype="dashed", color = "black") +
+  geom_boxplot() +
+  geom_jitter() +
+  theme_minimal()
+
+difficulty.plot
+
+
+# 
+# difficulty.plot <- ggplot(symlit_rep_difficultyplot.data, 
+#                     aes(x=reorder(cuetype, -correct), y=correct, colour = cuetype)) +
+#   geom_hline(yintercept=50, linetype="dashed", color = "black") +
+#   # geom_bar(stat = "identity") +
+#   geom_boxplot() +
+#   geom_jitter() +
+#   theme_minimal() +
+#   theme(legend.position = "none")
+# 
+# difficulty.plot
+
+```
+
+
+```{r symlit_rep_plotcondkdifficulty, eval= F}
+
+# aggregate proportion of correct choices and number of trials for each individual
+symlit_rep_difficultyplot.data  <- symlitrep.data %>% 
+  filter(valid != "drop" & trial != "NA") %>% 
+  filter(condition != "sife",
+         condition != "nufe",
+         condition != "orfe") %>% 
+  group_by(study, condition, conditionlong, subid, agecat, aged) %>%
+  arrange(conditionlong, subid, agecat, aged) %>%
+  summarise("correct" = round(mean(correct)*100, 2),
+            "trials" = length(valid))
+
+difficulty.plot <- ggplot(symlit_rep_difficultyplot.data, 
+                    aes(x=reorder(condition, -correct), y=correct, colour = conditionlong)) +
+  geom_hline(yintercept=50, linetype="dashed", color = "black") +
+  geom_boxplot() +
+  geom_jitter() +
+  theme_minimal()
+
+difficulty.plot
+
+
+# 
+# difficulty.plot <- ggplot(symlit_rep_difficultyplot.data, 
+#                     aes(x=reorder(cuetype, -correct), y=correct, colour = cuetype)) +
+#   geom_hline(yintercept=50, linetype="dashed", color = "black") +
+#   # geom_bar(stat = "identity") +
+#   geom_boxplot() +
+#   geom_jitter() +
+#   theme_minimal() +
+#   theme(legend.position = "none")
+# 
+# difficulty.plot
+
+```
+
+
+
+
+
+```{r symlit_rep_plottaskdifficulty, eval= F}
+
+# aggregate proportion of correct choices and number of trials for each individual
+symlit_rep_difficultyplot.data  <- symlitrep.data %>% 
+  filter(valid != "drop" & trial != "NA") %>% 
+  group_by(study, principle, subid, agecat, aged) %>%
+  arrange(conditionlong, subid, agecat, aged) %>%
+  summarise("correct" = round(mean(correct)*100, 2),
+            "trials" = length(valid))
+
+difficulty.plot <- ggplot(symlit_rep_difficultyplot.data, 
+                    aes(x=reorder(principle, -correct), y=correct, colour = principle)) +
+  geom_hline(yintercept=50, linetype="dashed", color = "black") +
+  geom_boxplot() +
+  geom_jitter() +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+difficulty.plot
+
+
+# 
+# difficulty.plot <- ggplot(symlit_rep_difficultyplot.data, 
+#                     aes(x=reorder(cuetype, -correct), y=correct, colour = cuetype)) +
+#   geom_hline(yintercept=50, linetype="dashed", color = "black") +
+#   # geom_bar(stat = "identity") +
+#   geom_boxplot() +
+#   geom_jitter() +
+#   theme_minimal() +
+#   theme(legend.position = "none")
+# 
+# difficulty.plot
+
+```
+
+
+
+```{r symlit_rep_plottaskrt, eval= F}
+
+# aggregate proportion of correct choices and number of trials for each individual
+symlit_rep_rt.data  <- symlitrep.data %>% 
+  filter(valid != "drop" & trial != "NA") %>% 
+  group_by(study, principle, subid, agecat, aged) %>%
+  arrange(conditionlong, subid, agecat, aged) %>%
+  summarise("RT" = mean(rt))
+
+rt.plot <- ggplot(symlit_rep_rt.data, 
+                    aes(x=reorder(principle, +RT), y=RT, colour = principle)) +
+  #geom_hline(yintercept=50, linetype="dashed", color = "black") +
+  geom_boxplot() +
+  geom_jitter() +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+rt.plot
+
+
+# 
+# difficulty.plot <- ggplot(symlit_rep_difficultyplot.data, 
+#                     aes(x=reorder(cuetype, -correct), y=correct, colour = cuetype)) +
+#   geom_hline(yintercept=50, linetype="dashed", color = "black") +
+#   # geom_bar(stat = "identity") +
+#   geom_boxplot() +
+#   geom_jitter() +
+#   theme_minimal() +
+#   theme(legend.position = "none")
+# 
+# difficulty.plot
+
+```
+
+
+
