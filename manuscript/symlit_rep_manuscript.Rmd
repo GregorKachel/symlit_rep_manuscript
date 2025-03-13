@@ -126,7 +126,7 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 ```{r rep_read_data, include = FALSE}
 
 # Full data set including all participants (i.e. including dropped participants)
-rep.data <- readRDS("./data/symlitrep_final_data.rds")
+rep.data <- readRDS("../data/symlitrep_final_data.rds")
 
 
  # $ study          : Factor w/ 3 levels --> Study1, Study2, Study3
@@ -231,7 +231,7 @@ Children were visited in-person at their daycares. Daycares provided a separate 
 (ref:testillustration-caption) Illustration of setup.
 
 ```{r figure-setup, fig.cap = "(ref:testillustration-caption)", fig.align = "center", echo = FALSE}
-knitr::include_graphics("./illustrations/Symlit_Rep_Setup.png", dpi = 108)
+knitr::include_graphics("../illustrations/Symlit_Rep_Setup.png", dpi = 108)
 ```
 
 *Familiarization*. E introduced an agent, namely a cartoon monkey, and familiarized children with the framing of the task. The monkey placed two small cups at the bottom of the screen. Next, the cups were lifted and the monkey dropped a banana under one of them. The cups were lowered again to hide the banana. Hence, children saw an item being hidden in plain sight and were solely required to remember its place for a minimal amount of time  before being asked "Where is the banana?". Children were required to point at the correct hiding place. In the familiarization phase, children received immediate feedback from the experimenter ("Well done!" / "hmm, lets go again!") while the hiding place of the banana was revealed. Children are expected to succeed in at least 4 familiarization trials in a row in order to move to the main test. Familiarization would continue for a minimum of four and a maximum of eight trials. The familiarization ensured that all participants were familiar with the aim of the game and that E was able to read participants' responses.
@@ -299,14 +299,14 @@ S1.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid),
 S1.full.bm <- add_criterion(S1.full.bm, c("loo", "waic"))
 
 # Saving the model (to not rerun it every time)
-saveRDS(S1.full.bm, "./models/S1.full.bm.rds")
+saveRDS(S1.full.bm, "../models/S1.full.bm.rds")
 
 ```
 
 ```{r rep_S1_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=T}
 
 # load model from rds
-S1.full.bm <- readRDS("./models/S1.full.bm.rds")
+S1.full.bm <- readRDS("../models/S1.full.bm.rds")
 # table(rep.S1.bayes.data$condition)
 
 nd1 <- tibble(z.age = rep(seq(from = min(rep.S1.bayes.data$z.age), to = max(rep.S1.bayes.data$z.age), length.out = 50),4),
@@ -456,14 +456,14 @@ S2.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid),
 S2.full.bm <- add_criterion(S2.full.bm, c("loo", "waic"))
 
 # Saving the model (to not rerun it every time)
-saveRDS(S2.full.bm, "./models/S2.full.bm.rds")
+saveRDS(S2.full.bm, "../models/S2.full.bm.rds")
 
 ```
 
 ```{r S2_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=T}
 
 # load model from saving rds
-S2.full.bm <- readRDS("./models/S2.full.bm.rds")
+S2.full.bm <- readRDS("../models/S2.full.bm.rds")
 
 nd2 <- tibble(z.age = rep(seq(from = min(S2.bayes.data$z.age), to = max(S2.bayes.data$z.age), length.out = 50),4),
              condition = c(rep("repo",50), 
@@ -618,14 +618,14 @@ S3.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid),
 S3.full.bm <- add_criterion(S3.full.bm, c("loo", "waic"))
 
 # Saving the model (to not rerun it every time)
-saveRDS(S3.full.bm, "./models/S3.full.bm.rds")
+saveRDS(S3.full.bm, "../models/S3.full.bm.rds")
 
 ```
 
 ```{r S3_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=T}
 
 # load model from saving rds
-S3.full.bm <- readRDS("./models/S3.full.bm.rds")
+S3.full.bm <- readRDS("../models/S3.full.bm.rds")
 
 nd3 <- tibble(z.age = rep(seq(from = min(S3.bayes.data$z.age), to = max(S3.bayes.data$z.age), length.out = 50),4),
              condition = c(rep("nuob",50), 
