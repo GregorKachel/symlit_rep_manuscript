@@ -126,7 +126,9 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 ```{r rep_read_data, include = FALSE}
 
 # Full data set including all participants (i.e. including dropped participants)
-rep.data <- readRDS("../data/symlitrep_final_data.rds")
+rep.data <- readRDS("../data/symlitrep_final_data.rds")%>%
+  mutate(ageinyears = aged/356.25, 
+         z.age = ageinyears - mean(ageinyears))
 
 
  # $ study          : Factor w/ 3 levels --> Study1, Study2, Study3
@@ -270,9 +272,9 @@ rep.S1.bayes.data  <- rep.data %>%
   filter(valid != "drop") %>% # valid participants only 
   filter(study == "study1") %>% # in study one
   filter(trial != "fam") %>% 
-  select(condition, subid, sex, aged, correct, trial) %>%
+  select(condition, subid, sex, ageinyears, correct, trial) %>%
   mutate(z.trial = scale(as.numeric(trial)),
-         z.age = aged - mean(aged),
+         z.age = ageinyears - mean(ageinyears),
          z.sex = scale(as.numeric(sex)))
 
 # # clean data set? 
@@ -293,7 +295,7 @@ S1.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid),
                data= rep.S1.bayes.data, 
                family=bernoulli(),
                chains = 4,
-               iter= 5000,
+               iter= 2000,
                cores= 4)
 
 S1.full.bm <- add_criterion(S1.full.bm, c("loo", "waic"))
@@ -328,12 +330,12 @@ f1 <- fitted(S1.full.bm,
   # this tells the function to ignore the random effects - in theory, we could generate predictions for specific individuals
   as_tibble() %>%
   bind_cols(nd1)%>%
-  mutate(age = z.age + mean(rep.S1.bayes.data$aged)) # convert age back to the original scale by adding the mean of the data
+  mutate(age = z.age + mean(rep.S1.bayes.data$ageinyears)) # convert age back to the original scale by adding the mean of the data
 
 
 # summarize the data to include them in the plot later on
 d1 <- rep.S1.bayes.data%>%
-  group_by(subid, aged, condition)%>%
+  group_by(subid, ageinyears, condition)%>%
   summarise(mean = mean(correct)) 
 
 
@@ -344,6 +346,7 @@ d1 <- rep.S1.bayes.data%>%
 # Alternative Plot without facetting
 
 p1 <- f1 %>%
+  mutate(age = age * 365.25)%>%
   group_by(condition)%>%
   summarise(
     Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
@@ -356,8 +359,8 @@ p1 <- f1 %>%
 
 ggplot()+
   geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d1, aes(x = aged/365, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f1, aes(x = age/365, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+  geom_point(data = d1, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
               stat = "identity", alpha = .25)+
   geom_point(data=p1, aes(x = days/364.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
   geom_text(data=p1, aes(label = months, x = days/364.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
@@ -431,26 +434,35 @@ We report how we determined our sample size, all data exclusions, all manipulati
 rep.S2.bayes.data  <- rep.data %>%
   filter(valid != "drop") %>% # valid participants only 
   filter(study == "study2") %>% # in study one
-  filter(trial != "fam") %>% 
-  select(condition, subid, sex, aged, correct, trial) %>%
-  mutate(z.trial = scale(as.numeric(trial)),
-         z.age = aged - mean(aged),
-         z.sex = scale(as.numeric(sex)))
+  filter(trial != "fam") %>%
+  select(condition, subid, sex, ageinyears, correct, trial) %>%
+  mutate(z.trial = scale(as.numeric(as.character(trial))),
+         z.age = agey - mean(agey),
+         z.sex = scale(as.numeric(sex)),
+         subid = paste0("id", subid))%>%
+  mutate(condition = as.character(condition))
 
 # # clean data set?
 # str(rep.S1.bayes.data)
 # sapply(rep.S1.bayes.data, function(x) sum(is.na(x)))
 
+unique(rep.S2.bayes.data$condition)
 
+rep.S2.bayes.data%>%
+  filter(condition == "Pars Pro Toto")
+
+table(rep.data$study, rep.data$condition)
 ```
 
 ```{r S2_bayes_fullmodel, echo=FALSE, include=F, eval=F}
 
-S2.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid), 
+condition*z.age+z.trial+sex+(z.trial
+
+S2.full.bm<-brm(correct~condition+z.age+(1|subid), 
                data=rep.S2.bayes.data, 
                family=bernoulli(),
                chains = 4,
-               iter= 5000,
+               iter= 2000,
                cores= 4)
 
 S2.full.bm <- add_criterion(S2.full.bm, c("loo", "waic"))
@@ -479,7 +491,7 @@ f2 <- fitted(S2.full.bm,
   # this tells the function to ignore the random effects - in theory, we could generate predictions for specific individuals
   as_tibble() %>%
   bind_cols(nd2)%>%
-  mutate(age = z.age + mean(S2.bayes.data$aged)) # convert age back to the original scale by adding the mean of the data
+  mutate(age = z.age + mean(S2.bayes.data$ageinyears)) # convert age back to the original scale by adding the mean of the data
 
 
 # summarize the data to include them in the plot later on
