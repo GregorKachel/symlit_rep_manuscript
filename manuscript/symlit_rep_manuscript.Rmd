@@ -130,6 +130,26 @@ rep.data <- readRDS("../data/symlitrep_final_data.rds")%>%
   mutate(ageinyears = aged/356.25, 
          z.age = ageinyears - mean(ageinyears))
 
+full.data <- readRDS("../data/symlitrep_full_data.rds")
+
+
+test <- full.data %>%
+  filter(study == "study1") 
+
+%>% 
+  filter(condition == "repr")
+
+table(test$condition)
+
+# Problematic ids
+# 263126 study1 but should be study2
+# 262944 study2 but should be study1 
+# drops within oversampling are a problem!
+# if trial = fam --> condition = familiarisation
+
+# study2 but should be study 1 1111990176
+# study1 but should be study 2 1112759854
+
 
  # $ study          : Factor w/ 3 levels --> Study1, Study2, Study3
  # $ title          : Factor w/ 3 levels --> Name/Theme of the Study
