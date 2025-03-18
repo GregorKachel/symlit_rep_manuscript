@@ -61,6 +61,10 @@ keywords          : "graphical representation, iconicity, analogy, symbol, commu
 wordcount         : "Child Development Max 40 pages // PNAS 1,500–2,000 words"
 
 bibliography      : ["library.bib"]
+appendix: # to change filenames, also see end of document
+  - "appendix_a_participants.Rmd"
+  - "appendix_b_stimuli.Rmd"
+  - "appendix_c_descriptives.Rmd"
 
 floatsintext      : no
 linenumbers       : yes
@@ -118,10 +122,6 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 *This Paper*. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. For the first time, the studies contributing to this paper investigate children's understanding of xxx.
 
 *Hypotheses*. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-# Study 1
-
-## Methods
 
 ```{r rep_read_data, include = FALSE}
 
@@ -190,10 +190,7 @@ rep.data <- readRDS("../data/symlitrep_final_data.rds")
  
 ```
 
-We report how we determined our sample size, all data exclusions, all manipulations, and all measures in the study [@simmons201221]. Supplementary materials document all pilots that were run and the specific conclusions we drew from them during the development of the study. Both supplements and main article are fully reproducible manuscripts [@R-papaja] providing all data and analyses. 
-
-### Participants
-```{r S1S2s3 participant demographics, echo=FALSE, eval=FALSE}
+```{r S1S2s3 participant demographics, echo=FALSE, eval=T}
 
 rep.age.table.data  <- rep.data %>% 
   distinct(subid, .keep_all = TRUE) %>% # select only one line per participant
@@ -206,38 +203,39 @@ rep.age.table.data  <- rep.data %>%
     Min = min(agem),
     Max = max(agem),
     SD = round(sd(agem), 2))
-# 
-# drop.table.data  <- data %>% 
-#   distinct(subid, .keep_all = TRUE) %>% # select only one line per participant
-#   filter(valid == "drop") %>%  # filter out dropped participants
-#   group_by(study) %>% 
-#   summarize(
-#     N = length(subid),
-#     female = sum(sex=="0"),
-#     Mean = mean(agem),
-#     Min = min(agem),
-#     Max = max(agem),
-#     SD = round(sd(agem), 2))
 
-# convert first column into row names
 rep.age.table.data <- data.frame(rep.age.table.data, row.names = "study")
 
+rep.drop.table.data  <- rep.data %>%
+  distinct(subid, .keep_all = TRUE) %>% # select only one line per participant
+  filter(valid == "drop") %>%
+  group_by(study) %>%
+  summarize(
+    N = length(subid),
+    female = sum(sex=="0"),
+    Mean = mean(agem),
+    Min = min(agem),
+    Max = max(agem),
+    fail_in_fam = length(subid[drop == "fail_in_fam"]),
+    quit_early = length(subid[drop == "quit_early"]),
+    fussy_child = length(subid[drop == "fussy_child"]),
+    language = length(subid[drop == "language"]),
+    technical = length(subid[drop == "technical"]))
 
-#  A total of `r age.table.data["study1", "N"]` two- to four-year-old children (M = `r age.table.data["study1", "Mean"]` months, SD = `r age.table.data["study1", "SD"]` months, range `r age.table.data["study1", "Min"]` - `r age.table.data["study1", "Max"]` months; `r age.table.data["study1", "female"]` female) participated in the study (see Figure\ \@ref(fig:S1ArrowsProgressDataCollectionPlot) for an overview of the age-distribution). 
+rep.drop.table.data <- data.frame(rep.drop.table.data, row.names = "study")
+
 
 ```
 
-We collected age as a continues predictor aiming to test two children per month of age between the third and seventh birthday.
+# Methods
+All three studies below share the same basic methods and analyses. For convenience, common aspects of the procedure, participant recruiting and stimulus design are reported first before discussing the indivual studies respectively.
 
-All participants were recruited in **MASKED FOR REVIEW**, a medium-sized middle-European city, and came from a predominantly white population of middle to high income families. They were contacted via a database of participants for child development studies to which their parents had voluntarily signed up. Appointments were made on the basis of parents’ and children’s availability. The study was reviewed and approved by an internal ethics committee at the **MASKED FOR REVIEW**. 
+## General Methods
 
-ALL STUDIES Data collection took place from June 2022 to February 2023. 
-
-In addition, XX children were tested but not submitted to the final sample for not succeeding in familiarization trials (N = XX), for not completing at least eight out of 16 test trials (N = XX), or due to being fussy (N = XX). All excluded children were younger than 36 months of age.
-
-
-### Procedure and Setup
+### Setup and Data Collection
 Children were visited in-person at their daycares. Daycares provided a separate room where experimenters (E) and children watched the presentation of a picture-book like hiding game on screen while sitting at their side. See figure \@ref(fig:figure-setup) for an illustration of the setup.
+
+See figure XXX for an illustration of the setup.
 
 (ref:testillustration-caption) Illustration of setup.
 
@@ -245,16 +243,31 @@ Children were visited in-person at their daycares. Daycares provided a separate 
 knitr::include_graphics("../illustrations/Symlit_Rep_Setup.png", dpi = 108)
 ```
 
-*Familiarization*. E introduced an agent, namely a cartoon monkey, and familiarized children with the framing of the task. The monkey placed two small cups at the bottom of the screen. Next, the cups were lifted and the monkey dropped a banana under one of them. The cups were lowered again to hide the banana. Hence, children saw an item being hidden in plain sight and were solely required to remember its place for a minimal amount of time  before being asked "Where is the banana?". Children were required to point at the correct hiding place. In the familiarization phase, children received immediate feedback from the experimenter ("Well done!" / "hmm, lets go again!") while the hiding place of the banana was revealed. Children are expected to succeed in at least 4 familiarization trials in a row in order to move to the main test. Familiarization would continue for a minimum of four and a maximum of eight trials. The familiarization ensured that all participants were familiar with the aim of the game and that E was able to read participants' responses.
+### Procedure
+*Familiarization*. 
 
-*Test phase*.The main phase of the study commenced with E announcing that the cartoon character had an idea for a new game. E explains that they must not see where the banana is hidden. The hiding sequence is identical to the familiarization phase, however the placement of the banana is covered by a wood fence over the lower half of the screen. Next, the monkey holds up geometric shape, namely a circle in the *marker condition* and an equilateral triangle in the *arrow condition*. E narrates "Coco is going to help you find the banana. In the arrow condition, the monkey places the triangle in a central position pointing to either the left or right target. In the marker condition, the monkey places the circle directly on the left or right target. After the placement, children are asked "where is the banana?". The hiding place is not revealed and children do not receive feedback in test trials. E acknowledges their choices by thanking them in a neutral tone and moves on to the next trial.
+E introduced an agent, namely a cartoon monkey, and familiarized children with the framing of the task. The monkey placed two small cups at the bottom of the screen. Next, the cups were lifted and the monkey dropped a banana under one of them. The cups were lowered again to hide the banana. Hence, children saw an item being hidden in plain sight and were solely required to remember its place for a minimal amount of time  before being asked "Where is the banana?". Children were required to point at the correct hiding place. In the familiarization phase, children received immediate feedback from the experimenter ("Well done!" / "hmm, lets go again!") while the hiding place of the banana was revealed. 
 
-Except for the geometric shapes and their placement, the presentations in both conditions were identical. A single trial lasted 20 to 30 seconds. Children were presented with a maximum of 16 test trials half of which in either condition. In order to be submitted to the analyses participants had to complete at least eight valid test trials (see coding below).The entire test sessions lasted about 15 minutes. See figure XXX for an illustration of the setup.
+To ensure that children were familiar with the goal of the game and the touch interface, they first had to complete a set of four to eight familiarization trials with a success rate of 75%. In case a child did not reply correctly in three out of four trials, another four familiarization trials were provided. If the child was correct in six out of eight trials, she was included in the main sample. Children that did not succeed during familiarization were allowed to participate further but their data was not submitted to analysis. 
 
-### Materials
+*Test phase*. The main phase of the study commenced with  announcing that the cartoon character had an idea for a new game. 
+
+
+E explains that they must not see where the banana is hidden. The hiding sequence is identical to the familiarization phase, however the placement of the banana is covered by a wood fence over the lower half of the screen. Next, the monkey holds up piece of paper and a pen
+
+
+ The hiding place is not revealed and children do not receive feedback in test trials. E acknowledges their choices by thanking them in a neutral tone and moves on to the next trial.
+
+Except for the geometric shapes and their placement, the presentations in both conditions were identical. A single trial lasted 20 to 30 seconds. Children were presented with 16 test trials containing the four test conditions in a blocked order. 
+
+In order to be submitted to the analyses participants had to complete at least eight valid test trials (see coding below).The entire test sessions lasted about 12 minutes. 
+
+### Stimuli
 Description of cues and targets and maybe how they were created. For an illustration of the stimuli and example presentations, please see supplementary materials sections XX and XX.  
 
-### Data analysis
+### Data Handling and Analyses
+Participant responses were collected directly by the experimental script
+
 Bayesian models were run in Stan (http://mc-stan.org/) and implemented via the function brm of the package brms (Bürkner, 2017). We used logistic Bayesian generalized linear mixed models (GLMM) to fit children's responses (0/1) as a function of their absolute age in days, condition (rep, pars, fsim, fcom) and an interaction between trial and task. We use default priors and include trial and sex as fixed effects to be controlled for. Trial number will be added as a random slope within subject.
 
 The full model notation was: $'correct~condition*z.age+z.trial+z.sex+(z.trial|subid)'$
@@ -271,6 +284,19 @@ For our main analyses, we used logistic Bayesian generalized linear mixed models
 The analysis models participants binary choices to predict the probability of children interpreting the cues correctly and model how this probability will change as a function of their absolute age in days. In order to evaluate the relevance of age and task type for children’s performance, we compared a full model as specified above with a reduced model lacking the interaction of age and task by using WAIC scores and weights (McElreath, 2016). Furthermore, we inspected the model estimates for the different predictors (including their 95% Credible Interval (CrI)). To answer our main research question of when children perform above chance in a task, we use the model to predict the developmental trajectory (with 95% CrI) for each task type. The criterion for settling when children perform above chance is the point at which the  95% CrI for a particular trajectory does no longer overlap with a midline demarcating the 50% chance level. 
 
 To further explore our data, we also binned participants in age-groups (three-, and four-year-olds). To test whether group-level performance was above chance in all experimental groups, we used two-tailed one-sample t-tests with the chance level set to .5. We provide Cohen's d as a standardized effect size for significance testing (computed via the function `cohensD`). Additionally, each participant's data was also submitted to a binomial test to determine whether their performance was above chance on an individual level. 
+
+## Study 1
+
+### Participants
+In order to model children's development across the preschool years continuously while aligning with conventions in the field, data collection aimed at testing two children per month of age between the third and the seventh birthday for a minimum of 96 participants (24 per year). As children were tested on the basis of availability, the final sample exceeds this preregistered minimum by ten participants. The final sample consisted of `r rep.age.table.data["study1", "N"]` children (M = `r rep.age.table.data["study1", "Mean"]` months, SD = `r rep.age.table.data["study1", "SD"]` months, range `r rep.age.table.data["study1", "Min"]` - `r rep.age.table.data["study1", "Max"]` months; `r rep.age.table.data["study1", "female"]` female). In addition, `r rep.drop.table.data["study1", "N"]` children (`r rep.drop.table.data["study1", "female"]` female) were tested but excluded from analysis for not succeeding during familiarization (N = `r rep.drop.table.data["study1", "fail_in_fam"]`), for not completing at least eight out of 16 test trials (N = `r rep.drop.table.data["study1", "quit_early"]`), or due to being fussy (N = `r rep.drop.table.data["study1", "fussy_child"]`). For `r rep.drop.table.data["study1", "language"]` children, experimenters only learned during testing that children were not fluent enough in German to participate as their families had only recently migrated. Finally, `r rep.drop.table.data["study1", "technical"]` children had to be excluded due to technical issues. For a graphical and tabular overview of participants and exclusions across all three studies presented here, please see Appendix A.
+
+All participants were recruited in **MASKED FOR REVIEW**, a medium-sized middle-European city, and came from a predominantly white population of middle to high income families. They were contacted via a database of participants for child development studies to which their parents had voluntarily signed up. Appointments were made on the basis of parents’ and children’s availability. The study was reviewed and approved by an internal ethics committee at the **MASKED FOR REVIEW**. Data collection took place from June 2022 to February 2023. 
+
+### Stimuli
+
+
+### Analyses
+
 
 ### Results
 
@@ -317,7 +343,7 @@ saveRDS(S1.full.bm, "../models/S1.full.bm.rds")
 
 ```
 
-```{r rep_S1_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=T, warning = F}
+```{r rep_S1_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=T, warning = F, message=F}
 
 # load model from rds
 S1.full.bm <- readRDS("../models/S1.full.bm.rds")
@@ -353,7 +379,7 @@ d1 <- rep.S1.bayes.data%>%
 
 ```
 
-```{r S1_bayes_plot_no_facets, echo=FALSE, eval=T, warning = F}
+```{r S1_bayes_plot_no_facets, echo=FALSE, eval=T, warning = F, message=F}
 
 # Plot without facetting
 
@@ -390,7 +416,7 @@ ggplot()+
 
 ```
 
-```{r S1_bayes_plot, echo=FALSE, eval=T, warning = F}
+```{r S1_bayes_plot, echo=FALSE, eval=T, warning = F, message=F}
 
 p1 <- f1 %>%
   mutate(age = age * 365.25)%>%
@@ -428,18 +454,19 @@ S1_plot
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-# Study 2
+## Study 2
 
-## Methods
-We report how we determined our sample size, all data exclusions, all manipulations, and all measures in the study [@simmons201221]. Supplementary materials document all pilots that were run and the specific conclusions we drew from them during the development of the study. Both supplements and main article are fully reproducible manuscripts [@R-papaja] providing all data and analyses. 
 
 ### Participants
-
-### Procedure and Setup
+A total of `r rep.age.table.data["study2", "N"]` three- to seven-year-old children (M = `r rep.age.table.data["study2", "Mean"]` months, SD = `r rep.age.table.data["study2", "SD"]` months, range `r rep.age.table.data["study2", "Min"]` - `r rep.age.table.data["study2", "Max"]` months; `r rep.age.table.data["study2", "female"]` female) participated. In addition, `r rep.drop.table.data["study2", "N"]` children (`r rep.drop.table.data["study2", "female"]` female) were tested but excluded from analysis for failing familiarization (N = `r rep.drop.table.data["study2", "fail_in_fam"]`), being fussy (N = `r rep.drop.table.data["study2", "fussy_child"]`), not being fluent in German (N = `r rep.drop.table.data["study2", "language"]`) or due to technical issues (N = `r rep.drop.table.data["study2", "technical"]`).
 
 ### Materials
 
 ### Data analysis
+
+Notation 
+Evaluation of model Stability 
+
 
 ### Results
 ```{r s2_bayes_prep_data, echo = FALSE, include=T, eval=T, results='asis'}
@@ -526,7 +553,7 @@ d2 <- rep.S2.bayes.data%>%
 
 ```
 
-```{r S2_bayes_plot, echo=FALSE, eval=T}
+```{r S2_bayes_plot, echo=FALSE, eval=T, warning=F, message=F}
 
 p2 <- f2 %>%
   mutate(age = age * 365.25)%>%
@@ -561,7 +588,7 @@ ggplot()+
 
 ```
 
-```{r S2_mixbayes_plot, echo=FALSE, eval=T}
+```{r S2_mixbayes_plot, echo=FALSE, eval=T, warning=F, message=F}
 
 
 p2 <- f2 %>%
@@ -596,18 +623,19 @@ ggplot()+
 ```
 
 
-# Study 3
-
-## Methods
+## Study 3
+General note on the aim of the investigation
 
 ### Participants
-
-### Procedure and Setup
+A total of `r rep.age.table.data["study3", "N"]` three- to seven-year-old children (M = `r rep.age.table.data["study3", "Mean"]` months, SD = `r rep.age.table.data["study3", "SD"]` months, range `r rep.age.table.data["study3", "Min"]` - `r rep.age.table.data["study3", "Max"]` months; `r rep.age.table.data["study3", "female"]` female) participated. In addition, `r rep.drop.table.data["study3", "N"]` children (`r rep.drop.table.data["study3", "female"]` female) were tested but excluded for low performance during familiarization (N = `r rep.drop.table.data["study3", "fail_in_fam"]`), for not completing at least eight out of 16 test trials (N = `r rep.drop.table.data["study3", "quit_early"]`), or being fussy (N = `r rep.drop.table.data["study3", "fussy_child"]`). Another `r rep.drop.table.data["study3", "language"]`children were excluded due to language problems or technical issues (N = `r rep.drop.table.data["study3", "technical"]`).
 
 ### Materials
 
-### Data analysis
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+### Analysis
+
+Trails
+Notation
+Model Evaluation
 
 ### Results
 ```{r s3_bayes_prep_data, echo = FALSE, include=T, eval=T, results='asis'}
@@ -643,7 +671,7 @@ saveRDS(S3.full.bm, "../models/S3.full.bm.rds")
 
 ```
 
-```{r S3_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=T}
+```{r S3_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=T, warning=F, message=F}
 
 # load model from saving rds
 S3.full.bm <- readRDS("../models/S3.full.bm.rds")
@@ -673,7 +701,7 @@ d3 <- rep.S3.bayes.data%>%
 
 ```
 
-```{r S3_bayes_plot, echo=FALSE, eval=T}
+```{r S3_bayes_plot, echo=FALSE, eval=T, warning=F, message=F}
 
 # Plot without facetting
 p3 <- f3 %>%
@@ -709,7 +737,7 @@ ggplot()+
 
 ```
 
-```{r S3_mixbayes_plot, echo=FALSE, eval=T}
+```{r S3_mixbayes_plot, echo=FALSE, eval=T, warning=F, message=F}
 
 p3 <- f3 %>%
   mutate(age = age * 365.25)%>%
@@ -745,7 +773,7 @@ ggplot()+
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-## Additional Analyses
+# Additional Analyses
 
 possible add-ons
 - a model including all conditions
@@ -753,8 +781,29 @@ possible add-ons
 - evaluating manipulations such as complex/simple; 
 - reaction time analyses
 
+Additional Analyses:
+
+object vs feature
+- orfe vs orob
+- sife vs siob
+- nufe vs nuob
+
+round vs angular
+- Study One Study1 - cue A = rund, cue B eckig ...if one of them is easier
+
+Reaction Times
+just reaction times and perc correct across aged
+
+
 # General Discussion
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+Overview
+
+Main Finding
+
+Strengths and Implications
+
+Limitations
 
 # Conclusion
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
@@ -765,3 +814,20 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 
 ::: {#refs custom-style="Bibliography"}
 :::
+
+
+
+
+\newpage
+
+# (APPENDIX) Appendix {-}
+
+```{r child = "appendix_a_participants.Rmd"}
+```
+
+```{r child = "appendix_b_stimuli.Rmd"}
+```
+
+```{r child = "appendix_c_descriptives.Rmd"}
+```
+

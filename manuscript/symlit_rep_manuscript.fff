@@ -2,7 +2,7 @@
 \ifnextchar[{\eatarg}{}
 
 
-{\centering \includegraphics{./illustrations/Symlit_Rep_Setup}
+{\centering \includegraphics{../illustrations/Symlit_Rep_Setup}
 
 }
 

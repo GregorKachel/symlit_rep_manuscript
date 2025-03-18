@@ -1,0 +1,57 @@
+
+# Participants and Exclusions
+
+Data collection aimed at testing two children per month of age between the third and seventh birthday for a minimum of 96 children per study. For an overview of the sample distribution, please see figure \@ref(fig:suppl-participants-dots).
+
+```{r suppl-participants-dots, fig.cap = "Illustration of participants across the age range.", fig.align = "center", echo = FALSE}
+
+age.plot.data <- rep.data %>% #select data
+  distinct(subid, .keep_all = TRUE) %>% # select only one line per participant
+  filter(valid != "drop")  %>%
+  mutate(sex = as.factor(sex))  %>%
+  mutate(sex = fct_recode(sex, "female" = "0","male"="1")) %>% 
+  rename(Sex = sex)
+
+age.plot <- ggplot(age.plot.data, aes(x = agem, fill = Sex)) +
+  geom_dotplot(stackgroups = TRUE, binwidth = 1, binpositions = "all")+  
+  coord_cartesian(xlim = c(36, 86), ylim = c(0, 0.1)) +
+  theme_bw() +
+  scale_x_continuous(name = "Age in months", breaks = seq(36, 84, 12), minor_breaks = seq(36, 84, 1)) +
+  scale_y_continuous(name = "Count", breaks = NULL) +
+  #coord_fixed(ratio=5) +
+  theme(panel.grid.minor.x = element_line(linewidth = 0.25, linetype = 2),
+        panel.grid.major.x = element_line(linewidth = 1, linetype = 1)) +
+    facet_wrap(~ study, ncol = 1)
+age.plot
+
+```
+
+```{r total participants}
+
+# In order to trace children's development continuously across the preschool years. In order to align with conventions in the field, the study aimed to test at least two children per month of age between the third and seventh birthday for a minimum of 96 participants. As occasionally children participated on the basis of availability, the final sample comprises `r sum(rep.age.table.data$N)` children (`r sum(rep.age.table.data$female)` female) between `r min(rep.age.table.data$Min)` and `r min(rep.age.table.data$Max)` months of age.
+
+```
+
+
+The total number of participants in all three studies comprises XX children. In addition, XX children were tested but not included in the data set due to XXXXXXXX. For an overview of how the respective exclusions are distributed across the age range, please see figure \@ref(fig:suppl-drops-dots). Exclusions due to low performance during familiarization occured almost exclusively between the third and fourth birthday. All other exclusion criteria appear to be randomly distributed across the age range. 
+
+```{r suppl-drops-dots, fig.cap = "Illustration of exclusions across the age range.", fig.align = "center", echo = FALSE}
+
+drop.plot.data <- rep.data %>% #select data
+  distinct(subid, .keep_all = TRUE) %>% # select only one line per participant
+  filter(valid == "drop")
+
+drop.plot <- ggplot(drop.plot.data, aes(x = agem, fill = drop)) +
+  geom_dotplot(stackgroups = TRUE, binwidth = 1, binpositions = "all")+  
+  coord_cartesian(xlim = c(36, 85), ylim = c(0, 0.1)) +
+  theme_bw() +
+  scale_x_continuous(name = "Alter in Monaten", breaks = seq(36, 84, 12), minor_breaks = seq(36, 84, 1)) +
+  scale_y_continuous(name = "Anzahl Drops", breaks = NULL) +
+  #coord_fixed(ratio=5) +
+  theme(panel.grid.minor.x = element_line(size = 0.25, linetype = 2),
+        panel.grid.major.x = element_line(size = 1, linetype = 1)) +
+    facet_wrap(~ study, ncol = 1)
+drop.plot
+
+```
+

@@ -48,8 +48,8 @@ age.plot <- ggplot(age.plot.data, aes(x = agem, fill = sex)) +
   geom_dotplot(stackgroups = TRUE, binwidth = 1, binpositions = "all")+  
   coord_cartesian(xlim = c(36, 86), ylim = c(0, 0.1)) +
   theme_bw() +
-  scale_x_continuous(name = "Alter in Monaten", breaks = seq(36, 84, 12), minor_breaks = seq(36, 84, 1)) +
-  scale_y_continuous(name = "Anzahl", breaks = NULL) +
+  scale_x_continuous(name = "Age in Months", breaks = seq(36, 84, 12), minor_breaks = seq(36, 84, 1)) +
+  scale_y_continuous(name = "Count", breaks = NULL) +
   #coord_fixed(ratio=5) +
   theme(panel.grid.minor.x = element_line(size = 0.25, linetype = 2),
         panel.grid.major.x = element_line(size = 1, linetype = 1)) +
