@@ -39,8 +39,6 @@ affiliation:
     institution   : "Leuphana University"
   - id            : "2"
     institution   : "Max-Planck-Institute for Evolutionary Anthropology"
-
-
 authornote: |
     *Ethics, consent and conflict of interest*: This study confirms with recognized standards (e.g. the Declaration of Helsinki) and was approved by an internal ethics committee at the Max-Planck-Institute for Evolutionary Anthropology. Informed consent has been obtained from all participants. The authors declare no conflict of interest. 
     
@@ -113,15 +111,17 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
 # Introduction
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+~~Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.~~
 
-*General notes Citing stuff*. You have to make sure that the respective reference in included in the bib-file. I would also suggest to have two additional folders in the root, namely (1) papers to cite - where we can dumb pdfs, and (2) papers_cited. Whenever you are adding a new reference please put the citation in bibtex, name the pdf accorind to the bibtext id and add the pdf to the papers_cited folder. And this is how to cite something in markdown: Preschoolers invent and comprehend iconic gestures spontaneously [@bohn2019young].
+ Preschoolers invent and comprehend iconic gestures spontaneously [@bohn2019young].
 
-*Children's understanding of graphical representations*. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+*Children's understanding of graphical representations*. 
+~~Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.~~
 
-*This Paper*. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. For the first time, the studies contributing to this paper investigate children's understanding of xxx.
+*This Paper*. 
+~~Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. For the first time, the studies contributing to this paper investigate children's understanding of xxx.~~
 
-*Hypotheses*. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+*Hypotheses*. ~~Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.~~
 
 ```{r rep_read_data, include = FALSE}
 
@@ -266,22 +266,11 @@ In order to be submitted to the analyses participants had to complete at least e
 Description of cues and targets and maybe how they were created. For an illustration of the stimuli and example presentations, please see supplementary materials sections XX and XX.  
 
 ### Data Handling and Analyses
-Participant responses were collected directly by the experimental script
+Participant choices were recorded by the experimental script and directly coded as correct or incorrect. Exclusions of data were solely made on the level of the participants with regard to the exclusion  The analyses modeled participants' binary choices to predict the probability of children interpreting the cues correctly and model how this probability will change as a function of their age. 
 
-Bayesian models were run in Stan (http://mc-stan.org/) and implemented via the function brm of the package brms (Bürkner, 2017). We used logistic Bayesian generalized linear mixed models (GLMM) to fit children's responses (0/1) as a function of their absolute age in days, condition (rep, pars, fsim, fcom) and an interaction between trial and task. We use default priors and include trial and sex as fixed effects to be controlled for. Trial number will be added as a random slope within subject.
+ We used logistic Bayesian generalized linear mixed models (GLMM) to fit children's responses (0/1) as a function of their absolute age in days, condition and an interaction between trial and task. We use default priors and include trial and sex as fixed effects to be controlled for. Trial number will be added as a random slope within subject. In order to evaluate the relevance of age and condition for children’s performance, a full model was compared with a reduced model lacking the interaction of age and task using WAIC scores and weights (McElreath, 2016). Furthermore, model estimates were inspected for the different predictors (including their 95% Credible Interval (CrI)). All Bayesian models were run in Stan (http://mc-stan.org/) and implemented via the function brm of the package brms (Bürkner, 2017).
 
-The full model notation was: $'correct~condition*z.age+z.trial+z.sex+(z.trial|subid)'$
-•	correct: correct choice (0/1)
-•	z.age: age in days, centered to a mean of 0 
-•	z.trial: trial number, scaled
-•	z.sex: participants' sex (male/female), scaled
-
-The analysis modeled participants binary choices to predict the probability of children interpreting the cues correctly and model how this probability will change as a function of their absolute age in days. We used the model to predict the
-developmental trajectory (with 95% CrI) for each task type. The criterion for settling when children perform above chance with either type of stimuli is the point at which the 95% CrI for a particular trajectory does no longer overlap with a midline demarcating the 50% chance level.
-
-For our main analyses, we used logistic Bayesian generalized linear mixed models (GLMM) to fit children’s responses (0/1) as a function of their absolute age in days, task (arrow, marker) and an interaction between trial and task. We used default priors and included trial and sex as fixed effects to be controlled for. Trial number was added as a random slope within subject. The full model notation was $'correct ~ task*z.age +z.trial +z.sex +(z.trial|id)'$.
-
-The analysis models participants binary choices to predict the probability of children interpreting the cues correctly and model how this probability will change as a function of their absolute age in days. In order to evaluate the relevance of age and task type for children’s performance, we compared a full model as specified above with a reduced model lacking the interaction of age and task by using WAIC scores and weights (McElreath, 2016). Furthermore, we inspected the model estimates for the different predictors (including their 95% Credible Interval (CrI)). To answer our main research question of when children perform above chance in a task, we use the model to predict the developmental trajectory (with 95% CrI) for each task type. The criterion for settling when children perform above chance is the point at which the  95% CrI for a particular trajectory does no longer overlap with a midline demarcating the 50% chance level. 
+To answer our main research question of when children perform above chance in a task, we use the model to predict the developmental trajectory (with 95% CrI) for each task type. The criterion for settling when children perform above chance is the point at which the  95% CrI for a particular trajectory does no longer overlap with a midline demarcating the 50% chance level. 
 
 To further explore our data, we also binned participants in age-groups (three-, and four-year-olds). To test whether group-level performance was above chance in all experimental groups, we used two-tailed one-sample t-tests with the chance level set to .5. We provide Cohen's d as a standardized effect size for significance testing (computed via the function `cohensD`). Additionally, each participant's data was also submitted to a binomial test to determine whether their performance was above chance on an individual level. 
 
@@ -296,6 +285,11 @@ All participants were recruited in **MASKED FOR REVIEW**, a medium-sized middle-
 
 
 ### Analyses
+The full model notation was: $'correct~condition*z.age+z.trial+z.sex+(z.trial|subid)'$
+•	correct: correct choice (0/1)
+•	z.age: age in days, centered to a mean of 0 
+•	z.trial: trial number, scaled
+•	z.sex: participants' sex (male/female), scaled
 
 
 ### Results
@@ -318,6 +312,22 @@ rep.S1.bayes.data  <- rep.data %>%
 # # clean data set? 
 # str(rep.S1.bayes.data)
 # sapply(rep.S1.bayes.data, function(x) sum(is.na(x)))
+# 
+# rep.S1.bayes.data  <- rep.data %>%
+#   filter(valid != "drop") %>% # valid participants only
+#   filter(study == "study1") %>% # in study one
+#   filter(trial != "fam") %>%
+#   select(condition, subid, sex, aged, correct, trial,rt) %>%
+#   mutate(z.trial = scale(as.numeric(trial)),
+#          ageinyears = aged/356.25,
+#          z.age = ageinyears - mean(ageinyears),
+#          z.sex = scale(as.numeric(sex)))
+# 
+# min(rep.S1.bayes.data$rt)
+# max(rep.S1.bayes.data$rt)
+# mean(rep.S1.bayes.data$rt)
+# median(rep.S1.bayes.data$rt)
+# hist(rep.S1.bayes.data$rt)
 
 
 ```
@@ -452,7 +462,7 @@ S1_plot
 
 ```
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+~~Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.~~
 
 ## Study 2
 
