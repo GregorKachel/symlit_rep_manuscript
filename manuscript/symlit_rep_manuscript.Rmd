@@ -343,6 +343,15 @@ rep.S1.bayes.data  <- rep.data %>%
 # in prergistration we used the term "task" instead of "condition", same thing
 # preregistered: correct ~ task*z.age +z.trial +z.sex +(z.trial|id)
 
+S1.null.bm<-brm(correct~condition+z.age+z.trial+z.sex+(z.trial|subid), 
+               data= rep.S1.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 2000,
+               cores= 4)
+
+S1.null.bm <- add_criterion(S1.null.bm, c("loo", "waic"))
+
 S1.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid), 
                data= rep.S1.bayes.data, 
                family=bernoulli(),
@@ -352,9 +361,23 @@ S1.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid),
 
 S1.full.bm <- add_criterion(S1.full.bm, c("loo", "waic"))
 
+S1.item.bm<-brm(correct~condition+z.age+z.trial+z.sex+(z.trial|subid)+ (z.age|item), 
+               data= rep.S1.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 2000,
+               cores= 4)
+
+
 # Saving the model (to not rerun it every time)
 saveRDS(S1.full.bm, "../models/S1.full.bm.rds")
 
+loo_compare(S1.null.bm, S1.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
+
+model_weights(S1.null.bm, S1.full.bm, criterion = "waic")
+
+
+"significant" if elpd_diff > 2*se_diff
 ```
 
 ```{r rep_S1_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=T, warning = F, message=F}
@@ -522,6 +545,15 @@ rep.S2.bayes.data  <- rep.data %>%
 #                cores= 4)
 # 
 
+S2.null.bm<-brm(correct~condition+z.age+z.trial+z.sex+(z.trial|subid), 
+               data= rep.S2.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 2000,
+               cores= 4)
+
+S2.null.bm <- add_criterion(S2.null.bm, c("loo", "waic"))
+
 S2.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid), 
                data= rep.S2.bayes.data, 
                family=bernoulli(),
@@ -533,6 +565,10 @@ S2.full.bm <- add_criterion(S2.full.bm, c("loo", "waic"))
 
 # Saving the model (to not rerun it every time)
 saveRDS(S2.full.bm, "../models/S2.full.bm.rds")
+
+loo_compare(S2.null.bm, S2.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
+
+model_weights(S2.null.bm, S2.full.bm, criterion = "waic")
 
 ```
 

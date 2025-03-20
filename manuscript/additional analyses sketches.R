@@ -12,7 +12,7 @@ rep.S1.bayes.data  <- rep.data %>%
   filter(trial != "fam") %>% 
   select(condition, subid, sex, aged, correct, trial, rt) %>%
   mutate(z.trial = scale(as.numeric(trial)),
-         ageinyears = aged/356.25, 
+         ageinyears = aged/365.25, 
          z.age = ageinyears - mean(ageinyears),
          z.sex = scale(as.numeric(sex)))
 
@@ -22,7 +22,7 @@ rep.S2.bayes.data  <- rep.data %>%
   filter(trial != "fam") %>% 
   select(condition, subid, sex, aged, correct, trial, rt) %>%
   mutate(z.trial = scale(as.numeric(trial)),
-         ageinyears = aged/356.25, 
+         ageinyears = aged/365.25, 
          z.age = ageinyears - mean(ageinyears),
          z.sex = scale(as.numeric(sex)))
 
@@ -32,7 +32,7 @@ rep.S3.bayes.data  <- rep.data %>%
   filter(trial != "fam") %>% 
   select(condition, subid, sex, aged, correct, trial, rt) %>%
   mutate(z.trial = scale(as.numeric(trial)),
-         ageinyears = aged/356.25, 
+         ageinyears = aged/365.25, 
          z.age = ageinyears - mean(ageinyears),
          z.sex = scale(as.numeric(sex)))
 
@@ -43,9 +43,8 @@ S3.full.bm <- readRDS("../models/S3.full.bm.rds")
 
 
 # checking models -----------------------
-
-
-
+library(brms)
+pp_check(S3.full.bm)
 
 # additional analyses ---------------------------
 
