@@ -113,6 +113,10 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 # Introduction
 ~~Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.~~
 
+
+
+
+
  Preschoolers invent and comprehend iconic gestures spontaneously [@bohn2019young].
 
 *Children's understanding of graphical representations*. 
@@ -303,7 +307,7 @@ rep.S1.bayes.data  <- rep.data %>%
   filter(valid != "drop") %>% # valid participants only 
   filter(study == "study1") %>% # in study one
   filter(trial != "fam") %>% 
-  select(condition, subid, sex, aged, correct, trial) %>%
+  select(condition, subid, sex, aged, correct, trial, rt) %>%
   mutate(z.trial = scale(as.numeric(trial)),
          ageinyears = aged/356.25, 
          z.age = ageinyears - mean(ageinyears),
@@ -655,7 +659,7 @@ rep.S3.bayes.data  <- rep.data %>%
   filter(valid != "drop") %>% # valid participants only 
   filter(study == "study3") %>% # in study3
   filter(trial != "fam") %>% 
-  select(condition, subid, sex, aged, correct, trial) %>%
+  select(condition, subid, sex, aged, correct, trial, rt) %>%
   mutate(z.trial = scale(as.numeric(trial)),
          ageinyears = aged/356.25, 
          z.age = ageinyears - mean(ageinyears),
