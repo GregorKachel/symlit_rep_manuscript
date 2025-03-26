@@ -1,0 +1,267 @@
+---
+title: "S1_item_analyses"
+output: html_document
+date: "2025-03-25"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library("papaja")
+r_refs("library.bib")
+
+# Loading packages 
+# NOTE: this will install these packages on your machine in case they are missing
+
+# General
+if (!require(tidyverse)) install.packages('tidyverse'); library(tidyverse)
+if (!require(lsr)) install.packages('lsr'); library(lsr) # Analysis, Cohen's D
+if (!require(ggthemes)) install.packages('ggthemes'); library(ggthemes) # for tufte boxplots
+
+# bayes packages
+if (!require(brms)) install.packages('brms'); library(brms) # 
+if (!require(tidybayes)) install.packages('tidybayes'); library(tidybayes) # 
+if (!require(HDInterval)) install.packages('HDInterval'); library(HDInterval) # 
+if (!require(posterior)) install.packages('posterior'); library(posterior) # 
+
+
+```
+
+# Study 1 - Cue model (very specific)
+
+**Preregistration**
+An additional exploratory analysis will include a random effect for item level effects (Model: correct ~ task*z.age +z.trial +z.sex +(z.trial|id) +(z.age|item)). Results will help to evaluate the equivalence of items within a task and be reported in the supplements.
+
+```{r prepdata}
+rep.data <- readRDS("../data/symlitrep_final_data.rds")
+
+# prepare data 
+rep.S1.bayes.data  <- rep.data %>%
+  filter(valid != "drop") %>% # valid participants only 
+  filter(study == "study1") %>% # in study one
+  filter(trial != "fam") %>% 
+  select(condition, subid, sex, aged, correct, trial, rt, cue) %>%
+  mutate(condition = factor(condition, levels = c(
+        "Representation", # first level becomes reference
+        "Pars Pro Toto", 
+        "Simple Form Analogy", 
+        "Complex Form Analogy"))) %>%  
+  mutate(sex = factor(sex, levels = c(
+        "0", # first level becomes reference
+        "1"))) %>%  
+  mutate(z.trial = scale(as.numeric(trial)),
+         ageinyears = aged/365.25, 
+         z.age = ageinyears - mean(ageinyears),
+         z.sex = scale(as.numeric(sex))) %>% 
+  mutate(item = gsub("_A.png", "", cue)) %>% 
+  mutate(item = gsub("_B.png", "", item)) 
+
+```
+
+Cue is ideal for evaluating item combinations down to the specific combination of cue and target.
+
+correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|cue)
+
+```{r S1_cue_model, echo=FALSE, eval=FALSE}
+
+# S1.full.bm<-brm(correct~condition*z.age+z.trial+sex+(z.trial|subid), 
+# table(rep.S1.bayes.data$condition, rep.S1.bayes.data$cue)
+
+S1.cue.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|cue), 
+               data= rep.S1.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 2000,
+               cores= 4)
+
+saveRDS(S1.cue.model, "../models/S1.cue.model.rds")
+
+```
+
+```{r inspectmodel}
+
+S1.cue.model <- readRDS("../models/S1.cue.model.rds")
+
+### POSTERIOR PREDICTICE CHECKS
+### Check plots ...nice, binomial
+pp_check(S1.cue.model)
+pp_check(S1.cue.model, type = "bars")
+
+summary(S1.cue.model)
+```
+
+
+Rhat and BulkESS are good:
+
+```{r rhat_bulkESS}
+
+### EFFECTICE SAMPLE SIZES
+### inspect rhat --> always 1 --> good
+### inspect Bull_ESS --> always > 1000 --> good
+# summary(S1.item.model)
+
+### for reporting BULK_ESS
+S1.cue.coef <- summarise_draws(as_draws_df(S1.cue.model)) %>%
+  filter(grepl("^b_", variable) |
+         grepl("^sd_", variable)) %>%
+  mutate(variable = gsub("b_", "", variable)) %>%
+  mutate(variable = gsub("condition", "", variable)) %>%
+  data.frame(row.names = "variable")
+
+# all > 1000
+mean(S1.cue.coef$ess_bulk)
+min(S1.cue.coef$ess_bulk)
+max(S1.cue.coef$ess_bulk)
+
+# all = 1  
+mean(S1.cue.coef$rhat)
+min(S1.cue.coef$rhat)
+max(S1.cue.coef$rhat)
+
+# Cue Intercept beta = `r S1.full.coef["sd_cue__Intercept", "mean"]`,
+# 95% CrI [`r S1.full.coef["sd_cue__Intercept", "q5"]`, `r S1.full.coef["sd_cue__Intercept", "q95"]`]
+
+# Cue Type	Log-Odds	Accuracy (%)
+# Average cue	        2.10	89.1%
+# 1 SD below average	1.65	84.0%
+# 1 SD above average	2.55	92.7%
+
+
+```
+
+```{r illustrationcueintercepts}
+
+# summary(S1.item.model)
+cue_effects <- ranef(S1.cue.model)$cue
+
+# Extract random intercepts
+cue_intercepts <- as_tibble(cue_effects[, , "Intercept"], rownames = "cue") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5)
+
+
+ggplot(cue_intercepts, aes(x = cue, y = estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  labs(
+    title = "Cue-Level Random Intercepts",
+    x = "Cue",
+    y = "Estimated Deviation from Overall Intercept (log-odds)"
+  ) +
+  theme_minimal()
+
+```
+
+# Study 1 - Item model (more broad)
+
+Item is ideal for evaluating the specific difficulty of a certain combination of cue, tar, dis
+It captures item level variation on the level of the operationalisation of a specific idea. 
+
+correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|item)
+
+```{r S1_item_model, echo=FALSE, eval=FALSE}
+
+# S1.full.bm<-brm(correct~condition*z.age+z.trial+sex+(z.trial|subid), 
+# table(rep.S1.bayes.data$condition, rep.S1.bayes.data$cue)
+
+S1.item.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|item), 
+               data= rep.S1.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 2000,
+               cores= 4)
+
+saveRDS(S1.item.model, "../models/S1.item.model.rds")
+
+```
+
+```{r inspectmodel}
+
+S1.item.model <- readRDS("../models/S1.item.model.rds")
+
+### POSTERIOR PREDICTICE CHECKS
+### Check plots ...nice, binomial
+pp_check(S1.item.model)
+pp_check(S1.item.model, type = "bars")
+
+# summary(S1.cue.model) # Intercept 0.45 .10-.27
+summary(S1.item.model) # Intercept  0.17 .01-.40
+
+
+```
+
+
+Rhat and BulkESS are good:
+
+```{r rhat_bulkESS}
+
+### EFFECTICE SAMPLE SIZES
+### inspect rhat --> always 1 --> good
+### inspect Bull_ESS --> always > 1000 --> good
+# summary(S1.item.model)
+
+### for reporting BULK_ESS
+S1.item.coef <- summarise_draws(as_draws_df(S1.item.model)) %>%
+  filter(grepl("^b_", variable) |
+         grepl("^sd_", variable)) %>%
+  mutate(variable = gsub("b_", "", variable)) %>%
+  mutate(variable = gsub("condition", "", variable)) %>%
+  data.frame(row.names = "variable")
+
+# all > 1000
+mean(S1.item.coef$ess_bulk)
+min(S1.item.coef$ess_bulk)
+max(S1.item.coef$ess_bulk)
+
+# all = 1  
+mean(S1.item.coef$rhat)
+min(S1.item.coef$rhat)
+max(S1.item.coef$rhat)
+
+# Item Intercept beta = `r S1.full.coef["sd_cue__Intercept", "mean"]`,
+# 95% CrI [`r S1.full.coef["sd_cue__Intercept", "q5"]`, `r S1.full.coef["sd_cue__Intercept", "q95"]`]
+
+# Cue Type	Log-Odds	Accuracy (%)
+# Average cue	        2.10	89.1%
+# 1 SD below average	1.65	84.0%
+# 1 SD above average	2.55	92.7%
+
+
+```
+
+
+
+
+
+```{r illustrationcueintercepts}
+
+# summary(S1.item.model)
+item_effects <- ranef(S1.item.model)$item
+
+# Extract random intercepts
+item_intercepts <- as_tibble(item_effects[, , "Intercept"], rownames = "item") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5)
+
+
+ggplot(item_intercepts, aes(x = item, y = estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  labs(
+    title = "Item-Level Random Intercepts",
+    x = "Item",
+    y = "Estimated Deviation from Overall Intercept (log-odds)"
+  ) +
+  theme_minimal()
+
+```
+
+
