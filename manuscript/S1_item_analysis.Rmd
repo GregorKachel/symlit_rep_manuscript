@@ -27,11 +27,6 @@ if (!require(posterior)) install.packages('posterior'); library(posterior) #
 
 ```
 
-# Study 1 - Cue model (very specific)
-
-**Preregistration**
-An additional exploratory analysis will include a random effect for item level effects (Model: correct ~ task*z.age +z.trial +z.sex +(z.trial|id) +(z.age|item)). Results will help to evaluate the equivalence of items within a task and be reported in the supplements.
-
 ```{r prepdata}
 rep.data <- readRDS("../data/symlitrep_final_data.rds")
 
@@ -58,9 +53,17 @@ rep.S1.bayes.data  <- rep.data %>%
 
 ```
 
-Cue is ideal for evaluating item combinations down to the specific combination of cue and target.
+**Preregistration**
+An additional exploratory analysis will include a random effect for item level effects (Model: correct ~ task*z.age +z.trial +z.sex +(z.trial|id) +(z.age|item)). Results will help to evaluate the equivalence of items within a task and be reported in the supplements.
 
-correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|cue)
+# Study 1 - Cue model (very specific)
+**Cue** (8 levels per condition) is ideal for evaluating item combinations down to the specific combination of cue and target.
+
+**correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|cue)**
+
+**Item** (4 levels per condition) is ideal for evaluating the specific difficulty of a certain combination of cue, tar, dis. It captures item level variation on the level of the operationalization of a specific idea. 
+
+**correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|item)**
 
 ```{r S1_cue_model, echo=FALSE, eval=FALSE}
 
@@ -74,94 +77,12 @@ S1.cue.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.a
                iter= 2000,
                cores= 4)
 
+S1.cue.model <- add_criterion(S1.cue.model, c("loo", "waic"))
+
+
 saveRDS(S1.cue.model, "../models/S1.cue.model.rds")
 
 ```
-
-```{r inspectmodel}
-
-S1.cue.model <- readRDS("../models/S1.cue.model.rds")
-
-### POSTERIOR PREDICTICE CHECKS
-### Check plots ...nice, binomial
-pp_check(S1.cue.model)
-pp_check(S1.cue.model, type = "bars")
-
-summary(S1.cue.model)
-```
-
-
-Rhat and BulkESS are good:
-
-```{r rhat_bulkESS}
-
-### EFFECTICE SAMPLE SIZES
-### inspect rhat --> always 1 --> good
-### inspect Bull_ESS --> always > 1000 --> good
-# summary(S1.item.model)
-
-### for reporting BULK_ESS
-S1.cue.coef <- summarise_draws(as_draws_df(S1.cue.model)) %>%
-  filter(grepl("^b_", variable) |
-         grepl("^sd_", variable)) %>%
-  mutate(variable = gsub("b_", "", variable)) %>%
-  mutate(variable = gsub("condition", "", variable)) %>%
-  data.frame(row.names = "variable")
-
-# all > 1000
-mean(S1.cue.coef$ess_bulk)
-min(S1.cue.coef$ess_bulk)
-max(S1.cue.coef$ess_bulk)
-
-# all = 1  
-mean(S1.cue.coef$rhat)
-min(S1.cue.coef$rhat)
-max(S1.cue.coef$rhat)
-
-# Cue Intercept beta = `r S1.full.coef["sd_cue__Intercept", "mean"]`,
-# 95% CrI [`r S1.full.coef["sd_cue__Intercept", "q5"]`, `r S1.full.coef["sd_cue__Intercept", "q95"]`]
-
-# Cue Type	Log-Odds	Accuracy (%)
-# Average cue	        2.10	89.1%
-# 1 SD below average	1.65	84.0%
-# 1 SD above average	2.55	92.7%
-
-
-```
-
-```{r illustrationcueintercepts}
-
-# summary(S1.item.model)
-cue_effects <- ranef(S1.cue.model)$cue
-
-# Extract random intercepts
-cue_intercepts <- as_tibble(cue_effects[, , "Intercept"], rownames = "cue") %>%
-  rename(
-    estimate = Estimate,
-    lower = Q2.5,
-    upper = Q97.5)
-
-
-ggplot(cue_intercepts, aes(x = cue, y = estimate)) +
-  geom_point() +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
-  coord_flip() +
-  labs(
-    title = "Cue-Level Random Intercepts",
-    x = "Cue",
-    y = "Estimated Deviation from Overall Intercept (log-odds)"
-  ) +
-  theme_minimal()
-
-```
-
-# Study 1 - Item model (more broad)
-
-Item is ideal for evaluating the specific difficulty of a certain combination of cue, tar, dis
-It captures item level variation on the level of the operationalisation of a specific idea. 
-
-correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|item)
 
 ```{r S1_item_model, echo=FALSE, eval=FALSE}
 
@@ -175,22 +96,27 @@ S1.item.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.
                iter= 2000,
                cores= 4)
 
+S1.item.model <- add_criterion(S1.item.model, c("loo", "waic"))
+
 saveRDS(S1.item.model, "../models/S1.item.model.rds")
 
 ```
 
-```{r inspectmodel}
-
+```{r both_ppcheck}
+# read in models
+S1.cue.model <- readRDS("../models/S1.cue.model.rds")
 S1.item.model <- readRDS("../models/S1.item.model.rds")
 
 ### POSTERIOR PREDICTICE CHECKS
-### Check plots ...nice, binomial
+# cue
+pp_check(S1.cue.model)
+pp_check(S1.cue.model, type = "bars")
+# item
 pp_check(S1.item.model)
 pp_check(S1.item.model, type = "bars")
 
-# summary(S1.cue.model) # Intercept 0.45 .10-.27
+summary(S1.cue.model) # Intercept 0.45 .10-.27
 summary(S1.item.model) # Intercept  0.17 .01-.40
-
 
 ```
 
@@ -204,7 +130,13 @@ Rhat and BulkESS are good:
 ### inspect Bull_ESS --> always > 1000 --> good
 # summary(S1.item.model)
 
-### for reporting BULK_ESS
+S1.cue.coef <- summarise_draws(as_draws_df(S1.cue.model)) %>%
+  filter(grepl("^b_", variable) |
+         grepl("^sd_", variable)) %>%
+  mutate(variable = gsub("b_", "", variable)) %>%
+  mutate(variable = gsub("condition", "", variable)) %>%
+  data.frame(row.names = "variable")
+
 S1.item.coef <- summarise_draws(as_draws_df(S1.item.model)) %>%
   filter(grepl("^b_", variable) |
          grepl("^sd_", variable)) %>%
@@ -212,6 +144,17 @@ S1.item.coef <- summarise_draws(as_draws_df(S1.item.model)) %>%
   mutate(variable = gsub("condition", "", variable)) %>%
   data.frame(row.names = "variable")
 
+# CUE
+# all > 1000
+mean(S1.cue.coef$ess_bulk)
+min(S1.cue.coef$ess_bulk)
+max(S1.cue.coef$ess_bulk)
+# all = 1  
+mean(S1.cue.coef$rhat)
+min(S1.cue.coef$rhat)
+max(S1.cue.coef$rhat)
+
+# ITEM
 # all > 1000
 mean(S1.item.coef$ess_bulk)
 min(S1.item.coef$ess_bulk)
@@ -222,7 +165,8 @@ mean(S1.item.coef$rhat)
 min(S1.item.coef$rhat)
 max(S1.item.coef$rhat)
 
-# Item Intercept beta = `r S1.full.coef["sd_cue__Intercept", "mean"]`,
+
+# Cue Intercept beta = `r S1.full.coef["sd_cue__Intercept", "mean"]`,
 # 95% CrI [`r S1.full.coef["sd_cue__Intercept", "q5"]`, `r S1.full.coef["sd_cue__Intercept", "q95"]`]
 
 # Cue Type	Log-Odds	Accuracy (%)
@@ -233,11 +177,39 @@ max(S1.item.coef$rhat)
 
 ```
 
+```{r both_illustrationcueintercepts}
+
+# CUE
+
+# summary(S1.item.model)
+cue_effects <- ranef(S1.cue.model)$cue
+
+# Extract random intercepts
+cue_intercepts <- as_tibble(cue_effects[, , "Intercept"], rownames = "cue") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5) %>% 
+  mutate(condition = substr(cue,1,4))
 
 
-
-
-```{r illustrationcueintercepts}
+cue.plot <- ggplot(cue_intercepts, aes(x = reorder(cue, estimate), y = estimate, color = condition)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
+  labs(
+    title = "Cue-Level Random Intercepts by Condition",
+    x = "Cue",
+    y = "Estimated Deviation from Overall Intercept (log-odds)",
+    color = "Condition"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",  # Remove if you want a legend
+    strip.text = element_text(size = 12, face = "bold")
+  )
 
 # summary(S1.item.model)
 item_effects <- ranef(S1.item.model)$item
@@ -247,21 +219,49 @@ item_intercepts <- as_tibble(item_effects[, , "Intercept"], rownames = "item") %
   rename(
     estimate = Estimate,
     lower = Q2.5,
-    upper = Q97.5)
+    upper = Q97.5) %>% 
+  mutate(condition = substr(item,1,4))
 
 
-ggplot(item_intercepts, aes(x = item, y = estimate)) +
+item.plot <- ggplot(item_intercepts, aes(x = reorder(item, estimate), y = estimate, color = condition)) +
   geom_point() +
   geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
   geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
   coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
   labs(
-    title = "Item-Level Random Intercepts",
+    title = "Item-Level Random Intercepts by Condition",
     x = "Item",
-    y = "Estimated Deviation from Overall Intercept (log-odds)"
+    y = "Estimated Deviation from Overall Intercept (log-odds)",
+    color = "Condition"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    strip.text = element_text(size = 12, face = "bold"))
+
+
+# cue.plot 
+# item.plot
+library(patchwork)
+combined_plot <- cue.plot + item.plot + plot_layout(ncol = 2)
+
+combined_plot
 
 ```
+
+```{r modelcomparison}
+
+model_weights(S1.item.model, S1.cue.model, criterion = "waic")
+
+loo_compare(S1.item.model, S1.cue.model, criterion = "waic")%>%as_tibble(rownames = "index")
+
+
+
+```
+
+Cue Model is much more likely to make adequate predictions than the item model.
+
+elpd_diff is -17.68 in favor of the cue model. se_diff is 1/3 of the difference. Hence, the difference between models is decisive in favor of the cue model. 
 
 
