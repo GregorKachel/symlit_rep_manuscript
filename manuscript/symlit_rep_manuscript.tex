@@ -254,8 +254,6 @@ Two or three sentences to provide a \textbf{broader perspective}, readily compre
 
 \st{Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.}
 
-𝛽
-
 Preschoolers invent and comprehend iconic gestures spontaneously (Bohn, Kachel, \& Tomasello, 2019).
 
 \emph{Children's understanding of graphical representations}.
@@ -285,7 +283,7 @@ During test sessions, one child and an experimenter sat down together to play a 
 
 \begin{figure}
 
-{\centering \includegraphics{../illustrations/Symlit_Rep_Setup} 
+{\centering \includegraphics{../illustrations/Symlit_Rep_Setup_fromarrows} 
 
 }
 
@@ -310,7 +308,7 @@ For an illustration of the stimuli and example presentations, please see supplem
 
 Participant choices were recorded by the experimental script and directly coded as correct or incorrect. Exclusions of data were solely made on the level of participants with regard to the exclusion criteria reported above. The analyses modeled participants' binary choices to predict the probability of children interpreting the cues correctly and to model how this probability would change as a function of their age. Logistic Bayesian generalized linear mixed models (GLMM) fitted children's responses (0/1) as a function of their age, the experimental condition and an interaction between trial and condition. Trial and sex were included as fixed effects to be controlled for. Trial number was added as a random slope within subject. To evaluate the relevance of age and condition for children's performance, a full model was compared with a reduced model lacking the interaction of age and task by using WAIC scores and weights (McElreath, 2016). Furthermore, model estimates were inspected for the different predictors (including their 95\% Credible Interval (CrI)). In each study, the most simple condition was set as the reference level within conditions. All Bayesian models used default priors and were run in Stan (\url{http://mc-stan.org/}) via the function brm of the package brms (Bürkner, 2017).
 
-To answer the main research question of when children performed above chance in any of the study's conditions, we use the models to predict the developmental trajectory (with 95\% CrI) for each condition. The criterion for settling when children passed criterion as a group was the point at which the 95\% CrI for a particular trajectory did no longer overlap with a midline demarcating the 50\% chance level.
+To answer the main research question of when children performed above chance in any of the study's conditions, we use the models to predict the developmental trajectory (with 95\% CrI) for each condition (expected values of the posterior predicted dist via fct fitted). The criterion for settling when children passed criterion as a group was the point at which the 95\% CrI for a particular trajectory did no longer overlap with a midline demarcating the 50\% chance level.
 
 To further explore the data, participants were binned according to their age in years. To test whether group-level performance was above chance in all experimental groups, we used two-tailed one-sample t-tests with the chance level set to .5. We provide Cohen's d as a standardized effect size for significance testing (computed via the function \texttt{cohensD}).
 
@@ -326,9 +324,26 @@ A sample of 106 children (M = 59.18 months, SD = 13.58 months, range 36 - 83 mon
 
 A total of XX trials (\emph{Representation}: ; \emph{Pars Pro Toto}: ; \emph{Simple Form Analogy}: ; \emph{Complex Form Analogy}: ) from XX participants were submitted for analysis. The full model notation was \('correct~condition*z.age+z.trial+sex+(z.trial|subid)'\). In addition, a null model lacking the interaction of condition and age (\('correct~condition+z.age+z.trial+sex+(z.trial|subid)'\)) was fitted.
 
+\subsubsection{Notes}\label{notes}
+
+\begin{itemize}
+\tightlist
+\item
+  deviation from preregistration
+\item
+  elpd\_diff ist neu und zusätzlich
+\item
+  most simple condition als reference \ldots warum
+\item
+  bezeichnung output fitted function --\textgreater{} wie macht brms die confidence intervalle um die mittelwerte --\textgreater{}
+\item
+  ``expected value of the posterior predicted distribution''
+\end{itemize}
+
 \subsubsection{Results}\label{results}
 
-As expected in the context of binomial models, posterior predictive checks for both models indicated excellent fit of observed data and model predictions. Rhat values in both models were equal to one, indicating convergence across all chains. Effective sample sizes for all fixed effects in the full model (Bulk ESS, mean = 2555, range 1760 - 3766) and the null model (Bulk ESS, mean = 2253, range 1706 - 3444) were \textgreater{} 1000, indicating reliable posterior estimations.
+ALL NUMBERS FROM MODEL CHECKS GO TO SUPPL
+Posterior predictive checks for both models indicated excellent fit of observed data and model predictions. Rhat values in both models were equal to one, indicating convergence across all chains. Effective sample sizes for all fixed effects in the full model (Bulk ESS, mean = 2555, range 1760 - 3766) and the null model (Bulk ESS, mean = 2253, range 1706 - 3444) were \textgreater{} 1000, indicating reliable posterior estimations.
 
 Comparing models using weights based on the Widely Applicable Information Criterion (WAIC) yielded 76.06\% of the model weight for the full model, and 23.94\% for the null model. Hence, the full model generally has a higher probability of making accurate predictions. Directly comparing the models' WAIC via expected log predictive density (ELPD) corroborates this (ELPD WAIC; full model = -901.65; null model = -904.26). The standard error of the difference in predictive accuracy (3.15), however is lower than the difference itself (-2.61). While the full model slightly exceeds in predictive power, evidence in favor of this model is not decisive. A similar comparison via Leave-One-Out Cross-Validation (LOO) provided essentially the same results. In absence of conclusive evidence for either model, we report the results for the full model below in line with the preregistration.
 

@@ -120,14 +120,13 @@ summary(S1.item.model) # Intercept  0.17 .01-.40
 
 ```
 
-
 Rhat and BulkESS are good:
 
 ```{r rhat_bulkESS}
 
 ### EFFECTICE SAMPLE SIZES
 ### inspect rhat --> always 1 --> good
-### inspect Bull_ESS --> always > 1000 --> good
+### inspect Bulk_ESS --> always > 1000 --> good
 # summary(S1.item.model)
 
 S1.cue.coef <- summarise_draws(as_draws_df(S1.cue.model)) %>%
@@ -263,5 +262,47 @@ loo_compare(S1.item.model, S1.cue.model, criterion = "waic")%>%as_tibble(rowname
 Cue Model is much more likely to make adequate predictions than the item model.
 
 elpd_diff is -17.68 in favor of the cue model. se_diff is 1/3 of the difference. Hence, the difference between models is decisive in favor of the cue model. 
+
+
+```{r S2_cue_model, echo=FALSE, eval=FALSE}
+
+# prepare data 
+rep.S1.bayes.data  <- rep.data %>%
+  filter(valid != "drop") %>% # valid participants only 
+  filter(study == "study2") %>% # in study one
+  filter(trial != "fam") %>% 
+  select(condition, subid, sex, aged, correct, trial, rt, cue) %>%
+  mutate(condition = factor(condition, levels = c(
+        "Representation", # first level becomes reference
+        "Pars Pro Toto", 
+        "Simple Form Analogy", 
+        "Complex Form Analogy"))) %>%  
+  mutate(sex = factor(sex, levels = c(
+        "0", # first level becomes reference
+        "1"))) %>%  
+  mutate(z.trial = scale(as.numeric(trial)),
+         ageinyears = aged/365.25, 
+         z.age = ageinyears - mean(ageinyears),
+         z.sex = scale(as.numeric(sex))) %>% 
+  mutate(item = gsub("_A.png", "", cue)) %>% 
+  mutate(item = gsub("_B.png", "", item)) 
+
+
+# S1.full.bm<-brm(correct~condition*z.age+z.trial+sex+(z.trial|subid), 
+table(rep.S2.bayes.data$condition, rep.S2.bayes.data$cue)
+
+S2.cue.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|cue), 
+               data= rep.S2.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 5000,
+               cores= 4)
+
+S2.cue.model <- add_criterion(S2.cue.model, c("loo", "waic"))
+
+
+saveRDS(S2.cue.model, "../models/S2.cue.model.rds")
+
+```
 
 
