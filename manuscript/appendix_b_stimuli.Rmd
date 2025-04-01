@@ -7,7 +7,7 @@ Additional Tables and illustrations for the convenience of the reader. Add illus
 
 ## Some graphic
 ```{r suppl-setup3, fig.cap = "Check this out", fig.align = "center", echo = FALSE}
-knitr::include_graphics("../illustrations/Symlit_Rep_Setup.png", dpi = 108)
+knitr::include_graphics("../illustrations/Symlit_Rep_Setup_fromarrows.png", dpi = 108)
 ```
 
 
@@ -16,7 +16,7 @@ Additional Tables and illustrations for the convenience of the reader. Add illus
 
 ## Some graphic
 ```{r suppl-setup4, fig.cap = "Check this out", fig.align = "center", echo = FALSE}
-knitr::include_graphics("../illustrations/Symlit_Rep_Setup.png", dpi = 108)
+knitr::include_graphics("../illustrations/Symlit_Rep_Setup_fromarrows.png", dpi = 108)
 ```
 
 
@@ -25,5 +25,5 @@ Additional Tables and illustrations for the convenience of the reader. Add illus
 
 ## Some graphic
 ```{r suppl-setup5, fig.cap = "Check this out", fig.align = "center", echo = FALSE}
-knitr::include_graphics("../illustrations/Symlit_Rep_Setup.png", dpi = 108)
+knitr::include_graphics("../illustrations/Symlit_Rep_Setup_fromarrows.png", dpi = 108)
 ```

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.3.25)  1 APR 2025 10:35
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.4.1)  1 APR 2025 16:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -381,7 +381,7 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count317
 \calc@Cskip=\skip86
 ) (c:/Users/Kachel.IPE-KACHEL-N/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2025/03/10 v25.5 The multilingual framework for pdfLaTeX, LuaLaTeX and XeLaTeX
+Package: babel 2025/03/27 v25.6 The multilingual framework for pdfLaTeX, LuaLaTeX and XeLaTeX
 \babel@savecnt=\count318
 \U@D=\dimen196
 \l@unhyphenated=\language3
@@ -389,9 +389,9 @@ Package: babel 2025/03/10 v25.5 The multilingual framework for pdfLaTeX, LuaLaTe
 \bbl@readstream=\read2
 \bbl@dirlevel=\count319
 Package babel Info: You haven't specified a language as a class or package
-(babel)             option. I'll load 'nil'. Reported on input line 4200.
+(babel)             option. I'll load 'nil'. Reported on input line 4213.
 (c:/Users/Kachel.IPE-KACHEL-N/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/nil.ldf
-Language: nil 2025/03/10 v25.5 Nil language
+Language: nil 2025/03/27 v25.6 Nil language
 \l@nil=\language4
 )) (c:/Users/Kachel.IPE-KACHEL-N/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/locale/en/babel-english.tex)
 Package babel Info: Importing data for english
@@ -493,6 +493,11 @@ Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
 Package csquotes Info: ... configuration file loaded successfully.
 (c:/Users/Kachel.IPE-KACHEL-N/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.cfg
 File: csquotes.cfg 
+)) (c:/Users/Kachel.IPE-KACHEL-N/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
+(c:/Users/Kachel.IPE-KACHEL-N/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape-nometadata.sty
+Package: pdflscape-nometadata 2022-10-28 v0.13 Display of landscape pages in PDF (HO)
+Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
 )) (c:/Users/Kachel.IPE-KACHEL-N/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/bookmark/bookmark.sty
 Package: bookmark 2023-12-10 v1.31 PDF bookmarks (HO)
 (c:/Users/Kachel.IPE-KACHEL-N/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
@@ -594,29 +599,29 @@ Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'english'.
-No file symlit_rep_manuscript.aux.
+(./symlit_rep_manuscript.aux)
 \openout1 = `symlit_rep_manuscript.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 250.
-LaTeX Font Info:    ... okay on input line 250.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 250.
-LaTeX Font Info:    ... okay on input line 250.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 250.
-LaTeX Font Info:    ... okay on input line 250.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 250.
-LaTeX Font Info:    ... okay on input line 250.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 250.
-LaTeX Font Info:    ... okay on input line 250.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 250.
-LaTeX Font Info:    ... okay on input line 250.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 250.
-LaTeX Font Info:    ... okay on input line 250.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 250.
-LaTeX Font Info:    ... okay on input line 250.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 250.
-LaTeX Font Info:    ... okay on input line 250.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 250.
-LaTeX Font Info:    ... okay on input line 250.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 251.
+LaTeX Font Info:    ... okay on input line 251.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 251.
+LaTeX Font Info:    ... okay on input line 251.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 251.
+LaTeX Font Info:    ... okay on input line 251.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 251.
+LaTeX Font Info:    ... okay on input line 251.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 251.
+LaTeX Font Info:    ... okay on input line 251.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 251.
+LaTeX Font Info:    ... okay on input line 251.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 251.
+LaTeX Font Info:    ... okay on input line 251.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 251.
+LaTeX Font Info:    ... okay on input line 251.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 251.
+LaTeX Font Info:    ... okay on input line 251.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 251.
+LaTeX Font Info:    ... okay on input line 251.
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -662,19 +667,19 @@ Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 250.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 251.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 250.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 251.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 250.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 251.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 250.
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 251.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 250.
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 251.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 250.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 251.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 250.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 251.
 
 Package fontspec Info: 
 (fontspec)             latinmodern-math scale = 0.9999970497384594.
@@ -702,7 +707,7 @@ Package fontspec Info:
 (fontspec)             <->s*[0.9999970497384594]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 250.
+(Font)              scaled to size 12.0pt on input line 251.
 
 Package fontspec Info: 
 (fontspec)             latinmodern-math scale = 0.9999970497384594.
@@ -738,15 +743,15 @@ Package fontspec Info:
 (fontspec)             <->s*[0.9999970497384594]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 250.
+(Font)              scaled to size 12.0pt on input line 251.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 250.
+(Font)              `operators' in the math version `normal' on input line 251.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 250.
+(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 251.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 250.
+(Font)              `operators' in the math version `bold' on input line 251.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 250.
+(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 251.
 
 Package fontspec Info: 
 (fontspec)             latinmodern-math scale = 0.9999970497384594.
@@ -812,13 +817,13 @@ Package fontspec Info:
 (fontspec)             <->s*[1.000097049443433]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 250.
+(Font)              `symbols' in the math version `normal' on input line 251.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 250.
+(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 251.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 250.
+(Font)              `symbols' in the math version `bold' on input line 251.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 250.
+(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 251.
 
 Package fontspec Info: 
 (fontspec)             latinmodern-math scale = 0.9999970497384594.
@@ -878,50 +883,47 @@ Package fontspec Info:
 (fontspec)             <->s*[0.9998970500334856]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `normal' on input line 250.
+(Font)              `largesymbols' in the math version `normal' on input line 251.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 250.
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 251.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 250.
+(Font)              `largesymbols' in the math version `bold' on input line 251.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 250.
-Package hyperref Info: Link coloring OFF on input line 250.
-
-Package hyperref Warning: Rerun to get /PageLabels entry.
-
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 251.
+Package hyperref Info: Link coloring OFF on input line 251.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 8.4pt on input line 252.
+(Font)              scaled to size 8.4pt on input line 253.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 252.
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 252.
+(Font)              scaled to size 6.0pt on input line 253.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 253.
 (c:/Users/Kachel.IPE-KACHEL-N/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 12.0011pt on input line 252.
+(Font)              scaled to size 12.0011pt on input line 253.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.40076pt on input line 252.
+(Font)              scaled to size 8.40076pt on input line 253.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.00055pt on input line 252.
+(Font)              scaled to size 6.00055pt on input line 253.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 11.99872pt on input line 252.
+(Font)              scaled to size 11.99872pt on input line 253.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.3991pt on input line 252.
+(Font)              scaled to size 8.3991pt on input line 253.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 252.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 252.
+(Font)              scaled to size 5.99936pt on input line 253.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 253.
 (c:/Users/Kachel.IPE-KACHEL-N/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 252.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 253.
 (c:/Users/Kachel.IPE-KACHEL-N/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 252.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 253.
 (c:/Users/Kachel.IPE-KACHEL-N/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 252.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 253.
 (c:/Users/Kachel.IPE-KACHEL-N/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
@@ -937,9 +939,6 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 [4]
 
 [5]
-
-LaTeX Warning: Reference `fig:figure-setup' on page 6 undefined on input line 280.
-
 \openout4 = `symlit_rep_manuscript.fff'.
 
 (symlit_rep_manuscript.fff)
@@ -959,14 +958,14 @@ Missing character: There is no β (U+03B2) in font [lmroman12-regular]:mapping=t
 File: symlit_rep_manuscript_files/figure-latex/S1_bayes_plot_no_facets-1.pdf Graphic file (type pdf)
 <use symlit_rep_manuscript_files/figure-latex/S1_bayes_plot_no_facets-1.pdf>
 
-Overfull \hbox (28.90639pt too wide) in paragraph at lines 354--355
+Overfull \hbox (28.90639pt too wide) in paragraph at lines 350--351
 [][]  
  []
 
 File: symlit_rep_manuscript_files/figure-latex/S1_bayes_plot-1.pdf Graphic file (type pdf)
 <use symlit_rep_manuscript_files/figure-latex/S1_bayes_plot-1.pdf>
 
-Overfull \hbox (28.90639pt too wide) in paragraph at lines 356--357
+Overfull \hbox (28.90639pt too wide) in paragraph at lines 352--353
 [][]  
  []
 
@@ -983,7 +982,7 @@ File: symlit_rep_manuscript_files/figure-latex/S2_bayes_plot-1.pdf Graphic file 
 File: symlit_rep_manuscript_files/figure-latex/S2_mixbayes_plot-1.pdf Graphic file (type pdf)
 <use symlit_rep_manuscript_files/figure-latex/S2_mixbayes_plot-1.pdf>
 
-Overfull \hbox (28.90639pt too wide) in paragraph at lines 377--378
+Overfull \hbox (28.90639pt too wide) in paragraph at lines 372--373
 [][]  
  []
 
@@ -993,18 +992,14 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 [13]
-File: symlit_rep_manuscript_files/figure-latex/S3_bayes_plot-1.pdf Graphic file (type pdf)
-<use symlit_rep_manuscript_files/figure-latex/S3_bayes_plot-1.pdf>
-
-Underfull \vbox (badness 2057) has occurred while \output is active []
-
-
 
 [14]
+File: symlit_rep_manuscript_files/figure-latex/S3_bayes_plot-1.pdf Graphic file (type pdf)
+<use symlit_rep_manuscript_files/figure-latex/S3_bayes_plot-1.pdf>
 File: symlit_rep_manuscript_files/figure-latex/S3_mixbayes_plot-1.pdf Graphic file (type pdf)
 <use symlit_rep_manuscript_files/figure-latex/S3_mixbayes_plot-1.pdf>
 
-Overfull \hbox (28.90639pt too wide) in paragraph at lines 399--400
+Overfull \hbox (28.90639pt too wide) in paragraph at lines 392--393
 [][]  
  []
 
@@ -1027,16 +1022,10 @@ File: ../illustrations/Symlit_Rep_Setup_fromarrows.png Graphic file (type bmp)
 [19
 
 ]
-
-LaTeX Warning: Reference `fig:suppl-participants-dots' on page 20 undefined on input line 456.
-
 File: symlit_rep_manuscript_files/figure-latex/suppl-participants-dots-1.pdf Graphic file (type pdf)
 <use symlit_rep_manuscript_files/figure-latex/suppl-participants-dots-1.pdf>
 
-LaTeX Warning: Reference `fig:suppl-drops-dots' on page 20 undefined on input line 467.
-
-
-Overfull \hbox (61.72488pt too wide) in paragraph at lines 475--475
+Overfull \hbox (61.72488pt too wide) in paragraph at lines 468--468
 []\TU/lmtt/m/n/12 ## Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.[] 
  []
 
@@ -1050,27 +1039,68 @@ File: symlit_rep_manuscript_files/figure-latex/suppl-drops-dots-1.pdf Graphic fi
 
 
 [21]
+File: ../illustrations/Symlit_Rep_Setup_fromarrows.png Graphic file (type bmp)
+<../illustrations/Symlit_Rep_Setup_fromarrows.png>
+File: ../illustrations/Symlit_Rep_Setup_fromarrows.png Graphic file (type bmp)
+<../illustrations/Symlit_Rep_Setup_fromarrows.png>
+File: ../illustrations/Symlit_Rep_Setup_fromarrows.png Graphic file (type bmp)
+<../illustrations/Symlit_Rep_Setup_fromarrows.png>
 
-! LaTeX Error: File `../illustrations/Symlit_Rep_Setup' not found.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.498 ...aphics{../illustrations/Symlit_Rep_Setup}
-                                                  
-I could not locate the file with any of these extensions:
-.pdf,.PDF,.ai,.AI,.png,.PNG,.jpg,.JPG,.jpeg,.JPEG,.jp2,.JP2,.jpf,.JPF,.bmp,.BMP,.ps,.PS,.eps,.EPS,.mps,.MPS
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+[22
 
- 
+]
+
+[23]
+
+[24]
+
+[25]
+
+[26
+
+]
+
+LaTeX Warning: Float too large for page by 82.89511pt on input line 572.
+
+
+LaTeX Warning: Float too large for page by 82.89511pt on input line 613.
+
+
+LaTeX Warning: Float too large for page by 82.89511pt on input line 654.
+
+
+
+[27
+
+]
+
+[28]
+
+[29]
+
+[30]
+
+[31
+
+
+] AED endfloat: Processing end Figures and Tables
+
+[32
+
+] (./symlit_rep_manuscript.aux)
+ ***********
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2020/03/25>
+ ***********
+ ) 
 Here is how much of TeX's memory you used:
- 22390 strings out of 475848
- 419451 string characters out of 5772186
- 1020372 words of memory out of 5000000
- 45006 multiletter control sequences out of 15000+600000
+ 22480 strings out of 475848
+ 420526 string characters out of 5772187
+ 1023396 words of memory out of 5000000
+ 45086 multiletter control sequences out of 15000+600000
  577301 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 90i,11n,114p,2260b,572s stack positions out of 10000i,1000n,20000p,200000b,200000s
-Output written on symlit_rep_manuscript.pdf (21 pages).
+ 90i,11n,114p,2260b,653s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on symlit_rep_manuscript.pdf (32 pages).

@@ -200,6 +200,7 @@
 
 \linenumbers
 \usepackage{csquotes}
+\usepackage{pdflscape}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -312,20 +313,6 @@ To answer the main research question of when children performed above chance in 
 
 To further explore the data, participants were binned according to their age in years. To test whether group-level performance was above chance in all experimental groups, we used two-tailed one-sample t-tests with the chance level set to .5. We provide Cohen's d as a standardized effect size for significance testing (computed via the function \texttt{cohensD}).
 
-\subsection{Study 1}\label{study-1}
-
-\subsubsection{Participants}\label{participants}
-
-A sample of 106 children (M = 59.18 months, SD = 13.58 months, range 36 - 83 months; 51 female) participated in study 1. In addition, 22 children (11 female) were tested but excluded from analysis for not succeeding during familiarization (N = 13), for not completing at least eight out of 16 test trials (N = 1), or due to being fussy (N = 2). For 4 children, experimenters only learned during testing that children were not fluent enough in German to participate as their families had only recently migrated. Finally, 2 children had to be excluded due to technical issues. For a graphical and tabular overview of participants and exclusions across all three studies presented here, please see Appendix A.
-
-\subsubsection{Stimuli}\label{stimuli}
-
-\subsubsection{Analyses}\label{analyses}
-
-A total of XX trials (\emph{Representation}: ; \emph{Pars Pro Toto}: ; \emph{Simple Form Analogy}: ; \emph{Complex Form Analogy}: ) from XX participants were submitted for analysis. The full model notation was \('correct~condition*z.age+z.trial+sex+(z.trial|subid)'\). In addition, a null model lacking the interaction of condition and age (\('correct~condition+z.age+z.trial+sex+(z.trial|subid)'\)) was fitted.
-
-\subsubsection{Notes}\label{notes}
-
 \begin{itemize}
 \tightlist
 \item
@@ -340,12 +327,21 @@ A total of XX trials (\emph{Representation}: ; \emph{Pars Pro Toto}: ; \emph{Sim
   ``expected value of the posterior predicted distribution''
 \end{itemize}
 
+\subsection{Study 1}\label{study-1}
+
+\subsubsection{Participants}\label{participants}
+
+A sample of 106 children (M = 59.18 months, SD = 13.58 months, range 36 - 83 months; 51 female) participated in study 1. In addition, 22 children (11 female) were tested but excluded from analysis for not succeeding during familiarization (N = 13), for not completing at least eight out of 16 test trials (N = 1), or due to being fussy (N = 2). For 4 children, experimenters only learned during testing that children were not fluent enough in German to participate as their families had only recently migrated. Finally, 2 children had to be excluded due to technical issues. For a graphical and tabular overview of participants and exclusions across all three studies presented here, please see Appendix A.
+
+\subsubsection{Stimuli}\label{stimuli}
+
+\subsubsection{Analyses}\label{analyses}
+
+A total of 1688 trials (mean per condition = 422, range: 420 - 424) from 106 participants were submitted for analysis. The full model notation was \('correct~condition*z.age+z.trial+sex+(z.trial|subid)'\). In addition, a null model lacking the interaction of condition and age was fitted.
+
 \subsubsection{Results}\label{results}
 
-ALL NUMBERS FROM MODEL CHECKS GO TO SUPPL
-Posterior predictive checks for both models indicated excellent fit of observed data and model predictions. Rhat values in both models were equal to one, indicating convergence across all chains. Effective sample sizes for all fixed effects in the full model (Bulk ESS, mean = 2555, range 1760 - 3766) and the null model (Bulk ESS, mean = 2253, range 1706 - 3444) were \textgreater{} 1000, indicating reliable posterior estimations.
-
-Comparing models using weights based on the Widely Applicable Information Criterion (WAIC) yielded 76.06\% of the model weight for the full model, and 23.94\% for the null model. Hence, the full model generally has a higher probability of making accurate predictions. Directly comparing the models' WAIC via expected log predictive density (ELPD) corroborates this (ELPD WAIC; full model = -901.65; null model = -904.26). The standard error of the difference in predictive accuracy (3.15), however is lower than the difference itself (-2.61). While the full model slightly exceeds in predictive power, evidence in favor of this model is not decisive. A similar comparison via Leave-One-Out Cross-Validation (LOO) provided essentially the same results. In absence of conclusive evidence for either model, we report the results for the full model below in line with the preregistration.
+Posterior predictive checks for both full and null model indicated excellent fit of observed data and model predictions (see supplements for more information). Comparing the models using weights based on the Widely Applicable Information Criterion (WAIC) yielded 76.06\% of the model weight for the full model, and 23.94\% for the null model. Hence, the full model generally has a higher probability of making accurate predictions. Directly comparing the models' WAIC via expected log predictive density (ELPD) corroborates this (ELPD WAIC; full model = -901.65; null model = -904.26). The standard error of the difference in predictive accuracy (3.15), however is lower than the difference itself (-2.61). While the full model slightly exceeds in predictive power, evidence in favor of this model is not decisive. A similar comparison via Leave-One-Out Cross-Validation (LOO) provided essentially the same results. In absence of conclusive evidence for either model, we report the results for the full model below in line with the preregistration.
 
 Relative to the \emph{Representation} condition, the \emph{Simple Form Analogy} (beta = -1.39, 95\% CI {[}-1.69, -1.10) and \emph{Complex Form Analogy} (β = -1.36, 95\% CI {[}-1.67, -1.07) have a considerably lower probability of correct responses. The \emph{Pars Pro Toto} condition has no clear difference from the reference condition (β = -0.14, 95\% CI {[}-0.48, 0.19). Interaction terms between age and condition were not reliably different from zero. The developmental curves for each condition have essentially similar trajectories.
 
@@ -361,14 +357,13 @@ Finally, by tracing when the lower bound of the 95\% CrI exceeds the chance leve
 
 \subsubsection{Participants}\label{participants-1}
 
-A total of 99 three- to seven-year-old children (M = 60.04 months, SD = 13.69 months, range 36 - 83 months; 49 female) participated. In addition, 15 children (7 female) were tested but excluded from analysis for failing familiarization (N = 10), being fussy (N = 2), not being fluent in German (N = 1) or due to technical issues (N = 2).
+A total of 99 three- to seven-year-old children (M = 60.04 months, SD = 13.69 months, range 36 - 83 months; 49 female) participated. In addition, 13 children (6 female) were tested but excluded from analysis for failing familiarization (N = 9), being fussy (N = 1), not being fluent in German (N = 1) or due to technical issues (N = 2).
 
 \subsubsection{Materials}\label{materials}
 
 \subsubsection{Data analysis}\label{data-analysis}
 
-Notation
-Evaluation of model Stability
+A total of 1561 trials (mean per condition = 390.25, range: 388 - 393) from 99 participants were submitted for analysis. The full model notation was \('correct~condition*z.age+z.trial+sex+(z.trial|subid)'\). In addition, a null model lacking the interaction of condition and age was fitted.
 
 \subsubsection{Results}\label{results-1}
 
@@ -388,9 +383,7 @@ A total of 99 three- to seven-year-old children (M = 59.88 months, SD = 13.44 mo
 
 \subsubsection{Analysis}\label{analysis}
 
-Trails
-Notation
-Model Evaluation
+For study three, 1559 trials (mean per condition = 389.75, range: 388 - 392) from 99 participants were submitted for analysis. Data were analyzed both with a full model (\('correct~condition*z.age+z.trial+sex+(z.trial|subid)'\)) and a null model lacking the interaction of condition and age.
 
 \subsubsection{Results}\label{results-2}
 
@@ -495,7 +488,7 @@ Additional Tables and illustrations for the convenience of the reader. Add illus
 
 \begin{figure}
 
-{\centering \includegraphics{../illustrations/Symlit_Rep_Setup} 
+{\centering \includegraphics{../illustrations/Symlit_Rep_Setup_fromarrows} 
 
 }
 
@@ -510,7 +503,7 @@ Additional Tables and illustrations for the convenience of the reader. Add illus
 
 \begin{figure}
 
-{\centering \includegraphics{../illustrations/Symlit_Rep_Setup} 
+{\centering \includegraphics{../illustrations/Symlit_Rep_Setup_fromarrows} 
 
 }
 
@@ -525,7 +518,7 @@ Additional Tables and illustrations for the convenience of the reader. Add illus
 
 \begin{figure}
 
-{\centering \includegraphics{../illustrations/Symlit_Rep_Setup} 
+{\centering \includegraphics{../illustrations/Symlit_Rep_Setup_fromarrows} 
 
 }
 
@@ -536,15 +529,163 @@ Additional Tables and illustrations for the convenience of the reader. Add illus
 
 Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
 
-\subsection{Study 1}\label{study-1-2}
+\begin{landscape}
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:s1_testtables}Descriptive Statistics for Study 1}
+
+\begin{tabular}{lllllllllll}
+\toprule
+Condition & \multicolumn{1}{c}{Age} & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{trials} & \multicolumn{1}{c}{trials/N} & \multicolumn{1}{c}{M} & \multicolumn{1}{c}{SD} & \multicolumn{1}{c}{p} & \multicolumn{1}{c}{df} & \multicolumn{1}{c}{t(N-1)} & \multicolumn{1}{c}{d}\\
+\midrule
+Representation & 3-year-olds & 26 & 103 & 3.96 & 75.00 & 22.36 & <0.001 & 25.00 & 5.70 & 1.12\\
+ & 4-year-olds & 28 & 109 & 3.89 & 81.25 & 33.07 & <0.001 & 27.00 & 5.00 & 0.94\\
+ & 5-year-olds & 28 & 112 & 4.00 & 87.50 & 28.46 & <0.001 & 27.00 & 6.97 & 1.32\\
+ & 6-year-olds & 24 & 96 & 4.00 & 87.50 & 20.85 & <0.001 & 23.00 & 8.81 & 1.80\\
+Pars Pro Toto & 3-year-olds & 26 & 104 & 4.00 & 66.35 & 22.30 & <0.001 & 25.00 & 3.74 & 0.73\\
+ & 4-year-olds & 28 & 112 & 4.00 & 75.00 & 31.91 & <0.001 & 27.00 & 4.15 & 0.78\\
+ & 5-year-olds & 28 & 112 & 4.00 & 85.71 & 21.97 & <0.001 & 27.00 & 8.60 & 1.63\\
+ & 6-year-olds & 24 & 96 & 4.00 & 91.67 & 15.93 & <0.001 & 23.00 & 12.82 & 2.62\\
+Simple Form Analogy & 3-year-olds & 26 & 104 & 4.00 & 53.85 & 23.12 & 0.404 & 25.00 & 0.85 & 0.17\\
+ & 4-year-olds & 28 & 112 & 4.00 & 59.82 & 28.33 & 0.078 & 27.00 & 1.83 & 0.35\\
+ & 5-year-olds & 28 & 112 & 4.00 & 58.93 & 28.23 & 0.106 & 27.00 & 1.67 & 0.32\\
+ & 6-year-olds & 24 & 96 & 4.00 & 69.79 & 23.29 & <0.001 & 23.00 & 4.16 & 0.85\\
+Complex Form Analogy & 3-year-olds & 25 & 100 & 4.00 & 53.00 & 25.33 & 0.559 & 24.00 & 0.59 & 0.12\\
+ & 4-year-olds & 28 & 112 & 4.00 & 54.46 & 23.62 & 0.326 & 27.00 & 1.00 & 0.19\\
+ & 5-year-olds & 28 & 112 & 4.00 & 59.82 & 25.77 & 0.054 & 27.00 & 2.02 & 0.38\\
+ & 6-year-olds & 24 & 96 & 4.00 & 76.04 & 18.77 & <0.001 & 23.00 & 6.80 & 1.39\\
+\bottomrule
+\addlinespace
+\end{tabular}
+
+\begin{tablenotes}[para]
+\normalsize{\textit{Note.} This table was created by Gregor.}
+\end{tablenotes}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:s2_testtables}Descriptive Statistics for Study 2}
+
+\begin{tabular}{lllllllllll}
+\toprule
+Condition & \multicolumn{1}{c}{Age} & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{trials} & \multicolumn{1}{c}{trials/N} & \multicolumn{1}{c}{M} & \multicolumn{1}{c}{SD} & \multicolumn{1}{c}{p} & \multicolumn{1}{c}{df} & \multicolumn{1}{c}{t(N-1)} & \multicolumn{1}{c}{d}\\
+\midrule
+Absolute Position & 3-year-olds & 20 & 80 & 4.00 & 58.75 & 18.63 & 0.049 & 19.00 & 2.10 & 0.47\\
+ & 4-year-olds & 25 & 100 & 4.00 & 62.00 & 33.17 & 0.083 & 24.00 & 1.81 & 0.36\\
+ & 5-year-olds & 27 & 108 & 4.00 & 73.15 & 30.95 & <0.001 & 26.00 & 3.89 & 0.75\\
+ & 6-year-olds & 25 & 100 & 4.00 & 81.00 & 29.12 & <0.001 & 24.00 & 5.32 & 1.06\\
+Relative Position & 3-year-olds & 22 & 88 & 4.00 & 54.55 & 21.32 & 0.329 & 21.00 & 1.00 & 0.21\\
+ & 4-year-olds & 24 & 96 & 4.00 & 59.38 & 26.39 & 0.095 & 23.00 & 1.74 & 0.36\\
+ & 5-year-olds & 27 & 108 & 4.00 & 68.52 & 34.39 & 0.010 & 26.00 & 2.80 & 0.54\\
+ & 6-year-olds & 25 & 100 & 4.00 & 76.00 & 34.97 & 0.001 & 24.00 & 3.72 & 0.74\\
+Orientation of Object & 3-year-olds & 22 & 85 & 3.86 & 48.86 & 19.64 & 0.789 & 21.00 & -0.27 & 0.06\\
+ & 4-year-olds & 25 & 100 & 4.00 & 57.00 & 25.54 & 0.183 & 24.00 & 1.37 & 0.27\\
+ & 5-year-olds & 27 & 108 & 4.00 & 75.93 & 24.50 & <0.001 & 26.00 & 5.50 & 1.06\\
+ & 6-year-olds & 25 & 100 & 4.00 & 81.00 & 25.29 & <0.001 & 24.00 & 6.13 & 1.23\\
+Orientation of Feature & 3-year-olds & 21 & 80 & 3.81 & 55.95 & 28.40 & 0.348 & 20.00 & 0.96 & 0.21\\
+ & 4-year-olds & 25 & 100 & 4.00 & 67.00 & 28.61 & 0.007 & 24.00 & 2.97 & 0.59\\
+ & 5-year-olds & 27 & 108 & 4.00 & 65.74 & 34.77 & 0.027 & 26.00 & 2.35 & 0.45\\
+ & 6-year-olds & 25 & 100 & 4.00 & 79.00 & 33.60 & <0.001 & 24.00 & 4.32 & 0.86\\
+\bottomrule
+\addlinespace
+\end{tabular}
+
+\begin{tablenotes}[para]
+\normalsize{\textit{Note.} This table was created by Gregor.}
+\end{tablenotes}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:s3_testtables}Descriptive Statistics for Study 3}
+
+\begin{tabular}{lllllllllll}
+\toprule
+Condition & \multicolumn{1}{c}{Age} & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{trials} & \multicolumn{1}{c}{trials/N} & \multicolumn{1}{c}{M} & \multicolumn{1}{c}{SD} & \multicolumn{1}{c}{p} & \multicolumn{1}{c}{df} & \multicolumn{1}{c}{t(N-1)} & \multicolumn{1}{c}{d}\\
+\midrule
+Size of Object & 3-year-olds & 21 & 84 & 4.00 & 51.19 & 23.02 & 0.815 & 20.00 & 0.24 & 0.05\\
+ & 4-year-olds & 27 & 105 & 3.89 & 54.63 & 31.80 & 0.456 & 26.00 & 0.76 & 0.15\\
+ & 5-year-olds & 26 & 104 & 4.00 & 84.62 & 25.57 & <0.001 & 25.00 & 6.90 & 1.35\\
+ & 6-year-olds & 24 & 96 & 4.00 & 78.12 & 22.50 & <0.001 & 23.00 & 6.12 & 1.25\\
+Size of Feature & 3-year-olds & 21 & 84 & 4.00 & 46.43 & 19.82 & 0.419 & 20.00 & -0.83 & 0.18\\
+ & 4-year-olds & 26 & 104 & 4.00 & 51.92 & 23.37 & 0.678 & 25.00 & 0.42 & 0.08\\
+ & 5-year-olds & 26 & 104 & 4.00 & 56.73 & 32.06 & 0.295 & 25.00 & 1.07 & 0.21\\
+ & 6-year-olds & 24 & 96 & 4.00 & 62.50 & 19.50 & 0.005 & 23.00 & 3.14 & 0.64\\
+Number of Object & 3-year-olds & 21 & 84 & 4.00 & 42.86 & 21.13 & 0.137 & 20.00 & -1.55 & 0.34\\
+ & 4-year-olds & 27 & 108 & 4.00 & 61.11 & 30.49 & 0.069 & 26.00 & 1.89 & 0.36\\
+ & 5-year-olds & 26 & 104 & 4.00 & 72.12 & 34.88 & 0.003 & 25.00 & 3.23 & 0.63\\
+ & 6-year-olds & 24 & 96 & 4.00 & 83.33 & 32.69 & <0.001 & 23.00 & 4.99 & 1.02\\
+Number of Feature & 3-year-olds & 21 & 82 & 3.90 & 50.00 & 19.36 & >0.999 & 20.00 & 0.00 & 0.00\\
+ & 4-year-olds & 27 & 108 & 4.00 & 62.96 & 24.39 & 0.010 & 26.00 & 2.76 & 0.53\\
+ & 5-year-olds & 26 & 104 & 4.00 & 65.38 & 31.68 & 0.020 & 25.00 & 2.48 & 0.49\\
+ & 6-year-olds & 24 & 96 & 4.00 & 76.04 & 27.07 & <0.001 & 23.00 & 4.71 & 0.96\\
+\bottomrule
+\addlinespace
+\end{tabular}
+
+\begin{tablenotes}[para]
+\normalsize{\textit{Note.} This table was created by Gregor.}
+\end{tablenotes}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+\end{landscape}
+
+\section{Model Diagnostics}\label{model-diagnostics}
 
 Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
+
+\subsection{Study 1}\label{study-1-2}
+
+Model diagnostics were are provided for both full and null model in study 1. Rhat values in both models were equal to one, indicating convergence across all chains. Effective sample sizes for all fixed effects in the full model (Bulk ESS, mean = 2555, range 1760 - 3766) and the null model (Bulk ESS, mean = 2253, range 1706 - 3444) were \textgreater{} 1000, indicating reliable posterior estimations.
 
 \subsection{Study 2}\label{study-2-2}
 
 Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
 
 \subsection{Study 3}\label{study-3-2}
+
+Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
+
+\section{Additional Analyses}\label{additional-analyses-1}
+
+Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
+
+Cue Level Models
+
+\subsection{Study 1}\label{study-1-3}
+
+Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
+
+\subsection{Study 2}\label{study-2-3}
+
+Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
+
+\subsection{Study 3}\label{study-3-3}
 
 Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
 

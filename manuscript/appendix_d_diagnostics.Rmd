@@ -1,0 +1,12 @@
+
+# Model Diagnostics
+Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
+
+## Study 1
+Model diagnostics were are provided for both full and null model in study 1. Rhat values in both models were equal to one, indicating convergence across all chains. Effective sample sizes for all fixed effects in the full model (Bulk ESS, mean = `r round(mean(S1.full.coef$ess_bulk), 0)`, range `r round(min(S1.full.coef$ess_bulk), 0)` - `r round(max(S1.full.coef$ess_bulk), 0)`) and the null model (Bulk ESS, mean = `r round(mean(S1.null.coef$ess_bulk), 0)`, range `r round(min(S1.null.coef$ess_bulk), 0)` - `r round(max(S1.null.coef$ess_bulk), 0)`) were > 1000, indicating reliable posterior estimations.
+
+## Study 2
+Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
+
+## Study 3
+Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
