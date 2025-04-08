@@ -7,7 +7,7 @@ author:
     affiliation   : "1"
     corresponding : yes    # Define only one corresponding author
     address       : "Universitätsallee 1, C1.008a, 21335 Lüneburg"
-    email         : "gregor.kachel@leuphana.de"
+    email         : "gregor.kachel&#64;leuphana.de"
     role: # Contributorship roles (e.g., CRediT, https://credit.niso.org/)
       - "Conceptualization"
       - "Funding Acquisition"
@@ -51,7 +51,7 @@ abstract: |
   One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
   Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
   One or two sentences to put the results into a more **general context**.
-  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline. !Abstract must be less then 120words!
+  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline. Abstract must be less then 120words
   
   <!-- https://tinyurl.com/ybremelq -->
   
@@ -59,12 +59,6 @@ keywords          : "graphical representation, iconicity, analogy, symbol, commu
 wordcount         : "Child Development Max 40 pages // PNAS 1,500–2,000 words"
 
 bibliography      : ["library.bib"]
-appendix: # to change filenames, also see end of document
-  - "appendix_a_participants.Rmd"
-  - "appendix_b_stimuli.Rmd"
-  - "appendix_c_descriptives.Rmd"
-  - "appendix_d_diagnostics.Rmd"
-  - "appendix_e_additional.Rmd"
 
 floatsintext      : no
 linenumbers       : yes
@@ -79,11 +73,16 @@ classoption       : "man"
 output            : 
   papaja::apa6_pdf:
     latex_engine: xelatex
-    
-header-includes:
-  - \usepackage{pdflscape}
----
 
+appendix: # to change filenames, also see end of document
+- "appendix_a_participants.Rmd"
+- "appendix_b_stimuli.Rmd"
+- "appendix_c_descriptives.Rmd"
+- "appendix_d_diagnostics.Rmd"
+- "appendix_e_additional.Rmd"
+
+    
+---
 ```{r setup, include = FALSE}
 library("papaja")
 r_refs("library.bib")
@@ -116,13 +115,15 @@ if (!require(scales)) install.packages('scales'); library(scales) #
 
 ```
 
-```{r analysis-preferences, include = FALSE}
+```{r analysis_preferences, include = FALSE}
 # Seed for random number generation
 set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+
 ```
 
 ```{r rep_read_data, include = FALSE}
+
 # Full data set including all participants (i.e. including dropped participants)
 rep.data <- readRDS("../data/symlitrep_final_data.rds")
 
@@ -206,57 +207,11 @@ rep.S3.bayes.data  <- rep.data %>%
 #   group_by(study, condition) %>% 
 #   summarize(N = length(subid))
 
- # $ study          : chr w/ 3 levels --> Study1, Study2, Study3
- # $ title          : chr w/ 3 levels --> Name/Theme of the Study
- # $ condition      : chr w/ 12 levels --> Name of the condition i.e. experimental manipulation
- # $ cond           : chr w/ 12 levels --> Name of the condition in short form
- # $ subid          : chr w/ 364 levels --> Subjet ID
- # $ sex            : chr w/ 2 levels "0","1": --> Participants' sex; 1 = male
- # $ agey           : num [1:7146] total age in years
- # $ agem           : num [1:7146] total age in months 
- # $ aged           : num [1:7146] total age in days
- # $ valid          : chr w/ 3 levels --> Status of Participants
-      # "valid"= main sample
-      # "drop" = excluded participants
-      # "oversampling" = data collected after reaching the minimum of 96 participants per study
- # $ drop           : chr w/ 7 levels "fail_in_fam",..: --> Reasons for Participant exclusions
-      # fail_in_fam  --> did not meet criterion in familiarisation phase
-      # fussy_child  --> child was fussy or uncooperative, lost interest in participating   
-      # language     --> child did not understand instructions due to not speaking German fluently enough  
-      # oversampling --> Not a drop per se: participants tested after reaching minimum of participants  
-      # quit_early   --> Children that quit early and did not contribute at least 8 test trials 
-      # technical    --> technical problems; i.e. script for presenting experiment crashed
- # $ trial          : chr w/ 17 levels NUmbers 1-16 for test trials; "fam" for familiarisation trials
- # $ correct        : int [1:7146] correct choice = 1; incorrect = 0
- # $ rt             : int [1:7146] reaction time in ms
- # $ experimenter   : chr w/ 6 levels --> ID of the experimenter; E1 - E6
- # $ where          : chr w/ 4 levels 
-      # afterschoolcenter --> after school care; testing in the early afternoon
-      # daycare --> testing in kindergartens, prior to lunch
-      # home --> testing during visits at home; usually in the afternoon
-      # lab --> children were tested when visiting the lab; usually in the afternoon
- # $ eselectfam     : chr w/ 2 levels "0","1" 
-      # experimenter occasionally selected choices based on child's pointing during familiarisation traisl
- # $ eselectmain    : chr w/ 2 levels "0","1"
-      # experimenter occasionally selected choices based on child's pointing during test trails
- # $ leftObject     : chr w/ 99 levels "abpo_tar_1_A.png" 
-      # --> stimulus item displayed on the left side of the screen as target/distractor
- # $ rightObject    : chr w/ 99 levels "abpo_tar_1_A.png"
-      # --> stimulus item displayed on the right side of the screen as target/distractor
- # $ cue            : chr w/ 98 levels "abpo_cue_1_A.png"
-      # --> stimulus item displayed in the middle of the screen as a cue
- # $ target_position: chr w/ 2 levels "left","right": 
-      # side on which the target (i.e. correct choice) was presented
- # $ item           : chr w/ 4 levels "1","2","3","4":
-      # number of stimulus item in the respective condition
- # $ target_shape   : chr w/ 2 levels "A","B":
-      # target stimulus shape in the respective condition
- # $ pick           : chr w/ 2 levels "
-      # side of children's choice (left/right) 
- 
+
 ```
 
-```{r S1S2s3 participant demographics, echo=FALSE, eval=T}
+```{r S1S2s3_participant_demographics, echo=FALSE, eval=T}
+
 rep.age.table.data  <- rep.data %>% 
   distinct(subid, .keep_all = TRUE) %>% # select only one line per participant
   filter(valid != "drop") %>%  # filter out dropped participants
@@ -941,6 +896,14 @@ ggplot()+
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
+```{r summaryresults,  echo=FALSE, eval=T, warning=F, message=F}
+
+p_all <- rbind(p1,p2,p3)
+p_all %>% arrange(months)
+
+```
+
+
 # Additional Analyses
 
 possible add-ons
@@ -982,6 +945,9 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 
 ::: {#refs custom-style="Bibliography"}
 :::
+
+
+
 
 
 

@@ -1,8 +1,7 @@
 
 # Descriptive Statistics
 Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
-\begin{landscape}
-```{r s1_testtables, echo = FALSE, include=T, eval=T, results='asis'}
+```{r s1_testtables, echo = FALSE, include=T, eval=T}
 
 #library(scales) 
 # required for rounding pvalues, is part of tidyverse but needs to be loaded again? ## it occurs when functions are overwritten multiple times
@@ -32,11 +31,18 @@ rep.s1.freq$Condition[duplicated(rep.s1.freq$Condition)] <- ""
 # kable(rep.s1.freq) %>%
 # kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 
+# apa_table(
+#   rep.s1.freq
+#   , caption = "Descriptive Statistics for Study 1"
+#   , note = "This table was created by Gregor."
+#   , escape = TRUE
+# )
+
 apa_table(
-  rep.s1.freq
-  , caption = "Descriptive Statistics for Study 1"
-  , note = "This table was created by Gregor."
-  , escape = TRUE
+  rep.s1.freq,
+  caption = "Descriptive Statistics for Study 1",
+  escape = TRUE,
+  font_size = "scriptsize"
 )
 
 ```
@@ -71,12 +77,20 @@ rep.s2.freq$Condition[duplicated(rep.s2.freq$Condition)] <- ""
 # kable(rep.s1.freq) %>%
 # kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 
+# apa_table(
+#   rep.s2.freq
+#   , caption = "Descriptive Statistics for Study 2"
+#   , note = "This table was created by Gregor."
+#   , escape = TRUE
+# )
+
 apa_table(
-  rep.s2.freq
-  , caption = "Descriptive Statistics for Study 2"
-  , note = "This table was created by Gregor."
-  , escape = TRUE
+  rep.s2.freq,
+  caption = "Descriptive Statistics for Study 2",
+  escape = TRUE,
+  font_size = "scriptsize"
 )
+
 
 ```
 
@@ -111,12 +125,12 @@ rep.s3.freq$Condition[duplicated(rep.s3.freq$Condition)] <- ""
 # kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 
 apa_table(
-  rep.s3.freq
-  , caption = "Descriptive Statistics for Study 3"
-  , note = "This table was created by Gregor."
-  , escape = TRUE
+  rep.s3.freq,
+  caption = "Descriptive Statistics for Study 3",
+  escape = TRUE,
+  font_size = "scriptsize"
 )
 
 ```
 
-\end{landscape}
+
