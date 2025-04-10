@@ -42,6 +42,8 @@ affiliation:
 authornote: |
     *Ethics, consent and conflict of interest*: This study confirms with recognized standards (e.g. the Declaration of Helsinki) and was approved by an internal ethics committee at the Max-Planck-Institute for Evolutionary Anthropology. Informed consent has been obtained from all participants. The authors declare no conflict of interest. 
     
+    *Scientific Integrity and Openness*: The data and code necessary to reproduce the analyses presented here are publicly accessible, as are the materials necessary to attempt to replicate the findings. Analyses were also pre-registered. Data, code, materials, and the preregistration for this research are available at the following URL XXX Repo XXX.
+    
     *Acknowledgments*: We are thankful to Susanne Mauritz for her help in the organization of the study and to Valerie Jurgenson and Cynthia Pones for help with data collection. We would like to thank Anne Deiglmayr for hosting this project in her research group and for her continuous support. Finally, we are very thankful to all parents and children participating in the study. Gregor Kachel was supported by the German Research Foundation (Deutsche Forschungsgemeinschaft) under project number 429220405.
 
 abstract: |
@@ -84,18 +86,9 @@ appendix: # to change filenames, also see end of document
 ```{r setup, include = FALSE}
 library("papaja")
 r_refs("library.bib")
-# 
-# output:
-#   papaja::apa6_doc:
-#     reference_docx: "apa6.docx"
-# bibliography: ["references.bib"]
-# csl: "apa.csl"
-# # 
-# # 
-
 
 # Loading packages 
-# NOTE: this will install these packages on your machine in case they are missing
+# NOTE: this will install these packages in case they are missing
 
 # General
 if (!require(tidyverse)) install.packages('tidyverse'); library(tidyverse)

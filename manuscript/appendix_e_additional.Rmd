@@ -130,7 +130,7 @@ max(S1.item.coef$rhat)
 
 ```
 
-```{r S1_illustrationcueintercepts}
+```{r S1_illustrationcueintercepts, echo=FALSE, eval=FALSE}
 
 # CUE
 
@@ -200,6 +200,65 @@ library(patchwork)
 combined_plot <- cue.plot + item.plot + plot_layout(ncol = 2)
 
 combined_plot
+
+```
+
+```{r objectfeaturecomp, echo=FALSE, eval=FALSE}
+
+objectfeature.data  <- rep.data %>%
+  filter(valid != "drop") %>% # valid participants only 
+  filter(trial != "fam") %>% 
+  filter(cond %in% c("orfe", "orob", "sife", "siob", "nufe", "nuob")) %>% 
+  select(condition, cond, subid, sex, aged, correct, trial, rt, cue) %>%
+  mutate(z.trial = scale(as.numeric(trial)),
+         ageinyears = aged/356.25, 
+         z.age = ageinyears - mean(ageinyears),
+         z.sex = scale(as.numeric(sex)),
+         objectfeature = case_when(
+           grepl("ob", cond) ~ "object",
+           grepl("fe", cond) ~ "feature",
+           TRUE ~ NA_character_))
+
+table(objectfeature.data$condition)
+table(objectfeature.data$objectfeature)
+
+perc_objectfeature.data <- objectfeature.data %>% 
+  group_by(objectfeature) %>% 
+  summarize(mean = mean(correct))
+
+perc_objectfeature.data
+
+```
+
+```{r roundangularcomp, echo=FALSE, eval=FALSE}
+
+
+rep.S1.shape.data  <- rep.data %>%
+  filter(valid != "drop") %>% # valid participants only 
+  filter(study == "study1") %>% # in study one
+  filter(trial != "fam") %>% 
+  select(condition, subid, sex, aged, correct, trial, rt, cue) %>%
+  mutate(z.trial = scale(as.numeric(trial)),
+         ageinyears = aged/356.25, 
+         z.age = ageinyears - mean(ageinyears),
+         z.sex = scale(as.numeric(sex)),
+         shape = case_when(
+           grepl("A", cue) ~ "round",
+           grepl("B", cue) ~ "angular",
+           TRUE ~ NA_character_))
+
+# shape    mean
+# <chr>   <dbl>
+#   1 angular 0.709
+# 2 round   0.709
+
+# :- D
+
+perc_rep.S1.shape.data <- rep.S1.shape.data %>% 
+  group_by(condition, shape) %>% 
+  summarize(mean = mean(correct))
+
+perc_rep.S1.shape.data
 
 ```
 
