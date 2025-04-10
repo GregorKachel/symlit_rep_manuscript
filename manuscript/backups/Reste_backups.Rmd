@@ -41,7 +41,6 @@ rep.S1.bayes.data  <- rep.data %>%
 
 ```
 
-
 ```{r s2_bayes_prep_data, echo = FALSE, include=T, eval=T, results='asis'}
 
 # prepare data 
@@ -78,7 +77,6 @@ rep.S2.bayes.data  <- rep.data %>%
 
 ```
 
-
 ```{r s3_bayes_prep_data, echo = FALSE, include=T, eval=T, results='asis'}
 
 # prepare data 
@@ -102,4 +100,5 @@ rep.S3.bayes.data  <- rep.data %>%
          z.sex = scale(as.numeric(sex)))
 
 ```
+
 

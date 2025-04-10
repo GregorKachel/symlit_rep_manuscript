@@ -1,5 +1,5 @@
 
-# Model Diagnostics
+# Appendix D - Model Diagnostics
 Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
 
 ## Study 1

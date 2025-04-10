@@ -175,7 +175,7 @@ kable(s1.symlitrep.correct.table.data, caption = "Overview of Performance for St
 ```{r s1bolddevplot, echo = FALSE, include=T, eval=T, results='asis'}
 
 # aggregate proportion of correct choices and number of trials for each individual
-S1.ind.correct.plot.data  <- symlitrep.data %>% 
+S1.ind.correct.plot.data  <- rep.data %>% 
   filter(valid != "drop" & trial != "NA" & study == "study1") %>% 
   group_by(conditionlong, subid, agecat, aged) %>%
   arrange(conditionlong, subid, agecat, aged) %>%
@@ -863,6 +863,8 @@ ggplot()+
 
 ```
 
+
+# Difficulty
 ```{r symlit_rep_plotcondkdifficulty, eval= F}
 
 # aggregate proportion of correct choices and number of trials for each individual
@@ -934,40 +936,6 @@ difficulty.plot
 
 ```
 
-```{r symlit_rep_plottaskdifficulty, eval= F}
-
-# aggregate proportion of correct choices and number of trials for each individual
-symlit_rep_difficultyplot.data  <- symlitrep.data %>% 
-  filter(valid != "drop" & trial != "NA") %>% 
-  group_by(study, principle, subid, agecat, aged) %>%
-  arrange(conditionlong, subid, agecat, aged) %>%
-  summarise("correct" = round(mean(correct)*100, 2),
-            "trials" = length(valid))
-
-difficulty.plot <- ggplot(symlit_rep_difficultyplot.data, 
-                    aes(x=reorder(principle, -correct), y=correct, colour = principle)) +
-  geom_hline(yintercept=50, linetype="dashed", color = "black") +
-  geom_boxplot() +
-  geom_jitter() +
-  theme_minimal() +
-  theme(legend.position = "none")
-
-difficulty.plot
-
-
-# 
-# difficulty.plot <- ggplot(symlit_rep_difficultyplot.data, 
-#                     aes(x=reorder(cuetype, -correct), y=correct, colour = cuetype)) +
-#   geom_hline(yintercept=50, linetype="dashed", color = "black") +
-#   # geom_bar(stat = "identity") +
-#   geom_boxplot() +
-#   geom_jitter() +
-#   theme_minimal() +
-#   theme(legend.position = "none")
-# 
-# difficulty.plot
-
-```
 
 
 ```{r symlit_rep_plottaskrt, eval= F}

@@ -1,7 +1,6 @@
 
-# Descriptive Statistics
-Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
-```{r s1_testtables, echo = FALSE, include=T, eval=T}
+# Appendix C - Descriptive Statistics
+```{r suppl-descriptives-S1, tab.cap = "Descriptive Analyses for Study 1.", eval = T}
 
 #library(scales) 
 # required for rounding pvalues, is part of tidyverse but needs to be loaded again? ## it occurs when functions are overwritten multiple times
@@ -38,16 +37,26 @@ rep.s1.freq$Condition[duplicated(rep.s1.freq$Condition)] <- ""
 #   , escape = TRUE
 # )
 
-apa_table(
-  rep.s1.freq,
-  caption = "Descriptive Statistics for Study 1",
-  escape = TRUE,
-  font_size = "scriptsize"
-)
+# apa_table(
+#   rep.s1.freq,
+#   caption = "Descriptive Statistics for Study 1",
+#   escape = TRUE,
+#   font_size = "small"
+# )
+
+ft <- flextable(rep.s1.freq) %>%
+  theme_apa() %>%
+  set_caption("suppl-descriptives-S1") %>%
+  fontsize(size = 8, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  autofit()
+ft
+
 
 ```
+\newpage
 
-```{r s2_testtables, echo = FALSE, include=T, eval=T, results='asis'}
+```{r suppl-descriptives-S2, tab.cap = "Descriptive Analyses for Study 2.", eval = T}
 
 #library(scales) 
 # required for rounding pvalues, is part of tidyverse but needs to be loaded again? ## it occurs when functions are overwritten multiple times
@@ -84,17 +93,26 @@ rep.s2.freq$Condition[duplicated(rep.s2.freq$Condition)] <- ""
 #   , escape = TRUE
 # )
 
-apa_table(
-  rep.s2.freq,
-  caption = "Descriptive Statistics for Study 2",
-  escape = TRUE,
-  font_size = "scriptsize"
-)
+# apa_table(
+#   rep.s2.freq,
+#   caption = "Descriptive Statistics for Study 2",
+#   escape = TRUE,
+#   font_size = "small"
+# )
 
+
+ft <- flextable(rep.s2.freq) %>%
+  theme_apa() %>%
+  set_caption("suppl-descriptives-S2") %>%
+  fontsize(size = 8, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  autofit()
+ft
 
 ```
+\newpage
 
-```{r s3_testtables, echo = FALSE, include=T, eval=T, results='asis'}
+```{r suppl-descriptives-S3, tab.cap = "Descriptive Analyses for Study 3.", eval = T}
 
 #library(scales) 
 # required for rounding pvalues, is part of tidyverse but needs to be loaded again? ## it occurs when functions are overwritten multiple times
@@ -124,13 +142,56 @@ rep.s3.freq$Condition[duplicated(rep.s3.freq$Condition)] <- ""
 # kable(rep.s1.freq) %>%
 # kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 
-apa_table(
-  rep.s3.freq,
-  caption = "Descriptive Statistics for Study 3",
-  escape = TRUE,
-  font_size = "scriptsize"
-)
+# apa_table(
+#   rep.s3.freq,
+#   caption = "Descriptive Statistics for Study 3",
+#   escape = TRUE,
+#   font_size = "small"
+# )
+
+
+ft <- flextable(rep.s3.freq) %>%
+  theme_apa() %>%
+  set_caption("suppl-descriptives-S3") %>%
+  fontsize(size = 8, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  autofit()
+ft
 
 ```
+
+```{r symlit_rep_plottaskdifficulty, eval= F}
+
+# aggregate proportion of correct choices and number of trials for each individual
+rep_difficultyplot.data  <- rep.data %>% 
+  filter(valid != "drop" & trial != "NA") %>% 
+  group_by(study, title, condition, subid, agey, aged) %>%
+  arrange(condition, subid, agey, aged) %>%
+  summarise("correct" = round(mean(correct)*100, 2),
+            "trials" = length(valid))
+
+difficulty.plot <- ggplot(rep_difficultyplot.data, 
+                    aes(x=reorder(condition, -correct), y=correct, colour = condition)) +
+  geom_hline(yintercept=50, linetype="dashed", color = "black") +
+  geom_boxplot() +
+  geom_jitter() +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+difficulty.plot
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -69,23 +69,30 @@ figurelist        : no
 tablelist         : no
 footnotelist      : no
 
-classoption       : "man"
-output            : 
-  papaja::apa6_pdf:
-    latex_engine: xelatex
+output:
+  papaja::apa6_doc: default
 
+    
 appendix: # to change filenames, also see end of document
 - "appendix_a_participants.Rmd"
 - "appendix_b_stimuli.Rmd"
 - "appendix_c_descriptives.Rmd"
 - "appendix_d_diagnostics.Rmd"
 - "appendix_e_additional.Rmd"
-
     
 ---
 ```{r setup, include = FALSE}
 library("papaja")
 r_refs("library.bib")
+# 
+# output:
+#   papaja::apa6_doc:
+#     reference_docx: "apa6.docx"
+# bibliography: ["references.bib"]
+# csl: "apa.csl"
+# # 
+# # 
+
 
 # Loading packages 
 # NOTE: this will install these packages on your machine in case they are missing
@@ -94,7 +101,10 @@ r_refs("library.bib")
 if (!require(tidyverse)) install.packages('tidyverse'); library(tidyverse)
 if (!require(lsr)) install.packages('lsr'); library(lsr) # Analysis, Cohen's D
 if (!require(ggthemes)) install.packages('ggthemes'); library(ggthemes) # for tufte boxplots
-if (!require(kableExtra)) install.packages('kableExtra'); library(kableExtra) 
+# if (!require(kableExtra)) install.packages('kableExtra'); library(kableExtra) 
+
+# Styling library(flextable)
+if (!require(flextable)) install.packages('flextable'); library(flextable) 
 
 # bayes packages
 if (!require(brms)) install.packages('brms'); library(brms) # 
@@ -269,65 +279,6 @@ rep.s3.trials <- rep.S3.bayes.data %>%
 
 ```
 
-# Introduction
-See googledocs for drafts of the intro and discussion
-
-# Methods
-All three studies presented here share the same methods and analyses. For convenience, common aspects of the procedure, participant recruiting and stimulus design are reported first before discussing the individual studies respectively.
-
-## General Methods
-
-### Setup and Data Collection
-In order to trace the development of children's symbolic competence continuously across the preschool years, data collection aimed at testing two children per month of age between the third and the seventh birthday for a total 96 participants while euqally balancing male and female participants.  As children participated on the basis of availability and data collection was done by several experimenter teams visiting different institutions in parallel, the resulting final samples slightly exceed this preregistered minimum sample size. The final sample approximate an equal distribution of male and female participants and
-while aligning with conventions in the field, by providing at least 24 participants per condition and year of age. 
-
-All participants were recruited in **MASKED FOR REVIEW**, a medium-sized middle-European city, and came from a predominantly white population of middle to high income families. They were contacted via a database of participants for child development studies to which their parents had voluntarily signed up. Children were tested in day- and afterschoolcare for the most part, and occasionally in the lab or at home. The studies were reviewed and approved by an internal ethics committee at the **MASKED FOR REVIEW**. Data collection took place from June 2022 to February 2023. 
-
-During test sessions, one child and an experimenter sat down together to play a picture-book-style hiding game presented on a touch-screen laptop. Verbal instructions were played back by the experimental script. Experimenters supervised children during data collection an assisted with a fixed set of verbal prompts when necessary. Test sessions always took place in a quiet separate room. See figure \@ref(fig:figure-setup) for an illustration of the setup.
-
-(ref:testillustration-caption) Illustration of setup. Experimenters were sitting behind the children in order to not distract them from the task and supervised data collection.
-
-```{r figure-setup, fig.cap = "(ref:testillustration-caption)", fig.align = "center", echo = FALSE}
-knitr::include_graphics("../illustrations/Symlit_Rep_Setup_fromarrows.png", dpi = 108)
-
-```
-
-### Procedure
-*Familiarization*. Experimenters invited children to join a hiding game and to follow the narration of the story. First, the presentation introduced a cartoon monkey. This character then placed two barriers on the bottom left and right side of the screen. After holding up a banana, one of the barriers was lifted, the banana was placed there and the barrier was lowered to conceal the banana. Children were now prompted to touch the hiding place and in doing so the barrier of their choice was lifted to reveal the banana if they chose correctly. Hence to succeed here, children solely had to remember where the item went and touch this part of the screen after a few seconds. The experimental script provided immediate feedback upon children's choice ("yes, great job!"; "No, that's not it. Let's try again!") during the familiarization. To ensure that children were familiar with the goal of the game and the touch interface, they first had to complete a set of four to eight familiarization trials with a success rate of 75%. In case a child did not reply correctly in three out of four trials, another four familiarization trials were provided. If the child was correct in six out of eight trials, she was included in the main sample. Children that did not succeed during familiarization were allowed to participate but their data was not submitted to analysis. These children are reported below as failing the familiarization phase.
-
-*Test phase*. The main phase of the study commenced with announcing that the cartoon character had an idea for a new game. The narration conveyed that children were not allowed to see where the banana would be hidden, but that the monkey would help them find it. Hence, the cartoon character was established as a partner in a cooperative coordination game. The hiding sequence was identical to the familiarization phase, however the placement of the banana was concealed by a barrier over the lower half of the screen and the two hiding places displayed different graphical shapes in the same colour. The monkey then held up piece of paper and a pencil. Pencil movement and a short scribble sound indicated that the monkey was drawing something. Children were reminded that the monkey was going to help them. Children were now prompted with the phrase "Where is the banana?" and the monkey's drawing was placed in the center between the two barriers. The drawing now served as a cue to guide children's choice. In the most basic experimental condition in study one, each hiding places, for example, showed either a solid blue circle or square and the paper displayed a simple outline drawing of either shape. Here, the drawing was a direct representation of the target shape. Crucially, however, children received only neutral feedback upon making a choice ("Ah, thank you") and there was no reveal animation. The game simply continued with the next round in which two new hiding places with different shapes were displayed, and hiding sequence was repeated as before.
-
-Except for the geometric shapes displayed on the hiding places and the respective drawing, the experimental representation was identical for all test trials. A single trial lasted roughly 30 to 60 seconds, depending on how swiftly children chose. Each study presented four different experimental conditions with four trials each in a blocked order for a maximum of 16 test trials. Children occasionally wished to stop before completing all trials, resulting in minor deviations of the total number of trials per condition that are submitted to analyses. Children that did not complete a minimum of eight test trials were not submitted to analysis and are reported below. The entire test session lasted about 12 minutes.
-
-### Stimuli and Experimental Manipulations
-Description of cues and targets and maybe how they were created. 
-
-For an illustration of the stimuli and example presentations, please see supplementary materials sections XX and XX.  
-
-### Data Handling and Analyses
-Participant choices were recorded by the experimental script and directly coded as correct or incorrect. Exclusions of data were solely made on the level of participants with regard to the exclusion criteria reported above. The analyses modeled participants' binary choices to predict the probability of children interpreting the cues correctly and to model how this probability would change as a function of their age. Logistic Bayesian generalized linear mixed models (GLMM) fitted children's responses (0/1) as a function of their age, the experimental condition and an interaction between trial and condition. Trial and sex were included as fixed effects to be controlled for. Trial number was added as a random slope within subject. To evaluate the relevance of age and condition for children’s performance, a full model was compared with a reduced model lacking the interaction of age and task by using WAIC scores and weights (McElreath, 2016). Furthermore, model estimates were inspected for the different predictors (including their 95% Credible Interval (CrI)). In each study, the most simple condition was set as the reference level within conditions. All Bayesian models used default priors and were run in Stan (http://mc-stan.org/) via the function brm of the package brms (Bürkner, 2017).
-
-To answer the main research question of when children performed above chance in any of the study's conditions, we use the models to predict the developmental trajectory (with 95% CrI) for each condition (expected values of the posterior predicted dist via fct fitted). The criterion for settling when children passed criterion as a group was the point at which the 95% CrI for a particular trajectory did no longer overlap with a midline demarcating the 50% chance level. 
-
-To further explore the data, participants were binned according to their age in years. To test whether group-level performance was above chance in all experimental groups, we used two-tailed one-sample t-tests with the chance level set to .5. We provide Cohen's d as a standardized effect size for significance testing (computed via the function `cohensD`). 
-
-- deviation from preregistration
-- elpd_diff ist neu und zusätzlich
-- most simple condition als reference ...warum
-- bezeichnung output fitted function --> wie macht brms die confidence intervalle um die mittelwerte --> 
-- "expected value of the posterior predicted distribution"
-
-## Study 1
-
-### Participants
-A sample of `r rep.age.table.data["study1", "N"]` children (M = `r rep.age.table.data["study1", "Mean"]` months, SD = `r rep.age.table.data["study1", "SD"]` months, range `r rep.age.table.data["study1", "Min"]` - `r rep.age.table.data["study1", "Max"]` months; `r rep.age.table.data["study1", "female"]` female) participated in study 1. In addition, `r rep.drop.table.data["study1", "N"]` children (`r rep.drop.table.data["study1", "female"]` female) were tested but excluded from analysis for not succeeding during familiarization (N = `r rep.drop.table.data["study1", "fail_in_fam"]`), for not completing at least eight out of 16 test trials (N = `r rep.drop.table.data["study1", "quit_early"]`), or due to being fussy (N = `r rep.drop.table.data["study1", "fussy_child"]`). For `r rep.drop.table.data["study1", "language"]` children, experimenters only learned during testing that children were not fluent enough in German to participate as their families had only recently migrated. Finally, `r rep.drop.table.data["study1", "technical"]` children had to be excluded due to technical issues. For a graphical and tabular overview of participants and exclusions across all three studies presented here, please see Appendix A.
-
-### Stimuli
-
-
-### Analyses
-A total of `r sum(rep.s1.trials$Trials)` trials (mean per condition = `r mean(rep.s1.trials$Trials)`, range: `r min(rep.s1.trials$Trials)` - `r max(rep.s1.trials$Trials)`) from `r rep.age.table.data["study1", "N"]` participants were submitted for analysis. The full model notation was $'correct~condition*z.age+z.trial+sex+(z.trial|subid)'$. In addition, a null model lacking the interaction of condition and age was fitted. 
-
 ```{r rep_s1_bayes, echo = FALSE, include=F, eval=F, results='asis'}
 
 # NOTE: this is section is not evaluated to save time during knitting
@@ -473,92 +424,6 @@ p1 <- f1 %>%
 
 ```
 
-### Results
-
-Posterior predictive checks for both full and null model indicated excellent fit of observed data and model predictions (see supplements for more information). Comparing the models using weights based on the Widely Applicable Information Criterion (WAIC) yielded `r round(S1.weights$value[2]*100,2)`% of the model weight for the full model, and `r round(S1.weights$value[1]*100,2)`% for the null model. Hence, the full model generally has a higher probability of making accurate predictions. Directly comparing the models' WAIC via expected log predictive density (ELPD) corroborates this (ELPD WAIC; full model = `r round(S1.comp$elpd_waic[1],2)`; null model = `r round(S1.comp$elpd_waic[2],2)`). The standard error of the difference in predictive accuracy (`r round(S1.comp$se_diff[2],2)`), however is lower than the difference itself (`r round(S1.comp$elpd_diff[2],2)`). While the full model slightly exceeds in predictive power, evidence in favor of this model is not decisive. A similar comparison via Leave-One-Out Cross-Validation (LOO) provided essentially the same results. In absence of conclusive evidence for either model, we report the results for the full model below in line with the preregistration.
-
-Relative to the *Representation* condition, the *Simple Form Analogy* (beta = `r S1.full.coef["SimpleFormAnalogy", "mean"]`, 95% CI [`r S1.full.coef["SimpleFormAnalogy", "q5"]`, `r S1.full.coef["SimpleFormAnalogy", "q95"]`) and *Complex Form Analogy* (β = `r S1.full.coef["ComplexFormAnalogy", "mean"]`, 95% CI [`r S1.full.coef["ComplexFormAnalogy", "q5"]`, `r S1.full.coef["ComplexFormAnalogy", "q95"]`) have a considerably lower probability of correct responses. The *Pars Pro Toto* condition has no clear difference from the reference condition (β = `r S1.full.coef["ParsProToto", "mean"]`, 95% CI [`r S1.full.coef["ParsProToto", "q5"]`, `r S1.full.coef["ParsProToto", "q95"]`). Interaction terms between age and condition were not reliably different from zero. The developmental curves for each condition have essentially similar trajectories.
-
-Finally, by tracing when the lower bound of the 95% CrI exceeds the chance level of 50%, it is possible to report when children's group level performance exceeds chance level and becomes robustly systematic in favor of the correct choice option. In study 1, children perform above chance in the *Representation* condition as early as `r p1$months[p1$condition == "Representation"]` months. Quickly after at XX months, children succed in the *Pars Pro Toto* condition. In the more abstract conditions *Simple Form Analogy* and Complex Form Analogy, preschoolers meet criterion at `r p1$months[p1$condition == "Simple Form Analogy"]` and `r p1$months[p1$condition == "Complex Form Analogy"]` months respectively. 
-
-```{r S1_bayes_plot_no_facets, echo=FALSE, eval=T, warning = F, message=F}
-
-# Plot without facetting
-
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d1, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p1, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p1, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p1, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  #facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-
-
-```
-
-```{r S1_bayes_plot, echo=FALSE, eval=T, warning = F, message=F}
-
-p1 <- f1 %>%
-  mutate(age = age * 365.25)%>%
-  group_by(condition)%>%
-  summarise(
-    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
-    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
-    days = age[which.min(abs(Q2.5-.5))],
-    months = round(days/30.5),
-    years = round(days/365.25, 2),
-    monthlabels = as.character(paste(months, "months"))
-    )
-
-S1_plot <- ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d1, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p1, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p1, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p1, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-#
-S1_plot
-
-```
-
-~~Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.~~
-
-## Study 2
-
-
-### Participants
-A total of `r rep.age.table.data["study2", "N"]` three- to seven-year-old children (M = `r rep.age.table.data["study2", "Mean"]` months, SD = `r rep.age.table.data["study2", "SD"]` months, range `r rep.age.table.data["study2", "Min"]` - `r rep.age.table.data["study2", "Max"]` months; `r rep.age.table.data["study2", "female"]` female) participated. In addition, `r rep.drop.table.data["study2", "N"]` children (`r rep.drop.table.data["study2", "female"]` female) were tested but excluded from analysis for failing familiarization (N = `r rep.drop.table.data["study2", "fail_in_fam"]`), being fussy (N = `r rep.drop.table.data["study2", "fussy_child"]`), not being fluent in German (N = `r rep.drop.table.data["study2", "language"]`) or due to technical issues (N = `r rep.drop.table.data["study2", "technical"]`).
-
-### Materials
-
-### Data analysis
-A total of `r sum(rep.s2.trials$Trials)` trials (mean per condition = `r mean(rep.s2.trials$Trials)`, range: `r min(rep.s2.trials$Trials)` - `r max(rep.s2.trials$Trials)`) from `r rep.age.table.data["study2", "N"]` participants were submitted for analysis. The full model notation was $'correct~condition*z.age+z.trial+sex+(z.trial|subid)'$. In addition, a null model lacking the interaction of condition and age was fitted. 
-
-
-
-### Results
-
 ```{r S2_bayes_fullmodel, echo=FALSE, include=F, eval=F}
 
 
@@ -648,88 +513,6 @@ d2 <- rep.S2.bayes.data%>%
 
 ```
 
-```{r S2_bayes_plot, echo=FALSE, eval=T, warning=F, message=F}
-
-p2 <- f2 %>%
-  mutate(age = age * 365.25)%>%
-  group_by(condition)%>%
-  summarise(
-    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
-    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
-    days = age[which.min(abs(Q2.5-.5))],
-    months = round(days/30.5),
-    years = round(days/365.25, 2),
-    monthlabels = as.character(paste(months, "months"))
-  )
-
-
-
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d2, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f2, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p2, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p2, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p2, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  #facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-```
-
-```{r S2_mixbayes_plot, echo=FALSE, eval=T, warning=F, message=F}
-
-
-p2 <- f2 %>%
-  mutate(age = age * 365.25)%>%
-  group_by(condition)%>%
-  summarise(
-    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
-    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
-    days = age[which.min(abs(Q2.5-.5))],
-    months = round(days/30.5),
-    years = round(days/365.25, 2),
-    monthlabels = as.character(paste(months, "months"))
-  )
-
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d2, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f2, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p2, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p2, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p2, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-```
-
-## Study 3
-General note on the aim of the investigation
-
-### Participants
-A total of `r rep.age.table.data["study3", "N"]` three- to seven-year-old children (M = `r rep.age.table.data["study3", "Mean"]` months, SD = `r rep.age.table.data["study3", "SD"]` months, range `r rep.age.table.data["study3", "Min"]` - `r rep.age.table.data["study3", "Max"]` months; `r rep.age.table.data["study3", "female"]` female) participated. In addition, `r rep.drop.table.data["study3", "N"]` children (`r rep.drop.table.data["study3", "female"]` female) were tested but excluded for low performance during familiarization (N = `r rep.drop.table.data["study3", "fail_in_fam"]`), for not completing at least eight out of 16 test trials (N = `r rep.drop.table.data["study3", "quit_early"]`), or being fussy (N = `r rep.drop.table.data["study3", "fussy_child"]`). Another `r rep.drop.table.data["study3", "language"]`children were excluded due to language problems or technical issues (N = `r rep.drop.table.data["study3", "technical"]`).
-
-### Materials
-
-### Analysis
-For study three, `r sum(rep.s3.trials$Trials)` trials (mean per condition = `r mean(rep.s3.trials$Trials)`, range: `r min(rep.s3.trials$Trials)` - `r max(rep.s3.trials$Trials)`) from `r rep.age.table.data["study3", "N"]` participants were submitted for analysis. Data were analyzed both with a full model ($'correct~condition*z.age+z.trial+sex+(z.trial|subid)'$) and a null model lacking the interaction of condition and age. 
-
-### Results
-
 ```{r S3_bayes_fullmodel, echo=FALSE, include=F, eval=F}
 
 
@@ -814,6 +597,231 @@ d3 <- rep.S3.bayes.data%>%
 
 ```
 
+
+# Introduction
+
+See googledocs for drafts of the intro and discussion. There needs to be at least one citation in order for this document to knit, so consider that preschoolers invent and comprehend iconic gestures spontaneously [@bohn2019young].
+
+
+# General Methods
+
+All three studies presented here share the same methods and analyses. For convenience, common aspects of the procedure, participant recruiting and stimulus design are reported first before discussing the individual studies respectively.
+
+## Setup and Data Collection
+
+In order to trace the development of children's symbolic competence continuously across the preschool years, data collection aimed at testing two children per month of age between the third and the seventh birthday for a total 96 participants while euqally balancing male and female participants.  As children participated on the basis of availability and data collection was done by several experimenter teams visiting different institutions in parallel, the resulting final samples slightly exceed this preregistered minimum sample size. The final sample approximate an equal distribution of male and female participants and
+while aligning with conventions in the field, by providing at least 24 participants per condition and year of age. 
+
+All participants were recruited in **MASKED FOR REVIEW**, a medium-sized middle-European city, and came from a predominantly white population of middle to high income families. They were contacted via a database of participants for child development studies to which their parents had voluntarily signed up. Children were tested in day- and afterschoolcare for the most part, and occasionally in the lab or at home. The studies were reviewed and approved by an internal ethics committee at the **MASKED FOR REVIEW**. Data collection took place from June 2022 to February 2023. 
+
+During test sessions, one child and an experimenter sat down together to play a picture-book-style hiding game presented on a touch-screen laptop. Verbal instructions were played back by the experimental script. Experimenters supervised children during data collection an assisted with a fixed set of verbal prompts when necessary. Test sessions always took place in a quiet separate room. See figure \@ref(fig:figure-setup) for an illustration of the setup.
+
+(ref:testillustration-caption) Illustration of setup. Experimenters were sitting behind the children in order to not distract them from the task and supervised data collection.
+
+```{r figure-setup, fig.cap = "(ref:testillustration-caption)", fig.align = "center", echo = FALSE}
+knitr::include_graphics("../illustrations/Symlit_Rep_Setup_fromarrows.png", dpi = 108)
+
+```
+
+## Procedure
+
+*Familiarization*. Experimenters invited children to join a hiding game and to follow the narration of the story. First, the presentation introduced a cartoon monkey. This character then placed two barriers on the bottom left and right side of the screen. After holding up a banana, one of the barriers was lifted, the banana was placed there and the barrier was lowered to conceal the banana. Children were now prompted to touch the hiding place and in doing so the barrier of their choice was lifted to reveal the banana if they chose correctly. Hence to succeed here, children solely had to remember where the item went and touch this part of the screen after a few seconds. The experimental script provided immediate feedback upon children's choice ("yes, great job!"; "No, that's not it. Let's try again!") during the familiarization. To ensure that children were familiar with the goal of the game and the touch interface, they first had to complete a set of four to eight familiarization trials with a success rate of 75%. In case a child did not reply correctly in three out of four trials, another four familiarization trials were provided. If the child was correct in six out of eight trials, she was included in the main sample. Children that did not succeed during familiarization were allowed to participate but their data was not submitted to analysis. These children are reported below as failing the familiarization phase.
+
+*Test phase*. The main phase of the study commenced with announcing that the cartoon character had an idea for a new game. The narration conveyed that children were not allowed to see where the banana would be hidden, but that the monkey would help them find it. Hence, the cartoon character was established as a partner in a cooperative coordination game. The hiding sequence was identical to the familiarization phase, however the placement of the banana was concealed by a barrier over the lower half of the screen and the two hiding places displayed different graphical shapes in the same colour. The monkey then held up piece of paper and a pencil. Pencil movement and a short scribble sound indicated that the monkey was drawing something. Children were reminded that the monkey was going to help them. Children were now prompted with the phrase "Where is the banana?" and the monkey's drawing was placed in the center between the two barriers. The drawing now served as a cue to guide children's choice. In the most basic experimental condition in study one, each hiding places, for example, showed either a solid blue circle or square and the paper displayed a simple outline drawing of either shape. Here, the drawing was a direct representation of the target shape. Crucially, however, children received only neutral feedback upon making a choice ("Ah, thank you") and there was no reveal animation. The game simply continued with the next round in which two new hiding places with different shapes were displayed, and hiding sequence was repeated as before.
+
+Except for the geometric shapes displayed on the hiding places and the respective drawing, the experimental representation was identical for all test trials. A single trial lasted roughly 30 to 60 seconds, depending on how swiftly children chose. Each study presented four different experimental conditions with four trials each in a blocked order for a maximum of 16 test trials. Children occasionally wished to stop before completing all trials, resulting in minor deviations of the total number of trials per condition that are submitted to analyses. Children that did not complete a minimum of eight test trials were not submitted to analysis and are reported below. The entire test session lasted about 12 minutes.
+
+## Stimuli and Experimental Manipulations
+Description of cues and targets and maybe how they were created. 
+
+For an illustration of the stimuli and example presentations, please see supplementary materials sections XX and XX.
+
+## Data Handling and Analyses
+Participant choices were recorded by the experimental script and directly coded as correct or incorrect. Exclusions of data were solely made on the level of participants with regard to the exclusion criteria reported above. The analyses modeled participants' binary choices to predict the probability of children interpreting the cues correctly and to model how this probability would change as a function of their age. Logistic Bayesian generalized linear mixed models (GLMM) fitted children's responses (0/1) as a function of their age, the experimental condition and an interaction between trial and condition. Trial and sex were included as fixed effects to be controlled for. Trial number was added as a random slope within subject. To evaluate the relevance of age and condition for children’s performance, a full model was compared with a reduced model lacking the interaction of age and task by using WAIC scores and weights (McElreath, 2016). Furthermore, model estimates were inspected for the different predictors (including their 95% Credible Interval (CrI)). In each study, the most simple condition was set as the reference level within conditions. All Bayesian models used default priors and were run in Stan (http://mc-stan.org/) via the function brm of the package brms (Bürkner, 2017).
+
+To answer the main research question of when children performed above chance in any of the study's conditions, we use the models to predict the developmental trajectory (with 95% CrI) for each condition (expected values of the posterior predicted dist via fct fitted). The criterion for settling when children passed criterion as a group was the point at which the 95% CrI for a particular trajectory did no longer overlap with a midline demarcating the 50% chance level. 
+
+To further explore the data, participants were binned according to their age in years. To test whether group-level performance was above chance in all experimental groups, we used two-tailed one-sample t-tests with the chance level set to .5. We provide Cohen's d as a standardized effect size for significance testing (computed via the function `cohensD`). 
+
+- deviation from preregistration
+- elpd_diff ist neu und zusätzlich
+- most simple condition als reference ...warum
+- bezeichnung output fitted function --> wie macht brms die confidence intervalle um die mittelwerte --> 
+- "expected value of the posterior predicted distribution"
+
+# Study 1
+
+## Participants
+A sample of `r rep.age.table.data["study1", "N"]` children (M = `r rep.age.table.data["study1", "Mean"]` months, SD = `r rep.age.table.data["study1", "SD"]` months, range `r rep.age.table.data["study1", "Min"]` - `r rep.age.table.data["study1", "Max"]` months; `r rep.age.table.data["study1", "female"]` female) participated in study 1. In addition, `r rep.drop.table.data["study1", "N"]` children (`r rep.drop.table.data["study1", "female"]` female) were tested but excluded from analysis for not succeeding during familiarization (N = `r rep.drop.table.data["study1", "fail_in_fam"]`), for not completing at least eight out of 16 test trials (N = `r rep.drop.table.data["study1", "quit_early"]`), or due to being fussy (N = `r rep.drop.table.data["study1", "fussy_child"]`). For `r rep.drop.table.data["study1", "language"]` children, experimenters only learned during testing that children were not fluent enough in German to participate as their families had only recently migrated. Finally, `r rep.drop.table.data["study1", "technical"]` children had to be excluded due to technical issues. For a graphical and tabular overview of participants and exclusions across all three studies presented here, please see Appendix A.
+
+## Stimuli
+
+## Analyses
+A total of `r sum(rep.s1.trials$Trials)` trials (mean per condition = `r mean(rep.s1.trials$Trials)`, range: `r min(rep.s1.trials$Trials)` - `r max(rep.s1.trials$Trials)`) from `r rep.age.table.data["study1", "N"]` participants were submitted for analysis. The full model notation was $'correct~condition*z.age+z.trial+sex+(z.trial|subid)'$. In addition, a null model lacking the interaction of condition and age was fitted. 
+
+## Results
+
+Posterior predictive checks for both full and null model indicated excellent fit of observed data and model predictions (see supplements for more information). Comparing the models using weights based on the Widely Applicable Information Criterion (WAIC) yielded `r round(S1.weights$value[2]*100,2)`% of the model weight for the full model, and `r round(S1.weights$value[1]*100,2)`% for the null model. Hence, the full model generally has a higher probability of making accurate predictions. Directly comparing the models' WAIC via expected log predictive density (ELPD) corroborates this (ELPD WAIC; full model = `r round(S1.comp$elpd_waic[1],2)`; null model = `r round(S1.comp$elpd_waic[2],2)`). The standard error of the difference in predictive accuracy (`r round(S1.comp$se_diff[2],2)`), however is lower than the difference itself (`r round(S1.comp$elpd_diff[2],2)`). While the full model slightly exceeds in predictive power, evidence in favor of this model is not decisive. A similar comparison via Leave-One-Out Cross-Validation (LOO) provided essentially the same results. In absence of conclusive evidence for either model, we report the results for the full model below in line with the preregistration.
+
+Relative to the *Representation* condition, the *Simple Form Analogy* (beta = `r S1.full.coef["SimpleFormAnalogy", "mean"]`, 95% CI [`r S1.full.coef["SimpleFormAnalogy", "q5"]`, `r S1.full.coef["SimpleFormAnalogy", "q95"]`) and *Complex Form Analogy* (beta = `r S1.full.coef["ComplexFormAnalogy", "mean"]`, 95% CI [`r S1.full.coef["ComplexFormAnalogy", "q5"]`, `r S1.full.coef["ComplexFormAnalogy", "q95"]`) have a considerably lower probability of correct responses. The *Pars Pro Toto* condition has no clear difference from the reference condition (beta= `r S1.full.coef["ParsProToto", "mean"]`, 95% CI [`r S1.full.coef["ParsProToto", "q5"]`, `r S1.full.coef["ParsProToto", "q95"]`). Interaction terms between age and condition were not reliably different from zero. The developmental curves for each condition have essentially similar trajectories.
+
+Finally, by tracing when the lower bound of the 95% CrI exceeds the chance level of 50%, it is possible to report when children's group level performance exceeds chance level and becomes robustly systematic in favor of the correct choice option. In study 1, children perform above chance in the *Representation* condition as early as `r p1$months[p1$condition == "Representation"]` months. Quickly after at XX months, children succed in the *Pars Pro Toto* condition. In the more abstract conditions *Simple Form Analogy* and Complex Form Analogy, preschoolers meet criterion at `r p1$months[p1$condition == "Simple Form Analogy"]` and `r p1$months[p1$condition == "Complex Form Analogy"]` months respectively. 
+
+For a conventional analysis binning participants according to their age in years, please see table \@ref(tab:suppl-descriptives-S1) in appendix C.
+
+```{r S1_bayes_plot_no_facets, echo=FALSE, eval=T, warning = F, message=F}
+
+# Plot without facetting
+
+ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d1, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p1, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p1, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p1, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  #facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+
+
+```
+
+```{r S1_bayes_plot, echo=FALSE, eval=F, warning = F, message=F}
+
+p1 <- f1 %>%
+  mutate(age = age * 365.25)%>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/365.25, 2),
+    monthlabels = as.character(paste(months, "months"))
+    )
+
+S1_plot <- ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d1, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p1, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p1, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p1, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+#
+S1_plot
+
+```
+
+# Study 2
+
+## Participants
+A total of `r rep.age.table.data["study2", "N"]` three- to seven-year-old children (M = `r rep.age.table.data["study2", "Mean"]` months, SD = `r rep.age.table.data["study2", "SD"]` months, range `r rep.age.table.data["study2", "Min"]` - `r rep.age.table.data["study2", "Max"]` months; `r rep.age.table.data["study2", "female"]` female) participated. In addition, `r rep.drop.table.data["study2", "N"]` children (`r rep.drop.table.data["study2", "female"]` female) were tested but excluded from analysis for failing familiarization (N = `r rep.drop.table.data["study2", "fail_in_fam"]`), being fussy (N = `r rep.drop.table.data["study2", "fussy_child"]`), not being fluent in German (N = `r rep.drop.table.data["study2", "language"]`) or due to technical issues (N = `r rep.drop.table.data["study2", "technical"]`).
+
+## Materials
+
+## Data analysis
+A total of `r sum(rep.s2.trials$Trials)` trials (mean per condition = `r mean(rep.s2.trials$Trials)`, range: `r min(rep.s2.trials$Trials)` - `r max(rep.s2.trials$Trials)`) from `r rep.age.table.data["study2", "N"]` participants were submitted for analysis. The full model notation was $'correct~condition*z.age+z.trial+sex+(z.trial|subid)'$. In addition, a null model lacking the interaction of condition and age was fitted. 
+
+## Results
+
+```{r S2_bayes_plot, echo=FALSE, eval=T, warning=F, message=F}
+
+p2 <- f2 %>%
+  mutate(age = age * 365.25)%>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/365.25, 2),
+    monthlabels = as.character(paste(months, "months"))
+  )
+
+ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d2, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f2, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p2, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p2, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p2, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  #facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+```
+
+```{r S2_mixbayes_plot, echo=FALSE, eval=F, warning=F, message=F}
+
+
+p2 <- f2 %>%
+  mutate(age = age * 365.25)%>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/365.25, 2),
+    monthlabels = as.character(paste(months, "months"))
+  )
+
+ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d2, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f2, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p2, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p2, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p2, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+```
+
+# Study 3
+General note on the aim of the investigation
+
+## Participants
+A total of `r rep.age.table.data["study3", "N"]` three- to seven-year-old children (M = `r rep.age.table.data["study3", "Mean"]` months, SD = `r rep.age.table.data["study3", "SD"]` months, range `r rep.age.table.data["study3", "Min"]` - `r rep.age.table.data["study3", "Max"]` months; `r rep.age.table.data["study3", "female"]` female) participated. In addition, `r rep.drop.table.data["study3", "N"]` children (`r rep.drop.table.data["study3", "female"]` female) were tested but excluded for low performance during familiarization (N = `r rep.drop.table.data["study3", "fail_in_fam"]`), for not completing at least eight out of 16 test trials (N = `r rep.drop.table.data["study3", "quit_early"]`), or being fussy (N = `r rep.drop.table.data["study3", "fussy_child"]`). Another `r rep.drop.table.data["study3", "language"]`children were excluded due to language problems or technical issues (N = `r rep.drop.table.data["study3", "technical"]`).
+
+## Materials
+
+## Analysis
+For study three, `r sum(rep.s3.trials$Trials)` trials (mean per condition = `r mean(rep.s3.trials$Trials)`, range: `r min(rep.s3.trials$Trials)` - `r max(rep.s3.trials$Trials)`) from `r rep.age.table.data["study3", "N"]` participants were submitted for analysis. Data were analyzed both with a full model ($'correct~condition*z.age+z.trial+sex+(z.trial|subid)'$) and a null model lacking the interaction of condition and age. 
+
+## Results
+
 ```{r S3_bayes_plot, echo=FALSE, eval=T, warning=F, message=F}
 
 # Plot without facetting
@@ -850,7 +858,7 @@ ggplot()+
 
 ```
 
-```{r S3_mixbayes_plot, echo=FALSE, eval=T, warning=F, message=F}
+```{r S3_mixbayes_plot, echo=FALSE, eval=F, warning=F, message=F}
 
 p3 <- f3 %>%
   mutate(age = age * 365.25)%>%
@@ -886,21 +894,20 @@ ggplot()+
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-```{r summaryresults,  echo=FALSE, eval=T, warning=F, message=F}
+```{r summaryresults,  echo=FALSE, eval=F, warning=F, message=F}
 
 p_all <- rbind(p1,p2,p3)
 p_all %>% arrange(months)
 
 ```
 
-
 # Additional Analyses
 
 possible add-ons
-- a model including all conditions
-- comparing difficulty across items and tasks
-- evaluating manipulations such as complex/simple; 
-- reaction time analyses
+a model including all conditions
+comparing difficulty across items and tasks
+evaluating manipulations such as complex/simple; 
+reaction time analyses
 
 Additional Analyses:
 
@@ -913,15 +920,11 @@ round vs angular
 - Study One Study1 - cue A = rund, cue B eckig ...if one of them is easier
 
 Reaction Times
-just reaction times and perc correct across aged
+- just reaction times and perc correct across aged
 
-
-# General Discussion
+# Discussion
 See googledocs for drafts of the intro and discussion
 
-
-# Conclusion
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
 \newpage
 
@@ -930,28 +933,32 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 ::: {#refs custom-style="Bibliography"}
 :::
 
+```{r, eval =FALSE}
+# (APPENDIX) Appendix {-}
 
-
-
-
+```
 
 
 \newpage
 
-# (APPENDIX) Appendix {-}
+
 
 ```{r child = "appendix_a_participants.Rmd"}
 ```
 
+\newpage
 ```{r child = "appendix_b_stimuli.Rmd"}
 ```
 
+\newpage
 ```{r child = "appendix_c_descriptives.Rmd"}
 ```
 
+\newpage
 ```{r child = "appendix_d_diagnostics.Rmd"}
 ```
 
+\newpage
 ```{r child = "appendix_e_additional.Rmd"}
 ```
 
