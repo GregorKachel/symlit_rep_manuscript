@@ -1075,6 +1075,13 @@ ggsave(
 ```
 
 
+<!-- weitere zahlen -->
+```{r summaryresults,  echo=FALSE, eval=F, warning=F, message=F}
+
+p_all <- rbind(p1,p2,p3)
+p_all %>% arrange(months)
+
+```
 
 
 <!-- RESTE ...Backup von alten Versionen -->
@@ -1567,6 +1574,205 @@ d3 <- rep.S3.bayes.data%>%
   summarise(mean = mean(correct)) 
 
 ```
+
+```{r S1_bayes_plot_no_facets, echo=FALSE, eval=F, warning = F, message=F}
+
+# Plot without facetting
+
+ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d1, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p1, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p1, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p1, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  #facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+
+
+```
+
+```{r S1_bayes_plot, echo=FALSE, eval=F, warning = F, message=F}
+
+p1 <- f1 %>%
+  mutate(age = age * 365.25)%>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/365.25, 2),
+    monthlabels = as.character(paste(months, "months"))
+    )
+
+S1_plot <- ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d1, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p1, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p1, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p1, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+#
+S1_plot
+
+```
+
+```{r S2_bayes_plot, echo=FALSE, eval=F, warning=F, message=F}
+
+p2 <- f2 %>%
+  mutate(age = age * 365.25)%>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/365.25, 2),
+    monthlabels = as.character(paste(months, "months"))
+  )
+
+ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d2, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f2, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p2, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p2, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p2, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  #facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+```
+
+```{r S2_mixbayes_plot, echo=FALSE, eval=F, warning=F, message=F}
+
+
+p2 <- f2 %>%
+  mutate(age = age * 365.25)%>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/365.25, 2),
+    monthlabels = as.character(paste(months, "months"))
+  )
+
+ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d2, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f2, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p2, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p2, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p2, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+```
+
+```{r S3_bayes_plot, echo=FALSE, eval=T, warning=F, message=F}
+
+# Plot without facetting
+p3 <- f3 %>%
+  mutate(age = age * 365.25)%>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/365.25, 2),
+    monthlabels = as.character(paste(months, "months")))
+
+ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d3, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f3, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p3, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p3, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p3, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  #facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+
+
+
+```
+
+```{r S3_mixbayes_plot, echo=FALSE, eval=F, warning=F, message=F}
+
+p3 <- f3 %>%
+  mutate(age = age * 365.25)%>%
+  group_by(condition)%>%
+  summarise(
+    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
+    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
+    days = age[which.min(abs(Q2.5-.5))],
+    months = round(days/30.5),
+    years = round(days/365.25, 2),
+    monthlabels = as.character(paste(months, "months")))
+
+ggplot()+
+  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
+  geom_point(data = d3, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
+  geom_smooth(data = f3, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
+              stat = "identity", alpha = .25)+
+  geom_point(data=p3, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
+  geom_text(data=p3, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  geom_text(data=p3, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
+  theme_minimal()+
+  scale_color_ptol(name = "condition")+
+  scale_fill_ptol(name = "condition")+
+  facet_grid(~condition)+
+  labs(x = "Age", y="Proportion correct")+
+  ylim(0,1)+
+  xlim(3,7)+
+  theme(legend.position = "bottom")
+
+
+
+```
+
 <!-- Hier gehts los -->
 <!-- Hier gehts los -->
 <!-- Hier gehts los -->
@@ -1649,71 +1855,11 @@ For a conventional analysis binning participants according to their age in years
 
 ```{r figure-study1plot, fig.cap = "(ref:study1plot-caption)", fig.align = "center", echo = FALSE}
 
-knitr::include_graphics("../illustrations/final_plot.png", dpi = 108)
+knitr::include_graphics("../illustrations/plot_study1.png", dpi = 108)
 
 ```
 
 
-```{r S1_bayes_plot_no_facets, echo=FALSE, eval=T, warning = F, message=F}
-
-# Plot without facetting
-
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d1, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p1, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p1, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p1, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  #facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-
-
-```
-
-```{r S1_bayes_plot, echo=FALSE, eval=F, warning = F, message=F}
-
-p1 <- f1 %>%
-  mutate(age = age * 365.25)%>%
-  group_by(condition)%>%
-  summarise(
-    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
-    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
-    days = age[which.min(abs(Q2.5-.5))],
-    months = round(days/30.5),
-    years = round(days/365.25, 2),
-    monthlabels = as.character(paste(months, "months"))
-    )
-
-S1_plot <- ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d1, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p1, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p1, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p1, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-#
-S1_plot
-
-```
 
 # Study 2
 
@@ -1727,72 +1873,14 @@ A total of `r sum(rep.s2.trials$Trials)` trials (mean per condition = `r mean(re
 
 ## Results
 
-```{r S2_bayes_plot, echo=FALSE, eval=T, warning=F, message=F}
+(ref:study2plot-caption) Study 2 - Developmental Trajectories.
 
-p2 <- f2 %>%
-  mutate(age = age * 365.25)%>%
-  group_by(condition)%>%
-  summarise(
-    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
-    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
-    days = age[which.min(abs(Q2.5-.5))],
-    months = round(days/30.5),
-    years = round(days/365.25, 2),
-    monthlabels = as.character(paste(months, "months"))
-  )
+```{r figure-study2plot, fig.cap = "(ref:study2plot-caption)", fig.align = "center", echo = FALSE}
 
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d2, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f2, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p2, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p2, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p2, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  #facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
+knitr::include_graphics("../illustrations/plot_study2.png", dpi = 108)
 
 ```
 
-```{r S2_mixbayes_plot, echo=FALSE, eval=F, warning=F, message=F}
-
-
-p2 <- f2 %>%
-  mutate(age = age * 365.25)%>%
-  group_by(condition)%>%
-  summarise(
-    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
-    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
-    days = age[which.min(abs(Q2.5-.5))],
-    months = round(days/30.5),
-    years = round(days/365.25, 2),
-    monthlabels = as.character(paste(months, "months"))
-  )
-
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d2, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f2, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p2, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p2, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p2, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-```
 
 # Study 3
 General note on the aim of the investigation
@@ -1807,82 +1895,16 @@ For study three, `r sum(rep.s3.trials$Trials)` trials (mean per condition = `r m
 
 ## Results
 
-```{r S3_bayes_plot, echo=FALSE, eval=T, warning=F, message=F}
-
-# Plot without facetting
-p3 <- f3 %>%
-  mutate(age = age * 365.25)%>%
-  group_by(condition)%>%
-  summarise(
-    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
-    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
-    days = age[which.min(abs(Q2.5-.5))],
-    months = round(days/30.5),
-    years = round(days/365.25, 2),
-    monthlabels = as.character(paste(months, "months")))
-
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d3, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f3, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p3, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p3, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p3, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  #facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-
-
-
-```
-
-```{r S3_mixbayes_plot, echo=FALSE, eval=F, warning=F, message=F}
-
-p3 <- f3 %>%
-  mutate(age = age * 365.25)%>%
-  group_by(condition)%>%
-  summarise(
-    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
-    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
-    days = age[which.min(abs(Q2.5-.5))],
-    months = round(days/30.5),
-    years = round(days/365.25, 2),
-    monthlabels = as.character(paste(months, "months")))
-
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d3, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f3, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p3, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p3, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p3, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-
-
-```
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-```{r summaryresults,  echo=FALSE, eval=F, warning=F, message=F}
 
-p_all <- rbind(p1,p2,p3)
-p_all %>% arrange(months)
+
+(ref:study3plot-caption) Study 3 - Developmental Trajectories.
+
+```{r figure-study3plot, fig.cap = "(ref:study3plot-caption)", fig.align = "center", echo = FALSE}
+
+knitr::include_graphics("../illustrations/plot_study3.png", dpi = 108)
 
 ```
 

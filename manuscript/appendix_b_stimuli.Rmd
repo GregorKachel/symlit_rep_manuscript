@@ -15,3 +15,18 @@ knitr::include_graphics("../illustrations/Symlit_Rep_Setup_fromarrows.png", dpi 
 ```{r suppl-setup5, fig.cap = "Check this out", fig.align = "center", echo = FALSE}
 knitr::include_graphics("../illustrations/Symlit_Rep_Setup_fromarrows.png", dpi = 108)
 ```
+
+## Some graphic
+```{r suppl-setup6, fig.cap = "Check this out", fig.align = "center", echo = FALSE}
+knitr::include_graphics("../illustrations/Symlit_Rep_Setup_fromarrows.png", dpi = 108)
+```
+
+## Some graphic
+```{r suppl-setup7, fig.cap = "Check this out", fig.align = "center", echo = FALSE}
+knitr::include_graphics("../illustrations/Symlit_Rep_Setup_fromarrows.png", dpi = 108)
+```
+
+## Some graphic
+```{r suppl-setup58, fig.cap = "Check this out", fig.align = "center", echo = FALSE}
+knitr::include_graphics("../illustrations/Symlit_Rep_Setup_fromarrows.png", dpi = 108)
+```
