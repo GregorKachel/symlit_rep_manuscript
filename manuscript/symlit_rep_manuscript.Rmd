@@ -228,22 +228,21 @@ rep.S3.bayes.data  <- rep.data %>%
 add_colour <- function(df) {
   df %>%
     mutate(colour = case_when(
-      condition == "Representation" ~ "#006400",
-      condition == "Pars Pro Toto" ~ "#79e000",
-      condition == "Simple Form Analogy" ~ "#ff9609",
-      condition == "Complex Form Analogy" ~ "#ffc512",
-      condition == "Absolute Position" ~ "#4B0082",
-      condition == "Relative Position" ~ "#6A5ACD",
-      condition == "Orientation of Object" ~ "#8B0000",
-      condition == "Orientation of Feature" ~ "#A0522D",
-      condition == "Size of Object" ~ "#191970",
-      condition == "Size of Feature" ~ "#008080",
-      condition == "Number of Object" ~ "#800080",
-      condition == "Number of Feature" ~ "#8B008B",
+      condition == "Representation" ~ "#00441b",
+      condition == "Pars Pro Toto" ~ "#238b45",
+      condition == "Simple Form Analogy" ~ "#cc4c02",
+      condition == "Complex Form Analogy" ~ "#ff9609",
+      condition == "Absolute Position" ~ "#084081",
+      condition == "Relative Position" ~ "#2b8cbe",
+      condition == "Orientation of Object" ~ "#7B3F00",
+      condition == "Orientation of Feature" ~ "#B55239",
+      condition == "Size of Object" ~ "#2E004F", 
+      condition == "Size of Feature" ~ "#9370DB",
+      condition == "Number of Object" ~ "#67000d",
+      condition == "Number of Feature" ~ "#cb181d",
       TRUE ~ NA_character_
     ))
 }
-
 
 # condition_colours_df <- data.frame(
 #   condition = c(
@@ -297,7 +296,7 @@ add_colour <- function(df) {
 ```
 
 <!-- Prepare Demographics -->
-```{r S1S2s3_participant_demographics, echo=FALSE, eval=T}
+```{r S1S2s3_participant_demographics, echo=F, eval=T}
 
 rep.age.table.data  <- rep.data %>% 
   distinct(subid, .keep_all = TRUE) %>% # select only one line per participant
@@ -355,6 +354,136 @@ rep.s3.trials <- rep.S3.bayes.data %>%
     N = n_distinct(subid))
 
 ```
+
+```{r plot-participants-dots, echo = F, warning=F}
+
+age.plot.data <- rep.data %>% #select data
+  distinct(subid, .keep_all = TRUE) %>% # select only one line per participant
+  filter(valid != "drop")  %>%
+  mutate(sex = as.factor(sex))  %>%
+  mutate(sex = fct_recode(sex, "female" = "0","male"="1")) %>% 
+  rename(Sex = sex) %>% 
+  mutate(study = case_when(
+    study == "study1" ~ "Study 1",
+    study == "study2" ~ "Study 2",
+    study == "study3" ~ "Study 3",
+    TRUE ~ NA_character_))
+
+age.plot <- ggplot(age.plot.data, aes(x = agem, fill = Sex)) +
+  geom_dotplot(stackgroups = TRUE, binwidth = 1, binpositions = "all") +  
+  coord_fixed(ratio = 4, xlim = c(36, 84), ylim = c(0, 1.01)) +  # combine here
+  theme_bw() +
+  scale_x_continuous(name = "Age in Months", breaks = seq(36, 84, 12), minor_breaks = seq(36, 84, 1)) +
+  scale_y_continuous(name = "Participants", breaks = NULL) +
+  facet_wrap(~ study, ncol = 1) +
+  labs(fill = NULL) +
+  guides(fill = guide_legend(ncol =2, byrow = TRUE)) +  
+  theme_minimal() +
+  theme(
+    base_size = 13,
+    panel.grid.minor.x = element_line(linewidth = 0.25, linetype = 2),
+    panel.grid.major.x = element_line(linewidth = 1, linetype = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1),
+    strip.background = element_rect(colour = "grey30", size = 1),
+    strip.text = element_text(face = "bold", size = rel(.9), 
+                              margin = margin(t = 5, b = 8)),
+    axis.title = element_text(face = "bold", size = rel(.9)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = c(1, -0.06),              
+    legend.justification = c(1, 1),
+    legend.text = element_text(size = rel(.9)),
+    panel.grid.minor = element_blank()
+  )
+
+ggsave(
+  filename = "../illustrations/plot_supp_participants_S123.png",
+  plot = age.plot,
+  device = "png",
+  width = 9.5, height = 6,
+  dpi = 300,
+  units = "in",
+  bg = "white")
+# 
+# # display plot
+# img <- image_read("../illustrations/plot_participants_S123.png")
+# 
+# windows(width = 15, height = 10)  # On Windows
+# plot(img)
+
+
+
+```
+
+```{r plot-exclusions-dots, echo = F, warning=F}
+
+drop.plot.data <- rep.data %>% #select data
+  distinct(subid, .keep_all = TRUE) %>% # select only one line per participant
+  filter(valid == "drop") %>% 
+  mutate(study = case_when(
+    study == "study1" ~ "Study 1",
+    study == "study2" ~ "Study 2",
+    study == "study3" ~ "Study 3",
+    TRUE ~ NA_character_)) %>% 
+  mutate(drop = case_when(
+    drop == "fail_in_fam" ~ "< 75% Correct in Familiarization",
+    drop == "fussy_child" ~ "Fussy Child", 
+    drop == "language" ~ "Low Language Proficiency", 
+    drop == "quit_early" ~ "Quit Early",
+    drop == "technical" ~ "Technical Problem",
+    TRUE ~ NA_character_)) %>%  
+  mutate(drop = factor(drop, levels = c(
+    "< 75% Correct in Familiarization",
+    "Quit Early",
+    "Fussy Child",
+    "Low Language Proficiency",
+    "Technical Problem")))
+
+drop.plot <- ggplot(drop.plot.data, aes(x = agem, fill = drop)) +
+  geom_dotplot(stackgroups = TRUE, binwidth = 1, binpositions = "all") +  
+  theme_bw() +
+  scale_x_continuous(name = "Age in Months", breaks = seq(36, 84, 12), minor_breaks = seq(36, 84, 1)) +
+  scale_y_continuous(name = "Exclusions", breaks = NULL) +
+  coord_fixed(ratio = 4, xlim = c(36, 84), ylim = c(0, 1.5)) + 
+  facet_wrap(~ study, ncol = 1) +
+  labs(fill = NULL) +
+  guides(fill = guide_legend(ncol = 5, byrow = TRUE)) +  
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.grid.minor.x = element_line(linewidth = 0.25, linetype = 2),
+    panel.grid.major.x = element_line(linewidth = 1, linetype = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1),
+    strip.background = element_rect(colour = "grey30", size = 1),
+    strip.text = element_text(face = "bold", size = rel(.9), 
+                              margin = margin(t = 5, b = 8)),
+    axis.title = element_text(face = "bold", size = rel(.9)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = "bottom",
+    legend.justification = c(1, 1),
+    legend.text = element_text(size = rel(.9)),
+    legend.margin = margin(t = 2),
+    plot.margin = margin(10, 10, 10, 10),
+    panel.grid.minor = element_blank()
+  )
+
+ggsave(
+  filename = "../illustrations/plot_supp_exclusions_S123.png",
+  plot = drop.plot,
+  device = "png",
+  width = 9.5, height = 6,
+  dpi = 300,
+  units = "in",
+  bg = "white")
+
+
+# # display plot
+# img <- image_read("../illustrations/plot_supp_exclusions_S123.png")
+# 
+# windows(width = 15, height = 10)  # On Windows
+# plot(img)
+
+```
+
+
 
 <!-- Run full and null models for all three studies (not evaluated to save time) -->
 ```{r rep_s1_bayes, echo = FALSE, include=F, eval=F, results='asis'}
@@ -1703,7 +1832,7 @@ ggplot()+
 
 ```
 
-```{r S3_bayes_plot, echo=FALSE, eval=T, warning=F, message=F}
+```{r S3_bayes_plot, echo=FALSE, eval=F, warning=F, message=F}
 
 # Plot without facetting
 p3 <- f3 %>%
@@ -1847,7 +1976,7 @@ Posterior predictive checks for both full and null model indicated excellent fit
 
 Relative to the *Representation* condition, the *Simple Form Analogy* (beta = `r S1.full.coef["SimpleFormAnalogy", "mean"]`, 95% CI [`r S1.full.coef["SimpleFormAnalogy", "q5"]`, `r S1.full.coef["SimpleFormAnalogy", "q95"]`) and *Complex Form Analogy* (beta = `r S1.full.coef["ComplexFormAnalogy", "mean"]`, 95% CI [`r S1.full.coef["ComplexFormAnalogy", "q5"]`, `r S1.full.coef["ComplexFormAnalogy", "q95"]`) have a considerably lower probability of correct responses. The *Pars Pro Toto* condition has no clear difference from the reference condition (beta= `r S1.full.coef["ParsProToto", "mean"]`, 95% CI [`r S1.full.coef["ParsProToto", "q5"]`, `r S1.full.coef["ParsProToto", "q95"]`). Interaction terms between age and condition were not reliably different from zero. The developmental curves for each condition have essentially similar trajectories.
 
-Finally, by tracing when the lower bound of the 95% CrI exceeds the chance level of 50%, it is possible to report when children's group level performance exceeds chance level and becomes robustly systematic in favor of the correct choice option. In study 1, children perform above chance in the *Representation* condition as early as `r p1$months[p1$condition == "Representation"]` months. Quickly after at XX months, children succed in the *Pars Pro Toto* condition. In the more abstract conditions *Simple Form Analogy* and Complex Form Analogy, preschoolers meet criterion at `r p1$months[p1$condition == "Simple Form Analogy"]` and `r p1$months[p1$condition == "Complex Form Analogy"]` months respectively. 
+Finally, by tracing when the lower bound of the 95% CrI exceeds the chance level of 50%, it is possible to report when children's group level performance exceeds chance level and becomes robustly systematic in favor of the correct choice option. In study 1, children perform above chance in the *Representation* condition as early as `r p1$months[p1$condition == "Representation"]` months. Quickly after at XX months, children succeed in the *Pars Pro Toto* condition. In the more abstract conditions *Simple Form Analogy* and Complex Form Analogy, preschoolers meet criterion at `r p1$months[p1$condition == "Simple Form Analogy"]` and `r p1$months[p1$condition == "Complex Form Analogy"]` months respectively. 
 
 For a conventional analysis binning participants according to their age in years, please see table \@ref(tab:suppl-descriptives-S1) in appendix C.
 
