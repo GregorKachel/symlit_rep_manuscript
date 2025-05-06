@@ -1,8 +1,6 @@
 
 # Appendix A - Participants and Exclusions
 
-Data collection aimed at testing two children per month of age between the third and seventh birthday for a minimum of 96 children per study. For an overview of the sample distribution, please see figure \@ref(fig:suppl-participants-dots).
-
 ```{r total participants}
 
 # In order to trace children's development continuously across the preschool years. In order to align with conventions in the field, the study aimed to test at least two children per month of age between the third and seventh birthday for a minimum of 96 participants. As occasionally children participated on the basis of availability, the final sample comprises `r sum(rep.age.table.data$N)` children (`r sum(rep.age.table.data$female)` female) between `r min(rep.age.table.data$Min)` and `r min(rep.age.table.data$Max)` months of age.
@@ -10,12 +8,14 @@ Data collection aimed at testing two children per month of age between the third
 ```
 
 
-```{r suppl-participants-dots, fig.cap = "Distribution of Participants across the age-range in all three studies. Dots represent individuals. Colors indicate their respective sex.", fig.align = "center", echo = FALSE, out.width = "100%"}
+```{r suppl-participants-dots, fig.cap = "Distribution of Participants across the age-range in all three studies. Dots represent individuals. Colors indicate their respective sex.", fig.align = "center", echo = FALSE, out.width = "80%"}
+
 knitr::include_graphics(knitr::plot_crop("../illustrations/plot_supp_participants_S123.png"))
+
 ```
 
-The total number of participants in all three studies comprises XX children. In addition, XX children were tested but not included in the data set due to XXXXXXXX. For an overview of how the respective exclusions are distributed across the age range, please see figure \@ref(fig:suppl-drops-dots). Exclusions due to low performance during familiarization occured almost exclusively between the third and fourth birthday. All other exclusion criteria appear to be randomly distributed across the age range. 
+```{r suppl-exclusions-dots, fig.cap = "Distribution of Exclusions across the age-range in all three studies. Dots represent individuals. Colors indicate why children where not submitted to analyses.", fig.align = "center", echo = FALSE, out.width = "70%"}
 
-```{r suppl-exclusions-dots2, fig.cap = "Distribution of Exclusions across the age-range in all three studies. Dots represent individuals. Colors indicate why children where not submitted to analyses.", fig.align = "center", echo = FALSE, out.width = "100%"}
 knitr::include_graphics(knitr::plot_crop("../illustrations/plot_supp_exclusions_S123.png"))
+
 ```
