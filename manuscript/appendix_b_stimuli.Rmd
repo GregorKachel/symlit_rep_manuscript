@@ -22,13 +22,13 @@ knitr::include_graphics(knitr::plot_crop("../illustrations/stimuli complete S1.p
 
 ```{r suppl-plot-S2-stimuli, fig.cap = "*Stimuli for Study 2.* Panels illustrate all items used in the conditions (A) Absolute Position, (B) Relative Position, (C) Orientation of Object and (D) Orientation of Feature.", fig.align = "center", echo = FALSE, out.width = "83%"}
 
-knitr::include_graphics(knitr::plot_crop("../illustrations/stimuli complete S1.png"))
+knitr::include_graphics(knitr::plot_crop("../illustrations/stimuli complete S2.png"))
 
 ```
 
 
 ```{r suppl-plot-S3-stimuli, fig.cap = "*Stimuli for Study 3.* Panels illustrate all items used in the conditions (A) Size of Object, (B) Size of Feature, (C) Number of Object and (D) Number of Feature.", fig.align = "center", echo = FALSE, out.width = "83%"}
 
-knitr::include_graphics(knitr::plot_crop("../illustrations/stimuli complete S1.png"))
+knitr::include_graphics(knitr::plot_crop("../illustrations/stimuli complete S3.png"))
 
 ```

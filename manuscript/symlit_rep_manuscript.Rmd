@@ -84,7 +84,7 @@ appendix: # to change filenames, also see end of document
     
 ---
 
-<!-- This chunk inspects the input but hides the code and output -->
+<!-- Packages, Setup, Read data for all studies, and prepare for analyses -->
 ```{r setup, include = FALSE}
 library("papaja")
 r_refs("library.bib")
@@ -134,7 +134,6 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 
 ```
 
-<!-- Read data for all studies and prepare for analyses -->
 ```{r rep_read_data, include = FALSE}
 
 # Full data set including all participants (i.e. including dropped participants)
@@ -512,7 +511,12 @@ S1.null.bm <- add_criterion(S1.null.bm, c("loo", "waic"))
 
 ### MODEL COMPARISON
 S1.comp <- loo_compare(S1.null.bm, S1.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
-S1.weights <- model_weights(S1.null.bm, S1.full.bm, criterion = "waic") %>% as_tibble(rownames = "index")
+S1.comp <- data.frame(S1.comp, row.names = "index")
+
+S1.weights <- model_weights(S1.null.bm, S1.full.bm, criterion = "waic") 
+S1.weights <- S1.weights %>% as_tibble(rownames = "index")
+S1.weights <- data.frame(S1.weights, row.names = "index")
+
 # "significant" if elpd_diff > 2*se_diff (confer Sivula et al., 2020)
 
 ### LOO COMPARISON
@@ -568,7 +572,14 @@ S2.null.bm <- add_criterion(S2.null.bm, c("loo", "waic"))
 
 ### MODEL COMPARISON
 S2.comp <- loo_compare(S2.null.bm, S2.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
-S2.weights <- model_weights(S2.null.bm, S2.full.bm, criterion = "waic") %>% as_tibble(rownames = "index")
+S2.comp <- data.frame(S2.comp, row.names = "index")
+
+
+S2.weights <- model_weights(S2.null.bm, S2.full.bm, criterion = "waic") 
+S2.weights <- S2.weights %>% as_tibble(rownames = "index")
+S2.weights <- data.frame(S2.weights, row.names = "index")
+
+
 # "significant" if elpd_diff > 2*se_diff (confer Sivula et al., 2020)
 
 ### LOO COMPARISON
@@ -625,7 +636,16 @@ S3.null.bm <- add_criterion(S3.null.bm, c("loo", "waic"))
 
 ### MODEL COMPARISON
 S3.comp <- loo_compare(S3.null.bm, S3.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
-S3.weights <- model_weights(S3.null.bm, S3.full.bm, criterion = "waic") %>% as_tibble(rownames = "index")
+S3.comp <- data.frame(S3.comp, row.names = "index")
+
+
+S3.weights <- model_weights(S3.null.bm, S3.full.bm, criterion = "waic") 
+S3.weights <- S3.weights %>% as_tibble(rownames = "index")
+S3.weights <- data.frame(S3.weights, row.names = "index")
+
+
+
+
 # "significant" if elpd_diff > 2*se_diff (confer Sivula et al., 2020)
 
 ### LOO COMPARISON
@@ -660,6 +680,7 @@ saveRDS(S3.weights, "../models/S3.weights.rds")
 
 S1.full.bm <- readRDS("../models/S1.full.bm.rds")
 S1.null.bm <- readRDS("../models/S1.null.bm.rds")
+
 S1.comp <- readRDS("../models/S1.comp.rds")
 S1.weights <- readRDS("../models/S1.weights.rds")
 
@@ -686,14 +707,14 @@ S1.full.coef <- summarise_draws(as_draws_df(S1.full.bm)) %>%
 
 S1.null.coef <- summarise_draws(as_draws_df(S1.null.bm)) %>%
   filter(grepl("^b_", variable))
-
-# mean(S1.full.coef_table$ess_bulk)
-# min(S1.full.coef_table$ess_bulk)
-# max(S1.full.coef_table$ess_bulk)
 # 
-# mean(S1.null.coef_table$ess_bulk)
-# min(S1.null.coef_table$ess_bulk)
-# max(S1.null.coef_table$ess_bulk)
+# mean(S1.full.coef$ess_bulk)
+# min(S1.full.coef$ess_bulk)
+# max(S1.full.coef$ess_bulk)
+# 
+# mean(S1.null.coef$ess_bulk)
+# min(S1.null.coef$ess_bulk)
+# max(S1.null.coef$ess_bulk)
 
 
 ```
@@ -702,6 +723,7 @@ S1.null.coef <- summarise_draws(as_draws_df(S1.null.bm)) %>%
 
 S2.full.bm <- readRDS("../models/S2.full.bm.rds")
 S2.null.bm <- readRDS("../models/S2.null.bm.rds")
+
 S2.comp <- readRDS("../models/S2.comp.rds")
 S2.weights <- readRDS("../models/S2.weights.rds")
 
@@ -729,19 +751,61 @@ S2.full.coef <- summarise_draws(as_draws_df(S2.full.bm)) %>%
 S2.null.coef <- summarise_draws(as_draws_df(S2.null.bm)) %>%
   filter(grepl("^b_", variable))
 
-# mean(S2.full.coef_table$ess_bulk)
-# min(S2.full.coef_table$ess_bulk)
-# max(S2.full.coef_table$ess_bulk)
 # 
-# mean(S2.null.coef_table$ess_bulk)
-# min(S2.null.coef_table$ess_bulk)
-# max(S2.null.coef_table$ess_bulk)
-
+# mean(S2.full.coef$ess_bulk)
+# min(S2.full.coef$ess_bulk)
+# max(S2.full.coef$ess_bulk)
+# 
+# mean(S2.null.coef$ess_bulk)
+# min(S2.null.coef$ess_bulk)
+# max(S2.null.coef$ess_bulk)
 
 
 ```
 
 ```{r rep_s3_inspect, echo = FALSE, include=F, eval=T, results='asis'}
+
+
+S3.full.bm <- readRDS("../models/S3.full.bm.rds")
+S3.null.bm <- readRDS("../models/S3.null.bm.rds")
+
+S3.comp <- readRDS("../models/S3.comp.rds") 
+S3.weights <- readRDS("../models/S3.weights.rds")
+
+
+## POSTERIOR PREDICTICE CHECKS
+## Check plots ...they look good, as expected in binomial models
+# pp_check(S3.full.bm)
+# pp_check(S3.null.bm)
+# pp_check(S3.full.bm, type = "bars")
+# pp_check(S3.null.bm, type = "bars")
+
+# ### EFFECTICE SAMPLE SIZES
+# ## inspect rhat --> always 1 --> good
+# ## inspect Bull_ESS --> always > 1000 --> good
+# summary(S3.full.bm)
+# summary(S3.null.bm)
+
+# for reporting BULK_ESS
+S3.full.coef <- summarise_draws(as_draws_df(S3.full.bm)) %>%
+  filter(grepl("^b_", variable)) %>% 
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  data.frame(row.names = "variable")
+
+S3.null.coef <- summarise_draws(as_draws_df(S3.null.bm)) %>%
+  filter(grepl("^b_", variable))
+
+# mean(S3.full.coef$ess_bulk)
+# min(S3.full.coef$ess_bulk)
+# max(S3.full.coef$ess_bulk)
+# 
+# mean(S3.null.coef$ess_bulk)
+# min(S3.null.coef$ess_bulk)
+# max(S3.null.coef$ess_bulk)
+
+
+
 
 ```
 
@@ -762,7 +826,7 @@ nd1 <- tibble(z.age = rep(seq(from = min(rep.S1.bayes.data$z.age), to = max(rep.
              z.trial = rep(0,200))
 
 # here we generate the fitted values based on the model
-# the function fitted() takes in the model and the new dataset and generates a fitted values (inclucing upper and lower 95% CI) for every row in the dataset
+# the function fitted() takes in the model and the new dataset and generates a fitted values (inclucing upper and lower 95% CrI) for every row in the dataset
 # because our dataset ranges from min age to max age in the data, we get the prediction for the age range in the data 
 # but we could also generate predictions for different ages of course
 f1 <- fitted(S1.full.bm, 
@@ -827,7 +891,7 @@ nd2 <- tibble(z.age = rep(seq(from = min(rep.S2.bayes.data$z.age), to = max(rep.
               z.trial = rep(0,200))
 
 # here we generate the fitted values based on the model
-# the function fitted() takes in the model and the new dataset and generates a fitted values (inclucing upper and lower 95% CI) for every row in the dataset
+# the function fitted() takes in the model and the new dataset and generates a fitted values (inclucing upper and lower 95% CrI) for every row in the dataset
 # because our dataset ranges from min age to max age in the data, we get the prediction for the age range in the data 
 # but we could also generate predictions for different ages of course
 f2 <- fitted(S2.full.bm, 
@@ -893,7 +957,7 @@ nd3 <- tibble(z.age = rep(seq(from = min(rep.S3.bayes.data$z.age), to = max(rep.
               z.trial = rep(0,200))
 
 # here we generate the fitted values based on the model
-# the function fitted() takes in the model and the new dataset and generates a fitted values (inclucing upper and lower 95% CI) for every row in the dataset
+# the function fitted() takes in the model and the new dataset and generates a fitted values (inclucing upper and lower 95% CrI) for every row in the dataset
 # because our dataset ranges from min age to max age in the data, we get the prediction for the age range in the data 
 # but we could also generate predictions for different ages of course
 f3 <- fitted(S3.full.bm, 
@@ -1202,15 +1266,38 @@ ggsave(
 ```
 
 <!-- weitere zahlen -->
-```{r summaryresults,  echo=FALSE, eval=F, warning=F, message=F}
+```{r summaryresults,  echo=FALSE, warning=F, message=F, eval=T}
 
-p_all <- rbind(p1,p2,p3)
-p_all %>% arrange(months)
-
+p_all <- rbind(p1,p2,p3) %>% arrange(months)
 p_all <- data.frame(p_all, row.names = "condition")
 
 ```
 
+```{r additionalanalyses, echo=FALSE, warning=F, message=F, eval=F}
+
+# 
+# possible add-ons
+# a model including all Conditions
+# comparing difficulty across items and tasks
+# evaluating manipulations such as complex/simple; 
+# reaction time analyses
+# 
+# Additional Analyses:
+# 
+# object vs feature
+# - orfe vs orob
+# - sife vs siob
+# - nufe vs nuob
+# 
+# round vs angular
+# - Study One Study1 - cue A = rund, cue B eckig ...if one of them is easier
+# 
+# Reaction Times
+# - just reaction times and perc correct across aged
+
+```
+
+<!-- Hier gehts los -->
 # Introduction
 
 See googledocs for drafts of the intro and discussion. There needs to be at least one citation in order for this document to knit, so consider that preschoolers invent and comprehend iconic gestures spontaneously [@bohn2019young].
@@ -1218,11 +1305,11 @@ See googledocs for drafts of the intro and discussion. There needs to be at leas
 
 # General Methods
 
-All three studies presented here share the same methods and analyses. For the convenience of the reader, common features of the procedure, participant recruiting and stimulus design are reported first before discussing the three studies respectively. All studies were preregistered online prior to data collection (cf. [Study 1](https://aspredicted.org/SJT_H7F), [Study 2](https://aspredicted.org/L2H_XC7), and [Study 3](https://aspredicted.org/DR4_B4B)).
+All three studies presented below share the same methods and analyses. For the convenience of the reader, common features of the procedure, participant recruiting and stimulus design are reported first before discussing the three studies respectively. All studies were preregistered online prior to data collection (cf. [Study 1](https://aspredicted.org/SJT_H7F), [Study 2](https://aspredicted.org/L2H_XC7), and [Study 3](https://aspredicted.org/DR4_B4B)).
 
 ## Data Collection and Setup
 
-In order to continuously trace the development of symbolic competences across the preschool years, data collection aimed at testing two children per month of age between the third and the seventh birthday for a total of 96 participants per study while balancing male and female participants.  As children participated on the basis of availability and by several experimenter teams visiting different institutions in parallel, the resulting final samples slightly exceed this preregistered minimum sample size. The final sample approximates an equal distribution of male and female participants and aligns with conventions in the field in providing a minimum of 24 participants per study and year of age (cf. Appendix A figure \@ref(fig:suppl-participants-dots). All participants were recruited in **MASKED FOR REVIEW**, a medium-sized middle-European city, and came from a predominantly white population of middle to high income families. They were contacted via a database of participants for child development studies to which their parents had voluntarily signed up. Children were tested in day- and afterschoolcare for the most part, and occasionally in the lab or at home. The studies were reviewed and approved by an internal ethics committee at the **MASKED FOR REVIEW**. Data collection took place from June 2022 to February 2023. 
+In order to continuously trace the development of symbolic competences across the preschool years, data collection aimed at testing two children per month of age between the third and the seventh birthday for a total of 96 participants per study while balancing male and female participants.  As children participated on the basis of availability and data were collected by several experimenter teams visiting different institutions in parallel, the resulting final samples slightly exceed this preregistered minimum sample size. The final sample approximates an equal distribution of male and female participants and aligns with conventions in the field in providing a minimum of 24 participants per study and year of age (cf. Appendix A figure \@ref(fig:suppl-participants-dots)). All participants were recruited in **MASKED FOR REVIEW**, a medium-sized middle-European city, and came from a predominantly white population of middle to high income families. They were contacted via a database of participants for child development studies to which their parents had voluntarily signed up. Children were tested in day- and afterschoolcare for the most part, and occasionally in the lab or at home. The studies were reviewed and approved by an internal ethics committee at the **MASKED FOR REVIEW**. Data collection took place from June 2022 to February 2023. 
 
 ## Setup and Procedure
 
@@ -1234,129 +1321,186 @@ knitr::include_graphics(knitr::plot_crop("../illustrations/setup room.png"))
 
 ```
 
-*Familiarization.* Experimenters invited children to join a hiding game and to follow the narration of the story. First, the presentation introduced a cartoon monkey. This character then placed two hiding places on the bottom left and right side of the screen. After holding up a banana, one of the barriers was lifted, the banana was placed underneath and the barrier was lowered. Children were now prompted to touch the hiding place and in doing so the barrier of their choice was lifted to reveal the banana again if they chose correctly. The experimental script played back prerecorded feedback upon children's choice ("yes, great job!"; "No, that's not it. Let's try again!") during the familiarization (cf. Appendix B, figure \@ref(fig:suppl-plot-setupfamtest) A). In order to succeed during familiarization, children solely had to remember where the item went and touch this part of the screen after a few seconds. To ensure that children were familiar with the goal of the game and the touch interface, they first had to complete a set of four to eight familiarization trials with a success rate of 75%. In case a child did not reply correctly in three out of four trials, another four familiarization trials were provided. If the child was correct in six out of eight trials, she was included in the main sample. Children that did not succeed during familiarization were allowed to participate but their data was not submitted to analysis. These children are reported below as failing the familiarization phase.
+Experimenters invited the participants to join a hiding game and initially instructed them to follow the narration of the story. First, the presentation introduced a cartoon monkey. This character then placed two cups on the bottom left and right side of the screen. After holding up a banana, one of the barriers was lifted, the banana was placed underneath one of the cups and the barrier was lowered. Children were now prompted to touch the hiding place and in doing so the barrier of their choice was lifted to reveal the banana again if they chose correctly. The experimental script played back prerecorded feedback upon children's choice ("yes, great job!"; "No, that's not it. Let's try again!") during the familiarization (cf. Appendix B, figure \@ref(fig:suppl-plot-setupfamtest) A). In order to succeed during familiarization, children solely had to remember where the item went and touch this part of the screen after a few seconds. To ensure that children were familiar with the goal of the game and the touch interface, they first had to complete a set of four to eight familiarization trials with a success rate of 75%. In case a child did not reply correctly in three out of four trials, another four familiarization trials were provided. If the child was correct in six out of eight trials, she was included in the main sample. Children that did not succeed during familiarization were allowed to participate but their data was not submitted to analysis. These children are reported below as failing the familiarization phase.
 
-*Test.* The main phase of the study commenced with announcing that the cartoon character had an idea for a new game. The narration conveyed that children were not allowed to see where the banana would be hidden, but that the monkey would help them find it. Hence, the cartoon character was established as a knowledgeable and benevolent partner in a cooperative coordination game. The hiding sequence was identical to the familiarization phase, however the placement of the banana was concealed by a barrier covering the lower half of the screen. After the hiding phase, the monkey then held up piece of paper and a pencil. Pencil movement and a short scribble sound indicated that the monkey was drawing. Children were reminded that the monkey was going to help them. Children were now prompted with the phrase "Where is the banana?" and the monkey's drawing was placed in the center between the two barriers. The drawing served as a cue to guide children's choice. In the most basic experimental condition in study one, each hiding places, for example, showed either a solid blue circle or square and the paper displayed a simple outline drawing of either shape. Here, the drawing was a direct representation of the target shape. Upon making a choice by touching the hiding places, children received no feedback and there was no reveal animation. Rather, children's choice was acknowledged with neutral feedback ("Ah, thank you") leading over to the next trial (cf. Appendix B, figure \@ref(fig:suppl-plot-setupfamtest) B). 
+The main phase of the study commenced with announcing that the cartoon character had an idea for a new game. The narration conveyed that children were not allowed to see where the banana would be hidden, but that the monkey would help them find it. Hence, the cartoon character was established as a knowledgeable and benevolent partner in a cooperative coordination game. The hiding sequence was identical to the familiarization phase, however the placement of the banana was concealed by a barrier covering the lower half of the screen. After the hiding phase, the monkey then held up piece of paper and a pencil. Pencil movement and a short scribble sound indicated that the monkey was drawing. Children were reminded that the monkey was going to help them. Children were now prompted with the phrase "Where is the banana?" and the monkey's drawing was placed in the center between the two barriers. The drawing served as a cue to guide children's choice. In the most basic experimental condition in study one, each hiding places, for example, showed either a solid blue circle or square and the paper displayed a simple outline drawing of either shape. Here, the drawing was a direct representation of the target shape. Upon making a choice by touching the hiding places, children received no feedback and there was no reveal animation. Rather, children's choice was acknowledged with neutral feedback ("Ah, thank you") leading over to the next trial (cf. Appendix B, figure \@ref(fig:suppl-plot-setupfamtest) B). 
 
-*Presentation and Counterbalancing.* Except for the geometric shapes displayed on the hiding places and the respective drawing, the experimental presentation was identical for all test trials. A single trial lasted roughly 20 to 60 seconds, depending on how swiftly children chose. Each study presented four different experimental conditions with four trials each in a blocked order for a maximum of 16 test trials. Test sessions lasted about 12 minutes in total. The order of conditions was counterbalanced across participants. Children occasionally wished to stop before completing all trials, resulting in minor deviations of the total number of trials per condition that are submitted to analyses. For an overview of the average number of trials a participant received in each condition, see tables \@ref(tab:suppl-descriptives-S1), \@ref(tab:suppl-descriptives-S2) and \@ref(tab:suppl-descriptives-S3) in Appendix C. In line with the preregistration, children had to complete a minimum of eight test trials to be included in the final samples. Respective exclusions are reported seperately for each study. 
+Except for the geometric shapes displayed on the hiding places and the respective drawing, the experimental presentation was identical for all test trials. A single trial lasted roughly 20 to 60 seconds, depending on how swiftly children chose. Each study presented four different experimental conditions with four trials each in a blocked order for a maximum of 16 test trials. Test sessions lasted about 12 minutes in total. The order of conditions was counterbalanced across participants. Children occasionally wished to stop before completing all trials, resulting in minor deviations of the total number of trials per condition that are submitted to analyses. For an overview of the average number of trials participants received in each condition, see tables \@ref(tab:suppl-descriptives-S1), \@ref(tab:suppl-descriptives-S2) and \@ref(tab:suppl-descriptives-S3) in Appendix C. In line with the preregistration, children had to complete a minimum of eight test trials to be included in analysis. Respective exclusions are reported separately for each study. 
 
-## Stimuli and Experimental Manipulations
-
-The set of studies presented here regards communication as a means for solving coordination problems. In the most simple small-world scenario an utterance or graphic display help 
-
-Description of cues and targets and maybe how they were created. 
-
-For an illustration of familiarization and test trials, see figure \@ref(fig:suppl-plot-setupfamtest) in appendix B.
-
-For an illustration of trial composition, see figure \@ref(fig:suppl-plot-setup-compose) in appendix B.
-
+## Stimuli and Counterbalancing
+The set of studies presented here regard communication as a means for solving coordination problems. In the most simple small-world scenario an utterance or symbol, such as a graphic display, provided by a helpful interlocutor should enable an addressee to shift attention to, or help decide for one out of two options that are relevant in a particular practical context and even in the absence of conventions [@wittgenstein2009philosophical]. For the purpose of operationalization, the context in the studies presented below is provided by the game of hide and seek and the options are two hiding places that are distinct by means of the graphic displays they are marked with. The aim was to test at what age children become able to spontaneously use graphic displays employing various dimensions of symbol-referent relationships. For this, the graphic displays presented as referents were designed to saliently differ in one relevant dimension and be as similar as possible with regard to other surface features. The referent, on the other hand, was a reduced and less straight-lined graphic display akin to a hand drawing that shares a feature with one of the referents and is thereby referring to it while it remains distinct with regard to other surface features. In any trial one of the possible referents serves as a target and the other as a distractor. For counterbalancing, a second referent was designed to refer to the other target, such that across participants the same referents serve equally often as targets and distractors. For an illustration of trial composition, see figure \@ref(fig:suppl-plot-setup-compose) in appendix B. For each of the conditions in the three studies below, four sets of stimuli were designed, consisting of two blue shapes serving as target or distractor, and two drawings that could serve as cues. Each condition covers a particular type of symbol-referent relationship via four stimulus versions with two variations each. For an example, consider figure \@ref(fig:suppl-plot-S1-stimuli) in appendix B. Panel (A) shows all stimuli for the *representation* condition. The first column exemplifies a set of targets (a blue square and circle) and referents (outline drawings of a square and circle). During test, participants are presented with four test trials per condition, each composed of the shapes of a single column. During testing, a child sees each trial combination only once and with only one of the two possible cues. Across children, the position (left/right) of the referents, and the identity of cues are counterbalanced. 
 
 ## Data Handling and Analyses
-Participant choices were recorded by the experimental script and directly coded as correct or incorrect. Exclusions of data were solely made on the level of participants with regard to the exclusion criteria reported above. The analyses modeled participants' binary choices to predict the probability of children interpreting  cues correctly and to model how this probability would change as a function of their age. Logistic Bayesian generalized linear mixed models (GLMM) fitted children's responses (0/1) as a function of their age, the experimental condition and an interaction between trial and condition. Trial and sex were included as fixed effects to be controlled for. Trial number was added as a random slope within subject. To evaluate the relevance of age and condition for children’s performance, a full model was compared with a reduced model lacking the interaction of age and task by using WAIC scores and weights [@mcelreath2018statistical] as well as 
-the difference in Expected Log Predictive Density (ELPD) via the function *loo_compare*. Furthermore, model estimates were inspected for the different predictors (including their 95% Credible Interval (CrI)). In each study, the condition hypothesized as the most simple was set as the reference level within conditions to make interpretation of model estimates convenient. All Bayesian models used default priors and were run in Stan (http://mc-stan.org/) via the function brm of the package brms [@burkner2017brms]. To answer the main research question of when children as a group systematically make correct choices in any of the conditions outlined below, we use fitted models to predict the developmental trajectory (with 95% CrI) of group level performance drawn from values of the posterior predicted distribution via the function *fitted*. These trajectories and CrIs were plotted by age. The criterion for settling when children performed above chance was the point at which the 95% CrI for a particular trajectory did no longer overlap with a midline demarcating 50% chance level. All analyses were preregistered prior to data collection. Analyses deviate from the preregistered analyses when comparing models using ELPD differences. This was simply not as common by the time of preregistration. For the convenience of the reader, we also provide conventional analyses binning participants according to their age in years. To test whether group-level performance was above chance in all experimental groups, two-tailed one-sample t-tests with the chance level set to .5 were computed and are accompanied by Cohen's *d* as a standardized effect size for significance testing (cf. Appendix C Tables \@ref(tab:suppl-descriptives-S1), \@ref(tab:suppl-descriptives-S2) and \@ref(tab:suppl-descriptives-S3). 
+In each test trial participants were prompted to touch one of the two choice options. Choices were logged by the experimental script and directly coded as correct or incorrect. Exclusions of data were solely made on the level of participants with regard to the exclusion criteria reported above. The analyses modeled participants' binary choices to predict the probability of children interpreting  cues correctly and to model how this probability would change as a function of their age. Logistic Bayesian generalized linear mixed models (GLMM) fitted children's responses (0/1) as a function of their age, the experimental condition and an interaction between trial and condition. Trial and sex were included as fixed effects to be controlled for. Trial number was added as a random slope within subject. To evaluate the relevance of age and condition for children’s performance, a full model was compared with a reduced model lacking the interaction of age and condition using Widely Applicable Information Criterion (WAIC) scores and weights [@mcelreath2018statistical] as well as the difference in Expected Log Predictive Density (ELPD) via the function *loo_compare*. Furthermore, model estimates were inspected for the different predictors including their 95% Credible Interval (CrI). In each study, the condition hypothesized as the most simple was set as the reference level within conditions to make interpretation of model estimates convenient. All Bayesian models used default priors and were run in Stan (http://mc-stan.org/) via the function brm of the package brms [@burkner2017brms]. To answer the main research question of when children as a group systematically make correct choices in any of the conditions outlined below, we use fitted models to predict the developmental trajectory (with 95% CrI) of group level performance drawn from values of the posterior predicted distribution via the function *fitted*. These trajectories and CrIs were plotted by age. The criterion for settling when children performed above chance was the point at which the 95% CrI for a particular trajectory did no longer overlap with a midline demarcating 50% chance level. All analyses were preregistered prior to data collection. Analyses deviate from the preregistered analyses when comparing models using ELPD differences. This was simply not as common by the time of preregistration. For the convenience of the reader, we also provide conventional analyses binning participants according to their age in years. To test whether group-level performance was above chance in all experimental groups, two-tailed one-sample t-tests with the chance level set to .5 were computed and are accompanied by Cohen's *d* as a standardized effect size for significance testing (cf. Appendix C Tables \@ref(tab:suppl-descriptives-S1), \@ref(tab:suppl-descriptives-S2) and \@ref(tab:suppl-descriptives-S3)). 
 
 # Study 1
+Study 1 aimed to establish a baseline for children's performance and for evaluating task demands by providing the most simple symbol-referent relationship possible, where the cue is a direct representation of the target (*Representation*). From this, further conditions were designed that were reducing the amount of similarity by reducing the amount of information provided (*Pars Pro Toto*) or reducing 
 
-## Participants
-A sample of `r rep.age.table.data["study1", "N"]` children (M = `r rep.age.table.data["study1", "Mean"]` months, SD = `r rep.age.table.data["study1", "SD"]` months, range `r rep.age.table.data["study1", "Min"]` - `r rep.age.table.data["study1", "Max"]` months; `r rep.age.table.data["study1", "female"]` female) participated in Study 1. In addition, `r rep.drop.table.data["study1", "N"]` children (`r rep.drop.table.data["study1", "female"]` female) were tested but excluded from analysis for not succeeding during familiarization (N = `r rep.drop.table.data["study1", "fail_in_fam"]`), for not completing at least eight out of 16 test trials (N = `r rep.drop.table.data["study1", "quit_early"]`), or due to being fussy (N = `r rep.drop.table.data["study1", "fussy_child"]`). For `r rep.drop.table.data["study1", "language"]` children, experimenters only learned during testing that they were not fluent enough in German to participate as their families had only recently migrated. Finally, `r rep.drop.table.data["study1", "technical"]` children had to be excluded due to technical issues. For a graphical overview of participants and exclusions across all three studies, see Appendix A figure \@ref(fig:suppl-participants-dots) and \@ref(fig:suppl-exclusions-dots).
+
+
+
+
+
+establish a base line for all other studies
+
+showing a developmental trajectory
 
 ## Stimuli
+
+
+Basic shapes that children know () versus less canonical shapes
+
+Gestalt Principles, Form Completion ()
+
+Round vs edgy (bouba kiki)
+
+Simple and Complex Form analogy - simpler stimulus vs more information
 
 For all stimuli in Study 1, see figure \@ref(fig:suppl-plot-S1-stimuli) in appendix B.
 
 
-## Analyses
-A total of `r sum(rep.s1.trials$Trials)` trials (mean per condition = `r mean(rep.s1.trials$Trials)`, range: `r min(rep.s1.trials$Trials)` - `r max(rep.s1.trials$Trials)`) from `r rep.age.table.data["study1", "N"]` participants were submitted for analysis. The full model notation was $'correct~condition*z.age+z.trial+sex+(z.trial|subid)'$. In addition, a null model lacking the interaction of condition and age was fitted.
+
+• Representation (rep): the graphical cue is a direct representation of the referent
+• Pars Pro Toto (pars): the graphical cue represents a part of the stimulus
+
+Two further conditions aimed at abstracting from the original representations while still retain-ing characteristic features of the shapes.
+
+• Simple Form Analogy (fsim): the graphical cue represents the referent by means of an analogy in form. The cue is a simple shape that is either round or
+edgy pointing to either round or square referents.
+• Complex Form Analogy (fcom): the graphical cue represents the referent by means of an analogy in form. The cue is a complex shape that is either round
+or edgy pointing to either round or square referents.
+
+
+
+
+## Participants
+A sample of `r rep.age.table.data["study1", "N"]` children (M = `r rep.age.table.data["study1", "Mean"]` months, SD = `r rep.age.table.data["study1", "SD"]` months, range `r rep.age.table.data["study1", "Min"]` - `r rep.age.table.data["study1", "Max"]` months; `r rep.age.table.data["study1", "female"]` female) participated in Study 1. In addition, `r rep.drop.table.data["study1", "N"]` children (`r rep.drop.table.data["study1", "female"]` female) were tested but excluded from analysis for not succeeding during familiarization (N = `r rep.drop.table.data["study1", "fail_in_fam"]`), for not completing at least eight out of 16 test trials (N = `r rep.drop.table.data["study1", "quit_early"]`), or due to being fussy (N = `r rep.drop.table.data["study1", "fussy_child"]`). For `r rep.drop.table.data["study1", "language"]` children, experimenters only learned during testing that they were not fluent enough in German to participate as their families had only recently migrated. Finally, `r rep.drop.table.data["study1", "technical"]` children had to be excluded due to technical issues. For a graphical overview of participants and exclusions across all three studies, see Appendix A figure \@ref(fig:suppl-participants-dots) and \@ref(fig:suppl-exclusions-dots).
+
+## Analysis
+A total of `r sum(rep.s1.trials$Trials)` trials (mean per condition = `r mean(rep.s1.trials$Trials)`, range: `r min(rep.s1.trials$Trials)` - `r max(rep.s1.trials$Trials)`) from `r rep.age.table.data["study1", "N"]` participants were submitted for analysis. The full model notation was `correct ~ condition*z.age + z.trial + sex + (z.trial | subid)`. In addition, a null model lacking the interaction of condition and age was fitted.
 
 ## Results
+Posterior predictive checks (PPC) for both full and null model indicated excellent fit of observed data and model predictions (see supplement D for more information). Comparing the models using weights based on the Widely Applicable Information Criterion (WAIC) yielded `r round(S1.weights["S1.full.bm","value"]*100,2)`% of the model weight for the full model, and `r round(S1.weights["S1.null.bm","value"]*100,2)`% for the null model. Hence, the full model generally has a higher probability of making accurate predictions. Directly comparing the models' WAIC via expected log predictive density (ELPD) corroborates this (ELPD WAIC; full model = `r round(S1.comp["S1.full.bm", "elpd_waic"],2)`; null model = `r round(S1.comp["S1.null.bm", "elpd_waic"],2)`). The standard error of the difference in predictive accuracy (SE = `r round(S1.comp["S1.null.bm", "se_diff"],2)`), however is lower than the difference itself (ELPD diff = `r round(S1.comp["S1.null.bm", "elpd_diff"],2)`). While the full model slightly exceeds in predictive power, evidence in favor of this model is not decisive. A similar comparison via Leave-One-Out Cross-Validation (LOO) provided essentially the same results. In absence of conclusive evidence for either model, we report the results for the full model in line with the preregistration.
 
-Posterior predictive checks for both full and null model indicated excellent fit of observed data and model predictions (see supplement D for more information). Comparing the models using weights based on the Widely Applicable Information Criterion (WAIC) yielded `r round(S1.weights$value[2]*100,2)`% of the model weight for the full model, and `r round(S1.weights$value[1]*100,2)`% for the null model. Hence, the full model generally has a higher probability of making accurate predictions. Directly comparing the models' WAIC via expected log predictive density (ELPD) corroborates this (ELPD WAIC; full model = `r round(S1.comp$elpd_waic[1],2)`; null model = `r round(S1.comp$elpd_waic[2],2)`). The standard error of the difference in predictive accuracy (`r round(S1.comp$se_diff[2],2)`), however is lower than the difference itself (`r round(S1.comp$elpd_diff[2],2)`). While the full model slightly exceeds in predictive power, evidence in favor of this model is not decisive. A similar comparison via Leave-One-Out Cross-Validation (LOO) provided essentially the same results. In absence of conclusive evidence for either model, we report the results for the full model below in line with the preregistration.
+Relative to the *Representation* condition, the *Simple Form Analogy* (beta = `r S1.full.coef["SimpleFormAnalogy", "mean"]`, 95% CrI [`r S1.full.coef["SimpleFormAnalogy", "q5"]`, `r S1.full.coef["SimpleFormAnalogy", "q95"]`) and *Complex Form Analogy* (beta = `r S1.full.coef["ComplexFormAnalogy", "mean"]`, 95% CrI [`r S1.full.coef["ComplexFormAnalogy", "q5"]`, `r S1.full.coef["ComplexFormAnalogy", "q95"]`) have a considerably lower probability of correct responses. The *Pars Pro Toto* condition has no clear difference from the reference condition (beta = `r S1.full.coef["ParsProToto", "mean"]`, 95% CrI [`r S1.full.coef["ParsProToto", "q5"]`, `r S1.full.coef["ParsProToto", "q95"]`). Interaction terms between age and condition were not reliably different from zero. The developmental curves for each condition have essentially similar trajectories. Interaction effects with age were not relevant with the exception of *Pars Pro Toto*. Here, the interaction with age was positive and just above zero (beta = `r S1.full.coef["ParsProToto:z.age", "mean"]`, 95% CrI [`r S1.full.coef["ParsProToto:z.age", "q5"]`, `r S1.full.coef["ParsProToto:z.age", "q95"]`), suggesting that performance increased more steeply across the age range than in the reference condition *Representation*. Generally, participants’ performance improved with age in all conditions (beta = `r S1.full.coef["z.age", "mean"]`, 95% CrI [`r S1.full.coef["z.age", "q5"]`, `r S1.full.coef["z.age", "q95"]`). In contrast, trial number has no clear effect on performance (beta = `r S1.full.coef["z.trial", "mean"]`, 95% CrI [`r S1.full.coef["z.trial", "q5"]`, `r S1.full.coef["z.trial", "q95"]`), suggesting no evidence for learning or fatigue throughout the test session.
 
-Relative to the *Representation* condition, the *Simple Form Analogy* (beta = `r S1.full.coef["SimpleFormAnalogy", "mean"]`, 95% CI [`r S1.full.coef["SimpleFormAnalogy", "q5"]`, `r S1.full.coef["SimpleFormAnalogy", "q95"]`) and *Complex Form Analogy* (beta = `r S1.full.coef["ComplexFormAnalogy", "mean"]`, 95% CI [`r S1.full.coef["ComplexFormAnalogy", "q5"]`, `r S1.full.coef["ComplexFormAnalogy", "q95"]`) have a considerably lower probability of correct responses. The *Pars Pro Toto* condition has no clear difference from the reference condition (beta= `r S1.full.coef["ParsProToto", "mean"]`, 95% CI [`r S1.full.coef["ParsProToto", "q5"]`, `r S1.full.coef["ParsProToto", "q95"]`). Interaction terms between age and condition were not reliably different from zero. The developmental curves for each condition have essentially similar trajectories. Finally, by tracing when the lower bound of the 95% CrI exceeds the chance level of 50%, it is possible to report when children's group level performance exceeds chance level and becomes robustly systematic in favor of the correct choice option. In study 1, children perform above chance in the *Representation* condition as early as `r p1$months[p1$condition == "Representation"]` months. Quickly after at XX months, children succeed in the *Pars Pro Toto* condition. In the more abstract conditions *Simple Form Analogy* and Complex Form Analogy, preschoolers meet criterion at `r p1$months[p1$condition == "Simple Form Analogy"]` and `r p1$months[p1$condition == "Complex Form Analogy"]` months respectively. For a side-by-side comparison of the developmental trajectories for all conditions in study, see figure \@ref(fig:plot-study1). For an additional conventional analysis binning participants according to their age in years, please see table \@ref(tab:suppl-descriptives-S1) in appendix C.
+Finally, by tracing when the lower bound of the 95% CrI exceeds the chance level of 50%, it is possible to report when children's group level performance becomes robustly systematic in favor of the correct choice option. In study 1, children perform above chance in the *Representation* condition at least as early as `r p1$months[p1$condition == "Representation"]` months, which is the lower limit of the age-range. Quickly after, at `r p1$months[p1$condition == "Pars Pro Toto"]` months, children succeed in the *Pars Pro Toto* condition. In the more abstract conditions *Simple Form Analogy* and *Complex Form Analogy*, preschoolers meet criterion at `r p1$months[p1$condition == "Simple Form Analogy"]` and `r p1$months[p1$condition == "Complex Form Analogy"]` months respectively. For a side-by-side comparison of the developmental trajectories in the four conditions of study 1, see figure \@ref(fig:plot-study1). For an additional conventional analysis binning participants according to their age in years, please see table \@ref(tab:suppl-descriptives-S1) in appendix C.
 
-```{r plot-study1, fig.cap = "*Developmental Trajectories for all Conditions in Study 1.* Panels illustrate an example stimulus combination (distractor, cue, target) and results for the four conditions. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% credibility intervals. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level in the respective conditions.", fig.align = "center", echo = FALSE, out.width = "100%"}
+```{r plot-study1, fig.cap = "*Developmental Trajectories for all Conditions in Study 1.* Panels illustrate an example stimulus combination (distractor, cue, target) and results for the conditions. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
 
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/plot_study1.png"))
 
 ```
 
+## Discussion
+
+The condition *Representation* illustrates that
+
+This shows that the task design and setup are sufficiently clear even for the youngest children in the sample, and that by three years of age children understand the pragmatics of a repre-sentational graphic cue in the context of the picture-book-style object-choice-task at hand. A second condition used the exact same stimuli, but the cues provided only half of the respec-tive figures to guide children’s choices. This representation is still extremely similar, as target and cue still have the same shape, whereas the distractor and cue have different shapes and absolutely nothing in common. Nevertheless, children solve this pars-pro-toto condition only at 40 months (Fig. 16, pars condition)
+
+children are generally able to handle the task at hand
+are generally able to read communicative cues
+
+Performance still increases over the preschool years
+
+CrIs are narrowing constantly as children's performance becomes more uniform
+
+
+
+The condition *Pars Pro Toto* provides a very interesting result. While children are generally able to solve this task relatively early, 
+
+The interaction with age shows that improves more quickly with age
+
+
+*Simple Form Analogy* and *Complex form Analogy* share highly similar developmental trajectories and, when considering the entire age-range, appear equally difficult for participants. However, group level success occurs slightly earlier with the more simple condition. This suggests a slight benefit of a more basic stimulus that appears to be easier to grasp.    
+
+
+Results are perfectly in line with the hypothesized developmental succesion of group level success coming to pass first with *Representation*, then *Pars Pro Toto*, *Simple Form Analogy* and *Complex Form Analogy*.
+
+
 # Study 2
+
+## Stimuli
+
+explored whether children can infer symbol-referent relationships based on orientation and position (Fig. 17). In all of the four conditions, cue and target do not have the same shape, which further limits the influence of iconicity. 
+
+• Orientation of Object (orob): the graphical cue and referent have different shapes but share the same orientation (e.g. horizontal/vertical)
+• Orientation of Feature (orfe): the graphical cue and referent but both have a salient feature and are pointing in the same direction
+• Absolut Position (abpo): the graphical cue and referent appear in the same position on the hiding place (target) or the paper (cue) respectively
+• Relative Position (repo): the graphical cue and referent consist of two shapes that are either close or apart, or align horizontally or vertically
+
+The first condition used elongated shapes that are oriented either horizontally or vertically. Cue and target share the same angle of orientation.
+
+For all stimuli in Study 2, see figure \@ref(fig:suppl-plot-S2-stimuli) in appendix B.
 
 ## Participants
 A total of `r rep.age.table.data["study2", "N"]` three- to seven-year-old children (M = `r rep.age.table.data["study2", "Mean"]` months, SD = `r rep.age.table.data["study2", "SD"]` months, range `r rep.age.table.data["study2", "Min"]` - `r rep.age.table.data["study2", "Max"]` months; `r rep.age.table.data["study2", "female"]` female) participated. In addition, a total of `r rep.drop.table.data["study2", "N"]` children (`r rep.drop.table.data["study2", "female"]` female) were tested but excluded from analysis for failing familiarization (N = `r rep.drop.table.data["study2", "fail_in_fam"]`), being fussy (N = `r rep.drop.table.data["study2", "fussy_child"]`), not being fluent enough in German to follow the instructions (N = `r rep.drop.table.data["study2", "language"]`) or due to technical issues (N = `r rep.drop.table.data["study2", "technical"]`).
 
-## Materials
 
-For all stimuli in Study 2, see figure \@ref(fig:suppl-plot-S2-stimuli) in appendix B.
-
-
-## Data analysis
-A total of `r sum(rep.s2.trials$Trials)` trials (mean per condition = `r mean(rep.s2.trials$Trials)`, range: `r min(rep.s2.trials$Trials)` - `r max(rep.s2.trials$Trials)`) from `r rep.age.table.data["study2", "N"]` participants were submitted for analysis. The full model notation was $'correct~condition*z.age+z.trial+sex+(z.trial|subid)'$. In addition, a null model lacking the interaction of condition and age was fitted. 
+## Analysis
+A total of `r sum(rep.s2.trials$Trials)` trials (mean per condition = `r mean(rep.s2.trials$Trials)`, range: `r min(rep.s2.trials$Trials)` - `r max(rep.s2.trials$Trials)`) from `r rep.age.table.data["study2", "N"]` participants were submitted for analysis. The full model notation was `correct ~ condition*z.age + z.trial + sex + (z.trial | subid)`. In addition, a null model lacking the interaction of condition and age was fitted. 
 
 ## Results
+For both full and null model, PPCs indicate excellent fit of observed data and model predictions. To compare model performance, we evaluated the WAIC estimates. The null model showed a slightly better predictive performance (ELPD = `r round(S2.comp["S2.null.bm","elpd_waic"],2)`) compared to the full model (ELPD = `r round(S2.comp["S2.full.bm","elpd_waic"],2)`). WAIC values also indicate better performance of the null model (WAIC = `r round(S2.comp["S2.null.bm", "waic"],2)`) over the full model (WAIC = `r round(S2.comp["S2.full.bm", "waic"],2)`). However, the difference between models (ELPD Diff = `r round(S2.comp["S2.full.bm", "elpd_diff"],2)`) falls within the bounds of uncertainty (SE = `r round(S2.comp["S2.full.bm", "se_diff"],2)`), suggesting no advantage in predictive accuracy. Hence, the preregistered analyses using the full model is reported below. 
 
+Across all conditions, performance improved with both age (beta = `r S2.full.coef["z.age", "mean"]`, 95% CrI [`r S2.full.coef["z.age", "q5"]`, `r S2.full.coef["z.age", "q95"]`) and slightly with trial number (beta = `r S2.full.coef["z.trial", "mean"]`, 95% CrI [`r S2.full.coef["z.trial", "q5"]`, `r S2.full.coef["z.trial", "q95"]`). Relative to *Absolute Position*, children were generally less likely to correctly solve *Relative Position* (beta = `r S2.full.coef["RelativePosition", "mean"]`, 95% CrI [`r S2.full.coef["RelativePosition", "q5"]`, `r S2.full.coef["RelativePosition", "q95"]`). Performance in *Orientation of Object* (beta = `r S2.full.coef["OrientationofObject", "mean"]`, 95% CrI [`r S2.full.coef["OrientationofObject", "q5"]`, `r S2.full.coef["OrientationofObject", "q95"]`) and *Orientation of Feature* (beta = `r S2.full.coef["OrientationofFeature", "mean"]`, 95% CrI [`r S2.full.coef["OrientationofFeature", "q5"]`, `r S2.full.coef["OrientationofFeature", "q95"]`) was not substantially different from the reference category when considering the full age range. Interaction terms between age and condition, including *Relative Position* and age (beta = `r S2.full.coef["RelativePosition:z.age", "mean"]`), were not credibly different from zero, suggesting similar developmental patterns for all conditions. Tracing the lower bound of the 95% CrI against the 50% chance level (cf. figure \@ref(fig:plot-study2)), the model establishes that children master the condition *Absolute Position* at `r p2$months[p2$condition == "Absolute Position"]` months, making it the easiest task in study 2. Then in quick succession, children succeed in *Orientation of Feature* at `r p2$months[p2$condition == "Orientation of Feature"]` months, *Relative Position* at `r p2$months[p2$condition == "Relative Position"]` months and *Orientation of Object* at `r p2$months[p2$condition == "Orientation of Object"]` months.  For a side-by-side comparison of the developmental trajectories, see figure \@ref(fig:plot-study2). For an additional conventional analysis binning participants according to their age in years, see table \@ref(tab:suppl-descriptives-S2) in appendix C.
 
-
-For a side-by-side comparison of the developmental trajectories for all conditions in study 2, see figure \@ref(fig:plot-study2). For an additional conventional analysis binning participants according to their age in years, please see table \@ref(tab:suppl-descriptives-S2) in appendix C.
-
-```{r plot-study2, fig.cap = "*Developmental Trajectories for all Conditions in Study 2.* Panels illustrate an example stimulus combination (distractor, cue, target) and results for the four conditions. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% credibility intervals. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level in the respective conditions.", fig.align = "center", echo = FALSE, out.width = "100%"}
+```{r plot-study2, fig.cap = "*Developmental Trajectories for all Conditions in Study 2.* Panels illustrate example stimulus combinations (distractor, cue, target) and results for all conditions. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level and the dots represent individual means. The coloured dots and annotation indicate when performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/plot_study2.png"))
 
 ```
 
+## Discussion
+
+In a more abstract condition, the cues and targets have a feature like a bump or an opening that is oriented either up- or downward (Fig. 17, orfe condition). Crucially, the cues’ feature is never oriented towards either target, as this would replicate study A3 and might have been read as an unconventional arrow. Orientation of feature is solved already at 46 months (Fig. 19). In the third condition, the position of the cue and the target align within their respective reference frame (paper; box).  Thus, a symbol-referent position is established by their abso-lute position in the context they occur in (Fig. 17, condition abpo). Here children succeed at 42 months of age. By contrast, the fourth condition uses the relative position (repo) of the sym-bols. The target and cue are composed of two figures each that are either closer together or wider apart, while using different shapes for cue and the target and distractor respectively. Here children succeed later at 49 months of age (Fig. 19, condition repo). This is interesting as the position conditions require children to identify relations (absolute position – fig-ure/ground; relative position – figure/figure). 
+
+We hypothesize that children will succeed earlier with orob than orfe and earlier with apbo than with repo.
+
+
+Arguably, all four of these conditions have an iconic aspect to them with regard to the overall gestalt of the displays. Study B3, thus, set out to further reduce the amount of iconicity by drawing size and number analogies (Fig. 20). 
+
 
 # Study 3
 General note on the aim of the investigation
 
-## Participants
-A total of `r rep.age.table.data["study3", "N"]` three- to seven-year-old children (M = `r rep.age.table.data["study3", "Mean"]` months, SD = `r rep.age.table.data["study3", "SD"]` months, range `r rep.age.table.data["study3", "Min"]` - `r rep.age.table.data["study3", "Max"]` months; `r rep.age.table.data["study3", "female"]` female) participated. In addition, `r rep.drop.table.data["study3", "N"]` children (`r rep.drop.table.data["study3", "female"]` female) were tested but excluded for low performance during familiarization (N = `r rep.drop.table.data["study3", "fail_in_fam"]`), for not completing at least eight out of 16 test trials (N = `r rep.drop.table.data["study3", "quit_early"]`), or being fussy (N = `r rep.drop.table.data["study3", "fussy_child"]`). Another `r rep.drop.table.data["study3", "language"]` children were excluded due to language problems or technical issues (N = `r rep.drop.table.data["study3", "technical"]`).
+## Stimuli
+The first condition in Study B3 uses different shapes for cue and target/distractor. Stimuli have almost nothing in common except for being either large or small with regard to the reference frame 
 
-## Materials
+• Size of object (siob): the graphical cue refers to the target by means of an analogy in size
+• Size of feature (sife): the graphical cue refers to a salient feature of the target by means of an analogy in size
+• Number of objects (nuob): the graphical cue refers to the target by means of an analogy in number
+• Number of features (nufe): the graphical cue refers to a salient feature of the target by means of an analogy in number
 
 For all stimuli in Study 3, see figure \@ref(fig:suppl-plot-S3-stimuli) in appendix B.
 
-
+## Participants
+A total of `r rep.age.table.data["study3", "N"]` three- to seven-year-old children (M = `r rep.age.table.data["study3", "Mean"]` months, SD = `r rep.age.table.data["study3", "SD"]` months, range `r rep.age.table.data["study3", "Min"]` - `r rep.age.table.data["study3", "Max"]` months; `r rep.age.table.data["study3", "female"]` female) participated. In addition, `r rep.drop.table.data["study3", "N"]` children (`r rep.drop.table.data["study3", "female"]` female) were tested but excluded for low performance during familiarization (N = `r rep.drop.table.data["study3", "fail_in_fam"]`), for not completing at least eight out of 16 test trials (N = `r rep.drop.table.data["study3", "quit_early"]`), or being fussy (N = `r rep.drop.table.data["study3", "fussy_child"]`). Further exclusions were necessary due to language problems (N = `r rep.drop.table.data["study3", "language"]`) and technical issues (N = `r rep.drop.table.data["study3", "technical"]`).
 
 ## Analysis
-For study three, `r sum(rep.s3.trials$Trials)` trials (mean per condition = `r mean(rep.s3.trials$Trials)`, range: `r min(rep.s3.trials$Trials)` - `r max(rep.s3.trials$Trials)`) from `r rep.age.table.data["study3", "N"]` participants were submitted for analysis. Data were analyzed both with a full model ($'correct~condition*z.age+z.trial+sex+(z.trial|subid)'$) and a null model lacking the interaction of condition and age. 
+For study three, `r sum(rep.s3.trials$Trials)` trials (mean per condition = `r mean(rep.s3.trials$Trials)`, range: `r min(rep.s3.trials$Trials)` - `r max(rep.s3.trials$Trials)`) from `r rep.age.table.data["study3", "N"]` participants were submitted for analysis. Data were analyzed both with a full model (`correct ~ condition*z.age + z.trial + sex + (z.trial | subid)`) and a null model lacking the interaction of condition and age. 
 
 ## Results
+PPCs indicated excellent fit of observed data and model predictions in both models. When comparing performance, the full model showed a better fit (ELPD = `r round(S3.comp["S3.full.bm","elpd_waic"],2)`) relative to the null model (ELPD = `r round(S3.comp["S3.null.bm","elpd_waic"],2)`). The WAIC values also favored the full model (WAIC = `r round(S3.comp["S3.full.bm", "waic"],2)`) over the null model (WAIC = `r round(S3.comp["S3.null.bm", "waic"],2)`). Despite the slightly lower WAIC and higher ELPD of the full model, the difference in predictive accuracy (ELPD Diff = `r round(S3.comp["S3.null.bm", "elpd_diff"],2)`) remains almost within the range of sampling uncertainty (SE = `r round(S3.comp["S3.null.bm", "se_diff"],2)`). In the absence of substantial differences, the full model is reported below in line with the preregistration.
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+Overall, children's performance increased with age (beta = `r S3.full.coef["z.age", "mean"]`, 95% CrI [`r S3.full.coef["z.age", "q5"]`, `r S3.full.coef["z.age", "q95"]`) and with trial number (beta = `r S3.full.coef["z.trial", "mean"]`, 95% CrI [`r S3.full.coef["z.trial", "q5"]`, `r S3.full.coef["z.trial", "q95"]`), indicating general improvement across development and time-on-task. Relative to *Size of Object*, participants were substantially less accurate in *Size of Feature* (beta = `r S3.full.coef["SizeofFeature", "mean"]`, 95% CrI [`r S3.full.coef["SizeofFeature", "q5"]`, `r S3.full.coef["SizeofFeature", "q95"]`). A smaller, marginal effect was observed in *Number of Feature* (beta = `r S3.full.coef["NumberofFeature", "mean"]`, 95% CrI [`r S3.full.coef["NumberofFeature", "q5"]`, `r S3.full.coef["NumberofFeature", "q95"]`), while *Number of Object* (beta = `r S3.full.coef["NumberofObject", "mean"]`, 95% CrI [`r S3.full.coef["NumberofObject", "q5"]`, `r S3.full.coef["NumberofObject", "q95"]`) did not differ reliably from *Size of Object*. Age moderated performance less strongly in *Size of Feature* (beta = `r S3.full.coef["SizeofFeature:z.age", "mean"]`) and *Number of Feature* (beta = `r S3.full.coef["NumberofFeature:z.age", "mean"]`), suggesting lower developmental gains compared to *Size of Object*. Generally, the conditions relying on feature-based reference are associated with lower overall performance and weaker developmental gains. The best overview of the relative performance across conditions is provided by plotting the model estimates (cf. figure \@ref(fig:plot-study3)). Children succeed in most conditions just after the fourth birthday. Model estimates indicate group level success in *Size of Object* at `r p3$months[p3$condition == "Size of Object"]` months, *Number of Object* at `r p3$months[p3$condition == "Number of Object"]` months, and *Number of Feature* at `r p3$months[p3$condition == "Number of Feature"]` months. The exception to this pattern is *Size of Feature* where children master the task no sooner than `r p3$months[p3$condition == "Size of Feature"]` months of age. For an alternative analyses binning children by year of age, please see table \@ref(tab:suppl-descriptives-S3) in appendix C.
 
-
-
-For a side-by-side comparison of the developmental trajectories for all conditions in study 2, see figure \@ref(fig:plot-study3). For an additional conventional analysis binning participants according to their age in years, please see table \@ref(tab:suppl-descriptives-S3) in appendix C.
-
-```{r plot-study3, fig.cap = "*Developmental Trajectories for all Conditions in Study 3.* Panels illustrate an example stimulus combination (distractor, cue, target) and results for the four conditions. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% credibility intervals. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level in the respective conditions.", fig.align = "center", echo = FALSE, out.width = "100%"}
+```{r plot-study3, fig.cap = "*Developmental Trajectories for all Conditions in Study 3.* Panels illustrate example stimulus combinations (distractor, cue, target) and results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level and the dots represent individual means. The coloured dots and annotation indicate when performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/plot_study3.png"))
 
 ```
 
+## Discussion
+
+We hypothesize that children will succeed earlier with analogies in size than in number, and that children will succeed earlier when cues refer to the
+objects per se rather than salient features.
 
 # Additional Analyses
 
-possible add-ons
-a model including all Conditions
-comparing difficulty across items and tasks
-evaluating manipulations such as complex/simple; 
-reaction time analyses
 
-Additional Analyses:
-
-object vs feature
-- orfe vs orob
-- sife vs siob
-- nufe vs nuob
-
-round vs angular
-- Study One Study1 - cue A = rund, cue B eckig ...if one of them is easier
-
-Reaction Times
-- just reaction times and perc correct across aged
+An additional exploratory analysis will include a random effect for item level effects (Model: correct ~ task*z.age +z.trial +z.sex +(z.trial|id) +(z.age|item)). Results will help to evaluate the equivalence of items within a task and be reported in the supplements. Due to the low number of individual items within a task we expect this model to be less diagnostic with regard to our main research question and, therefore, will not include the term in the main analysis.
 
 # Discussion
 See googledocs for drafts of the intro and discussion
