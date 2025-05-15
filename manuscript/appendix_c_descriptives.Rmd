@@ -1,6 +1,47 @@
 
-# Appendix C - Descriptive Statistics
-```{r suppl-descriptives-S1, tab.cap = "Descriptive Analyses for Study 1.", eval = T}
+# Appendix C - Results
+
+```{r suppl-S1-coef-table, tab.cap = "Study 1 - Posterior Estimates for the Full Model.", eval = T}
+
+S1.full.coef.table.fin <- S1.full.coef.table %>% 
+  filter(grepl("^b_", variable)) %>% 
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  mutate(variable = gsub("([^ ])([A-Z])", "\\1 \\2", variable)) %>% 
+  mutate(variable = gsub(":", " × ", variable)) %>% 
+  mutate(variable = gsub("z.age", "Age*", variable)) %>% 
+  mutate(variable = gsub("z.trial", "Trial*", variable)) %>% 
+  mutate(variable = gsub("sex1", "Sex (Male)", variable)) %>%
+  rename(
+    Predictor = variable,
+    Estimate = mean,
+    SD = sd,
+    MAD = mad,
+    `2.5% CrI` = q2.5, 
+    `97.5% CrI` = q97.5, 
+    `Bulk ESS` = ess_bulk,
+    `Tail ESS` = ess_tail) %>%
+  mutate(
+    `95% CrI` = paste0("[", sprintf("%.2f", `2.5% CrI`), ", ", sprintf("%.2f", `97.5% CrI`), "]"),
+    `Bulk ESS` = format(round(`Bulk ESS`), big.mark = ","),
+    `Tail ESS` = format(round(`Tail ESS`), big.mark = ",")) %>%
+  select(Predictor, Estimate, SD, MAD, `95% CrI`, `Bulk ESS`, `Tail ESS`)
+
+
+ft <- flextable(S1.full.coef.table.fin) %>%
+  theme_apa() %>%
+  set_caption("suppl-S1-coef-table") %>%
+  fontsize(size = 8, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = "Note. Estimates represent posterior means with 95% equal-tailed credible intervals (CrIs). MAD indicates Median Absolute Deviation. ESS refers to effective sample size. R̂ values omitted as they are all ~1 indicating convergence.  * = variables were standardized.") %>%
+  fontsize(part = "footer", size = 8) %>%  
+  autofit()
+ft
+
+```
+\newpage
+
+```{r suppl-descriptives-S1, tab.cap = "Study 1 - Descriptives and Conventional Analyses.", eval = T}
 
 #library(scales) 
 # required for rounding pvalues, is part of tidyverse but needs to be loaded again? ## it occurs when functions are overwritten multiple times
@@ -21,7 +62,9 @@ rep.s1.freq <- rep.S1.bayes.data %>%
              p = pvalue(t.test((correct), mu = 0.5)$p.value, accuracy = .001),
              df= t.test((correct), mu = 0.5)$parameter,
              "t(N-1)" = round(t.test((correct), mu = 0.5)$statistic, 2),
-             d = round(cohensD((correct), mu = 0.5), 2))
+             d = round(cohensD((correct), mu = 0.5), 2)) %>% 
+  rename(Trials = trials,
+    `Trials/N` = `trials/N`)
 
 # # delete duplicate labels in age by turning age into character and replacing duplicates
 rep.s1.freq$Condition <- as.character(rep.s1.freq$Condition)
@@ -47,16 +90,62 @@ rep.s1.freq$Condition[duplicated(rep.s1.freq$Condition)] <- ""
 ft <- flextable(rep.s1.freq) %>%
   theme_apa() %>%
   set_caption("suppl-descriptives-S1") %>%
-  fontsize(size = 8, part = "all") %>%
+  fontsize(size = 7.9, part = "all") %>%
   set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = c(
+    "Note. Descriptive and inferential statistics by age group and condition. Performance (*M*, *SD*) is percent correct responses.*p*, *t*, and *d* reflect one-sample t-tests vs. chance level (0.5). *Trials* = total trials across participants; *Trials/N* = average per participant."
+  )) %>%
+  fontsize(part = "footer", size = 7.9) %>%
+  padding(padding.left = 1, padding.right = 1, part = "all") %>%
   autofit()
-ft
 
+ft
 
 ```
 \newpage
 
-```{r suppl-descriptives-S2, tab.cap = "Descriptive Analyses for Study 2.", eval = T}
+```{r suppl-S2-coef-table, tab.cap = "Study 2 - Posterior Estimates for the Full Model.", eval = T}
+
+S2.full.coef.table.fin <- S2.full.coef.table %>% 
+  filter(grepl("^b_", variable)) %>% 
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  mutate(variable = gsub("([^ ])([A-Z])", "\\1 \\2", variable)) %>%
+  mutate(variable = gsub("of", " of", variable)) %>% 
+  mutate(variable = gsub(":", " × ", variable)) %>% 
+  mutate(variable = gsub("z.age", "Age*", variable)) %>% 
+  mutate(variable = gsub("z.trial", "Trial*", variable)) %>% 
+  mutate(variable = gsub("sex1", "Sex (Male)", variable)) %>%
+  rename(
+    Predictor = variable,
+    Estimate = mean,
+    SD = sd,
+    MAD = mad,
+    `2.5% CrI` = q2.5, 
+    `97.5% CrI` = q97.5, 
+    `Bulk ESS` = ess_bulk,
+    `Tail ESS` = ess_tail) %>%
+  mutate(
+    `95% CrI` = paste0("[", sprintf("%.2f", `2.5% CrI`), ", ", sprintf("%.2f", `97.5% CrI`), "]"),
+    `Bulk ESS` = format(round(`Bulk ESS`), big.mark = ","),
+    `Tail ESS` = format(round(`Tail ESS`), big.mark = ",")) %>%
+  select(Predictor, Estimate, SD, MAD, `95% CrI`, `Bulk ESS`, `Tail ESS`)
+
+
+ft <- flextable(S2.full.coef.table.fin) %>%
+  theme_apa() %>%
+  set_caption("suppl-S2-coef-table") %>%
+  fontsize(size = 8, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = "Note. Estimates represent posterior means with 95% equal-tailed credible intervals (CrIs). MAD indicates Median Absolute Deviation. ESS refers to effective sample size. R̂ values omitted as they are all ~1 indicating convergence.  * = variables were standardized.") %>%
+  fontsize(part = "footer", size = 8) %>%  
+  autofit()
+ft
+
+```
+\newpage
+
+```{r suppl-descriptives-S2, tab.cap = "Study 2 - Descriptives and Conventional Analyses.", eval = T}
 
 #library(scales) 
 # required for rounding pvalues, is part of tidyverse but needs to be loaded again? ## it occurs when functions are overwritten multiple times
@@ -77,7 +166,9 @@ rep.s2.freq <- rep.S2.bayes.data %>%
              p = pvalue(t.test((correct), mu = 0.5)$p.value, accuracy = .001),
              df= t.test((correct), mu = 0.5)$parameter,
              "t(N-1)" = round(t.test((correct), mu = 0.5)$statistic, 2),
-             d = round(cohensD((correct), mu = 0.5), 2))
+             d = round(cohensD((correct), mu = 0.5), 2)) %>% 
+  rename(Trials = trials,
+    `Trials/N` = `trials/N`)
 
 # # delete duplicate labels in age by turning age into character and replacing duplicates
 rep.s2.freq$Condition <- as.character(rep.s2.freq$Condition)
@@ -104,15 +195,61 @@ rep.s2.freq$Condition[duplicated(rep.s2.freq$Condition)] <- ""
 ft <- flextable(rep.s2.freq) %>%
   theme_apa() %>%
   set_caption("suppl-descriptives-S2") %>%
+  fontsize(size = 7.9, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = c(
+    "Note. Descriptive and inferential statistics by age group and condition. Performance (*M*, *SD*) is percent correct responses.*p*, *t*, and *d* reflect one-sample t-tests vs. chance level (0.5). *Trials* = total trials across participants; *Trials/N* = average per participant."
+  )) %>%
+  fontsize(part = "footer", size = 7.9) %>%
+  autofit()
+
+ft
+
+```
+\newpage
+
+```{r suppl-S3-coef-table, tab.cap = "Study 3 - Posterior Estimates for the Full Model.", eval = T}
+
+S3.full.coef.table.fin <- S3.full.coef.table %>% 
+  filter(grepl("^b_", variable)) %>% 
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  mutate(variable = gsub("([^ ])([A-Z])", "\\1 \\2", variable)) %>%
+  mutate(variable = gsub("of", " of", variable)) %>% 
+  mutate(variable = gsub(":", " × ", variable)) %>% 
+  mutate(variable = gsub("z.age", "Age*", variable)) %>% 
+  mutate(variable = gsub("z.trial", "Trial*", variable)) %>% 
+  mutate(variable = gsub("sex1", "Sex (Male)", variable)) %>%
+  rename(
+    Predictor = variable,
+    Estimate = mean,
+    SD = sd,
+    MAD = mad,
+    `2.5% CrI` = q2.5, 
+    `97.5% CrI` = q97.5, 
+    `Bulk ESS` = ess_bulk,
+    `Tail ESS` = ess_tail) %>%
+  mutate(
+    `95% CrI` = paste0("[", sprintf("%.2f", `2.5% CrI`), ", ", sprintf("%.2f", `97.5% CrI`), "]"),
+    `Bulk ESS` = format(round(`Bulk ESS`), big.mark = ","),
+    `Tail ESS` = format(round(`Tail ESS`), big.mark = ",")) %>%
+  select(Predictor, Estimate, SD, MAD, `95% CrI`, `Bulk ESS`, `Tail ESS`)
+
+
+ft <- flextable(S3.full.coef.table.fin) %>%
+  theme_apa() %>%
+  set_caption("suppl-S3-coef-table") %>%
   fontsize(size = 8, part = "all") %>%
   set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = "Note. Estimates represent posterior means with 95% equal-tailed credible intervals (CrIs). MAD indicates Median Absolute Deviation. ESS refers to effective sample size. R̂ values omitted as they are all ~1 indicating convergence.  * = variables were standardized.") %>%
+  fontsize(part = "footer", size = 8) %>%  
   autofit()
 ft
 
 ```
 \newpage
 
-```{r suppl-descriptives-S3, tab.cap = "Descriptive Analyses for Study 3.", eval = T}
+```{r suppl-descriptives-S3, tab.cap = "Study 3 - Descriptives and Conventional Analyses.", eval = T, warning=F}
 
 #library(scales) 
 # required for rounding pvalues, is part of tidyverse but needs to be loaded again? ## it occurs when functions are overwritten multiple times
@@ -133,7 +270,9 @@ rep.s3.freq <- rep.S3.bayes.data %>%
              p = pvalue(t.test((correct), mu = 0.5)$p.value, accuracy = .001),
              df= t.test((correct), mu = 0.5)$parameter,
              "t(N-1)" = round(t.test((correct), mu = 0.5)$statistic, 2),
-             d = round(cohensD((correct), mu = 0.5), 2))
+             d = round(cohensD((correct), mu = 0.5), 2)) %>% 
+  rename(Trials = trials,
+    `Trials/N` = `trials/N`)
 
 # # delete duplicate labels in age by turning age into character and replacing duplicates
 rep.s3.freq$Condition <- as.character(rep.s3.freq$Condition)
@@ -149,15 +288,18 @@ rep.s3.freq$Condition[duplicated(rep.s3.freq$Condition)] <- ""
 #   font_size = "small"
 # )
 
-
 ft <- flextable(rep.s3.freq) %>%
   theme_apa() %>%
   set_caption("suppl-descriptives-S3") %>%
-  fontsize(size = 8, part = "all") %>%
+  fontsize(size = 7.9, part = "all") %>%
   set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = c(
+    "Note. Descriptive and inferential statistics by age group and condition. Performance (*M*, *SD*) is percent correct responses.*p*, *t*, and *d* reflect one-sample t-tests vs. chance level (0.5). *Trials* = total trials across participants; *Trials/N* = average per participant."
+  )) %>%
+  fontsize(part = "footer", size = 7.9) %>%
   autofit()
-ft
 
+ft
 ```
 
 ```{r symlit_rep_plottaskdifficulty, eval= F}
