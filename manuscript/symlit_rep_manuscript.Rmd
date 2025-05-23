@@ -1376,21 +1376,23 @@ discussion.](https://docs.google.com/document/d/1nLlkREwo1JXngqy9Dfyhx5kdV4ue9w0
 
 # General Methods
 
-All three studies presented below share the same methods and analyses.
+All three studies presented below share methodological and analytic approaches.
 For the convenience of the reader, common features of the procedure,
 participant recruiting and stimulus design are reported first before
 discussing the three studies respectively. All studies were
 preregistered online prior to data collection (cf. [Study
 1](https://aspredicted.org/SJT_H7F), [Study
 2](https://aspredicted.org/L2H_XC7), and [Study
-3](https://aspredicted.org/DR4_B4B)).
+3](https://aspredicted.org/DR4_B4B)). [MB: im paper müsste der Link ausgeschreiben sein, nicht hinterlegt]
+
+[MB: links zu repo mit data und analysis scripts sowie code für die studien?]
 
 ## Data Collection and Setup
 
 In order to continuously trace the development of symbolic competences
-across the preschool years, data collection aimed to test two children
+across the preschool years, for each study we aimed to test two children
 per month of age between the third and the seventh birthday for a total
-of 96 participants per study while balancing male and female
+of 96 participants while balancing male and female
 participants. As children participated on the basis of availability and
 data were collected by several experimenter teams visiting different
 institutions in parallel, the resulting final samples slightly exceed
@@ -1436,7 +1438,7 @@ doing so the barrier of their choice was lifted to reveal the banana
 again if they chose correctly. The experimental script played back
 prerecorded feedback upon children's choice ("yes, great job!"; "No,
 that's not it. Let's try again!") during the familiarization (cf.
-Appendix B, figure \@ref(fig:suppl-plot-setupfamtest) A). In order to
+Appendix B, figure \@ref(fig:suppl-plot-setupfamtest) A) [MB: die Figure würde ich sagr nit ins paper nehmen - vll neben plot-figure setup, also beides zu einer Figure mergen]. In order to
 succeed during familiarization, children solely had to remember where
 the item went and touch this part of the screen a few seconds later. To
 ensure that children were familiar with the goal of the game and the
@@ -1520,7 +1522,7 @@ designed, consisting of two blue shapes serving as target or distractor,
 and two drawings that could serve as cues. Each condition covers a
 particular type of symbol-referent relationship via four stimulus
 versions with two variations each. For an example, consider figure
-\@ref(fig:suppl-plot-S1-stimuli) in appendix B. Panel (A) shows all
+\@ref(fig:suppl-plot-S1-stimuli) [MB: auch hier, die Figure würde ich vll soagr mit ins apper nehmen, also dass man die ganzen stimuli im paper hat] in appendix B. Panel (A) shows all
 stimuli for the *Representation* condition. The first column exemplifies
 a set of targets (a blue square and circle) and referents (outline
 drawings of a square and circle). During test, participants are
@@ -1543,7 +1545,7 @@ Logistic Bayesian generalized linear mixed models (GLMM) fitted
 children's responses (0/1) as a function of their age, the experimental
 condition and an interaction between trial and condition. Trial and sex
 were included as fixed effects to be controlled for. Trial number was
-added as a random slope within subject. To evaluate the relevance of age
+added as a random slope within subject [MB: random effects? ]. To evaluate the relevance of age
 and condition for children’s performance, a full model was compared with
 a reduced model lacking the interaction of age and condition using
 Widely Applicable Information Criterion (WAIC) scores and weights
@@ -1553,7 +1555,7 @@ model estimates were inspected for the different predictors including
 their 95% Credible Interval (CrI). In each study, the condition
 hypothesized as the most simple was set as the reference level within
 conditions to make interpretation of model estimates convenient. All
-Bayesian models used default priors and were run in Stan
+Bayesian models used default priors and were run in Stan [MB: citation statt link]
 (<http://mc-stan.org/>) via the function *brm* of the package *brms*
 [@burkner2017brms]. To answer the main research question of when
 children as a group systematically make correct choices in any of the
@@ -1583,13 +1585,11 @@ evaluating task demands by providing the most simple symbol-referent
 relationship possible, where the cue is a direct representation of the
 target (*Representation*). From this, three further conditions were
 derived that were also employing form or shape as a means for
-establishing reference but that were less iconic by either reducing the
-amount the amount of information provided (*Pars Pro Toto*), or the
+establishing reference but that were less iconic by either reducing the amount of information provided (*Pars Pro Toto*), or the
 amount of similarity between symbol and referent (*Simple Form Analogy*,
-*Complex Form Analogy).* We hypothesized that as a group children will
+*Complex Form Analogy).* We hypothesized (and preregistered) that as a group children will
 first succeed with *Representation*, then *Pars Pro Toto*, *Simple Form
-Analogy* and finally *Complex Form Analogy* (cf.
-[Preregistration](https://aspredicted.org/SJT_H7F)).
+Analogy* and finally *Complex Form Analogy*.
 
 ## Stimuli
 
@@ -1607,7 +1607,7 @@ provides less information and may require children to complete the
 shapes according to gestalt principles. While this completion is easiest
 in the first column in panels A to B (ibid.) due to the canonical shapes
 (square, circle) it is less obvious in columns 2 to 4 (ibid.) with the
-less iconic shapes albeit they are vertically and horizontally
+less iconic [MB: meinst du hier canonical? iconic klingt komisch weil man denkt manche wäre noch "ikonischer"] shapes albeit they are vertically and horizontally
 symmetrical on purpose. For comparability, *Pars Pro Toto* uses the same
 graphical cues as *Representation* but cut in half at a horizontal
 mid-line. A Stimulus set of an individual trial either uses the top or
@@ -1680,9 +1680,9 @@ log predictive density (ELPD) corroborates this (ELPD WAIC; full model =
 `r round(S1.comp["S1.full.bm", "elpd_waic"],2)`; null model =
 `r round(S1.comp["S1.null.bm", "elpd_waic"],2)`). The standard error of
 the difference in predictive accuracy (SE =
-`r round(S1.comp["S1.null.bm", "se_diff"],2)`), however is lower than
+`r round(S1.comp["S1.null.bm", "se_diff"],2)`), however is numerically larger than
 the difference itself (ELPD diff =
-`r round(S1.comp["S1.null.bm", "elpd_diff"],2)`). While the full model
+`r round(S1.comp["S1.null.bm", "elpd_diff"],2)`) [MB: hier hattest du "lower" geschrieben. die rule of thumb wäre aber dass der diff 2*mal größer sein sollte als der SE]. While the full model
 slightly exceeds in predictive power, evidence in favor of this model is
 not decisive. A similar comparison via Leave-One-Out Cross-Validation
 (LOO) provided essentially the same results. In absence of conclusive
@@ -1690,30 +1690,30 @@ evidence for either model, we report the results for the full model in
 line with the preregistration.
 
 Relative to the *Representation* condition, the *Simple Form Analogy*
-(beta = `r S1.full.coef["SimpleFormAnalogy", "mean"]`, 95% CrI
+($\beta$ = `r S1.full.coef["SimpleFormAnalogy", "mean"]`, 95% CrI
 [`r S1.full.coef["SimpleFormAnalogy", "q2.5"]`,
 `r S1.full.coef["SimpleFormAnalogy", "q97.5"]`) and *Complex Form
-Analogy* (beta = `r S1.full.coef["ComplexFormAnalogy", "mean"]`, 95% CrI
+Analogy* ($\beta$ = `r S1.full.coef["ComplexFormAnalogy", "mean"]`, 95% CrI
 [`r S1.full.coef["ComplexFormAnalogy", "q2.5"]`,
 `r S1.full.coef["ComplexFormAnalogy", "q97.5"]`) have a considerably
 lower probability of correct responses. The *Pars Pro Toto* condition
-has no clear difference from the reference condition (beta =
+has no clear difference from the reference condition ($\beta$ =
 `r S1.full.coef["ParsProToto", "mean"]`, 95% CrI
 [`r S1.full.coef["ParsProToto", "q2.5"]`,
 `r S1.full.coef["ParsProToto", "q97.5"]`). Interaction terms between age
 and condition were not reliably different from zero. The developmental
 curves for each condition have essentially similar trajectories.
 Interaction effects with age were not relevant with the exception of
-*Pars Pro Toto*. Here, the interaction with age was positive and just
-above zero (beta = `r S1.full.coef["ParsProToto:z.age", "mean"]`, 95%
+*Pars Pro Toto* [MB: das ist verwirrend, erst sagst du sie sind nicht reelvant und dann sagst du doch für eine Bedingung]. Here, the interaction with age was positive and just
+above zero ($\beta$ = `r S1.full.coef["ParsProToto:z.age", "mean"]`, 95%
 CrI [`r S1.full.coef["ParsProToto:z.age", "q2.5"]`,
 `r S1.full.coef["ParsProToto:z.age", "q97.5"]`), suggesting that
 performance increased more steeply across the age range than in the
 reference condition *Representation*. Generally, participants’
-performance improved with age in all conditions (beta =
+performance improved with age in all conditions ($\beta$ =
 `r S1.full.coef["z.age", "mean"]`, 95% CrI
 [`r S1.full.coef["z.age", "q2.5"]`, `r S1.full.coef["z.age", "q97.5"]`).
-In contrast, trial number has no clear effect on performance (beta =
+In contrast, trial number has no clear effect on performance ($\beta$ =
 `r S1.full.coef["z.trial", "mean"]`, 95% CrI
 [`r S1.full.coef["z.trial", "q2.5"]`,
 `r S1.full.coef["z.trial", "q97.5"]`), suggesting no evidence for
@@ -1769,7 +1769,7 @@ from the end of toddlerhood up into school age. The results for
 *Representation* further illustrate that already by three years of age
 children understand a representational symbol-referent relationship as
 operationalized here - with full-color target shapes and loose outline
-drawings as cues - in the concrete context of the of the
+drawings as cues - in the concrete context of the
 picture-book-style object-choice-task at hand. That is, task demands and
 framing do not seem to tax children's performance from three years
 onwards. Relatedly, it is quite interesting to observe that even within
@@ -1779,14 +1779,14 @@ or maybe simply did not care much for making correct choices (cf. dots
 representing individual performance in \@ref(fig:plot-study1)). This
 maybe seen as a baseline of failure that puts the numbers of children
 into perspective that are not succeeding in the more difficult
-conditions discussed below. Finally, we can observe that the CrI around
+conditions discussed below [MB: würde ich rausnehmen ab "Relatedly, it is quite interesting ..." - dafür machen wir ja die Analyse, das manche Kinder keinen Bock haben ist da ja eingepreist]. Finally, we can observe that the CrI around
 the estimated mean in the graphic presentation is getting narrower,
 showing that - as children get older - they are behaving more uniformly.
 *Representation*, hence, provides also a baseline for the uncertainty to
 that can be expected with the operationalization we used. For all of
 these reasons, *Representation* provides a robust and clear conceptual
 canvass against which the developmental patterns of all other
-symbol-referent relationships can be discussed.
+symbol-referent relationships can be discussed [MB: sehr gut, könnte man aber gut streamlinene und vll kürzen].
 
 The first case in question then is *Pars Pro Toto*. Despite using
 identical targets and - even partially identical cues - as in
@@ -1806,14 +1806,14 @@ age-range, appear equally difficult for participants. They appear as
 examples for symbol-referent relationships that are demanding for the
 oldest children in the sample, and may arguably require a second to
 solve or to describe verbally - even for adults. Establishing reference
-via an analogy in form is quite unconventional in graphic communication.
+via an analogy in form is quite unconventional in graphic communication [MB: Den satz würde ich rausnehmen, da könnte man nachfragen: wenn das so ungewöhnlich ist, warum habt ihr es dan gemacht?].
 Both conditions, here, stand out as conditions that are based first and
 foremost in visual similarity but are conceptually demanding at the same
 time. With regard to the influence of surface features, group level
 success occurs slightly earlier with the reduced cues employed in
 *Simple Form Analogy*. This suggests a slight benefit of a stimuli that
 are easier to grasp in line the literature on analogical reasoning
-[@gentner1988metaphor; @richland2006children] . Finally, overall results
+[@gentner1988metaphor; @richland2006children]. Finally, overall results
 are perfectly in line with the hypothesized developmental succession of
 group level success coming to pass first with *Representation*, then
 *Pars Pro Toto*, *Simple Form Analogy* and *Complex Form Analogy*.
@@ -1860,7 +1860,7 @@ alternate for the related cue and target, they are aligned up- or
 downwards. As in study 1, cues in *Orientation of Feature* were oriented
 on a vertical axis, to counter interpretations as arrow-like cues
 [@kachelarrowsInPrep]. For an overview of all stimuli per condition in
-Study 2, see figure \@ref(fig:suppl-plot-S2-stimuli) in appendix B.
+Study 2, see figure \@ref(fig:suppl-plot-S2-stimuli) [MB: siehe oben, vll ins paper mit rein] in appendix B.
 
 ## Participants
 
@@ -1907,28 +1907,26 @@ of uncertainty (SE = `r round(S2.comp["S2.full.bm", "se_diff"],2)`),
 suggesting no advantage in predictive accuracy. Hence, the preregistered
 analyses using the full model is reported below.
 
-Across all conditions, performance improved with both age (beta =
+Across all conditions, performance improved with both age ($\beta$ =
 `r S2.full.coef["z.age", "mean"]`, 95% CrI
 [`r S2.full.coef["z.age", "q2.5"]`, `r S2.full.coef["z.age", "q97.5"]`)
-and slightly with trial number (beta =
+and slightly with trial number ($\beta$ =
 `r S2.full.coef["z.trial", "mean"]`, 95% CrI
 [`r S2.full.coef["z.trial", "q2.5"]`,
 `r S2.full.coef["z.trial", "q97.5"]`). Relative to *Absolute Position*,
 children were generally less likely to correctly solve *Relative
-Position* (beta = `r S2.full.coef["RelativePosition", "mean"]`, 95% CrI
+Position* ($\beta$ = `r S2.full.coef["RelativePosition", "mean"]`, 95% CrI
 [`r S2.full.coef["RelativePosition", "q2.5"]`,
 `r S2.full.coef["RelativePosition", "q97.5"]`). Performance in
-*Orientation of Object* (beta =
+*Orientation of Object* ($\beta$ =
 `r S2.full.coef["OrientationofObject", "mean"]`, 95% CrI
 [`r S2.full.coef["OrientationofObject", "q2.5"]`,
 `r S2.full.coef["OrientationofObject", "q97.5"]`) and *Orientation of
-Feature* (beta = `r S2.full.coef["OrientationofFeature", "mean"]`, 95%
+Feature* ($\beta$ = `r S2.full.coef["OrientationofFeature", "mean"]`, 95%
 CrI [`r S2.full.coef["OrientationofFeature", "q2.5"]`,
 `r S2.full.coef["OrientationofFeature", "q97.5"]`) was not substantially
 different from the reference category when considering the full age
-range. Interaction terms between age and condition, including *Relative
-Position* and age (beta =
-`r S2.full.coef["RelativePosition:z.age", "mean"]`), were not credibly
+range. Interaction terms between age and condition were not credibly
 different from zero, suggesting similar developmental patterns for all
 conditions. Tracing the lower bound of the 95% CrI against the 50%
 chance level (cf. figure \@ref(fig:plot-study2)), the model establishes
@@ -1969,7 +1967,7 @@ target appears to be much more salient for children in graphic stimuli
 with a salient feature pointing out such as in *Orientation of Feature*,
 than an overall alignment in the horizontal, vertical or diagonal
 orientation. However, an overall picture emerges from the results of
-study 2. With stimuli that are not primarily drawing on representational
+study 2: with stimuli that are not primarily drawing on representational
 symbol-referent relationships but that are based in more conceptual
 Gestalt principles, children generally come to perform above chance
 closely around the fourth birthday. Arguably, all four of these
@@ -2018,7 +2016,7 @@ target shapes with either a relatively large or small void, opening, or
 protrusion. In *Number of Object*, cues and targets are composed of
 different shapes with some being simple line drawings. The displayed
 quantities were one against three, and two against four. As such they
-are easy to grasp and distinguish even for young children. Special
+are easy to grasp and distinguish even for young children [MB: reference would be nice here]. Special
 attention was paid to the arrangement of the objects to ensure that the
 cue and target objects do not share visually similarity by forming a
 similar pattern, which is difficult as such small number arrays lend
@@ -2078,10 +2076,10 @@ remains almost within the range of sampling uncertainty (SE =
 substantial differences, the full model is reported below in line with
 the preregistration.
 
-Overall, children's performance increased with age (beta =
+Overall, children's performance increased with age ($\beta$ =
 `r S3.full.coef["z.age", "mean"]`, 95% CrI
 [`r S3.full.coef["z.age", "q2.5"]`, `r S3.full.coef["z.age", "q97.5"]`)
-and with trial number (beta = `r S3.full.coef["z.trial", "mean"]`, 95%
+and with trial number ($\beta$ = `r S3.full.coef["z.trial", "mean"]`, 95%
 CrI [`r S3.full.coef["z.trial", "q2.5"]`,
 `r S3.full.coef["z.trial", "q97.5"]`), indicating general improvement
 across development and time-on-task. Relative to *Size of Object*,
@@ -2089,7 +2087,7 @@ participants were substantially less accurate in *Size of Feature* (beta
 = `r S3.full.coef["SizeofFeature", "mean"]`, 95% CrI
 [`r S3.full.coef["SizeofFeature", "q2.5"]`,
 `r S3.full.coef["SizeofFeature", "q97.5"]`). A smaller, marginal effect
-was observed in *Number of Feature* (beta =
+was observed in *Number of Feature* ($\beta$ =
 `r S3.full.coef["NumberofFeature", "mean"]`, 95% CrI
 [`r S3.full.coef["NumberofFeature", "q2.5"]`,
 `r S3.full.coef["NumberofFeature", "q97.5"]`). *Number of Object* (beta
@@ -2097,9 +2095,9 @@ was observed in *Number of Feature* (beta =
 [`r S3.full.coef["NumberofObject", "q2.5"]`,
 `r S3.full.coef["NumberofObject", "q97.5"]`) did not differ reliably
 from *Size of Object*. Age moderated performance less strongly in *Size
-of Feature* (beta = `r S3.full.coef["SizeofFeature:z.age", "mean"]`) and
-*Number of Feature* (beta =
-`r S3.full.coef["NumberofFeature:z.age", "mean"]`), suggesting lower
+of Feature* ($\beta$ = `r S3.full.coef["SizeofFeature:z.age", "mean"]`) and
+*Number of Feature* ($\beta$ =
+`r S3.full.coef["NumberofFeature:z.age", "mean"]`) [MB: warum kein 95% CRI hier], suggesting lower
 developmental gains compared to *Size of Object*. Generally, the
 conditions relying on feature-based reference are associated with lower
 overall performance and weaker developmental gains. The best overview of
@@ -2151,7 +2149,7 @@ the only condition that requires children to consider proportions within
 the composition of the target stimulus. However, given that the
 developmental trajectory is quite flat and the CrI comparably wide, the
 operationalization or graphical implementation of the concept *Size of
-Feature* may simply not have been ideal and salient enough. *Size of
+Feature* may simply not have been ideal and salient enough [MB: würde ich vll nochmal gucken ob Du eine inhaltlicher erklärung findest - 1. weil die Stimuli sehr sorgfältig kreiert wurden und 2. weil das alle anderen ergebnisse auch in Frage stellt (könnte ja auch sein, dass die stimuli eher schwer waren und wir daher alles unterschätzen).]. *Size of
 Object* demonstrates that children generally can grasp form analogies
 earlier with the exact same cues and *Absolute Position* and *Relative
 Position* from study 2 indicate that children can also master
@@ -2164,7 +2162,7 @@ be more pronounced.
 # Additional Analyses
 
 ??? Ich würde erstmal alles weitere fertig machen und die Additional
-Analyses optional lassen ???
+Analyses optional lassen ??? [MB: ja, gute Idee]
 
 Preregistration: \*An additional exploratory analysis will include a
 random effect for item level effects (Model: correct \~ task*z.age
@@ -2173,7 +2171,7 @@ evaluate the equivalence of items within a task and be reported in the
 supplements. Due to the low number of individual items within a task we
 expect this model to be less diagnostic with regard to our main research
 question and, therefore, will not include the term in the main
-analysis.*
+analysis.* [MB: Ich würde die models auf jeden Fall laufen lassen wenn wir sie in der der pre-reg haben und dann einfach sagen: macht keinen großen unterschied.]
 
 # Discussion
 
