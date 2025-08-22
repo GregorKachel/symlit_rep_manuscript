@@ -1324,6 +1324,526 @@ ggsave(
 
 ```
 
+<!-- Run additional item models for all three studies (not evaluated to save time) -->
+```{r S1S2S3_cue_model, echo=FALSE, eval=FALSE}
+
+# Main analysis:
+# S1.full.bm<-brm(correct~condition*z.age+z.trial+sex+(z.trial|subid) 
+
+# STUDY 1 
+
+# table(rep.S1.bayes.data$condition, rep.S1.bayes.data$cue)
+# table(rep.S1.bayes.data$cue)
+# table(rep.S1.bayes.data$condition)
+
+S1.cue.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|cue), 
+               data= rep.S1.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 5000,
+               cores= 4)
+
+S1.cue.model <- add_criterion(S1.cue.model, c("loo", "waic"))
+
+saveRDS(S1.cue.model, "../models/S1.cue.model.rds")
+ 
+# Warnung: 
+# 14 (0.8%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+
+
+
+
+
+# STUDY 2 
+
+# table(rep.S2.bayes.data$condition, rep.S2.bayes.data$cue)
+# table(rep.S2.bayes.data$cue)
+# table(rep.S2.bayes.data$condition)
+
+S2.cue.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|cue), 
+               data= rep.S2.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 5000,
+               cores= 4)
+
+S2.cue.model <- add_criterion(S2.cue.model, c("loo", "waic"))
+
+saveRDS(S2.cue.model, "../models/S2.cue.model.rds")
+
+
+
+
+
+
+# STUDY 3
+
+# table(rep.S3.bayes.data$condition, rep.S3.bayes.data$cue)
+# table(rep.S3.bayes.data$cue)
+# table(rep.S3.bayes.data$condition)
+
+S3.cue.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|cue), 
+               data= rep.S3.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 5000,
+               cores= 4)
+
+S3.cue.model <- add_criterion(S3.cue.model, c("loo", "waic"))
+
+# Warnung: 
+# 13 (0.8%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+
+saveRDS(S3.cue.model, "../models/S3.cue.model.rds")
+
+```
+
+```{r S1S2S3_cue_ppcheck_rhat_bulkESS, echo=FALSE, eval=FALSE}
+# read in models
+S1.cue.model <- readRDS("../models/S1.cue.model.rds")
+S2.cue.model <- readRDS("../models/S2.cue.model.rds")
+S3.cue.model <- readRDS("../models/S3.cue.model.rds")
+
+### POSTERIOR PREDICTICE CHECKS
+pp_check(S1.cue.model)
+pp_check(S1.cue.model, type = "bars")
+
+pp_check(S2.cue.model)
+pp_check(S2.cue.model, type = "bars")
+
+pp_check(S3.cue.model)
+pp_check(S3.cue.model, type = "bars")
+
+
+### inspect rhat --> always 1 --> good
+### inspect Bulk_ESS --> always > 1000 --> good
+
+#                       Estimate Est.Error l-95% CI 
+summary(S1.cue.model) # Intercept 0.45      0.10     0.28
+summary(S2.cue.model) # Intercept 0.28      0.12     0.04
+summary(S3.cue.model) # Intercept 0.25      0.11     0.03
+
+
+# For reporting in text:
+
+#Study 1
+S1.cue.coef <- summarise_draws(as_draws_df(S1.cue.model)) %>%
+  filter(grepl("^b_", variable) |
+         grepl("^sd_", variable)) %>%
+  mutate(variable = gsub("b_", "", variable)) %>%
+  mutate(variable = gsub("condition", "", variable)) %>%
+  data.frame(row.names = "variable")
+
+# all > 1000
+mean(S1.cue.coef$ess_bulk)
+min(S1.cue.coef$ess_bulk)
+max(S1.cue.coef$ess_bulk)
+# all = 1  
+mean(S1.cue.coef$rhat)
+min(S1.cue.coef$rhat)
+max(S1.cue.coef$rhat)
+
+
+
+#Study 2
+S2.cue.coef <- summarise_draws(as_draws_df(S2.cue.model)) %>%
+  filter(grepl("^b_", variable) |
+         grepl("^sd_", variable)) %>%
+  mutate(variable = gsub("b_", "", variable)) %>%
+  mutate(variable = gsub("condition", "", variable)) %>%
+  data.frame(row.names = "variable")
+
+# all > 1000
+mean(S2.cue.coef$ess_bulk)
+min(S2.cue.coef$ess_bulk)
+max(S2.cue.coef$ess_bulk)
+# all = 1  
+mean(S2.cue.coef$rhat)
+min(S2.cue.coef$rhat)
+max(S2.cue.coef$rhat)
+
+#Study 3
+S3.cue.coef <- summarise_draws(as_draws_df(S3.cue.model)) %>%
+  filter(grepl("^b_", variable) |
+         grepl("^sd_", variable)) %>%
+  mutate(variable = gsub("b_", "", variable)) %>%
+  mutate(variable = gsub("condition", "", variable)) %>%
+  data.frame(row.names = "variable")
+
+# all > 1000
+mean(S3.cue.coef$ess_bulk)
+min(S3.cue.coef$ess_bulk)
+max(S3.cue.coef$ess_bulk)
+# all = 1  
+mean(S3.cue.coef$rhat)
+min(S3.cue.coef$rhat)
+max(S3.cue.coef$rhat)
+
+
+```
+
+```{r S1S2S3_cue_illustrationcueintercepts, echo=FALSE, eval=FALSE}
+
+# STUDY 1
+
+S1.cue_effects <- ranef(S1.cue.model)$cue
+
+# Extract random intercepts
+S1.cue_intercepts <- as_tibble(S1.cue_effects[, , "Intercept"], rownames = "cue") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5) %>% 
+  mutate(condition = substr(cue,1,4))
+
+S1.cue.plot <- ggplot(S1.cue_intercepts, aes(x = reorder(cue, estimate), y = estimate, color = condition)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
+  labs(
+    title = "Cue-Level Random Intercepts by Condition",
+    x = "Cue",
+    y = "Estimated Deviation from Overall Intercept (log-odds)",
+    color = "Condition"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",  
+    strip.text = element_text(size = 12, face = "bold"))
+
+
+
+
+# STUDY 2
+
+S2.cue_effects <- ranef(S2.cue.model)$cue
+
+# Extract random intercepts
+S2.cue_intercepts <- as_tibble(S2.cue_effects[, , "Intercept"], rownames = "cue") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5) %>% 
+  mutate(condition = substr(cue,1,4))
+
+S2.cue.plot <- ggplot(S2.cue_intercepts, aes(x = reorder(cue, estimate), y = estimate, color = condition)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
+  labs(
+    title = "Cue-Level Random Intercepts by Condition",
+    x = "Cue",
+    y = "Estimated Deviation from Overall Intercept (log-odds)",
+    color = "Condition"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",  
+    strip.text = element_text(size = 12, face = "bold"))
+
+
+# STUDY 2
+
+S3.cue_effects <- ranef(S3.cue.model)$cue
+
+# Extract random intercepts
+S3.cue_intercepts <- as_tibble(S3.cue_effects[, , "Intercept"], rownames = "cue") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5) %>% 
+  mutate(condition = substr(cue,1,4))
+
+S3.cue.plot <- ggplot(S3.cue_intercepts, aes(x = reorder(cue, estimate), y = estimate, color = condition)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
+  labs(
+    title = "Cue-Level Random Intercepts by Condition",
+    x = "Cue",
+    y = "Estimated Deviation from Overall Intercept (log-odds)",
+    color = "Condition"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",  
+    strip.text = element_text(size = 12, face = "bold"))
+
+S1.cue.plot
+S2.cue.plot
+S3.cue.plot
+
+```
+
+
+
+
+```{r S1S2S3_item_model, echo=FALSE, eval=FALSE}
+
+# Main analysis:
+# S1.full.bm<-brm(correct~condition*z.age+z.trial+sex+(z.trial|subid) 
+
+# STUDY 1 
+
+# table(rep.S1.bayes.data$condition, rep.S1.bayes.data$item)
+# table(rep.S1.bayes.data$item)
+# table(rep.S1.bayes.data$condition)
+
+S1.item.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|item), 
+               data= rep.S1.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 5000,
+               cores= 4)
+
+S1.item.model <- add_criterion(S1.item.model, c("loo", "waic"))
+
+saveRDS(S1.item.model, "../models/S1.item.model.rds")
+
+# Warnung: 
+# 2 (0.1%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+
+# STUDY 2 
+
+# table(rep.S2.bayes.data$condition, rep.S2.bayes.data$item)
+# table(rep.S2.bayes.data$item)
+# table(rep.S2.bayes.data$condition)
+
+S2.item.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|item), 
+               data= rep.S2.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 5000,
+               cores= 4)
+
+S2.item.model <- add_criterion(S2.item.model, c("loo", "waic"))
+
+# 
+# Warnung: 
+# 9 (0.6%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+
+saveRDS(S2.item.model, "../models/S2.item.model.rds")
+
+
+# STUDY 3 
+
+# table(rep.S2.bayes.data$condition, rep.S2.bayes.data$item)
+# table(rep.S2.bayes.data$item)
+# table(rep.S2.bayes.data$condition)
+
+S3.item.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|item), 
+               data= rep.S3.bayes.data, 
+               family=bernoulli(),
+               chains = 4,
+               iter= 5000,
+               cores= 4)
+
+S3.item.model <- add_criterion(S3.item.model, c("loo", "waic"))
+
+# Warnung: 
+# 6 (0.4%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+
+saveRDS(S3.item.model, "../models/S3.item.model.rds")
+
+```
+
+```{r S1S2S3_cue_ppcheck_rhat_bulkESS, echo=FALSE, eval=FALSE}
+# read in models
+S1.item.model <- readRDS("../models/S1.item.model.rds")
+S2.item.model <- readRDS("../models/S2.item.model.rds")
+S3.item.model <- readRDS("../models/S3.item.model.rds")
+
+### POSTERIOR PREDICTICE CHECKS
+pp_check(S1.item.model)
+pp_check(S1.item.model, type = "bars")
+
+pp_check(S2.item.model)
+pp_check(S2.item.model, type = "bars")
+
+pp_check(S3.item.model)
+pp_check(S3.item.model, type = "bars")
+
+
+### inspect rhat --> always 1 --> good
+### inspect Bulk_ESS --> always > 1000 --> good
+
+#################       Estimate Est.Error l-95% CI 
+summary(S1.item.model) # Intercept 2.04      0.23     1.61
+summary(S2.item.model) # Intercept 1.09      0.25     0.60
+summary(S3.item.model) # Intercept 1.06      0.21     0.64
+
+# For reporting in text:
+
+#Study 1
+S1.item.coef <- summarise_draws(as_draws_df(S1.item.model)) %>%
+  filter(grepl("^b_", variable) |
+         grepl("^sd_", variable)) %>%
+  mutate(variable = gsub("b_", "", variable)) %>%
+  mutate(variable = gsub("condition", "", variable)) %>%
+  data.frame(row.names = "variable")
+
+# all > 1000
+mean(S1.item.coef$ess_bulk)
+min(S1.item.coef$ess_bulk)
+max(S1.item.coef$ess_bulk)
+# all = 1  
+mean(S1.item.coef$rhat)
+min(S1.item.coef$rhat)
+max(S1.item.coef$rhat)
+
+
+
+#Study 2
+S2.item.coef <- summarise_draws(as_draws_df(S2.item.model)) %>%
+  filter(grepl("^b_", variable) |
+         grepl("^sd_", variable)) %>%
+  mutate(variable = gsub("b_", "", variable)) %>%
+  mutate(variable = gsub("condition", "", variable)) %>%
+  data.frame(row.names = "variable")
+
+# all > 1000
+mean(S2.item.coef$ess_bulk)
+min(S2.item.coef$ess_bulk)
+max(S2.item.coef$ess_bulk)
+# all = 1  
+mean(S2.item.coef$rhat)
+min(S2.item.coef$rhat)
+max(S2.item.coef$rhat)
+
+#Study 3
+S3.item.coef <- summarise_draws(as_draws_df(S3.item.model)) %>%
+  filter(grepl("^b_", variable) |
+         grepl("^sd_", variable)) %>%
+  mutate(variable = gsub("b_", "", variable)) %>%
+  mutate(variable = gsub("condition", "", variable)) %>%
+  data.frame(row.names = "variable")
+
+# all > 1000
+mean(S3.item.coef$ess_bulk)
+min(S3.item.coef$ess_bulk)
+max(S3.item.coef$ess_bulk)
+# all = 1  
+mean(S3.item.coef$rhat)
+min(S3.item.coef$rhat)
+max(S3.item.coef$rhat)
+
+
+```
+
+```{r S1S2S3_cue_illustrationcueintercepts, echo=FALSE, eval=FALSE}
+
+# STUDY 1
+
+S1.item_effects <- ranef(S1.item.model)$item
+
+# Extract random intercepts
+S1.item_intercepts <- as_tibble(S1.item_effects[, , "Intercept"], rownames = "item") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5) %>% 
+  mutate(condition = substr(item,1,4))
+
+S1.item.plot <- ggplot(S1.item_intercepts, aes(x = reorder(item, estimate), y = estimate, color = condition)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
+  labs(
+    title = "item-Level Random Intercepts by Condition",
+    x = "item",
+    y = "Estimated Deviation from Overall Intercept (log-odds)",
+    color = "Condition"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",  
+    strip.text = element_text(size = 12, face = "bold"))
+
+# STUDY 2
+
+S2.item_effects <- ranef(S2.item.model)$item
+
+# Extract random intercepts
+S2.item_intercepts <- as_tibble(S2.item_effects[, , "Intercept"], rownames = "item") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5) %>% 
+  mutate(condition = substr(item,1,4))
+
+S2.item.plot <- ggplot(S2.item_intercepts, aes(x = reorder(item, estimate), y = estimate, color = condition)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
+  labs(
+    title = "item-Level Random Intercepts by Condition",
+    x = "item",
+    y = "Estimated Deviation from Overall Intercept (log-odds)",
+    color = "Condition"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",  
+    strip.text = element_text(size = 12, face = "bold"))
+
+
+# STUDY 3
+
+S3.item_effects <- ranef(S3.item.model)$item
+
+# Extract random intercepts
+S3.item_intercepts <- as_tibble(S3.item_effects[, , "Intercept"], rownames = "item") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5) %>% 
+  mutate(condition = substr(item,1,4))
+
+S3.item.plot <- ggplot(S3.item_intercepts, aes(x = reorder(item, estimate), y = estimate, color = condition)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
+  labs(
+    title = "item-Level Random Intercepts by Condition",
+    x = "item",
+    y = "Estimated Deviation from Overall Intercept (log-odds)",
+    color = "Condition"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",  
+    strip.text = element_text(size = 12, face = "bold"))
+
+# S1.item.plot
+# S2.item.plot
+# S3.item.plot
+
+# library(patchwork)
+S1.item.plot + 
+S2.item.plot + 
+S3.item.plot
+
+
+```
+
+
+
+
+
+
+
 <!-- weitere zahlen -->
 
 ```{r summaryresults,  echo=FALSE, warning=F, message=F, eval=T}
@@ -1333,7 +1853,7 @@ p_all <- data.frame(p_all, row.names = "condition")
 
 ```
 
-```{r additionalanalyses, echo=FALSE, warning=F, message=F, eval=F}
+```{r notespossibleadditionalanalyses, echo=FALSE, warning=F, message=F, eval=F}
 
 # 
 # possible add-ons
@@ -2486,19 +3006,23 @@ referents in study 1 (refXXX wie bei stimulus design). NEW NEW NEW*
 
 # Additional Analyses
 
-??? Ich würde erstmal alles weitere fertig machen und die Additional
-Analyses optional lassen ??? [MB: ja, gute Idee]
 
-Preregistration: \*An additional exploratory analysis will include a
-random effect for item level effects (Model: correct \~ task*z.age
-+z.trial +z.sex +(z.trial\|id) +(z.age\|item)). Results will help to
-evaluate the equivalence of items within a task and be reported in the
-supplements. Due to the low number of individual items within a task we
-expect this model to be less diagnostic with regard to our main research
-question and, therefore, will not include the term in the main
-analysis.* **[MB: Ich würde die models auf jeden Fall laufen lassen wenn
-wir sie in der der pre-reg haben und dann einfach sagen: macht keinen
-großen unterschied.]**
+
+In addition to our main analyses, we preregistered an additional analyses for exploring item level effects seperately in each study. For this we add a crossed random effect for items, allowing the relationship between age and performance to vary across items (correct ~ condition*z.age + z.trial + sex + (z.trial | subid)). Due to the lower number of individual items within a task, we expect this model to be less diagnostic with regard to our main research question. However, it adds detail about the equivalence of items within conditions. 
+
+## Study 1
+
+
+
+## Study 2
+
+
+
+## Study 3
+
+
+
+
 
 # Discussion
 
