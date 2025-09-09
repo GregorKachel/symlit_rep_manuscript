@@ -1,0 +1,267 @@
+
+```{r S1_item_intercepts, echo=FALSE, eval=T}
+
+# STUDY 1
+S1.item_effects <- ranef(S1.item.model)$item
+
+# Extract random intercepts
+S1.item_intercepts <- as_tibble(S1.item_effects[, , "Intercept"], rownames = "item") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5) %>% 
+  mutate(condition = substr(item,1,4)) %>% 
+  mutate(item = substr(item, 10,10)) %>% 
+  mutate(condition = case_when(
+    condition == "repr" ~ "Representation", 
+    condition == "pars" ~ "Pars Pro Toto",
+    condition == "fsim" ~"Simple Form Analogy",
+    condition == "fcom" ~ "Complex Form Analogy",
+    condition == "abpo" ~ "Absolute Position",
+    condition == "repo" ~ "Relative Position",
+    condition == "orob" ~ "Orientation of Object",
+    condition == "orfe" ~ "Orientation of Feature",
+    condition == "siob" ~ "Size of Object", 
+    condition == "sife" ~ "Size of Feature", 
+    condition == "nuob" ~ "Number of Object", 
+    condition == "nufe" ~ "Number of Feature",
+    TRUE ~ as.character(condition))) %>% 
+  mutate(condition = factor(condition, levels = c(
+    "Representation", # first level becomes reference
+    "Pars Pro Toto", 
+    "Simple Form Analogy", 
+    "Complex Form Analogy"))) %>% 
+  mutate(item = factor(item, levels = c("4", "3", "2", "1")))
+
+S1.item_intercepts <- add_colour(S1.item_intercepts)
+
+S1.item.plot <- ggplot(S1.item_intercepts, aes(x = item, y = estimate)) +
+  geom_point(aes(color = I(colour))) +
+  geom_errorbar(aes(ymin = lower, ymax = upper, color = I(colour)), width = 0.6, size = .5) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
+  labs(
+    x = "Item",
+    y = "Estimated Deviation from Overall Intercept (log-odds)"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",  
+    strip.text = element_text(size = 12, face = "bold"))
+
+ggsave(
+  filename = "../illustrations/plot_study1_item_intercepts.png",
+  plot = S1.item.plot,
+  device = "png",
+  width = 6, height = 4,
+  dpi = 300,
+  units = "in",
+  bg = "white"
+)
+
+
+```
+
+```{r S2_item_intercepts, echo=FALSE, eval=T}
+
+S2.item_effects <- ranef(S2.item.model)$item
+
+# Extract random intercepts
+S2.item_intercepts <- as_tibble(S2.item_effects[, , "Intercept"], rownames = "item") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5) %>% 
+  mutate(condition = substr(item,1,4)) %>% 
+  mutate(item = substr(item, 10,10)) %>% 
+  mutate(condition = case_when(
+    condition == "repr" ~ "Representation", 
+    condition == "pars" ~ "Pars Pro Toto",
+    condition == "fsim" ~"Simple Form Analogy",
+    condition == "fcom" ~ "Complex Form Analogy",
+    condition == "abpo" ~ "Absolute Position",
+    condition == "repo" ~ "Relative Position",
+    condition == "orob" ~ "Orientation of Object",
+    condition == "orfe" ~ "Orientation of Feature",
+    condition == "siob" ~ "Size of Object", 
+    condition == "sife" ~ "Size of Feature", 
+    condition == "nuob" ~ "Number of Object", 
+    condition == "nufe" ~ "Number of Feature",
+    TRUE ~ as.character(condition))) %>% 
+  mutate(condition = factor(condition, levels = c(
+    "Absolute Position",
+    "Relative Position",
+    "Orientation of Object",
+    "Orientation of Feature"))) %>%
+  mutate(item = factor(item, levels = c("4", "3", "2", "1")))
+
+S2.item_intercepts <- add_colour(S2.item_intercepts)
+
+S2.item.plot <- ggplot(S2.item_intercepts, aes(x = item, y = estimate)) +
+  geom_point(aes(color = I(colour))) +
+  geom_errorbar(aes(ymin = lower, ymax = upper, color = I(colour)), width = 0.6, size = .5) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
+  labs(
+    x = "Item",
+    y = "Estimated Deviation from Overall Intercept (log-odds)"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",  
+    strip.text = element_text(size = 12, face = "bold"))
+
+ggsave(
+  filename = "../illustrations/plot_study2_item_intercepts.png",
+  plot = S2.item.plot,
+  device = "png",
+  width = 6, height = 4,
+  dpi = 300,
+  units = "in",
+  bg = "white"
+)
+
+
+```
+
+```{r S3_item_intercepts, echo=FALSE, eval=T}
+
+S3.item_effects <- ranef(S3.item.model)$item
+
+# Extract random intercepts
+S3.item_intercepts <- as_tibble(S3.item_effects[, , "Intercept"], rownames = "item") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5) %>% 
+  mutate(condition = substr(item,1,4)) %>% 
+  mutate(item = substr(item, 10,10)) %>% 
+  mutate(condition = case_when(
+    condition == "repr" ~ "Representation", 
+    condition == "pars" ~ "Pars Pro Toto",
+    condition == "fsim" ~"Simple Form Analogy",
+    condition == "fcom" ~ "Complex Form Analogy",
+    condition == "abpo" ~ "Absolute Position",
+    condition == "repo" ~ "Relative Position",
+    condition == "orob" ~ "Orientation of Object",
+    condition == "orfe" ~ "Orientation of Feature",
+    condition == "siob" ~ "Size of Object", 
+    condition == "sife" ~ "Size of Feature", 
+    condition == "nuob" ~ "Number of Object", 
+    condition == "nufe" ~ "Number of Feature",
+    TRUE ~ as.character(condition))) %>% 
+  mutate(condition = factor(condition, levels = c(
+    "Size of Object", # first level becomes reference
+    "Size of Feature",
+    "Number of Object",
+    "Number of Feature"))) %>%
+  mutate(item = factor(item, levels = c("4", "3", "2", "1")))
+
+S3.item_intercepts <- add_colour(S3.item_intercepts)
+
+S3.item.plot <- ggplot(S3.item_intercepts, aes(x = item, y = estimate)) +
+  geom_point(aes(color = I(colour))) +
+  geom_errorbar(aes(ymin = lower, ymax = upper, color = I(colour)), width = 0.6, size = .5) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
+  labs(
+    x = "Item",
+    y = "Estimated Deviation from Overall Intercept (log-odds)"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",  
+    strip.text = element_text(size = 12, face = "bold"))
+
+ggsave(
+  filename = "../illustrations/plot_study3_item_intercepts.png",
+  plot = S3.item.plot,
+  device = "png",
+  width = 6, height = 4,
+  dpi = 300,
+  units = "in",
+  bg = "white"
+)
+
+
+
+
+```
+
+# Appendix E - Additional Analyses 
+In order to evaluate the equivalence of the items used in each experimental condition, we conducted an additional exploratory analysis to include a random effect for item level effects (Model notation `correct ~ condition*z.age +z.trial +z.sex +(z.trial|id) +(z.age|item)`). All three studies featured four conditions with four items each. Each item corresponds to a way of instantiating the type of symbol-referent-relationship addressed by the respective condition. Below we report the results for each study seperately. 
+
+## Study 1
+
+Smaller random-effect SDs, with wide CIs near zero → item-level variation is weaker and could even be negligible.
+
+Correlation between intercept and age slope is highly uncertain.
+
+Suggests that items as a grouping factor may not explain much additional variation.
+
+sd(Intercept) = 0.16 [0.01, 0.40] --> Items differ slightly in baseline difficulty,  
+0.16 log-odds corresponds to ~4 percentage points of accuracy --> effect of item is small
+
+sd(z.age) = 0.14 [0.01, 0.34] --> modest variation across items in how strongly it interacts with age. 
+effect size is small: ±0.14 log-odds ≈ ±3–4 percentage points per 1 SD in age.
+
+cor(Intercept, z.age) = 0.35 [-0.84, 0.98] → uncertain. there is no clear age effect for slightly easier or slightly more difficult items
+
+SUMMARY: Item-level effects are relatively small. Items are fairly homogeneous.
+
+```{r S1_item_summary_XXX, echo=FALSE, eval=F}
+
+# summary(S1.item.model)
+
+# print(S1.item.model, digits = 2)   
+# posterior_summary(S1.item.model)   
+# fixef(S1.item.model)               
+# ranef(S1.item.model)       
+
+```
+
+Plot: all items overlap with zero
+```{r plot-study1itemintercepts, fig.cap = "*Item-Level Random Intercepts by Condition* And some additional text here for explanation", fig.align = "center", echo = FALSE, out.width = "100%"}
+
+knitr::include_graphics(knitr::plot_crop("../illustrations/plot_study1_item_intercepts.png"))
+
+```
+
+
+Model comp full model and item model
+
+The two models have virtually identical predictive performance.
+
+The difference in WAIC (≈ 1.6) is tiny compared to its uncertainty (SE ≈ 39).
+
+The elpd_diff is well within one standard error of zero, meaning there’s no credible evidence that adding item-level random effects improves or harms predictive accuracy.
+
+Notice that S1.item.model has a higher p_waic (88.5 vs. 80.5) → it’s a more complex model (greater effective number of parameters), but that complexity does not translate into better predictive fit.
+
+
+## Study 2
+Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
+
+```{r plot-study2itemintercepts, fig.cap = "*Item-Level Random Intercepts by Condition* And some additional text here for explanation", fig.align = "center", echo = FALSE, out.width = "100%"}
+
+knitr::include_graphics(knitr::plot_crop("../illustrations/plot_study2_item_intercepts.png"))
+
+```
+
+
+## Study 3
+Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
+
+
+```{r plot-study3itemintercepts, fig.cap = "*Item-Level Random Intercepts by Condition* And some additional text here for explanation", fig.align = "center", echo = FALSE, out.width = "100%"}
+
+knitr::include_graphics(knitr::plot_crop("../illustrations/plot_study3_item_intercepts.png"))
+
+```
+
+
+
+

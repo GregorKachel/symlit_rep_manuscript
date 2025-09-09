@@ -65,8 +65,8 @@ appendix: # to change filenames, also see end of document
 - "appendix_a_participants.Rmd"
 - "appendix_b_stimuli.Rmd"
 - "appendix_c_descriptives.Rmd"
-- "appendix_d_diagnostics.Rmd"
-- "appendix_e_additional.Rmd"
+- "appendix_d_additional.Rmd"
+
 editor_options: 
   markdown: 
     wrap: 72
@@ -848,7 +848,6 @@ S3.full.coef <- S3.full.coef %>%
   mutate(variable = gsub("condition", "", variable)) %>% 
   data.frame(row.names = "variable")
 
-
 # NULL MODEL
 S3.null.coef <- summarise_draws(as_draws_df(S3.null.bm)) %>%
   filter(grepl("^b_", variable))
@@ -860,8 +859,6 @@ S3.null.coef <- summarise_draws(as_draws_df(S3.null.bm)) %>%
 # mean(S3.null.coef$ess_bulk)
 # min(S3.null.coef$ess_bulk)
 # max(S3.null.coef$ess_bulk)
-
-
 
 
 ```
@@ -895,7 +892,7 @@ f1 <- fitted(S1.full.bm,
   bind_cols(nd1)%>%
   mutate(age = z.age + mean(rep.S1.bayes.data$ageinyears)) %>% # convert age back to the original scale by adding the mean of the data
   mutate(condition = factor(condition, levels = c(
-        "Representation", # first level becomes reference
+        "Representation",
         "Pars Pro Toto", 
         "Simple Form Analogy", 
         "Complex Form Analogy")))
@@ -911,7 +908,7 @@ d1 <- rep.S1.bayes.data%>%
         "Complex Form Analogy")))
 
 p1 <- f1 %>%
-  mutate(age = age * 365.25)%>%
+  mutate(age = age * 365.25) %>%
    mutate(condition = factor(condition, levels = c(
         "Representation", # first level becomes reference
         "Pars Pro Toto", 
@@ -927,10 +924,13 @@ p1 <- f1 %>%
     monthlabels = as.character(paste(months, "months"))
     )
 
+
 nd1 <- add_colour(nd1)
 f1  <- add_colour(f1)
 d1  <- add_colour(d1)
 p1  <- add_colour(p1)
+
+
 
 ```
 
@@ -1065,7 +1065,7 @@ p3  <- add_colour(p3)
 
 ```
 
-<!-- Plotting aktuellste Version-->
+<!-- Plotting ohne stimuli -->
 
 ```{r rep_S1_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
 
@@ -1324,273 +1324,1033 @@ ggsave(
 
 ```
 
+<!-- Plotting mit stimuli -->
+```{r rep_S1_stim_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
+
+
+# load images ###################################
+
+# plotexample Representation.png
+image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[1], ".png"))
+image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[2], ".png"))
+image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[3], ".png"))
+image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[4], ".png"))
+# stimuli Representation.png
+image_1_2 <- image_read(paste0("../illustrations/stimuli ", levels(d1$condition)[1], ".png"))
+image_2_2 <- image_read(paste0("../illustrations/stimuli ", levels(d1$condition)[2], ".png"))
+image_3_3 <- image_read(paste0("../illustrations/stimuli ", levels(d1$condition)[3], ".png"))
+image_4_4 <- image_read(paste0("../illustrations/stimuli ", levels(d1$condition)[4], ".png"))
+# create grobs
+image_1_grob <- rasterGrob(image_1, interpolate = TRUE)
+image_2_grob <- rasterGrob(image_2, interpolate = TRUE)
+image_3_grob <- rasterGrob(image_3, interpolate = TRUE)
+image_4_grob <- rasterGrob(image_4, interpolate = TRUE)
+image_1_2_grob <- rasterGrob(image_1_2, interpolate = TRUE)
+image_2_2_grob <- rasterGrob(image_2_2, interpolate = TRUE)
+image_3_2_grob <- rasterGrob(image_3_3, interpolate = TRUE)
+image_4_2_grob <- rasterGrob(image_4_4, interpolate = TRUE)
+
+# plot 1
+plot1 <- ggplot() +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
+  
+  geom_point(
+    data = d1 %>% filter(condition == levels(condition)[1]),
+    aes(x = ageinyears, y = mean, colour = colour),
+    alpha = 0.5, shape = 1, size = 2
+  ) +
+  
+  geom_smooth(
+    data = f1 %>% filter(condition == levels(condition)[1]),
+    aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
+    stat = "identity", alpha = 0.2, linewidth = 0.8
+  ) +
+  
+  # shape 21 uses both fill (inside) and colour (stroke)
+  geom_point(
+    data = p1 %>% filter(condition == levels(condition)[1]),
+    aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
+    size = 4, shape = 21, stroke = 1
+  ) +
+  
+  # constant black overlay: set outside aes()
+  geom_point(
+    data = p1 %>% filter(condition == levels(condition)[1]),
+    aes(x = days/365.25, y = 0.5),
+    fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
+  ) +
+  
+  # text: move color/fontface outside aes()
+  geom_text(
+    data = p1 %>% filter(condition == levels(condition)[1]),
+    aes(label = months, x = days/365.25, y = 0.13),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  geom_text(
+    data = p1 %>% filter(condition == levels(condition)[1]),
+    aes(label = "months", x = days/365.25, y = .31),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  scale_colour_identity() +
+  scale_fill_identity() +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  labs(x = "Age", y = "Proportion Correct") +
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.title = element_text(face = "bold", size = rel(0.8)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+
+# plot 2
+plot2 <- ggplot() +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
+  
+  geom_point(
+    data = d1 %>% filter(condition == levels(condition)[2]),
+    aes(x = ageinyears, y = mean, colour = colour),
+    alpha = 0.5, shape = 1, size = 2
+  ) +
+  
+  geom_smooth(
+    data = f1 %>% filter(condition == levels(condition)[2]),
+    aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
+    stat = "identity", alpha = 0.2, linewidth = 0.8
+  ) +
+  
+  # shape 21 uses both fill (inside) and colour (stroke)
+  geom_point(
+    data = p1 %>% filter(condition == levels(condition)[2]),
+    aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
+    size = 4, shape = 21, stroke = 1
+  ) +
+  
+  # constant black overlay: set outside aes()
+  geom_point(
+    data = p1 %>% filter(condition == levels(condition)[2]),
+    aes(x = days/365.25, y = 0.5),
+    fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
+  ) +
+  
+  # text: move color/fontface outside aes()
+  geom_text(
+    data = p1 %>% filter(condition == levels(condition)[2]),
+    aes(label = months, x = days/365.25, y = 0.13),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  geom_text(
+    data = p1 %>% filter(condition == levels(condition)[2]),
+    aes(label = "months", x = days/365.25, y = .31),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  scale_colour_identity() +
+  scale_fill_identity() +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  labs(x = "Age", y = "Proportion Correct") +
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.title = element_text(face = "bold", size = rel(0.8)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+# plot 3
+plot3 <- ggplot() +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
+  
+  geom_point(
+    data = d1 %>% filter(condition == levels(condition)[3]),
+    aes(x = ageinyears, y = mean, colour = colour),
+    alpha = 0.5, shape = 1, size = 2
+  ) +
+  
+  geom_smooth(
+    data = f1 %>% filter(condition == levels(condition)[3]),
+    aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
+    stat = "identity", alpha = 0.2, linewidth = 0.8
+  ) +
+  
+  # shape 21 uses both fill (inside) and colour (stroke)
+  geom_point(
+    data = p1 %>% filter(condition == levels(condition)[3]),
+    aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
+    size = 4, shape = 21, stroke = 1
+  ) +
+  
+  # constant black overlay: set outside aes()
+  geom_point(
+    data = p1 %>% filter(condition == levels(condition)[3]),
+    aes(x = days/365.25, y = 0.5),
+    fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
+  ) +
+  
+  # text: move color/fontface outside aes()
+  geom_text(
+    data = p1 %>% filter(condition == levels(condition)[3]),
+    aes(label = months, x = days/365.25, y = 0.13),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  geom_text(
+    data = p1 %>% filter(condition == levels(condition)[3]),
+    aes(label = "months", x = days/365.25, y = .31),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  scale_colour_identity() +
+  scale_fill_identity() +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  labs(x = "Age", y = "Proportion Correct") +
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.title = element_text(face = "bold", size = rel(0.8)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+
+
+# plot 4
+plot4 <- ggplot() +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
+  
+  geom_point(
+    data = d1 %>% filter(condition == levels(condition)[4]),
+    aes(x = ageinyears, y = mean, colour = colour),
+    alpha = 0.5, shape = 1, size = 2
+  ) +
+  
+  geom_smooth(
+    data = f1 %>% filter(condition == levels(condition)[4]),
+    aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
+    stat = "identity", alpha = 0.2, linewidth = 0.8
+  ) +
+  
+  # shape 21 uses both fill (inside) and colour (stroke)
+  geom_point(
+    data = p1 %>% filter(condition == levels(condition)[4]),
+    aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
+    size = 4, shape = 21, stroke = 1
+  ) +
+  
+  # constant black overlay: set outside aes()
+  geom_point(
+    data = p1 %>% filter(condition == levels(condition)[4]),
+    aes(x = days/365.25, y = 0.5),
+    fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
+  ) +
+  
+  # text: move color/fontface outside aes()
+  geom_text(
+    data = p1 %>% filter(condition == levels(condition)[4]),
+    aes(label = months, x = days/365.25, y = 0.13),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  geom_text(
+    data = p1 %>% filter(condition == levels(condition)[4]),
+    aes(label = "months", x = days/365.25, y = .31),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  scale_colour_identity() +
+  scale_fill_identity() +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  labs(x = "Age", y = "Proportion Correct") +
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.title = element_text(face = "bold", size = rel(0.8)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+
+
+# Combine plots #######################
+
+S1_complete <- ggdraw() +
+  draw_plot_label(label = paste(levels(d1$condition)[1]), size = 14, x = 0.015, y = 0.98) +
+  draw_plot_label(label = paste(levels(d1$condition)[2]), size = 14, x = 0.275, y = 0.98) +
+  draw_plot_label(label = paste(levels(d1$condition)[3]), size = 14, x = 0.45, y = 0.98) +
+  draw_plot_label(label = paste(levels(d1$condition)[4]), size = 14, x = 0.68, y = 0.98) +
+  draw_plot(image_1_grob, y = 0.77, x = 0.05, width = .2, height = .2) +
+  draw_plot(image_2_grob, y = 0.77, x = 0.292, width = .2, height = .2) +
+  draw_plot(image_3_grob, y = 0.77, x = 0.541, width = .2, height = .2) +
+  draw_plot(image_4_grob, y = 0.77, x = 0.79, width = .2, height = .2) +
+  draw_plot(image_1_2_grob, y = 0.47, x = -0.01, width = .32, height = .32) +
+  draw_plot(image_2_2_grob, y = 0.47, x =  0.23, width = .32, height = .32) +
+  draw_plot(image_3_2_grob, y = 0.47, x =  0.48, width = .32, height = .32) +
+  draw_plot(image_4_2_grob, y = 0.47, x =  0.728, width = .32, height = .32) +
+  draw_plot(plot1, y = 0, x =  0.01, width = .25, height = .44) +
+  draw_plot(plot2, y = 0, x =  0.25, width = .25, height = .44) +
+  draw_plot(plot3, y = 0, x =  0.5, width = .25, height = .44) +
+  draw_plot(plot4, y = 0, x =  0.75, width = .25, height = .44) +
+  draw_plot_label(label = "A", size = 14, x = 0, y = 0.89) +
+  draw_plot_label(label = "B", size = 14, x = 0, y = 0.65) +
+  draw_plot_label(label = "C", size = 14, x = 0, y = 0.26)
+
+
+ggsave(
+  filename = "./S1_complete.pdf",
+  plot = S1_complete,
+  width = 27,
+  height = 16.9,
+  units = "cm",
+  dpi = 600   # or 600 for very high resolution
+)
+
+ shell.exec("S1_complete.pdf")
+
+ggsave(
+  filename = "./S1_complete.jpg",
+  plot = S1_complete,
+  width = 27,
+  height = 16.9,
+  units = "cm",
+  dpi = 600   # or 600 for very high resolution
+)
+
+
+# ggsave(
+#   filename = "./S1_complete.pdf",
+#   plot = S1_complete,
+#   width = 27,
+#   height = 16.9,
+#   units = "cm",
+#   dpi = 600   # or 600 for very high resolution
+# )
+
+# # Save  ------------
+# ggsave(
+#   filename = "../illustrations/plot_study1.png",
+#   plot = final_plot,
+#   device = "png",
+#   width = 8, height = 3.5,
+#   dpi = 300,
+#   units = "in",
+#   bg = "white"
+# )
+
+# # display plot
+# img <- image_read("../illustrations/plot_study1.png")
+# 
+# windows(width = 15, height = 10)  # On Windows
+# plot(img)
+
+
+```
+
+```{r rep_S2_stim_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
+
+
+# load images ###################################
+
+# plotexample Representation.png
+image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[1], ".png"))
+image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[2], ".png"))
+image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[3], ".png"))
+image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[4], ".png"))
+# stimuli Representation.png
+image_1_2 <- image_read(paste0("../illustrations/stimuli ", levels(d2$condition)[1], ".png"))
+image_2_2 <- image_read(paste0("../illustrations/stimuli ", levels(d2$condition)[2], ".png"))
+image_3_3 <- image_read(paste0("../illustrations/stimuli ", levels(d2$condition)[3], ".png"))
+image_4_4 <- image_read(paste0("../illustrations/stimuli ", levels(d2$condition)[4], ".png"))
+# create grobs
+image_1_grob <- rasterGrob(image_1, interpolate = TRUE)
+image_2_grob <- rasterGrob(image_2, interpolate = TRUE)
+image_3_grob <- rasterGrob(image_3, interpolate = TRUE)
+image_4_grob <- rasterGrob(image_4, interpolate = TRUE)
+image_1_2_grob <- rasterGrob(image_1_2, interpolate = TRUE)
+image_2_2_grob <- rasterGrob(image_2_2, interpolate = TRUE)
+image_3_2_grob <- rasterGrob(image_3_3, interpolate = TRUE)
+image_4_2_grob <- rasterGrob(image_4_4, interpolate = TRUE)
+
+# plot 1
+plot1 <- ggplot() +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
+  
+  geom_point(
+    data = d2 %>% filter(condition == levels(condition)[1]),
+    aes(x = ageinyears, y = mean, colour = colour),
+    alpha = 0.5, shape = 1, size = 2
+  ) +
+  
+  geom_smooth(
+    data = f2 %>% filter(condition == levels(condition)[1]),
+    aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
+    stat = "identity", alpha = 0.2, linewidth = 0.8
+  ) +
+  
+  # shape 21 uses both fill (inside) and colour (stroke)
+  geom_point(
+    data = p2 %>% filter(condition == levels(condition)[1]),
+    aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
+    size = 4, shape = 21, stroke = 1
+  ) +
+  
+  # constant black overlay: set outside aes()
+  geom_point(
+    data = p2 %>% filter(condition == levels(condition)[1]),
+    aes(x = days/365.25, y = 0.5),
+    fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
+  ) +
+  
+  # text: move color/fontface outside aes()
+  geom_text(
+    data = p2 %>% filter(condition == levels(condition)[1]),
+    aes(label = months, x = days/365.25, y = 0.13),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  geom_text(
+    data = p2 %>% filter(condition == levels(condition)[1]),
+    aes(label = "months", x = days/365.25, y = .31),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  scale_colour_identity() +
+  scale_fill_identity() +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  labs(x = "Age", y = "Proportion Correct") +
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.title = element_text(face = "bold", size = rel(0.8)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+
+# plot 2
+plot2 <- ggplot() +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
+  
+  geom_point(
+    data = d2 %>% filter(condition == levels(condition)[2]),
+    aes(x = ageinyears, y = mean, colour = colour),
+    alpha = 0.5, shape = 1, size = 2
+  ) +
+  
+  geom_smooth(
+    data = f2 %>% filter(condition == levels(condition)[2]),
+    aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
+    stat = "identity", alpha = 0.2, linewidth = 0.8
+  ) +
+  
+  # shape 21 uses both fill (inside) and colour (stroke)
+  geom_point(
+    data = p2 %>% filter(condition == levels(condition)[2]),
+    aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
+    size = 4, shape = 21, stroke = 1
+  ) +
+  
+  # constant black overlay: set outside aes()
+  geom_point(
+    data = p2 %>% filter(condition == levels(condition)[2]),
+    aes(x = days/365.25, y = 0.5),
+    fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
+  ) +
+  
+  # text: move color/fontface outside aes()
+  geom_text(
+    data = p2 %>% filter(condition == levels(condition)[2]),
+    aes(label = months, x = days/365.25, y = 0.13),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  geom_text(
+    data = p2 %>% filter(condition == levels(condition)[2]),
+    aes(label = "months", x = days/365.25, y = .31),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  scale_colour_identity() +
+  scale_fill_identity() +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  labs(x = "Age", y = "Proportion Correct") +
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.title = element_text(face = "bold", size = rel(0.8)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+# plot 3
+plot3 <- ggplot() +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
+  
+  geom_point(
+    data = d2 %>% filter(condition == levels(condition)[3]),
+    aes(x = ageinyears, y = mean, colour = colour),
+    alpha = 0.5, shape = 1, size = 2
+  ) +
+  
+  geom_smooth(
+    data = f2 %>% filter(condition == levels(condition)[3]),
+    aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
+    stat = "identity", alpha = 0.2, linewidth = 0.8
+  ) +
+  
+  # shape 21 uses both fill (inside) and colour (stroke)
+  geom_point(
+    data = p2 %>% filter(condition == levels(condition)[3]),
+    aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
+    size = 4, shape = 21, stroke = 1
+  ) +
+  
+  # constant black overlay: set outside aes()
+  geom_point(
+    data = p2 %>% filter(condition == levels(condition)[3]),
+    aes(x = days/365.25, y = 0.5),
+    fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
+  ) +
+  
+  # text: move color/fontface outside aes()
+  geom_text(
+    data = p2 %>% filter(condition == levels(condition)[3]),
+    aes(label = months, x = days/365.25, y = 0.13),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  geom_text(
+    data = p2 %>% filter(condition == levels(condition)[3]),
+    aes(label = "months", x = days/365.25, y = .31),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  scale_colour_identity() +
+  scale_fill_identity() +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  labs(x = "Age", y = "Proportion Correct") +
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.title = element_text(face = "bold", size = rel(0.8)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+
+
+# plot 4
+plot4 <- ggplot() +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
+  
+  geom_point(
+    data = d2 %>% filter(condition == levels(condition)[4]),
+    aes(x = ageinyears, y = mean, colour = colour),
+    alpha = 0.5, shape = 1, size = 2
+  ) +
+  
+  geom_smooth(
+    data = f2 %>% filter(condition == levels(condition)[4]),
+    aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
+    stat = "identity", alpha = 0.2, linewidth = 0.8
+  ) +
+  
+  # shape 21 uses both fill (inside) and colour (stroke)
+  geom_point(
+    data = p2 %>% filter(condition == levels(condition)[4]),
+    aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
+    size = 4, shape = 21, stroke = 1
+  ) +
+  
+  # constant black overlay: set outside aes()
+  geom_point(
+    data = p2 %>% filter(condition == levels(condition)[4]),
+    aes(x = days/365.25, y = 0.5),
+    fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
+  ) +
+  
+  # text: move color/fontface outside aes()
+  geom_text(
+    data = p2 %>% filter(condition == levels(condition)[4]),
+    aes(label = months, x = days/365.25, y = 0.13),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  geom_text(
+    data = p2 %>% filter(condition == levels(condition)[4]),
+    aes(label = "months", x = days/365.25, y = .31),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  scale_colour_identity() +
+  scale_fill_identity() +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  labs(x = "Age", y = "Proportion Correct") +
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.title = element_text(face = "bold", size = rel(0.8)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+
+
+# Combine plots #######################
+
+
+S2_complete <- ggdraw() +
+  draw_plot_label(label = paste(levels(d2$condition)[1]), size = 14, x = 0, y = 0.98) +
+  draw_plot_label(label = paste(levels(d2$condition)[2]), size = 14, x = 0.25, y = 0.98) +
+  draw_plot_label(label = paste(levels(d2$condition)[3]), size = 14, x = 0.46, y = 0.98) +
+  draw_plot_label(label = paste(levels(d2$condition)[4]), size = 14, x = 0.7, y = 0.98) +
+  draw_plot(image_1_grob, y = 0.77, x = 0.05, width = .2, height = .2) +
+  draw_plot(image_2_grob, y = 0.77, x = 0.292, width = .2, height = .2) +
+  draw_plot(image_3_grob, y = 0.77, x = 0.541, width = .2, height = .2) +
+  draw_plot(image_4_grob, y = 0.77, x = 0.79, width = .2, height = .2) +
+  draw_plot(image_1_2_grob, y = 0.47, x = -0.01, width = .32, height = .32) +
+  draw_plot(image_2_2_grob, y = 0.47, x =  0.23, width = .32, height = .32) +
+  draw_plot(image_3_2_grob, y = 0.47, x =  0.48, width = .32, height = .32) +
+  draw_plot(image_4_2_grob, y = 0.47, x =  0.728, width = .32, height = .32) +
+  draw_plot(plot1, y = 0, x =  0.01, width = .25, height = .44) +
+  draw_plot(plot2, y = 0, x =  0.25, width = .25, height = .44) +
+  draw_plot(plot3, y = 0, x =  0.5, width = .25, height = .44) +
+  draw_plot(plot4, y = 0, x =  0.75, width = .25, height = .44) +
+  draw_plot_label(label = "A", size = 14, x = 0, y = 0.89) +
+  draw_plot_label(label = "B", size = 14, x = 0, y = 0.65) +
+  draw_plot_label(label = "C", size = 14, x = 0, y = 0.26)
+
+
+ggsave(
+  filename = "./S2_complete.pdf",
+  plot = S2_complete,
+  width = 27,
+  height = 16.9,
+  units = "cm",
+  dpi = 600   # or 600 for very high resolution
+)
+
+# shell.exec("S2_complete.pdf")
+
+ggsave(
+  filename = "./S2_complete.jpg",
+  plot = S2_complete,
+  width = 27,
+  height = 16.9,
+  units = "cm",
+  dpi = 600   # or 600 for very high resolution
+)
+              
+
+```
+
+```{r rep_S3_stim_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
+
+
+# load images ###################################
+
+# plotexample Representation.png
+image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[1], ".png"))
+image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[2], ".png"))
+image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[3], ".png"))
+image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[4], ".png"))
+# stimuli Representation.png
+image_1_2 <- image_read(paste0("../illustrations/stimuli ", levels(d3$condition)[1], ".png"))
+image_2_2 <- image_read(paste0("../illustrations/stimuli ", levels(d3$condition)[2], ".png"))
+image_3_3 <- image_read(paste0("../illustrations/stimuli ", levels(d3$condition)[3], ".png"))
+image_4_4 <- image_read(paste0("../illustrations/stimuli ", levels(d3$condition)[4], ".png"))
+# create grobs
+image_1_grob <- rasterGrob(image_1, interpolate = TRUE)
+image_2_grob <- rasterGrob(image_2, interpolate = TRUE)
+image_3_grob <- rasterGrob(image_3, interpolate = TRUE)
+image_4_grob <- rasterGrob(image_4, interpolate = TRUE)
+image_1_2_grob <- rasterGrob(image_1_2, interpolate = TRUE)
+image_2_2_grob <- rasterGrob(image_2_2, interpolate = TRUE)
+image_3_2_grob <- rasterGrob(image_3_3, interpolate = TRUE)
+image_4_2_grob <- rasterGrob(image_4_4, interpolate = TRUE)
+
+# plot 1
+plot1 <- ggplot() +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
+  
+  geom_point(
+    data = d3 %>% filter(condition == levels(condition)[1]),
+    aes(x = ageinyears, y = mean, colour = colour),
+    alpha = 0.5, shape = 1, size = 2
+  ) +
+  
+  geom_smooth(
+    data = f3 %>% filter(condition == levels(condition)[1]),
+    aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
+    stat = "identity", alpha = 0.2, linewidth = 0.8
+  ) +
+  
+  # shape 21 uses both fill (inside) and colour (stroke)
+  geom_point(
+    data = p3 %>% filter(condition == levels(condition)[1]),
+    aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
+    size = 4, shape = 21, stroke = 1
+  ) +
+  
+  # constant black overlay: set outside aes()
+  geom_point(
+    data = p3 %>% filter(condition == levels(condition)[1]),
+    aes(x = days/365.25, y = 0.5),
+    fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
+  ) +
+  
+  # text: move color/fontface outside aes()
+  geom_text(
+    data = p3 %>% filter(condition == levels(condition)[1]),
+    aes(label = months, x = days/365.25, y = 0.13),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  geom_text(
+    data = p3 %>% filter(condition == levels(condition)[1]),
+    aes(label = "months", x = days/365.25, y = .31),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  scale_colour_identity() +
+  scale_fill_identity() +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  labs(x = "Age", y = "Proportion Correct") +
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.title = element_text(face = "bold", size = rel(0.8)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+
+# plot 2
+plot2 <- ggplot() +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
+  
+  geom_point(
+    data = d3 %>% filter(condition == levels(condition)[2]),
+    aes(x = ageinyears, y = mean, colour = colour),
+    alpha = 0.5, shape = 1, size = 2
+  ) +
+  
+  geom_smooth(
+    data = f3 %>% filter(condition == levels(condition)[2]),
+    aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
+    stat = "identity", alpha = 0.2, linewidth = 0.8
+  ) +
+  
+  # shape 21 uses both fill (inside) and colour (stroke)
+  geom_point(
+    data = p3 %>% filter(condition == levels(condition)[2]),
+    aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
+    size = 4, shape = 21, stroke = 1
+  ) +
+  
+  # constant black overlay: set outside aes()
+  geom_point(
+    data = p3 %>% filter(condition == levels(condition)[2]),
+    aes(x = days/365.25, y = 0.5),
+    fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
+  ) +
+  
+  # text: move color/fontface outside aes()
+  geom_text(
+    data = p3 %>% filter(condition == levels(condition)[2]),
+    aes(label = months, x = days/365.25, y = 0.13),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  geom_text(
+    data = p3 %>% filter(condition == levels(condition)[2]),
+    aes(label = "months", x = days/365.25, y = .31),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  scale_colour_identity() +
+  scale_fill_identity() +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  labs(x = "Age", y = "Proportion Correct") +
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.title = element_text(face = "bold", size = rel(0.8)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+# plot 3
+plot3 <- ggplot() +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
+  
+  geom_point(
+    data = d3 %>% filter(condition == levels(condition)[3]),
+    aes(x = ageinyears, y = mean, colour = colour),
+    alpha = 0.5, shape = 1, size = 2
+  ) +
+  
+  geom_smooth(
+    data = f3 %>% filter(condition == levels(condition)[3]),
+    aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
+    stat = "identity", alpha = 0.2, linewidth = 0.8
+  ) +
+  
+  # shape 21 uses both fill (inside) and colour (stroke)
+  geom_point(
+    data = p3 %>% filter(condition == levels(condition)[3]),
+    aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
+    size = 4, shape = 21, stroke = 1
+  ) +
+  
+  # constant black overlay: set outside aes()
+  geom_point(
+    data = p3 %>% filter(condition == levels(condition)[3]),
+    aes(x = days/365.25, y = 0.5),
+    fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
+  ) +
+  
+  # text: move color/fontface outside aes()
+  geom_text(
+    data = p3 %>% filter(condition == levels(condition)[3]),
+    aes(label = months, x = days/365.25, y = 0.13),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  geom_text(
+    data = p3 %>% filter(condition == levels(condition)[3]),
+    aes(label = "months", x = days/365.25, y = .31),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  scale_colour_identity() +
+  scale_fill_identity() +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  labs(x = "Age", y = "Proportion Correct") +
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.title = element_text(face = "bold", size = rel(0.8)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+
+
+# plot 4
+plot4 <- ggplot() +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
+  
+  geom_point(
+    data = d3 %>% filter(condition == levels(condition)[4]),
+    aes(x = ageinyears, y = mean, colour = colour),
+    alpha = 0.5, shape = 1, size = 2
+  ) +
+  
+  geom_smooth(
+    data = f3 %>% filter(condition == levels(condition)[4]),
+    aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
+    stat = "identity", alpha = 0.2, linewidth = 0.8
+  ) +
+  
+  # shape 21 uses both fill (inside) and colour (stroke)
+  geom_point(
+    data = p3 %>% filter(condition == levels(condition)[4]),
+    aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
+    size = 4, shape = 21, stroke = 1
+  ) +
+  
+  # constant black overlay: set outside aes()
+  geom_point(
+    data = p3 %>% filter(condition == levels(condition)[4]),
+    aes(x = days/365.25, y = 0.5),
+    fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
+  ) +
+  
+  # text: move color/fontface outside aes()
+  geom_text(
+    data = p3 %>% filter(condition == levels(condition)[4]),
+    aes(label = months, x = days/365.25, y = 0.13),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  geom_text(
+    data = p3 %>% filter(condition == levels(condition)[4]),
+    aes(label = "months", x = days/365.25, y = .31),
+    color = "black", fontface = "bold",
+    angle = 90, size = 3, vjust = 0.5
+  ) +
+  
+  scale_colour_identity() +
+  scale_fill_identity() +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  labs(x = "Age", y = "Proportion Correct") +
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.title = element_text(face = "bold", size = rel(0.8)),
+    axis.text = element_text(size = rel(0.8)),
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+
+
+# Combine plots #######################
+
+
+S3_complete <- ggdraw() +
+  draw_plot_label(label = paste(levels(d3$condition)[1]), size = 14, x = 0.028, y = 0.98) +
+  draw_plot_label(label = paste(levels(d3$condition)[2]), size = 14, x = 0.265, y = 0.98) +
+  draw_plot_label(label = paste(levels(d3$condition)[3]), size = 14, x = 0.487, y = 0.98) +
+  draw_plot_label(label = paste(levels(d3$condition)[4]), size = 14, x = 0.73, y = 0.98) +
+  draw_plot(image_1_grob, y = 0.77, x = 0.05, width = .2, height = .2) +
+  draw_plot(image_2_grob, y = 0.77, x = 0.292, width = .2, height = .2) +
+  draw_plot(image_3_grob, y = 0.77, x = 0.541, width = .2, height = .2) +
+  draw_plot(image_4_grob, y = 0.77, x = 0.79, width = .2, height = .2) +
+  draw_plot(image_1_2_grob, y = 0.47, x = -0.01, width = .32, height = .32) +
+  draw_plot(image_2_2_grob, y = 0.47, x =  0.23, width = .32, height = .32) +
+  draw_plot(image_3_2_grob, y = 0.47, x =  0.48, width = .32, height = .32) +
+  draw_plot(image_4_2_grob, y = 0.47, x =  0.728, width = .32, height = .32) +
+  draw_plot(plot1, y = 0, x =  0.01, width = .25, height = .44) +
+  draw_plot(plot2, y = 0, x =  0.25, width = .25, height = .44) +
+  draw_plot(plot3, y = 0, x =  0.5, width = .25, height = .44) +
+  draw_plot(plot4, y = 0, x =  0.75, width = .25, height = .44) +
+  draw_plot_label(label = "A", size = 14, x = 0, y = 0.89) +
+  draw_plot_label(label = "B", size = 14, x = 0, y = 0.65) +
+  draw_plot_label(label = "C", size = 14, x = 0, y = 0.26)
+
+
+ggsave(
+  filename = "./S3_complete.pdf",
+  plot = S3_complete,
+  width = 27,
+  height = 16.9,
+  units = "cm",
+  dpi = 600   # or 600 for very high resolution
+)
+
+# shell.exec("S3_complete.pdf")
+
+ggsave(
+  filename = "./S3_complete.jpg",
+  plot = S3_complete,
+  width = 27,
+  height = 16.9,
+  units = "cm",
+  dpi = 600   # or 600 for very high resolution
+)
+              
+
+```
+
+
+
 <!-- Run additional item models for all three studies (not evaluated to save time) -->
-```{r S1S2S3_cue_model, echo=FALSE, eval=FALSE}
+
+```{r S1S2S3_item_model,echo=FALSE, eval=F, warning = F, message=F}
 
 # Main analysis:
 # S1.full.bm<-brm(correct~condition*z.age+z.trial+sex+(z.trial|subid) 
 
-# STUDY 1 
-
-# table(rep.S1.bayes.data$condition, rep.S1.bayes.data$cue)
-# table(rep.S1.bayes.data$cue)
-# table(rep.S1.bayes.data$condition)
-
-S1.cue.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|cue), 
-               data= rep.S1.bayes.data, 
-               family=bernoulli(),
-               chains = 4,
-               iter= 5000,
-               cores= 4)
-
-S1.cue.model <- add_criterion(S1.cue.model, c("loo", "waic"))
-
-saveRDS(S1.cue.model, "../models/S1.cue.model.rds")
- 
-# Warnung: 
-# 14 (0.8%) p_waic estimates greater than 0.4. We recommend trying loo instead.
-
-
-
-
-
-# STUDY 2 
-
-# table(rep.S2.bayes.data$condition, rep.S2.bayes.data$cue)
-# table(rep.S2.bayes.data$cue)
-# table(rep.S2.bayes.data$condition)
-
-S2.cue.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|cue), 
-               data= rep.S2.bayes.data, 
-               family=bernoulli(),
-               chains = 4,
-               iter= 5000,
-               cores= 4)
-
-S2.cue.model <- add_criterion(S2.cue.model, c("loo", "waic"))
-
-saveRDS(S2.cue.model, "../models/S2.cue.model.rds")
-
-
-
-
-
-
-# STUDY 3
-
-# table(rep.S3.bayes.data$condition, rep.S3.bayes.data$cue)
-# table(rep.S3.bayes.data$cue)
-# table(rep.S3.bayes.data$condition)
-
-S3.cue.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.age|cue), 
-               data= rep.S3.bayes.data, 
-               family=bernoulli(),
-               chains = 4,
-               iter= 5000,
-               cores= 4)
-
-S3.cue.model <- add_criterion(S3.cue.model, c("loo", "waic"))
-
-# Warnung: 
-# 13 (0.8%) p_waic estimates greater than 0.4. We recommend trying loo instead.
-
-saveRDS(S3.cue.model, "../models/S3.cue.model.rds")
-
-```
-
-```{r S1S2S3_cue_ppcheck_rhat_bulkESS, echo=FALSE, eval=FALSE}
-# read in models
-S1.cue.model <- readRDS("../models/S1.cue.model.rds")
-S2.cue.model <- readRDS("../models/S2.cue.model.rds")
-S3.cue.model <- readRDS("../models/S3.cue.model.rds")
-
-### POSTERIOR PREDICTICE CHECKS
-pp_check(S1.cue.model)
-pp_check(S1.cue.model, type = "bars")
-
-pp_check(S2.cue.model)
-pp_check(S2.cue.model, type = "bars")
-
-pp_check(S3.cue.model)
-pp_check(S3.cue.model, type = "bars")
-
-
-### inspect rhat --> always 1 --> good
-### inspect Bulk_ESS --> always > 1000 --> good
-
-#                       Estimate Est.Error l-95% CI 
-summary(S1.cue.model) # Intercept 0.45      0.10     0.28
-summary(S2.cue.model) # Intercept 0.28      0.12     0.04
-summary(S3.cue.model) # Intercept 0.25      0.11     0.03
-
-
-# For reporting in text:
-
-#Study 1
-S1.cue.coef <- summarise_draws(as_draws_df(S1.cue.model)) %>%
-  filter(grepl("^b_", variable) |
-         grepl("^sd_", variable)) %>%
-  mutate(variable = gsub("b_", "", variable)) %>%
-  mutate(variable = gsub("condition", "", variable)) %>%
-  data.frame(row.names = "variable")
-
-# all > 1000
-mean(S1.cue.coef$ess_bulk)
-min(S1.cue.coef$ess_bulk)
-max(S1.cue.coef$ess_bulk)
-# all = 1  
-mean(S1.cue.coef$rhat)
-min(S1.cue.coef$rhat)
-max(S1.cue.coef$rhat)
-
-
-
-#Study 2
-S2.cue.coef <- summarise_draws(as_draws_df(S2.cue.model)) %>%
-  filter(grepl("^b_", variable) |
-         grepl("^sd_", variable)) %>%
-  mutate(variable = gsub("b_", "", variable)) %>%
-  mutate(variable = gsub("condition", "", variable)) %>%
-  data.frame(row.names = "variable")
-
-# all > 1000
-mean(S2.cue.coef$ess_bulk)
-min(S2.cue.coef$ess_bulk)
-max(S2.cue.coef$ess_bulk)
-# all = 1  
-mean(S2.cue.coef$rhat)
-min(S2.cue.coef$rhat)
-max(S2.cue.coef$rhat)
-
-#Study 3
-S3.cue.coef <- summarise_draws(as_draws_df(S3.cue.model)) %>%
-  filter(grepl("^b_", variable) |
-         grepl("^sd_", variable)) %>%
-  mutate(variable = gsub("b_", "", variable)) %>%
-  mutate(variable = gsub("condition", "", variable)) %>%
-  data.frame(row.names = "variable")
-
-# all > 1000
-mean(S3.cue.coef$ess_bulk)
-min(S3.cue.coef$ess_bulk)
-max(S3.cue.coef$ess_bulk)
-# all = 1  
-mean(S3.cue.coef$rhat)
-min(S3.cue.coef$rhat)
-max(S3.cue.coef$rhat)
-
-
-```
-
-```{r S1S2S3_cue_illustrationcueintercepts, echo=FALSE, eval=FALSE}
-
-# STUDY 1
-
-S1.cue_effects <- ranef(S1.cue.model)$cue
-
-# Extract random intercepts
-S1.cue_intercepts <- as_tibble(S1.cue_effects[, , "Intercept"], rownames = "cue") %>%
-  rename(
-    estimate = Estimate,
-    lower = Q2.5,
-    upper = Q97.5) %>% 
-  mutate(condition = substr(cue,1,4))
-
-S1.cue.plot <- ggplot(S1.cue_intercepts, aes(x = reorder(cue, estimate), y = estimate, color = condition)) +
-  geom_point() +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
-  coord_flip() +
-  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
-  labs(
-    title = "Cue-Level Random Intercepts by Condition",
-    x = "Cue",
-    y = "Estimated Deviation from Overall Intercept (log-odds)",
-    color = "Condition"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "none",  
-    strip.text = element_text(size = 12, face = "bold"))
-
-
-
-
-# STUDY 2
-
-S2.cue_effects <- ranef(S2.cue.model)$cue
-
-# Extract random intercepts
-S2.cue_intercepts <- as_tibble(S2.cue_effects[, , "Intercept"], rownames = "cue") %>%
-  rename(
-    estimate = Estimate,
-    lower = Q2.5,
-    upper = Q97.5) %>% 
-  mutate(condition = substr(cue,1,4))
-
-S2.cue.plot <- ggplot(S2.cue_intercepts, aes(x = reorder(cue, estimate), y = estimate, color = condition)) +
-  geom_point() +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
-  coord_flip() +
-  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
-  labs(
-    title = "Cue-Level Random Intercepts by Condition",
-    x = "Cue",
-    y = "Estimated Deviation from Overall Intercept (log-odds)",
-    color = "Condition"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "none",  
-    strip.text = element_text(size = 12, face = "bold"))
-
-
-# STUDY 2
-
-S3.cue_effects <- ranef(S3.cue.model)$cue
-
-# Extract random intercepts
-S3.cue_intercepts <- as_tibble(S3.cue_effects[, , "Intercept"], rownames = "cue") %>%
-  rename(
-    estimate = Estimate,
-    lower = Q2.5,
-    upper = Q97.5) %>% 
-  mutate(condition = substr(cue,1,4))
-
-S3.cue.plot <- ggplot(S3.cue_intercepts, aes(x = reorder(cue, estimate), y = estimate, color = condition)) +
-  geom_point() +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
-  coord_flip() +
-  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
-  labs(
-    title = "Cue-Level Random Intercepts by Condition",
-    x = "Cue",
-    y = "Estimated Deviation from Overall Intercept (log-odds)",
-    color = "Condition"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "none",  
-    strip.text = element_text(size = 12, face = "bold"))
-
-S1.cue.plot
-S2.cue.plot
-S3.cue.plot
-
-```
-
-
-
-
-```{r S1S2S3_item_model, echo=FALSE, eval=FALSE}
-
-# Main analysis:
-# S1.full.bm<-brm(correct~condition*z.age+z.trial+sex+(z.trial|subid) 
-
-# STUDY 1 
-
+### STUDY 1 ###
 # table(rep.S1.bayes.data$condition, rep.S1.bayes.data$item)
 # table(rep.S1.bayes.data$item)
 # table(rep.S1.bayes.data$condition)
@@ -1606,11 +2366,8 @@ S1.item.model <- add_criterion(S1.item.model, c("loo", "waic"))
 
 saveRDS(S1.item.model, "../models/S1.item.model.rds")
 
-# Warnung: 
-# 2 (0.1%) p_waic estimates greater than 0.4. We recommend trying loo instead.
 
-# STUDY 2 
-
+### STUDY 2 ###
 # table(rep.S2.bayes.data$condition, rep.S2.bayes.data$item)
 # table(rep.S2.bayes.data$item)
 # table(rep.S2.bayes.data$condition)
@@ -1624,15 +2381,9 @@ S2.item.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.
 
 S2.item.model <- add_criterion(S2.item.model, c("loo", "waic"))
 
-# 
-# Warnung: 
-# 9 (0.6%) p_waic estimates greater than 0.4. We recommend trying loo instead.
-
 saveRDS(S2.item.model, "../models/S2.item.model.rds")
 
-
-# STUDY 3 
-
+### STUDY 3 ###
 # table(rep.S2.bayes.data$condition, rep.S2.bayes.data$item)
 # table(rep.S2.bayes.data$item)
 # table(rep.S2.bayes.data$condition)
@@ -1646,37 +2397,33 @@ S3.item.model<-brm(correct ~ condition*z.age +z.trial +sex +(z.trial|subid) +(z.
 
 S3.item.model <- add_criterion(S3.item.model, c("loo", "waic"))
 
-# Warnung: 
-# 6 (0.4%) p_waic estimates greater than 0.4. We recommend trying loo instead.
-
 saveRDS(S3.item.model, "../models/S3.item.model.rds")
 
 ```
 
-```{r S1S2S3_cue_ppcheck_rhat_bulkESS, echo=FALSE, eval=FALSE}
+```{r S1S2S3_item_ppcheck_rhat_bulkESS, echo=FALSE, eval=T, warning = F, message=F}
 # read in models
 S1.item.model <- readRDS("../models/S1.item.model.rds")
 S2.item.model <- readRDS("../models/S2.item.model.rds")
 S3.item.model <- readRDS("../models/S3.item.model.rds")
 
 ### POSTERIOR PREDICTICE CHECKS
-pp_check(S1.item.model)
-pp_check(S1.item.model, type = "bars")
-
-pp_check(S2.item.model)
-pp_check(S2.item.model, type = "bars")
-
-pp_check(S3.item.model)
-pp_check(S3.item.model, type = "bars")
-
+# pp_check(S1.item.model)
+# pp_check(S1.item.model, type = "bars")
+# 
+# pp_check(S2.item.model)
+# pp_check(S2.item.model, type = "bars")
+# 
+# pp_check(S3.item.model)
+# pp_check(S3.item.model, type = "bars")
 
 ### inspect rhat --> always 1 --> good
 ### inspect Bulk_ESS --> always > 1000 --> good
 
 #################       Estimate Est.Error l-95% CI 
-summary(S1.item.model) # Intercept 2.04      0.23     1.61
-summary(S2.item.model) # Intercept 1.09      0.25     0.60
-summary(S3.item.model) # Intercept 1.06      0.21     0.64
+# summary(S1.item.model) # Intercept 2.04      0.23     1.61
+# summary(S2.item.model) # Intercept 1.09      0.25     0.60
+# summary(S3.item.model) # Intercept 1.06      0.21     0.64
 
 # For reporting in text:
 
@@ -1689,15 +2436,13 @@ S1.item.coef <- summarise_draws(as_draws_df(S1.item.model)) %>%
   data.frame(row.names = "variable")
 
 # all > 1000
-mean(S1.item.coef$ess_bulk)
-min(S1.item.coef$ess_bulk)
-max(S1.item.coef$ess_bulk)
-# all = 1  
-mean(S1.item.coef$rhat)
-min(S1.item.coef$rhat)
-max(S1.item.coef$rhat)
-
-
+# mean(S1.item.coef$ess_bulk)
+# min(S1.item.coef$ess_bulk)
+# max(S1.item.coef$ess_bulk)
+# # all = 1  
+# mean(S1.item.coef$rhat)
+# min(S1.item.coef$rhat)
+# max(S1.item.coef$rhat)
 
 #Study 2
 S2.item.coef <- summarise_draws(as_draws_df(S2.item.model)) %>%
@@ -1707,14 +2452,14 @@ S2.item.coef <- summarise_draws(as_draws_df(S2.item.model)) %>%
   mutate(variable = gsub("condition", "", variable)) %>%
   data.frame(row.names = "variable")
 
-# all > 1000
-mean(S2.item.coef$ess_bulk)
-min(S2.item.coef$ess_bulk)
-max(S2.item.coef$ess_bulk)
-# all = 1  
-mean(S2.item.coef$rhat)
-min(S2.item.coef$rhat)
-max(S2.item.coef$rhat)
+# # all > 1000
+# mean(S2.item.coef$ess_bulk)
+# min(S2.item.coef$ess_bulk)
+# max(S2.item.coef$ess_bulk)
+# # all = 1  
+# mean(S2.item.coef$rhat)
+# min(S2.item.coef$rhat)
+# max(S2.item.coef$rhat)
 
 #Study 3
 S3.item.coef <- summarise_draws(as_draws_df(S3.item.model)) %>%
@@ -1724,123 +2469,42 @@ S3.item.coef <- summarise_draws(as_draws_df(S3.item.model)) %>%
   mutate(variable = gsub("condition", "", variable)) %>%
   data.frame(row.names = "variable")
 
-# all > 1000
-mean(S3.item.coef$ess_bulk)
-min(S3.item.coef$ess_bulk)
-max(S3.item.coef$ess_bulk)
-# all = 1  
-mean(S3.item.coef$rhat)
-min(S3.item.coef$rhat)
-max(S3.item.coef$rhat)
+# # all > 1000
+# mean(S3.item.coef$ess_bulk)
+# min(S3.item.coef$ess_bulk)
+# max(S3.item.coef$ess_bulk)
+# # all = 1  
+# mean(S3.item.coef$rhat)
+# min(S3.item.coef$rhat)
+# max(S3.item.coef$rhat)
 
 
 ```
 
-```{r S1S2S3_cue_illustrationcueintercepts, echo=FALSE, eval=FALSE}
+```{r S1_itemvsfull_comp, echo=FALSE, eval=T, warning = F, message=F}
 
-# STUDY 1
+### MODEL COMPARISON
 
-S1.item_effects <- ranef(S1.item.model)$item
+# STUDY 1 - item vs full
+S1.itemvsfull.comp <- loo_compare(S1.item.model, S1.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
+S1.itemvsfull.comp  <- data.frame(S1.itemvsfull.comp , row.names = "index")
 
-# Extract random intercepts
-S1.item_intercepts <- as_tibble(S1.item_effects[, , "Intercept"], rownames = "item") %>%
-  rename(
-    estimate = Estimate,
-    lower = Q2.5,
-    upper = Q97.5) %>% 
-  mutate(condition = substr(item,1,4))
+# S1.itemvsfull.comp
 
-S1.item.plot <- ggplot(S1.item_intercepts, aes(x = reorder(item, estimate), y = estimate, color = condition)) +
-  geom_point() +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
-  coord_flip() +
-  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
-  labs(
-    title = "item-Level Random Intercepts by Condition",
-    x = "item",
-    y = "Estimated Deviation from Overall Intercept (log-odds)",
-    color = "Condition"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "none",  
-    strip.text = element_text(size = 12, face = "bold"))
+# STUDY 2 - item vs full
+S2.itemvsfull.comp <- loo_compare(S2.item.model, S2.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
+S2.itemvsfull.comp  <- data.frame(S2.itemvsfull.comp , row.names = "index")
 
-# STUDY 2
+# S2.itemvsfull.comp
 
-S2.item_effects <- ranef(S2.item.model)$item
+# STUDY 3 - item vs full
+S3.itemvsfull.comp <- loo_compare(S3.item.model, S3.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
+S3.itemvsfull.comp  <- data.frame(S3.itemvsfull.comp , row.names = "index")
 
-# Extract random intercepts
-S2.item_intercepts <- as_tibble(S2.item_effects[, , "Intercept"], rownames = "item") %>%
-  rename(
-    estimate = Estimate,
-    lower = Q2.5,
-    upper = Q97.5) %>% 
-  mutate(condition = substr(item,1,4))
-
-S2.item.plot <- ggplot(S2.item_intercepts, aes(x = reorder(item, estimate), y = estimate, color = condition)) +
-  geom_point() +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
-  coord_flip() +
-  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
-  labs(
-    title = "item-Level Random Intercepts by Condition",
-    x = "item",
-    y = "Estimated Deviation from Overall Intercept (log-odds)",
-    color = "Condition"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "none",  
-    strip.text = element_text(size = 12, face = "bold"))
-
-
-# STUDY 3
-
-S3.item_effects <- ranef(S3.item.model)$item
-
-# Extract random intercepts
-S3.item_intercepts <- as_tibble(S3.item_effects[, , "Intercept"], rownames = "item") %>%
-  rename(
-    estimate = Estimate,
-    lower = Q2.5,
-    upper = Q97.5) %>% 
-  mutate(condition = substr(item,1,4))
-
-S3.item.plot <- ggplot(S3.item_intercepts, aes(x = reorder(item, estimate), y = estimate, color = condition)) +
-  geom_point() +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
-  coord_flip() +
-  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
-  labs(
-    title = "item-Level Random Intercepts by Condition",
-    x = "item",
-    y = "Estimated Deviation from Overall Intercept (log-odds)",
-    color = "Condition"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "none",  
-    strip.text = element_text(size = 12, face = "bold"))
-
-# S1.item.plot
-# S2.item.plot
-# S3.item.plot
-
-# library(patchwork)
-S1.item.plot + 
-S2.item.plot + 
-S3.item.plot
+# S3.itemvsfull.comp
 
 
 ```
-
-
-
-
 
 
 
@@ -1877,6 +2541,8 @@ p_all <- data.frame(p_all, row.names = "condition")
 
 ```
 
+<!-- Jetzt im Appendix -->
+
 <!-- Hier gehts los -->
 
 **Keywords:** symbolic literacy, graphic symbols, communication,
@@ -1907,14 +2573,13 @@ communication that children acquire at the end of the first year
 [@liszkowski2012prelinguistic; @tomasello2007new]. Following this
 achievement, children soon become able to use iconic gestures, learn
 their first words and begin to form propositions over the course of the
-second year of life [@Tomasello2008origins; @tomasello2009cultural;
-@tomasello2010origins]. While at first lacking an understanding of the
+second year of life [@Tomasello2010origins; @tomasello2009cultural]. While at first lacking an understanding of the
 dual nature of symbolic means of communication, they soon come to grasp
 the standing-for-relationship of symbols in the third year of life. In
 order to better understand this process, researchers have worked on
 gesture, words, photographs, representative drawings, maps, models,
 simulacra, figurines and sound symbolism [@callaghan2015development;
-@tomasello1999young; @tomasello1997comprehension]. Notably, symbolic
+@Tomasello1999do; @tomasello1997comprehension]. Notably, symbolic
 behavior per se does not require symbolic insight [@namy2017symbols],
 which is to say that children may be successful communicators and grasp
 their interlocutors communicative acts or intentions but still lack
@@ -1932,7 +2597,7 @@ object-choice-tasks has been replicated many times by her group and
 other labs [@deloache2011early] and demonstrates that children’s
 symbolic understanding undergoes a rapid development in the first and
 second year of live [@deloache2004becoming; @callaghan2015development;
-@tomasello1999young].
+@Tomasello1999do].
 
 A similar developmental trajectory has been observed in the
 understanding of graphic representations. Iconicity provides an entry
@@ -2174,13 +2839,11 @@ approaches. For the convenience of the reader, common features of the
 procedure, participant recruiting and stimulus design are reported first
 before discussing the three studies respectively. All studies were
 preregistered online prior to data collection (cf. [Study
-1](https://aspredicted.org/SJT_H7F), [Study
-2](https://aspredicted.org/L2H_XC7), and [Study
-3](https://aspredicted.org/DR4_B4B)). **[MB: im paper müsste der Link
-ausgeschreiben sein, nicht hinterlegt]**
-
-**[MB: links zu repo mit data und analysis scripts sowie code für die
-studien?]**
+1](https://aspredicted.org/SJT_H7F): <https://aspredicted.org/SJT_H7F>,
+[Study 2](https://aspredicted.org/L2H_XC7):
+<https://aspredicted.org/L2H_XC7>, and [Study
+3](https://aspredicted.org/DR4_B4B): <https://aspredicted.org/DR4_B4B>).
+All stimuli, data and analyses are available at **LINK**.
 
 ## Data Collection and Setup
 
@@ -2235,13 +2898,11 @@ doing so the barrier of their choice was lifted to reveal the banana
 again if they chose correctly. The experimental script played back
 prerecorded feedback upon children's choice ("yes, great job!"; "No,
 that's not it. Let's try again!") during the familiarization (cf.
-Appendix B, figure \@ref(fig:suppl-plot-setupfamtest) A) **[MB: die
-Figure würde ich sagr nit ins paper nehmen - vll neben plot-figure
-setup, also beides zu einer Figure mergen]**. In order to succeed during
-familiarization, children solely had to remember where the item went and
-touch this part of the screen a few seconds later. To ensure that
-children were familiar with the goal of the game and the touch
-interface, they first had to complete a set of four to eight
+Appendix B, figure \@ref(fig:suppl-plot-setupfamtest) A). In order to
+succeed during familiarization, children solely had to remember where
+the item went and touch this part of the screen a few seconds later. To
+ensure that children were familiar with the goal of the game and the
+touch interface, they first had to complete a set of four to eight
 familiarization trials with a success rate of 75%. In case a child did
 not reply correctly in three out of four trials, another four
 familiarization trials were provided. If the child was correct in six
@@ -2322,30 +2983,27 @@ designed, consisting of two blue shapes serving as target or distractor,
 and two drawings that could serve as cues. Each condition covers a
 particular type of symbol-referent relationship via four stimulus
 versions with two variations each. For an example, consider figure
-\@ref(fig:suppl-plot-S1-stimuli) **[MB: auch hier, die Figure würde ich
-vll soagr mit ins apper nehmen, also dass man die ganzen stimuli im
-paper hat]** in appendix B. Panel (A) shows all stimuli for the
-*Representation* condition. The first column exemplifies a set of
-targets (a blue square and circle) and referents (outline drawings of a
-square and circle). During test, participants are presented with four
-test trials per condition, each composed of the shapes of a single
-column. During testing, a child sees each trial combination only once
-and with only one of the two possible cues. Across children, the
-position (left/right) of the referent, and the identity of the cue are
-counterbalanced.
+\@ref(fig:suppl-plot-S1-stimuli) in appendix B. Panel (A) shows all
+stimuli for the *Representation* condition. The first column exemplifies
+a set of targets (a blue square and circle) and referents (outline
+drawings of a square and circle). During test, participants are
+presented with four test trials per condition, each composed of the
+shapes of a single column. During testing, a child sees each trial
+combination only once and with only one of the two possible cues. Across
+children, the position (left/right) of the referent, and the identity of
+the cue are counterbalanced.
 
 ## Data Handling and Analyses
 
 *Symbolic development has been documented to undergo rapid transition
 within three to six months intervals [@deloache2011early;
-@callaghan2015development; @Tomasello1999do]. Despite this,
-researchers mostly bin subjects by years of age and, thereby, lose
-information [@cohen1983cost; @maxwell1993bivariate]. The studies
-presented below use children’s age in months as a continuous variable.
-To draw inferences, we followed the approach of House and colleagues
-[@House2017diverse; @House2013ontogeny] and plotted the model estimates
-graphically as a smoothed curve surrounded by the respective confidence
-intervals.*
+@callaghan2015development; @Tomasello1999do]. Despite this, researchers
+mostly bin subjects by years of age and, thereby, lose information
+[@cohen1983cost; @maxwell1993bivariate]. The studies presented below use
+children’s age in months as a continuous variable. To draw inferences,
+we followed the approach of House and colleagues [@House2017diverse;
+@House2013ontogeny] and plotted the model estimates graphically as a
+smoothed curve surrounded by the respective confidence intervals.*
 
 In each test trial, participants were prompted to touch one of the two
 choice options. Choices were logged by the experimental script and
@@ -2483,9 +3141,19 @@ fitted.
 ## Results
 
 Posterior predictive checks (PPC) for both full and null model indicated
-excellent fit of observed data and model predictions (see supplement D
-for more information). Comparing the models using weights based on the
-Widely Applicable Information Criterion (WAIC) yielded
+excellent fit of observed data and model predictions. Rhat values in
+both models were equal to one, indicating convergence across all chains.
+Effective sample sizes for all fixed effects in the full model (Bulk
+ESS, mean = `r round(mean(S1.full.coef$ess_bulk), 0)`, range
+`r round(min(S1.full.coef$ess_bulk), 0)` -
+`r round(max(S1.full.coef$ess_bulk), 0)`) and the null model (Bulk ESS,
+mean = `r round(mean(S1.null.coef$ess_bulk), 0)`, range
+`r round(min(S1.null.coef$ess_bulk), 0)` -
+`r round(max(S1.null.coef$ess_bulk), 0)`) were \> 1000, indicating
+reliable posterior estimations.
+
+Comparing the models using weights based on the Widely Applicable
+Information Criterion (WAIC) yielded
 `r round(S1.weights["S1.full.bm","value"]*100,2)`% of the model weight
 for the full model, and
 `r round(S1.weights["S1.null.bm","value"]*100,2)`% for the null model.
@@ -2564,6 +3232,17 @@ age in years.
 knitr::include_graphics(knitr::plot_crop("../illustrations/plot_study1.png"))
 
 ```
+
+test
+test
+test
+
+```{r plot-study1_2, fig.cap = "*Developmental Trajectories for all Conditions in Study 2.* Panels illustrate example stimulus combinations (distractor, cue, target) and results for all conditions. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level and the dots represent individual means. The coloured dots and annotation indicate when performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
+
+knitr::include_graphics(knitr::plot_crop("./S1_complete.jpg"))
+
+```
+
 
 ## Discussion
 
@@ -2664,8 +3343,7 @@ alternate for the related cue and target, they are aligned up- or
 downwards. As in study 1, cues in *Orientation of Feature* were oriented
 on a vertical axis, to counter interpretations as arrow-like cues
 [@kachelarrowsInPrep]. For an overview of all stimuli per condition in
-Study 2, see figure \@ref(fig:suppl-plot-S2-stimuli) **[MB: siehe oben,
-vll ins paper mit rein]** in appendix B.
+Study 2, see figure \@ref(fig:suppl-plot-S2-stimuli) in appendix B.
 
 ## Participants
 
@@ -2698,12 +3376,22 @@ fitted.
 ## Results
 
 For both full and null model, PPCs indicate excellent fit of observed
-data and model predictions. To compare model performance, we evaluated
-the WAIC estimates. The null model showed a slightly better predictive
-performance (ELPD = `r round(S2.comp["S2.null.bm","elpd_waic"],2)`)
-compared to the full model (ELPD =
-`r round(S2.comp["S2.full.bm","elpd_waic"],2)`). WAIC values also
-indicate better performance of the null model (WAIC =
+data and model predictions. Rhat values in both models were equal to
+one, indicating convergence across all chains. Effective sample sizes
+for all fixed effects in the full model (Bulk ESS, mean =
+`r round(mean(S2.full.coef$ess_bulk), 0)`, range
+`r round(min(S2.full.coef$ess_bulk), 0)` -
+`r round(max(S2.full.coef$ess_bulk), 0)`) and the null model (Bulk ESS,
+mean = `r round(mean(S2.null.coef$ess_bulk), 0)`, range
+`r round(min(S2.null.coef$ess_bulk), 0)` -
+`r round(max(S2.null.coef$ess_bulk), 0)`) were \> 1000, indicating
+reliable posterior estimations.
+
+To compare model performance, we evaluated the WAIC estimates. The null
+model showed a slightly better predictive performance (ELPD =
+`r round(S2.comp["S2.null.bm","elpd_waic"],2)`) compared to the full
+model (ELPD = `r round(S2.comp["S2.full.bm","elpd_waic"],2)`). WAIC
+values also indicate better performance of the null model (WAIC =
 `r round(S2.comp["S2.null.bm", "waic"],2)`) over the full model (WAIC =
 `r round(S2.comp["S2.full.bm", "waic"],2)`). However, the difference
 between models (ELPD Diff =
@@ -2756,6 +3444,17 @@ participants according to their age in years, see table
 knitr::include_graphics(knitr::plot_crop("../illustrations/plot_study2.png"))
 
 ```
+
+test
+test
+test
+
+```{r plot-study2_2, fig.cap = "*Developmental Trajectories for all Conditions in Study 2.* Panels illustrate example stimulus combinations (distractor, cue, target) and results for all conditions. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level and the dots represent individual means. The coloured dots and annotation indicate when performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
+
+knitr::include_graphics(knitr::plot_crop("./S1_complete.jpg"))
+
+```
+
 
 ## Discussion
 
@@ -2820,22 +3519,24 @@ Feature* employs the exact same cues as *Size of Object*, but features
 target shapes with either a relatively large or small void, opening, or
 protrusion. In *Number of Object*, cues and targets are composed of
 different shapes with some being simple line drawings. The displayed
-quantities were one against three, and two against four. As such they
-are easy to grasp and distinguish even for young children **[MB:
-reference would be nice here].** Special attention was paid to the
-arrangement of the objects to ensure that the cue and target objects do
-not share visually similarity by forming a similar pattern, which is
-difficult as such small number arrays lend themselves to being grouped
-into canonical shapes by Gestalt principles such as proximity and
-closure. This issue was addressed by presenting the targets depicting
-the magnitudes three and four as if outlining irregular shapes. By
-contrast, the corresponding cues were aligned along a vertical of
-horizontal axis. For comparability, *Number of Feature* employs the same
-cues as *Number of Object*. To evoke a sense of quantity in the closed
-forms serving as referents, the target shapes in *Number of Feature*
-either have salient protrusions, or partial areas resulting from
-incisions. For an overview of all stimuli presented in Study 3, see
-figure \@ref(fig:suppl-plot-S3-stimuli) in appendix B.
+quantities were 1 versus 3, and 2 versus 4. Already in infancy children
+can discriminate 1 versus 3 [@feigenson2002representations]. Three- and
+four-year-olds can reliably distinguish these magnitudes explicitly and
+implicitly without counting [@mix2002quantitative;
+@halberda2008developmental; @huntley2000preschoolers]. Special attention
+was paid to the arrangement of the objects to ensure that the cue and
+target objects do not share visually similarity by forming a similar
+pattern, which is difficult as such small number arrays lend themselves
+to being grouped into canonical shapes by Gestalt principles such as
+proximity and closure. This issue was addressed by presenting the
+targets depicting the magnitudes three and four as if outlining
+irregular shapes. By contrast, the corresponding cues were aligned along
+a vertical of horizontal axis. For comparability, *Number of Feature*
+employs the same cues as *Number of Object*. To evoke a sense of
+quantity in the closed forms serving as referents, the target shapes in
+*Number of Feature* either have salient protrusions, or partial areas
+resulting from incisions. For an overview of all stimuli presented in
+Study 3, see figure \@ref(fig:suppl-plot-S3-stimuli) in appendix B.
 
 ## Participants
 
@@ -2869,10 +3570,22 @@ null model lacking the interaction of condition and age.
 ## Results
 
 PPCs indicated excellent fit of observed data and model predictions in
-both models. When comparing performance, the full model showed a better
-fit (ELPD = `r round(S3.comp["S3.full.bm","elpd_waic"],2)`) relative to
-the null model (ELPD = `r round(S3.comp["S3.null.bm","elpd_waic"],2)`).
-The WAIC values also favored the full model (WAIC =
+both models. Model diagnostics were drawn for the full and null model in
+study 3. Rhat values in both models were equal to one, indicating
+convergence across all chains. Effective sample sizes for all fixed
+effects in the full model (Bulk ESS, mean =
+`r round(mean(S3.full.coef$ess_bulk), 0)`, range
+`r round(min(S3.full.coef$ess_bulk), 0)` -
+`r round(max(S3.full.coef$ess_bulk), 0)`) and the null model (Bulk ESS,
+mean = `r round(mean(S3.null.coef$ess_bulk), 0)`, range
+`r round(min(S3.null.coef$ess_bulk), 0)` -
+`r round(max(S3.null.coef$ess_bulk), 0)`) were \> 1000, indicating
+reliable posterior estimations.
+
+When comparing performance, the full model showed a better fit (ELPD =
+`r round(S3.comp["S3.full.bm","elpd_waic"],2)`) relative to the null
+model (ELPD = `r round(S3.comp["S3.null.bm","elpd_waic"],2)`). The WAIC
+values also favored the full model (WAIC =
 `r round(S3.comp["S3.full.bm", "waic"],2)`) over the null model (WAIC =
 `r round(S3.comp["S3.null.bm", "waic"],2)`). Despite the slightly lower
 WAIC and higher ELPD of the full model, the difference in predictive
@@ -2928,6 +3641,15 @@ knitr::include_graphics(knitr::plot_crop("../illustrations/plot_study3.png"))
 
 ```
 
+test
+test
+test
+
+```{r plot-study3_2, fig.cap = "*Developmental Trajectories for all Conditions in Study 2.* Panels illustrate example stimulus combinations (distractor, cue, target) and results for all conditions. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level and the dots represent individual means. The coloured dots and annotation indicate when performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
+
+knitr::include_graphics(knitr::plot_crop("./S3_complete.jpg"))
+
+```
 ## Discussion
 
 We hypothesized that children will succeed earlier with analogies in
@@ -3006,23 +3728,20 @@ referents in study 1 (refXXX wie bei stimulus design). NEW NEW NEW*
 
 # Additional Analyses
 
-
-
-In addition to our main analyses, we preregistered an additional analyses for exploring item level effects seperately in each study. For this we add a crossed random effect for items, allowing the relationship between age and performance to vary across items (correct ~ condition*z.age + z.trial + sex + (z.trial | subid)). Due to the lower number of individual items within a task, we expect this model to be less diagnostic with regard to our main research question. However, it adds detail about the equivalence of items within conditions. 
+In addition to our main analyses, we preregistered an additional
+analyses for exploring item level effects seperately in each study. For
+this we add a crossed random effect for items, allowing the relationship
+between age and performance to vary across items (correct \~
+condition\*z.age + z.trial + sex + (z.trial \| subid)). Due to the lower
+number of individual items within a task, we expect this model to be
+less diagnostic with regard to our main research question. However, it
+adds detail about the equivalence of items within conditions.
 
 ## Study 1
 
-
-
 ## Study 2
 
-
-
 ## Study 3
-
-
-
-
 
 # Discussion
 
@@ -3281,13 +4000,13 @@ without explicit instruction or training [@bohn2019young;
 @raviv2018systematicity]. It would be extremely interesting to see at
 what ages and under what specific set of circumstances
 [@nolle2020language; @nolle2022field] young children may begin to use
-various dimensions of graphic communication for disambiguating
-reference [@nolle2018emergence] or establishing a even compositional
-communication systems [@bohn2019young] when producing signs themselves.
-Our work here demonstrates that at least by the age of four, they would
-be apt receivers of symbolic creations whose reference is based on
-iconicity, metonymy, alignment, orientation, as well as analogies in
-form, size and number.
+various dimensions of graphic communication for disambiguating reference
+[@nolle2018emergence] or establishing a even compositional communication
+systems [@bohn2019young] when producing signs themselves. Our work here
+demonstrates that at least by the age of four, they would be apt
+receivers of symbolic creations whose reference is based on iconicity,
+metonymy, alignment, orientation, as well as analogies in form, size and
+number.
 
 The work presented here provides a clear and methodologically rigorous
 account of early symbolic development. Its straightforward streamlined
@@ -3298,693 +4017,6 @@ understanding of children's growing aptitude in graphic communication:
 the conceptual space spanning from iconic to abstract graphical
 representation.
 
-<!-- RESTE ...Backup von alten Versionen -->
-
-```{r rep_S1_bayes_fullmodel_plotting_sketch, echo=FALSE, eval=F, warning = F, message=F}
-# packages -----------
-# library(patchwork)
-# library(magick)
-# library(grid)
-# library(ggplotify)
-# library(dplyr)
-# library(ggplot2)
-# library(magick)
-
-library(cowplot)
-
-# creating plots -------------------------------------
-
-# Get the selected condition level
-this_condition <- levels(d1$condition)[1]
-# Create the plot
-plot_1 <- ggplot() +
-  geom_hline(yintercept = .5, lty = 2, alpha = .75) +
-  
-  geom_point(data = d1 %>% filter(condition == this_condition), 
-             aes(x = ageinyears, y = mean, col = I(colour)), alpha = .5, shape = 1) +
-  
-  geom_smooth(data = f1 %>% filter(condition == this_condition),
-              aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, 
-                  fill = I(colour), col = I(colour)),
-              stat = "identity", alpha = .25) +
-  
-  geom_point(data = p1 %>% filter(condition == this_condition),
-             aes(x = days/365.25, y = .5, fill = I(colour), col = I(colour)), 
-             stat = "identity", size = 3) +
-  
-  geom_text(data = p1 %>% filter(condition == this_condition),
-            aes(label = months, x = days/365.25, y = .24, 
-                fill = I(colour), col = I(colour)), 
-            angle = 90, size = 4, parse = TRUE) +
-  
-  geom_text(data = p1 %>% filter(condition == this_condition),
-            aes(label = "months", x = days/365.25, y = .38, 
-                fill = I(colour), col = I(colour)), 
-            angle = 90, size = 4, parse = TRUE) +
-  theme_minimal() +
-  ylim(0, 1) +
-  xlim(3, 7) +
-  labs(y = "Proportion Correct") +
-  theme(
-    # axis.title.y = element_blank(),
-    axis.title.x = element_blank(),
-    # axis.text.y = element_blank(),
-    legend.position = "none")
-
-# Get the selected condition level
-this_condition <- levels(d1$condition)[2]
-# Create the plot
-plot_2 <- ggplot() +
-  geom_hline(yintercept = .5, lty = 2, alpha = .75) +
-  
-  geom_point(data = d1 %>% filter(condition == this_condition), 
-             aes(x = ageinyears, y = mean, col = I(colour)), alpha = .5, shape = 1) +
-  
-  geom_smooth(data = f1 %>% filter(condition == this_condition),
-              aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, 
-                  fill = I(colour), col = I(colour)),
-              stat = "identity", alpha = .25) +
-  
-  geom_point(data = p1 %>% filter(condition == this_condition),
-             aes(x = days/365.25, y = .5, fill = I(colour), col = I(colour)), 
-             stat = "identity", size = 3) +
-  
-  geom_text(data = p1 %>% filter(condition == this_condition),
-            aes(label = months, x = days/365.25, y = .24, 
-                fill = I(colour), col = I(colour)), 
-            angle = 90, size = 4, parse = TRUE) +
-  
-  geom_text(data = p1 %>% filter(condition == this_condition),
-            aes(label = "months", x = days/365.25, y = .38, 
-                fill = I(colour), col = I(colour)), 
-            angle = 90, size = 4, parse = TRUE) +
-  theme_minimal() +
-  ylim(0, 1) +
-  xlim(3, 7) +
-  theme(
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank(),
-    axis.text.y = element_blank(),
-    legend.position = "none")
-
-# Get the selected condition level
-this_condition <- levels(d1$condition)[3]
-# Create the plot
-plot_3 <- ggplot() +
-  geom_hline(yintercept = .5, lty = 2, alpha = .75) +
-  
-  geom_point(data = d1 %>% filter(condition == this_condition), 
-             aes(x = ageinyears, y = mean, col = I(colour)), alpha = .5, shape = 1) +
-  
-  geom_smooth(data = f1 %>% filter(condition == this_condition),
-              aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, 
-                  fill = I(colour), col = I(colour)),
-              stat = "identity", alpha = .25) +
-  
-  geom_point(data = p1 %>% filter(condition == this_condition),
-             aes(x = days/365.25, y = .5, fill = I(colour), col = I(colour)), 
-             stat = "identity", size = 3) +
-  
-  geom_text(data = p1 %>% filter(condition == this_condition),
-            aes(label = months, x = days/365.25, y = .24, 
-                fill = I(colour), col = I(colour)), 
-            angle = 90, size = 4, parse = TRUE) +
-  
-  geom_text(data = p1 %>% filter(condition == this_condition),
-            aes(label = "months", x = days/365.25, y = .38, 
-                fill = I(colour), col = I(colour)), 
-            angle = 90, size = 4, parse = TRUE) +
-  theme_minimal() +
-  ylim(0, 1) +
-  xlim(3, 7) +
-  theme(
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank(),
-    axis.text.y = element_blank(),
-    legend.position = "none")
-
-
-
-# Get the selected condition level
-this_condition <- levels(d1$condition)[4]
-# Create the plot
-plot_4 <- ggplot() +
-  geom_hline(yintercept = .5, lty = 2, alpha = .75) +
-  
-  geom_point(data = d1 %>% filter(condition == this_condition), 
-             aes(x = ageinyears, y = mean, col = I(colour)), alpha = .5, shape = 1) +
-  
-  geom_smooth(data = f1 %>% filter(condition == this_condition),
-              aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, 
-                  fill = I(colour), col = I(colour)),
-              stat = "identity", alpha = .25) +
-  
-  geom_point(data = p1 %>% filter(condition == this_condition),
-             aes(x = days/365.25, y = .5, fill = I(colour), col = I(colour)), 
-             stat = "identity", size = 3) +
-  
-  geom_text(data = p1 %>% filter(condition == this_condition),
-            aes(label = months, x = days/365.25, y = .24, 
-                fill = I(colour), col = I(colour)), 
-            angle = 90, size = 4, parse = TRUE) +
-  
-  geom_text(data = p1 %>% filter(condition == this_condition),
-            aes(label = "months", x = days/365.25, y = .38, 
-                fill = I(colour), col = I(colour)), 
-            angle = 90, size = 4, parse = TRUE) +
-  theme_minimal() +
-  ylim(0, 1) +
-  xlim(3, 7) +
-  theme(
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank(),
-    axis.text.y = element_blank(),
-    legend.position = "none")
-
-# loading images ---------------
-
-image_1  <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[1], ".png")) 
-image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[2], ".png")) 
-image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[3], ".png")) 
-image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[4], ".png")) 
-
-
-# combining things -----------
-
-plots_1234 <- plot_grid(plot_1, plot_2, plot_3, plot_4,
-                        nrow =1, align = 'h')
-plot_S1 <- ggdraw() + 
-  draw_plot(plots_1234, 0, 0, 1, 0.75) +  # Plot takes lower 80% of canvas
-  
-  draw_image(image_1, x = 0.03, y = 0.6, width = 0.22, height = 0.4) +
-  draw_image(image_2, x = .265, y = 0.6, width = 0.22, height = 0.4) +
-  draw_image(image_3, x = .513, y = 0.6, width = 0.22, height = 0.4) +
-  draw_image(image_4, x = .762, y = 0.6, width = 0.22, height = 0.4) +  
-  
-  draw_label(levels(d1$condition)[1], x = 0.147, y = .94, fontface = "bold", size = 14, hjust = 0.5) +
-  draw_label(levels(d1$condition)[2], x = 0.375, y = .94, fontface = "bold", size = 14, hjust = 0.5) +
-  draw_label(levels(d1$condition)[3], x = 0.632, y = .94, fontface = "bold", size = 14, hjust = 0.5) +
-  draw_label(levels(d1$condition)[4], x = 0.88, y = .94, fontface = "bold", size = 14, hjust = 0.5)
-
-plot_S1
-
-
-```
-
-```{r rep_S1_bayes_fullmodel_plotting_new2904, echo=FALSE, eval=F, warning = F, message=F}
-
-# library(ggplot2)
-library(png)
-library(grid)
-# while (!is.null(dev.list())) dev.off()
-
-# main plot -----
-# library(ggplot2)
-# library(png)
-library(grid)
-# while (!is.null(dev.list())) dev.off()
-
-# Step 1: Load the image file (PNG)
-img <- readPNG("../illustrations/plotexample Pars pro Toto.png")
-img_grob <- rasterGrob(img, interpolate = TRUE)
-
-# Step 2: Create main plot
-main_plot <- ggplot() +
-  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
-  
-  geom_point(data = d1, aes(x = ageinyears, y = mean, colour = colour), alpha = 0.5, shape = 1, size = 2) +
-  
-  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
-              stat = "identity", alpha = 0.2, linewidth = 0.8) +
-  
-  geom_point(data = p1, aes(x = days/365.25, y = 0.5, fill = colour, colour = colour), size = 4, shape = 21, stroke = 1) +
-  geom_point(data = p1, aes(x = days/365.25, y = 0.5, fill = "black", colour = "black"), size = 0.5, shape = 21, stroke = 1) +
-  geom_text(data = p1, aes(label = months, x = days/365.25, y = 0.24, colour = "black"),
-            angle = 90, size = 3.2, vjust = 0.5) +
-  
-  geom_text(data = p1, aes(label = "months", x = days/365.25, y = 0.38, colour = "black"), 
-            angle = 90, size = 3.2, vjust = 0.5) +
-  
-  scale_colour_identity() +
-  scale_fill_identity() +
-  scale_y_continuous(labels = function(x) paste0(x*100, "%")) + # Multiply by 100 & add %  
-  
-  
-  facet_grid(cols = vars(condition)) +
-  
-  labs(x = "Age", y = "Proportion correct") +
-  
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +   # Allow more Y space for image
-  
-  theme_minimal(base_size = 13) +
-  theme(
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 0.8),
-    strip.background = element_rect(colour = "grey30", size = 0.8),
-    strip.text = element_text(face = "bold", size = rel(0.8), 
-                              margin = margin(t = 5, b = 45)),
-    strip.switch.pad.grid = unit(0, "cm"),
-    axis.title = element_text(face = "bold", size = rel(0.8)),
-    axis.text = element_text(size = rel(0.8)),
-    legend.position = "none",
-    panel.grid.minor = element_blank()
-  )
-
-# adding images -----
-# load images
-image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[1], ".png")) 
-image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[2], ".png")) 
-image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[3], ".png")) 
-image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[4], ".png")) 
-# create grobs
-image_1_grob <- rasterGrob(image_1, interpolate = TRUE)
-image_2_grob <- rasterGrob(image_2, interpolate = TRUE)
-image_3_grob <- rasterGrob(image_3, interpolate = TRUE)
-image_4_grob <- rasterGrob(image_4, interpolate = TRUE)
-
-
-# place images on the plot
-library(cowplot)
-
-final_plot <- ggdraw(main_plot) +
-  draw_grob(image_1_grob, x = 0.08, y = 0.78, width = 0.23, height = 0.13) +
-  draw_grob(image_2_grob, x = 0.31, y = 0.78, width = 0.23, height = 0.13) +
-  draw_grob(image_3_grob, x = 0.54, y = 0.78, width = 0.23, height = 0.13) +
-  draw_grob(image_4_grob, x = 0.77, y = 0.78, width = 0.23, height = 0.13)
-
-# Save  ------------
-ggsave(
-  filename = "../illustrations/final_plot.png",
-  plot = final_plot,   # <- IMPORTANT: plot = main_plot
-  device = "png",
-  width = 8, height = 4,
-  dpi = 300,
-  units = "in",
-  bg = "white"
-)
-
-# display plot
-img <- image_read("../illustrations/study1_plot.png")
-
-windows(width = 15, height = 10)  # On Windows
-plot(img)
-
-```
-
-```{r rep_S1_bayes_fullmodel_plotting, echo=FALSE, eval=F, warning = F, message=F}
-
-
-# side by side
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d1, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = condition, col = condition),
-              stat = "identity", alpha = .25)+
-  geom_point(data = p1, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size = 3)+
-  geom_text(data = p1, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle = 90, size = 4, parse = TRUE)+
-  geom_text(data = p1, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle = 90, size = 4, parse = TRUE)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  facet_grid(cols = vars(condition))+
-  labs(x = "Age", y = "Proportion correct")+
-  ylim(0, 1)+
-  xlim(3, 7)+
-  theme(legend.position = "bottom")
-```
-
-```{r S2_bayes_fullmodel, echo=FALSE, include=F, eval=F}
-
-
-# S2.full.bm<-brm(correct~condition+z.age+(1|subid), 
-#                data=rep.S2.bayes.data, 
-#                family=bernoulli(),
-#                chains = 4,
-#                iter= 2000,
-#                cores= 4)
-# 
-
-S2.null.bm<-brm(correct~condition+z.age+z.trial+z.sex+(z.trial|subid), 
-               data= rep.S2.bayes.data, 
-               family=bernoulli(),
-               chains = 4,
-               iter= 5000,
-               cores= 4)
-
-S2.null.bm <- add_criterion(S2.null.bm, c("loo", "waic"))
-
-S2.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid), 
-               data= rep.S2.bayes.data, 
-               family=bernoulli(),
-               chains = 4,
-               iter= 5000,
-               cores= 4)
-
-S2.full.bm <- add_criterion(S2.full.bm, c("loo", "waic"))
-
-S2.comp <- loo_compare(S2.null.bm, S2.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
-S2.weights <- model_weights(S2.null.bm, S2.full.bm, criterion = "waic") %>% as_tibble(rownames = "index")
-
-# 
-# loo_compare(S2.null.bm, S2.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
-# model_weights(S2.null.bm, S2.full.bm, criterion = "waic")
-
-# Saving the model (to not rerun it every time)
-
-### LOO COMPARISON
-### not reported, essentially identical
-# S2.null.loo <- loo(S2.null.bm)
-# S2.full.loo <- loo(S2.full.bm)
-# S2.loo.comp <- loo_compare(S2.null.loo, S2.full.loo) %>%
-#   as_tibble(rownames = "model")
-# S2.loo.comp
-
-# Saving the model (to not rerun it every time)
-saveRDS(S2.full.bm, "../models/S2.full.bm.rds")
-saveRDS(S2.null.bm, "../models/S2.null.bm.rds")
-saveRDS(S2.comp, "../models/S2.comp.rds")
-saveRDS(S2.weights, "../models/S2.weights.rds")
-
-
-
-
-
-```
-
-```{r S2_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=F}
-
-# load model from saving rds
-S2.full.bm <- readRDS("../models/S2.full.bm.rds")
-
-nd2 <- tibble(z.age = rep(seq(from = min(rep.S2.bayes.data$z.age), 
-                              to = max(rep.S2.bayes.data$z.age), 
-                              length.out = 50),4),
-             condition = c(rep("Relative Position",50), 
-                           rep("Absolute Position",50), 
-                           rep("Orientation of Feature",50), 
-                           rep("Orientation of Object",50)), # the four conditions in the data
-             z.sex = rep(0,200),
-             z.trial = rep(0,200))
-
-f2 <- fitted(S2.full.bm, 
-             newdata = nd2, 
-             re_formula = NA) %>% 
-  # this tells the function to ignore the random effects - in theory, we could generate predictions for specific individuals
-  as_tibble() %>%
-  bind_cols(nd2)%>%
-  mutate(age = z.age + mean(rep.S2.bayes.data$ageinyears)) # convert age back to the original scale by adding the mean of the data
-
-
-# summarize the data to include them in the plot later on
-d2 <- rep.S2.bayes.data%>%
-  group_by(subid, ageinyears, condition)%>%
-  summarise(mean = mean(correct))
-
-```
-
-```{r S3_bayes_fullmodel, echo=FALSE, include=F, eval=F}
-
-
-S3.null.bm<-brm(correct~condition+z.age+z.trial+z.sex+(z.trial|subid), 
-               data= rep.S3.bayes.data, 
-               family=bernoulli(),
-               chains = 4,
-               iter= 5000,
-               cores= 4)
-
-S3.null.bm <- add_criterion(S3.null.bm, c("loo", "waic"))
-
-S3.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid), 
-               data= rep.S3.bayes.data, 
-               family=bernoulli(),
-               chains = 4,
-               iter= 5000,
-               cores= 4)
-
-S3.full.bm <- add_criterion(S3.full.bm, c("loo", "waic"))
-
-S3.comp <- loo_compare(S3.null.bm, S3.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
-S3.weights <- model_weights(S3.null.bm, S3.full.bm, criterion = "waic") %>% as_tibble(rownames = "index")
-
-### LOO COMPARISON
-### not reported, essentially identical
-# S2.null.loo <- loo(S2.null.bm)
-# S2.full.loo <- loo(S2.full.bm)
-# S2.loo.comp <- loo_compare(S2.null.loo, S2.full.loo) %>%
-#   as_tibble(rownames = "model")
-# S2.loo.comp
-
-# Saving the model (to not rerun it every time)
-saveRDS(S3.full.bm, "../models/S3.full.bm.rds")
-saveRDS(S3.null.bm, "../models/S3.null.bm.rds")
-saveRDS(S3.comp, "../models/S3.comp.rds")
-saveRDS(S3.weights, "../models/S3.weights.rds")
-
-# preregistered: correct ~ task*z.age +z.trial +z.sex +(z.trial|id)
-# 
-# S3.full.bm<-brm(correct~condition*z.age+z.trial+z.sex+(z.trial|subid), 
-#                 data= rep.S3.bayes.data, 
-#                 family=bernoulli(),
-#                 chains = 4,
-#                 iter= 2000,
-#                 cores= 4)
-# 
-# S3.full.bm <- add_criterion(S3.full.bm, c("loo", "waic"))
-# 
-# # Saving the model (to not rerun it every time)
-# saveRDS(S3.full.bm, "../models/S3.full.bm.rds")
-
-```
-
-```{r S3_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=F, warning=F, message=F}
-
-# load model from saving rds
-S3.full.bm <- readRDS("../models/S3.full.bm.rds")
-
-nd3 <- tibble(z.age = rep(seq(from = min(rep.S3.bayes.data$z.age), 
-                              to = max(rep.S3.bayes.data$z.age), 
-                              length.out = 50),4),
-             condition = c(rep("Number of Object",50), 
-                           rep("Number of Feature",50), 
-                           rep("Size of Object",50), 
-                           rep("Size of Feature",50)),
-             z.sex = rep(0,200),
-             z.trial = rep(0,200))
-
-f3 <- fitted(S3.full.bm, 
-             newdata = nd3, 
-             re_formula = NA) %>% 
-  as_tibble() %>%
-  bind_cols(nd3)%>%
-  mutate(age = z.age + mean(rep.S3.bayes.data$ageinyears)) 
-
-
-# summarize the data to include them in the plot later on
-d3 <- rep.S3.bayes.data%>%
-  group_by(subid, ageinyears, condition)%>%
-  summarise(mean = mean(correct)) 
-
-```
-
-```{r S1_bayes_plot_no_facets, echo=FALSE, eval=F, warning = F, message=F}
-
-# Plot without facetting
-
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d1, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p1, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p1, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p1, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  #facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-
-
-```
-
-```{r S1_bayes_plot, echo=FALSE, eval=F, warning = F, message=F}
-
-p1 <- f1 %>%
-  mutate(age = age * 365.25)%>%
-  group_by(condition)%>%
-  summarise(
-    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
-    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
-    days = age[which.min(abs(Q2.5-.5))],
-    months = round(days/30.5),
-    years = round(days/365.25, 2),
-    monthlabels = as.character(paste(months, "months"))
-    )
-
-S1_plot <- ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d1, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p1, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p1, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p1, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-#
-S1_plot
-
-```
-
-```{r S2_bayes_plot, echo=FALSE, eval=F, warning=F, message=F}
-
-p2 <- f2 %>%
-  mutate(age = age * 365.25)%>%
-  group_by(condition)%>%
-  summarise(
-    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
-    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
-    days = age[which.min(abs(Q2.5-.5))],
-    months = round(days/30.5),
-    years = round(days/365.25, 2),
-    monthlabels = as.character(paste(months, "months"))
-  )
-
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d2, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f2, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p2, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p2, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p2, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  #facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-```
-
-```{r S2_mixbayes_plot, echo=FALSE, eval=F, warning=F, message=F}
-
-
-p2 <- f2 %>%
-  mutate(age = age * 365.25)%>%
-  group_by(condition)%>%
-  summarise(
-    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
-    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
-    days = age[which.min(abs(Q2.5-.5))],
-    months = round(days/30.5),
-    years = round(days/365.25, 2),
-    monthlabels = as.character(paste(months, "months"))
-  )
-
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d2, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f2, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p2, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p2, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p2, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-```
-
-```{r S3_bayes_plot, echo=FALSE, eval=F, warning=F, message=F}
-
-# Plot without facetting
-p3 <- f3 %>%
-  mutate(age = age * 365.25)%>%
-  group_by(condition)%>%
-  summarise(
-    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
-    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
-    days = age[which.min(abs(Q2.5-.5))],
-    months = round(days/30.5),
-    years = round(days/365.25, 2),
-    monthlabels = as.character(paste(months, "months")))
-
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d3, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f3, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p3, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p3, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p3, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  #facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-
-
-
-```
-
-```{r S3_mixbayes_plot, echo=FALSE, eval=F, warning=F, message=F}
-
-p3 <- f3 %>%
-  mutate(age = age * 365.25)%>%
-  group_by(condition)%>%
-  summarise(
-    Q2.5_closest_to.5 = Q2.5[which.min(abs(Q2.5-.5))],
-    estimate_closest_to.5 = Estimate[which.min(abs(Q2.5-.5))],
-    days = age[which.min(abs(Q2.5-.5))],
-    months = round(days/30.5),
-    years = round(days/365.25, 2),
-    monthlabels = as.character(paste(months, "months")))
-
-ggplot()+
-  geom_hline(yintercept = .5, lty = 2, alpha = .75)+
-  geom_point(data = d3, aes(x = ageinyears, y = mean, col = condition), alpha = .5, shape = 1)+
-  geom_smooth(data = f3, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill =condition, col = condition), 
-              stat = "identity", alpha = .25)+
-  geom_point(data=p3, aes(x = days/365.25, y = .5, fill = condition, col = condition), stat = "identity", size=3)+
-  geom_text(data=p3, aes(label = months, x = days/365.25, y = .24, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  geom_text(data=p3, aes(label = "months", x = days/365.25, y = .38, fill = condition, col = condition), angle=90, size = 4, parse=T)+
-  theme_minimal()+
-  scale_color_ptol(name = "condition")+
-  scale_fill_ptol(name = "condition")+
-  facet_grid(~condition)+
-  labs(x = "Age", y="Proportion correct")+
-  ylim(0,1)+
-  xlim(3,7)+
-  theme(legend.position = "bottom")
-
-
-
-```
-
-<!-- RESTE ...Backup von alten Versionen -->
-
 \newpage
 
 # References
@@ -3992,7 +4024,7 @@ ggplot()+
 ::: {#refs custom-style="Bibliography"}
 :::
 
-```{r, eval =FALSE}
+```{r, eval =F}
 # (APPENDIX) Appendix {-}
 
 ```
@@ -4013,11 +4045,5 @@ ggplot()+
 ```
 
 \newpage
-
-```{r child = "appendix_d_diagnostics.Rmd"}
-```
-
-\newpage
-
-```{r child = "appendix_e_additional.Rmd"}
+```{r child = "appendix_d_additional.Rmd"}
 ```
