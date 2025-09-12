@@ -1,0 +1,20 @@
+
+# 
+# possible add-ons
+# a model including all Conditions
+# comparing difficulty across items and tasks
+# evaluating manipulations such as complex/simple; 
+# reaction time analyses
+# 
+# Additional Analyses:
+# 
+# object vs feature
+# - orfe vs orob
+# - sife vs siob
+# - nufe vs nuob
+# 
+# round vs angular
+# - Study One Study1 - cue A = rund, cue B eckig ...if one of them is easier
+# 
+# Reaction Times
+# - just reaction times and perc correct across aged

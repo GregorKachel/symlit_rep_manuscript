@@ -1,0 +1,51 @@
+
+
+# Appendix E - Additional Analyses 
+In order to evaluate the equivalence of the items used in each experimental condition, we conducted an additional exploratory analysis to include a random effect for item level effects (Model notation `correct ~ condition*z.age +z.trial +z.sex +(z.trial|id) +(z.age|item)`). All three studies featured four conditions with four items each. Each item corresponds to a way of instantiating the type of symbol-referent-relationship addressed by the respective condition. Below we report the results for each study seperately. 
+
+## Study 1
+
+Smaller random-effect SDs, with wide CIs near zero → item-level variation is weaker and could even be negligible.
+
+Correlation between intercept and age slope is highly uncertain.
+
+Suggests that items as a grouping factor may not explain much additional variation.
+
+sd(Intercept) = 0.16 [0.01, 0.40] --> Items differ slightly in baseline difficulty,  
+0.16 log-odds corresponds to ~4 percentage points of accuracy --> effect of item is small
+
+sd(z.age) = 0.14 [0.01, 0.34] --> modest variation across items in how strongly it interacts with age. 
+effect size is small: ±0.14 log-odds ≈ ±3–4 percentage points per 1 SD in age.
+
+cor(Intercept, z.age) = 0.35 [-0.84, 0.98] → uncertain. there is no clear age effect for slightly easier or slightly more difficult items
+
+SUMMARY: Item-level effects are relatively small. Items are fairly homogeneous.
+
+Model comp full model and item model
+
+The two models have virtually identical predictive performance.
+
+The difference in WAIC (≈ 1.6) is tiny compared to its uncertainty (SE ≈ 39).
+
+The elpd_diff is well within one standard error of zero, meaning there’s no credible evidence that adding item-level random effects improves or harms predictive accuracy.
+
+Notice that S1.item.model has a higher p_waic (88.5 vs. 80.5) → it’s a more complex model (greater effective number of parameters), but that complexity does not translate into better predictive fit.
+
+
+## Study 2
+Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
+
+
+## Study 3
+Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
+
+\newpage
+
+```{r plot-study1itemintercepts, fig.cap = "*Item-Level Random Intercepts by Condition* And some additional text here for explanation", fig.align = "center", echo = FALSE, out.width = "98%"}
+
+knitr::include_graphics(knitr::plot_crop("../illustrations/S1S2S3_item_plot.png"))
+
+```
+
+
+

@@ -1,6 +1,6 @@
 ---
 title             : "Young Children’s Spontaneous Comprehension of Symbol-Referent Relationships in the Graphic Domain"
-shorttitle        : "Children’s Comprehension of Symbol-Referent Relationships in the Graphic Domain"
+shorttitle        : "Comprehension of Graphic Symbol-Referent Relationships"
 author: 
   - name          : "Gregor Kachel"
     affiliation   : "1"
@@ -42,14 +42,16 @@ authornote: |
     
     
     *Ethics, consent and conflict of interest*: This study confirms with recognized standards (e.g. the Declaration of Helsinki) and was approved by an internal ethics committee at the Max-Planck-Institute for Evolutionary Anthropology. Informed consent has been obtained from all participants. The authors declare no conflict of interest. 
+    
     *Scientific Integrity and Openness*: The data and code necessary to reproduce the analyses presented here are publicly accessible, as are the materials necessary to attempt to replicate the findings. Analyses were also pre-registered. Data, code, materials, and the preregistration for this research are available at the following URL XXX Repo XXX.
+    
     *Acknowledgments*: We are thankful to Susanne Mauritz for her help in the organization of the study and to Valerie Jurgenson and Cynthia Pones for help with data collection. We would like to thank Anne Deiglmayr for hosting this project in her research group and for her continuous support. Finally, we are very thankful to all parents and children participating in the study. Gregor Kachel was supported by the German Research Foundation (Deutsche Forschungsgemeinschaft) under project number 429220405.
 
 abstract: |
   The developmental literature testifies to young children’s remarkable communicative skills in language and gesture, but much less is known about the domain of graphical communication. In three coordinated studies with identical procedures, young children’s ability to spontaneously comprehend unfamiliar graphic symbols was tested in a simple object-choice task across a wide variety of symbol-referent relationships. In four conditions per study, reference was established via representation, part-whole relationships, analogies in size, number and form but also gestalt-like principles such as orientation, alignment or figure-ground relationships. The samples comprise German-speaking children continuously spread from the third to the seventh birthday (Study 1, N = 106; Study 2, N = 99; Study 3, N = 99). While children are generally able to use direct representations to identify the correct target item already prior to their third birthday, group-level success in all other conditions was observed later, but well before school age. Converging results from conditions employing several abstract and conceptual symbol-referent relationships point to a qualitative shift in symbolic competence around the fourth birthday. Together, this set of studies explores the conceptual continuum from iconic to abstract graphical representations and, therein, provides one of the most comprehensive, robust and systematic investigations of young children’s ability to find meaning in unfamiliar graphic symbols - a largely unexplored component of emerging literacy.
   
 keywords          : "Graphic Communication, Iconicity, Analogical Reasoning, Gestalt Principles, Pragmatics, Emerging Literacy, Symbolic Literacy, Symbol-Referent-Relationship"
-wordcount         : "Child Development Max 40 pages // PNAS 1,500–2,000 words"
+wordcount         : "Child Development Max 40 pages"
 bibliography      : ["library.bib"]
 floatsintext      : no
 linenumbers       : yes
@@ -61,19 +63,19 @@ footnotelist      : no
 output:
   papaja::apa6_doc: default
     
-appendix: # to change filenames, also see end of document
+appendix: # to change filenames, also see end of s
 - "appendix_a_participants.Rmd"
-- "appendix_b_stimuli.Rmd"
-- "appendix_c_descriptives.Rmd"
-- "appendix_d_additional.Rmd"
+- "appendix_b_results.Rmd"
+- "appendix_c_additional.Rmd"
 
 editor_options: 
   markdown: 
     wrap: 72
 ---
 
-<!-- Packages, Setup, Read data for all studies, and prepare for analyses -->
 
+
+<!-- Packages, Setup, Read data for all studies, and prepare for analyses -->
 ```{r setup, include = FALSE}
 library("papaja")
 r_refs("library.bib")
@@ -91,6 +93,8 @@ if (!require(lsr)) install.packages('lsr'); library(lsr) # Analysis, Cohen's D
 if (!require(ggthemes)) install.packages('ggthemes'); library(ggthemes) # for tufte boxplots
 # if (!require(kableExtra)) install.packages('kableExtra'); library(kableExtra) 
 
+# plotting graphic
+library(patchwork)
 library(cowplot)
 library(magick)
 
@@ -287,8 +291,9 @@ add_colour <- function(df) {
 
 ```
 
-<!-- Prepare Demographics -->
 
+
+<!-- Prepare Demographics -->
 ```{r S1S2s3_participant_demographics, echo=F, eval=T}
 
 rep.age.table.data  <- rep.data %>% 
@@ -476,8 +481,10 @@ ggsave(
 
 ```
 
-<!-- Run full and null models for all three studies (not evaluated to save time) -->
 
+
+
+<!-- Run full and null models for all three studies (not evaluated to save time) -->
 ```{r rep_s1_bayes, echo = FALSE, include=F, eval=F, results='asis'}
 
 # NOTE: this is section is not evaluated to save time during knitting
@@ -670,8 +677,9 @@ saveRDS(S3.weights, "../models/S3.weights.rds")
 
 ```
 
-<!-- Diagnostics for all three studies -->
 
+
+<!-- Diagnostics for all three studies -->
 ```{r rep_s1_inspect, echo = FALSE, include=F, eval=T, results='asis'}
 
 S1.full.bm <- readRDS("../models/S1.full.bm.rds")
@@ -863,8 +871,9 @@ S3.null.coef <- summarise_draws(as_draws_df(S3.null.bm)) %>%
 
 ```
 
-<!-- Prepare Data for Plotting -->
 
+
+<!-- Prepare Data for Plotting -->
 ```{r rep_S1_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=T, warning = F, message=F}
 
 # load model from rds
@@ -1065,266 +1074,9 @@ p3  <- add_colour(p3)
 
 ```
 
-<!-- Plotting ohne stimuli -->
-
-```{r rep_S1_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
-
-# place images on the plot
-# while (!is.null(dev.list())) dev.off()
 
 
-# Create main plot
-main_plot <- ggplot() +
-  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
-  
-  geom_point(data = d1, aes(x = ageinyears, y = mean, colour = colour), alpha = 0.5, shape = 1, size = 2) +
-  
-  geom_smooth(data = f1, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
-              stat = "identity", alpha = 0.2, linewidth = 0.8) +
-  
-  geom_point(data = p1, aes(x = days/365.25, y = 0.5, fill = colour, colour = colour), size = 4, shape = 21, stroke = 1) +
-  geom_point(data = p1, aes(x = days/365.25, y = 0.5, fill = "black", colour = "black"), size = 0.5, shape = 21, stroke = 1) +
-  geom_text(data = p1, aes(label = months, x = days/365.25, y = 0.13, colour = "black", fontface = "bold"),
-            angle = 90, size = 3.2, vjust = 0.5) +
-  
-  geom_text(data = p1, aes(label = "months", x = days/365.25, y = .31, colour = "black", fontface = "bold"), 
-            angle = 90, size = 3.2, vjust = 0.5) +
-  
-  scale_colour_identity() +
-  scale_fill_identity() +
-  scale_y_continuous(labels = function(x) paste0(x*100, "%")) + # Multiply by 100 & add %  
-  
-  
-  facet_grid(cols = vars(condition)) +
-  
-  labs(x = "Age", y = "Proportion Correct") +
-  
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +   # Allow more Y space for image
-  
-  theme_minimal(base_size = 13) +
-  theme(
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
-    strip.background = element_rect(colour = "grey30", size = 1),
-    strip.text = element_text(face = "bold", size = rel(0.8), 
-                              margin = margin(t = 5, b = 45)), # HIER STRIPE SPACING via b =
-   # strip.switch.pad.grid = unit(0, "cm"),
-    axis.title = element_text(face = "bold", size = rel(0.8)),
-    axis.text = element_text(size = rel(0.8)),
-    legend.position = "none",
-    panel.grid.minor = element_blank()
-  )
-
-# adding images -----
-# load images
-image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[1], ".png"))
-image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[2], ".png"))
-image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[3], ".png"))
-image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[4], ".png"))
-# create grobs
-image_1_grob <- rasterGrob(image_1, interpolate = TRUE)
-image_2_grob <- rasterGrob(image_2, interpolate = TRUE)
-image_3_grob <- rasterGrob(image_3, interpolate = TRUE)
-image_4_grob <- rasterGrob(image_4, interpolate = TRUE)
-
-
-
-final_plot <- ggdraw(main_plot) +
-  draw_grob(image_1_grob, x = 0.071, y = 0.752, width = 0.25, height = 0.15) +
-  draw_grob(image_2_grob, x = 0.3, y = 0.752, width = 0.25, height = 0.15) +
-  draw_grob(image_3_grob, x = 0.527, y = 0.752, width = 0.25, height = 0.15) +
-  draw_grob(image_4_grob, x = 0.755, y = 0.752, width = 0.25, height = 0.15)
-
-# Save  ------------
-ggsave(
-  filename = "../illustrations/plot_study1.png",
-  plot = final_plot,
-  device = "png",
-  width = 8, height = 3.5,
-  dpi = 300,
-  units = "in",
-  bg = "white"
-)
-
-# # display plot
-# img <- image_read("../illustrations/plot_study1.png")
-# 
-# windows(width = 15, height = 10)  # On Windows
-# plot(img)
-
-
-```
-
-```{r rep_S2_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
-
-# Create main plot
-main_plot <- ggplot() +
-  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
-  
-  geom_point(data = d2, aes(x = ageinyears, y = mean, colour = colour), alpha = 0.5, shape = 1, size = 2) +
-  
-  geom_smooth(data = f2, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
-              stat = "identity", alpha = 0.2, linewidth = 0.8) +
-  
-  geom_point(data = p2, aes(x = days/365.25, y = 0.5, fill = colour, colour = colour), size = 4, shape = 21, stroke = 1) +
-  geom_point(data = p2, aes(x = days/365.25, y = 0.5, fill = "black", colour = "black"), size = 0.5, shape = 21, stroke = 1) +
-  geom_text(data = p2, aes(label = months, x = days/365.25, y = 0.13, colour = "black", fontface = "bold"),
-            angle = 90, size = 3.2, vjust = 0.5) +
-  
-  geom_text(data = p2, aes(label = "months", x = days/365.25, y = .31, colour = "black", fontface = "bold"), 
-            angle = 90, size = 3.2, vjust = 0.5) +
-  
-  scale_colour_identity() +
-  scale_fill_identity() +
-  scale_y_continuous(labels = function(x) paste0(x*100, "%")) + # Multiply by 100 & add %  
-  
-  
-  facet_grid(cols = vars(condition)) +
-  
-  labs(x = "Age", y = "Proportion Correct") +
-  
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +   # Allow more Y space for image
-  
-  theme_minimal(base_size = 13) +
-  theme(
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
-    strip.background = element_rect(colour = "grey30", size = 1),
-    strip.text = element_text(face = "bold", size = rel(0.8), 
-                              margin = margin(t = 5, b = 45)), # HIER STRIPE SPACING via b =
-   # strip.switch.pad.grid = unit(0, "cm"),
-    axis.title = element_text(face = "bold", size = rel(0.8)),
-    axis.text = element_text(size = rel(0.8)),
-    legend.position = "none",
-    panel.grid.minor = element_blank()
-  )
-
-# adding images -----
-# load images
-image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[1], ".png"))
-image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[2], ".png"))
-image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[3], ".png"))
-image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[4], ".png"))
-# create grobs
-image_1_grob <- rasterGrob(image_1, interpolate = TRUE)
-image_2_grob <- rasterGrob(image_2, interpolate = TRUE)
-image_3_grob <- rasterGrob(image_3, interpolate = TRUE)
-image_4_grob <- rasterGrob(image_4, interpolate = TRUE)
-
-
-
-final_plot <- ggdraw(main_plot) +
-  draw_grob(image_1_grob, x = 0.071, y = 0.752, width = 0.25, height = 0.15) +
-  draw_grob(image_2_grob, x = 0.3, y = 0.752, width = 0.25, height = 0.15) +
-  draw_grob(image_3_grob, x = 0.527, y = 0.752, width = 0.25, height = 0.15) +
-  draw_grob(image_4_grob, x = 0.755, y = 0.752, width = 0.25, height = 0.15)
-
-# Save  ------------
-ggsave(
-  filename = "../illustrations/plot_study2.png",
-  plot = final_plot,
-  device = "png",
-  width = 8, height = 3.5,
-  dpi = 300,
-  units = "in",
-  bg = "white"
-)
-
-# # display plot
-# img <- image_read("../illustrations/plot_study2.png")
-# 
-# windows(width = 15, height = 10)  # On Windows
-# plot(img)
-
-
-
-
-```
-
-```{r rep_S3_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
-
-
-# Create main plot
-main_plot <- ggplot() +
-  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
-  
-  geom_point(data = d3, aes(x = ageinyears, y = mean, colour = colour), alpha = 0.5, shape = 1, size = 2) +
-  
-  geom_smooth(data = f3, aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
-              stat = "identity", alpha = 0.2, linewidth = 0.8) +
-  
-  geom_point(data = p3, aes(x = days/365.25, y = 0.5, fill = colour, colour = colour), size = 4, shape = 21, stroke = 1) +
-  geom_point(data = p3, aes(x = days/365.25, y = 0.5, fill = "black", colour = "black"), size = 0.5, shape = 21, stroke = 1) +
-  geom_text(data = p3, aes(label = months, x = days/365.25, y = 0.13, colour = "black", fontface = "bold"),
-            angle = 90, size = 3.2, vjust = 0.5) +
-  
-  geom_text(data = p3, aes(label = "months", x = days/365.25, y = .31, colour = "black", fontface = "bold"), 
-            angle = 90, size = 3.2, vjust = 0.5) +
-  
-  scale_colour_identity() +
-  scale_fill_identity() +
-  scale_y_continuous(labels = function(x) paste0(x*100, "%")) + # Multiply by 100 & add %  
-  
-  
-  facet_grid(cols = vars(condition)) +
-  
-  labs(x = "Age", y = "Proportion Correct") +
-  
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +   # Allow more Y space for image
-  
-  theme_minimal(base_size = 13) +
-  theme(
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
-    strip.background = element_rect(colour = "grey30", size = 1),
-    strip.text = element_text(face = "bold", size = rel(0.8), 
-                              margin = margin(t = 5, b = 45)), # HIER STRIPE SPACING via b =
-    # strip.switch.pad.grid = unit(0, "cm"),
-    axis.title = element_text(face = "bold", size = rel(0.8)),
-    axis.text = element_text(size = rel(0.8)),
-    legend.position = "none",
-    panel.grid.minor = element_blank()
-  )
-
-# adding images -----
-# load images
-image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[1], ".png"))
-image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[2], ".png"))
-image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[3], ".png"))
-image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[4], ".png"))
-# create grobs
-image_1_grob <- rasterGrob(image_1, interpolate = TRUE)
-image_2_grob <- rasterGrob(image_2, interpolate = TRUE)
-image_3_grob <- rasterGrob(image_3, interpolate = TRUE)
-image_4_grob <- rasterGrob(image_4, interpolate = TRUE)
-
-
-
-final_plot <- ggdraw(main_plot) +
-  draw_grob(image_1_grob, x = 0.071, y = 0.752, width = 0.25, height = 0.15) +
-  draw_grob(image_2_grob, x = 0.3, y = 0.752, width = 0.25, height = 0.15) +
-  draw_grob(image_3_grob, x = 0.527, y = 0.752, width = 0.25, height = 0.15) +
-  draw_grob(image_4_grob, x = 0.755, y = 0.752, width = 0.25, height = 0.15)
-
-# Save  ------------
-ggsave(
-  filename = "../illustrations/plot_study3.png",
-  plot = final_plot,
-  device = "png",
-  width = 8, height = 3.5,
-  dpi = 300,
-  units = "in",
-  bg = "white"
-)
-
-# # display plot
-# img <- image_read("../illustrations/plot_study3.png")
-# 
-# windows(width = 15, height = 10)  # On Windows
-# plot(img)
-# 
-
-
-```
-
-<!-- Plotting mit stimuli -->
+<!-- Plotting with stimuli -->
 ```{r rep_S1_stim_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
 
 
@@ -1350,7 +1102,7 @@ image_2_2_grob <- rasterGrob(image_2_2, interpolate = TRUE)
 image_3_2_grob <- rasterGrob(image_3_3, interpolate = TRUE)
 image_4_2_grob <- rasterGrob(image_4_4, interpolate = TRUE)
 
-# plot 1
+# plot 1 #####################
 plot1 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1414,7 +1166,7 @@ plot1 <- ggplot() +
   )
 
 
-# plot 2
+# plot 2 ##################
 plot2 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1477,7 +1229,7 @@ plot2 <- ggplot() +
     axis.title.x = element_blank()
   )
 
-# plot 3
+# plot 3 #########################
 plot3 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1542,7 +1294,7 @@ plot3 <- ggplot() +
 
 
 
-# plot 4
+# plot 4 #########################
 plot4 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1630,59 +1382,37 @@ S1_complete <- ggdraw() +
   draw_plot_label(label = "B", size = 14, x = 0, y = 0.65) +
   draw_plot_label(label = "C", size = 14, x = 0, y = 0.26)
 
+# saving images ###############################
 
 ggsave(
-  filename = "./S1_complete.pdf",
+  filename = "../illustrations/S1_complete.pdf",
   plot = S1_complete,
   width = 27,
   height = 16.9,
   units = "cm",
-  dpi = 600   # or 600 for very high resolution
-)
+  dpi = 600)
 
- shell.exec("S1_complete.pdf")
+# shell.exec("../illustrations/S1_complete.pdf")
 
 ggsave(
-  filename = "./S1_complete.jpg",
+  filename = "./../illustrations/S1_complete.jpg",
   plot = S1_complete,
   width = 27,
   height = 16.9,
   units = "cm",
-  dpi = 600   # or 600 for very high resolution
-)
+  dpi = 600)
 
-
-# ggsave(
-#   filename = "./S1_complete.pdf",
-#   plot = S1_complete,
-#   width = 27,
-#   height = 16.9,
-#   units = "cm",
-#   dpi = 600   # or 600 for very high resolution
-# )
-
-# # Save  ------------
-# ggsave(
-#   filename = "../illustrations/plot_study1.png",
-#   plot = final_plot,
-#   device = "png",
-#   width = 8, height = 3.5,
-#   dpi = 300,
-#   units = "in",
-#   bg = "white"
-# )
-
-# # display plot
-# img <- image_read("../illustrations/plot_study1.png")
-# 
-# windows(width = 15, height = 10)  # On Windows
-# plot(img)
-
+ggsave(
+  filename = "./../illustrations/S1_complete.png",
+  plot = S1_complete,
+  width = 27,
+  height = 16.9,
+  units = "cm",
+  dpi = 600)
 
 ```
 
 ```{r rep_S2_stim_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
-
 
 # load images ###################################
 
@@ -1706,7 +1436,7 @@ image_2_2_grob <- rasterGrob(image_2_2, interpolate = TRUE)
 image_3_2_grob <- rasterGrob(image_3_3, interpolate = TRUE)
 image_4_2_grob <- rasterGrob(image_4_4, interpolate = TRUE)
 
-# plot 1
+# plot 1 ##################
 plot1 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1770,7 +1500,7 @@ plot1 <- ggplot() +
   )
 
 
-# plot 2
+# plot 2  ##################
 plot2 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1833,7 +1563,7 @@ plot2 <- ggplot() +
     axis.title.x = element_blank()
   )
 
-# plot 3
+# plot 3  ##################
 plot3 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1896,9 +1626,7 @@ plot3 <- ggplot() +
     axis.title.x = element_blank()
   )
 
-
-
-# plot 4
+# plot 4  ##################
 plot4 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1961,8 +1689,6 @@ plot4 <- ggplot() +
     axis.title.x = element_blank()
   )
 
-
-
 # Combine plots #######################
 
 
@@ -1988,8 +1714,10 @@ S2_complete <- ggdraw() +
   draw_plot_label(label = "C", size = 14, x = 0, y = 0.26)
 
 
+# Saving plots ##################
+
 ggsave(
-  filename = "./S2_complete.pdf",
+  filename = "../illustrations/S2_complete.pdf",
   plot = S2_complete,
   width = 27,
   height = 16.9,
@@ -1997,10 +1725,10 @@ ggsave(
   dpi = 600   # or 600 for very high resolution
 )
 
-# shell.exec("S2_complete.pdf")
+# shell.exec("../illustrations/S2_complete.pdf")
 
 ggsave(
-  filename = "./S2_complete.jpg",
+  filename = "../illustrations/S2_complete.jpg",
   plot = S2_complete,
   width = 27,
   height = 16.9,
@@ -2009,10 +1737,21 @@ ggsave(
 )
               
 
+ggsave(
+  filename = "../illustrations/S2_complete.png",
+  plot = S2_complete,
+  width = 27,
+  height = 16.9,
+  units = "cm",
+  dpi = 600   # or 600 for very high resolution
+)
+
+
+
+
 ```
 
 ```{r rep_S3_stim_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
-
 
 # load images ###################################
 
@@ -2036,7 +1775,7 @@ image_2_2_grob <- rasterGrob(image_2_2, interpolate = TRUE)
 image_3_2_grob <- rasterGrob(image_3_3, interpolate = TRUE)
 image_4_2_grob <- rasterGrob(image_4_4, interpolate = TRUE)
 
-# plot 1
+# plot 1 ###########################
 plot1 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -2100,7 +1839,7 @@ plot1 <- ggplot() +
   )
 
 
-# plot 2
+# plot 2 ###########################
 plot2 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -2163,7 +1902,7 @@ plot2 <- ggplot() +
     axis.title.x = element_blank()
   )
 
-# plot 3
+# plot 3 ###########################
 plot3 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -2226,9 +1965,7 @@ plot3 <- ggplot() +
     axis.title.x = element_blank()
   )
 
-
-
-# plot 4
+# plot 4 ###########################
 plot4 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -2291,10 +2028,7 @@ plot4 <- ggplot() +
     axis.title.x = element_blank()
   )
 
-
-
 # Combine plots #######################
-
 
 S3_complete <- ggdraw() +
   draw_plot_label(label = paste(levels(d3$condition)[1]), size = 14, x = 0.028, y = 0.98) +
@@ -2318,33 +2052,42 @@ S3_complete <- ggdraw() +
   draw_plot_label(label = "C", size = 14, x = 0, y = 0.26)
 
 
+# saving plots ###########################
+
 ggsave(
-  filename = "./S3_complete.pdf",
+  filename = "../illustrations/S3_complete.pdf",
   plot = S3_complete,
   width = 27,
   height = 16.9,
   units = "cm",
-  dpi = 600   # or 600 for very high resolution
+  dpi = 600   
 )
 
-# shell.exec("S3_complete.pdf")
+# shell.exec("../illustrations/S3_complete.pdf")
 
 ggsave(
-  filename = "./S3_complete.jpg",
+  filename = "../illustrations/S3_complete.jpg",
   plot = S3_complete,
   width = 27,
   height = 16.9,
   units = "cm",
-  dpi = 600   # or 600 for very high resolution
+  dpi = 600  
 )
-              
+   
+ggsave(
+  filename = "../illustrations/S3_complete.png",
+  plot = S3_complete,
+  width = 27,
+  height = 16.9,
+  units = "cm",
+  dpi = 600  
+)           
 
 ```
 
 
 
 <!-- Run additional item models for all three studies (not evaluated to save time) -->
-
 ```{r S1S2S3_item_model,echo=FALSE, eval=F, warning = F, message=F}
 
 # Main analysis:
@@ -2481,7 +2224,7 @@ S3.item.coef <- summarise_draws(as_draws_df(S3.item.model)) %>%
 
 ```
 
-```{r S1_itemvsfull_comp, echo=FALSE, eval=T, warning = F, message=F}
+```{r S1S2S3_itemvsfull_comp, echo=FALSE, eval=T, warning = F, message=F}
 
 ### MODEL COMPARISON
 
@@ -2506,42 +2249,243 @@ S3.itemvsfull.comp  <- data.frame(S3.itemvsfull.comp , row.names = "index")
 
 ```
 
+```{r S1S2S3_item_plotting, echo=FALSE, eval=T, warning = F, message=F}
+
+# prep data 1 #######
+
+S1.item_effects <- ranef(S1.item.model)$item
+
+# Extract random intercepts
+S1.item_intercepts <- as_tibble(S1.item_effects[, , "Intercept"], rownames = "item") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5) %>% 
+  mutate(condition = substr(item,1,4)) %>% 
+  mutate(item = substr(item, 10,10)) %>% 
+  mutate(condition = case_when(
+    condition == "repr" ~ "Representation", 
+    condition == "pars" ~ "Pars Pro Toto",
+    condition == "fsim" ~"Simple Form Analogy",
+    condition == "fcom" ~ "Complex Form Analogy",
+    condition == "abpo" ~ "Absolute Position",
+    condition == "repo" ~ "Relative Position",
+    condition == "orob" ~ "Orientation of Object",
+    condition == "orfe" ~ "Orientation of Feature",
+    condition == "siob" ~ "Size of Object", 
+    condition == "sife" ~ "Size of Feature", 
+    condition == "nuob" ~ "Number of Object", 
+    condition == "nufe" ~ "Number of Feature",
+    TRUE ~ as.character(condition))) %>% 
+  mutate(condition = factor(condition, levels = c(
+    "Representation", # first level becomes reference
+    "Pars Pro Toto", 
+    "Simple Form Analogy", 
+    "Complex Form Analogy"))) %>% 
+  mutate(item = factor(item, levels = c("4", "3", "2", "1")))
+
+S1.item_intercepts <- add_colour(S1.item_intercepts)
+
+# prep data 2 ######################
+
+S2.item_effects <- ranef(S2.item.model)$item
+
+# Extract random intercepts
+S2.item_intercepts <- as_tibble(S2.item_effects[, , "Intercept"], rownames = "item") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5) %>% 
+  mutate(condition = substr(item,1,4)) %>% 
+  mutate(item = substr(item, 10,10)) %>% 
+  mutate(condition = case_when(
+    condition == "repr" ~ "Representation", 
+    condition == "pars" ~ "Pars Pro Toto",
+    condition == "fsim" ~"Simple Form Analogy",
+    condition == "fcom" ~ "Complex Form Analogy",
+    condition == "abpo" ~ "Absolute Position",
+    condition == "repo" ~ "Relative Position",
+    condition == "orob" ~ "Orientation of Object",
+    condition == "orfe" ~ "Orientation of Feature",
+    condition == "siob" ~ "Size of Object", 
+    condition == "sife" ~ "Size of Feature", 
+    condition == "nuob" ~ "Number of Object", 
+    condition == "nufe" ~ "Number of Feature",
+    TRUE ~ as.character(condition))) %>% 
+  mutate(condition = factor(condition, levels = c(
+    "Absolute Position",
+    "Relative Position",
+    "Orientation of Object",
+    "Orientation of Feature"))) %>%
+  mutate(item = factor(item, levels = c("4", "3", "2", "1")))
+
+S2.item_intercepts <- add_colour(S2.item_intercepts)
+
+
+
+# prep data 3 #####################
+
+S3.item_effects <- ranef(S3.item.model)$item
+
+# Extract random intercepts
+S3.item_intercepts <- as_tibble(S3.item_effects[, , "Intercept"], rownames = "item") %>%
+  rename(
+    estimate = Estimate,
+    lower = Q2.5,
+    upper = Q97.5) %>% 
+  mutate(condition = substr(item,1,4)) %>% 
+  mutate(item = substr(item, 10,10)) %>% 
+  mutate(condition = case_when(
+    condition == "repr" ~ "Representation", 
+    condition == "pars" ~ "Pars Pro Toto",
+    condition == "fsim" ~"Simple Form Analogy",
+    condition == "fcom" ~ "Complex Form Analogy",
+    condition == "abpo" ~ "Absolute Position",
+    condition == "repo" ~ "Relative Position",
+    condition == "orob" ~ "Orientation of Object",
+    condition == "orfe" ~ "Orientation of Feature",
+    condition == "siob" ~ "Size of Object", 
+    condition == "sife" ~ "Size of Feature", 
+    condition == "nuob" ~ "Number of Object", 
+    condition == "nufe" ~ "Number of Feature",
+    TRUE ~ as.character(condition))) %>% 
+  mutate(condition = factor(condition, levels = c(
+    "Size of Object", # first level becomes reference
+    "Size of Feature",
+    "Number of Object",
+    "Number of Feature"))) %>%
+  mutate(item = factor(item, levels = c("4", "3", "2", "1")))
+
+S3.item_intercepts <- add_colour(S3.item_intercepts)
+
+
+
+# plot 1 ##################
+S1.item.plot <- ggplot(S1.item_intercepts, aes(x = item, y = estimate)) +
+  geom_point(aes(color = I(colour))) +
+  geom_errorbar(aes(ymin = lower, ymax = upper, color = I(colour)), width = 0.6, size = .5) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
+  scale_y_continuous(limits = c(-1, 1)) +
+  labs(
+    x = "Item",
+    y = "Estimated Deviation from Overall Intercept (log-odds)"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.y = element_text(size = 6),
+    axis.title.x  = element_text(size = 8),     
+    axis.title.y  = element_text(size = 8),
+    legend.position = "none",  
+    strip.text = element_text(size = 8, face = "bold"))
+
+# plot 2 ############
+
+S2.item.plot <- ggplot(S2.item_intercepts, aes(x = item, y = estimate)) +
+  geom_point(aes(color = I(colour))) +
+  geom_errorbar(aes(ymin = lower, ymax = upper, color = I(colour)), width = 0.6, size = .5) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
+  labs(
+    x = "Item",
+    y = "Estimated Deviation from Overall Intercept (log-odds)"
+  ) +
+  scale_y_continuous(limits = c(-1, 1)) +
+  theme_minimal() +
+  theme(
+    axis.text.y = element_text(size = 6),
+    axis.title.x  = element_text(size = 8),     
+    axis.title.y  = element_text(size = 8),     
+    legend.position = "none",  
+    strip.text = element_text(size = 8, face = "bold"))
+
+# plot 3 ################################
+
+S3.item.plot <- ggplot(S3.item_intercepts, aes(x = item, y = estimate)) +
+  geom_point(aes(color = I(colour))) +
+  geom_errorbar(aes(ymin = lower, ymax = upper, color = I(colour)), width = 0.6, size = .5) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  coord_flip() +
+  facet_wrap(~ condition, scales = "free_y", ncol = 1) +
+  labs(
+    x = "Item",
+    y = "Estimated Deviation from Overall Intercept (log-odds)"
+  ) +
+  scale_y_continuous(limits = c(-1, 1)) +
+  theme_minimal() +
+  theme(
+    axis.text.y = element_text(size = 6),
+    axis.title.x  = element_text(size = 8),     
+    axis.title.y  = element_text(size = 8),
+    legend.position = "none",  
+    strip.text = element_text(size = 8, face = "bold"))
+
+# combine plots  ##################
+
+# hide x axis
+S1.item.plot <- S1.item.plot + theme(axis.title.x = element_blank(),
+                                       axis.text.x  = element_blank(),
+                                       axis.ticks.x = element_blank())
+S2.item.plot <- S2.item.plot + theme(axis.title.x = element_blank(),
+                                       axis.text.x  = element_blank(),
+                                       axis.ticks.x = element_blank())
+
+
+S1S2S3_item_plot <- plot_grid(
+  S1.item.plot, 
+  S2.item.plot, 
+  S3.item.plot,
+  ncol = 1,
+  labels = c("A", "B", "C"),
+  label_size = 10,
+  label_y = .95,   # vertical center
+  hjust = -4,    # shift labels left
+  align = "v", axis = "tb"
+)
+
+
+ggsave(
+  filename = "../illustrations/S1S2S3_item_plot.pdf",
+  plot = S1S2S3_item_plot,
+  width = 17,
+  height = 22,
+  units = "cm",
+  dpi = 600   
+)
+
+ggsave(
+  filename = "../illustrations/S1S2S3_item_plot.png",
+  plot = S1S2S3_item_plot,
+  width = 17,
+  height = 22,
+  units = "cm",
+  dpi = 600   
+)
+
+ggsave(
+  filename = "../illustrations/S1S2S3_item_plot.jpg",
+  plot = S1S2S3_item_plot,
+  width = 17,
+  height = 22,
+  units = "cm",
+  dpi = 600   
+)
+
+
+```
+
+
 
 
 <!-- weitere zahlen -->
-
 ```{r summaryresults,  echo=FALSE, warning=F, message=F, eval=T}
 
 p_all <- rbind(p1,p2,p3) %>% arrange(months)
 p_all <- data.frame(p_all, row.names = "condition")
 
 ```
-
-```{r notespossibleadditionalanalyses, echo=FALSE, warning=F, message=F, eval=F}
-
-# 
-# possible add-ons
-# a model including all Conditions
-# comparing difficulty across items and tasks
-# evaluating manipulations such as complex/simple; 
-# reaction time analyses
-# 
-# Additional Analyses:
-# 
-# object vs feature
-# - orfe vs orob
-# - sife vs siob
-# - nufe vs nuob
-# 
-# round vs angular
-# - Study One Study1 - cue A = rund, cue B eckig ...if one of them is easier
-# 
-# Reaction Times
-# - just reaction times and perc correct across aged
-
-```
-
-<!-- Jetzt im Appendix -->
 
 <!-- Hier gehts los -->
 
@@ -2881,9 +2825,9 @@ presentation ("Oh look, the game continues!"). Test sessions always took
 place in a quiet separate room. See figure \@ref(fig:plot-figure-setup)
 for an illustration of the setup.
 
-```{r plot-figure-setup, fig.cap = "*Setup.* Experimenters were sitting behind the children in order to not distract them while supervising data collection.", fig.align = "center", echo = FALSE, out.width = "70%"}
+```{r plot-figure-setup, fig.cap = "*Setup.* Experimenters were sitting behind the children in order to not distract them while supervising data collection.", fig.align = "center", echo = FALSE, out.width = "98%"}
 
-knitr::include_graphics(knitr::plot_crop("../illustrations/setup room.png"))
+knitr::include_graphics(knitr::plot_crop("../illustrations/setup complete.png"))
 
 ```
 
@@ -3226,23 +3170,11 @@ the full model, and table \@ref(tab:suppl-descriptives-S1) for
 additional conventional analyses binning participants according to their
 age in years.
 
-```{r plot-study1, fig.cap = "*Developmental Trajectories for all Conditions in Study 1.* Panels illustrate an example stimulus combination (distractor, cue, target) and results for the conditions. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
+```{r plot-study1, fig.cap = "*Stimuli and Developmental Trajectories for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
 
-
-knitr::include_graphics(knitr::plot_crop("../illustrations/plot_study1.png"))
-
-```
-
-test
-test
-test
-
-```{r plot-study1_2, fig.cap = "*Developmental Trajectories for all Conditions in Study 2.* Panels illustrate example stimulus combinations (distractor, cue, target) and results for all conditions. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level and the dots represent individual means. The coloured dots and annotation indicate when performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
-
-knitr::include_graphics(knitr::plot_crop("./S1_complete.jpg"))
+knitr::include_graphics(knitr::plot_crop("../illustrations/S1_complete.png"))
 
 ```
-
 
 ## Discussion
 
@@ -3439,22 +3371,11 @@ participants according to their age in years, see table
 \@ref(tab:suppl-S2-coef-table) and table
 \@ref(tab:suppl-descriptives-S2) for an overview of model coefficients.
 
-```{r plot-study2, fig.cap = "*Developmental Trajectories for all Conditions in Study 2.* Panels illustrate example stimulus combinations (distractor, cue, target) and results for all conditions. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level and the dots represent individual means. The coloured dots and annotation indicate when performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
+```{r plot-study2, fig.cap = "*Stimuli and Developmental Trajectories for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
 
-knitr::include_graphics(knitr::plot_crop("../illustrations/plot_study2.png"))
-
-```
-
-test
-test
-test
-
-```{r plot-study2_2, fig.cap = "*Developmental Trajectories for all Conditions in Study 2.* Panels illustrate example stimulus combinations (distractor, cue, target) and results for all conditions. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level and the dots represent individual means. The coloured dots and annotation indicate when performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
-
-knitr::include_graphics(knitr::plot_crop("./S1_complete.jpg"))
+knitr::include_graphics(knitr::plot_crop("../illustrations/S2_complete.png"))
 
 ```
-
 
 ## Discussion
 
@@ -3641,15 +3562,6 @@ knitr::include_graphics(knitr::plot_crop("../illustrations/plot_study3.png"))
 
 ```
 
-test
-test
-test
-
-```{r plot-study3_2, fig.cap = "*Developmental Trajectories for all Conditions in Study 2.* Panels illustrate example stimulus combinations (distractor, cue, target) and results for all conditions. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level and the dots represent individual means. The coloured dots and annotation indicate when performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
-
-knitr::include_graphics(knitr::plot_crop("./S3_complete.jpg"))
-
-```
 ## Discussion
 
 We hypothesized that children will succeed earlier with analogies in
@@ -4036,14 +3948,11 @@ representation.
 
 \newpage
 
-```{r child = "appendix_b_stimuli.Rmd"}
+```{r child = "appendix_b_results.Rmd"}
 ```
 
 \newpage
 
-```{r child = "appendix_c_descriptives.Rmd"}
+```{r child = "appendix_c_additional.Rmd"}
 ```
 
-\newpage
-```{r child = "appendix_d_additional.Rmd"}
-```
