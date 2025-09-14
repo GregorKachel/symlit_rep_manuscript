@@ -1,7 +1,58 @@
 
 
 # Appendix E - Additional Analyses 
-In order to evaluate the equivalence of the items used in each experimental condition, we conducted an additional exploratory analysis to include a random effect for item level effects (Model notation `correct ~ condition*z.age +z.trial +z.sex +(z.trial|id) +(z.age|item)`). All three studies featured four conditions with four items each. Each item corresponds to a way of instantiating the type of symbol-referent-relationship addressed by the respective condition. Below we report the results for each study seperately. 
+
+```{r suppl-S1item-coef-table, tab.cap = "Study 1 - Posterior Estimates for the Full Model with item-level random effects.", eval = T}
+
+S1.item.coef.table.fin <- S1.item.coef.table %>% 
+  # filter(grepl("^b_", variable)) %>% 
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  mutate(variable = gsub("([^ ])([A-Z])", "\\1 \\2", variable)) %>% 
+  mutate(variable = gsub(":", " × ", variable)) %>% 
+  mutate(variable = gsub("z.age", "Age*", variable)) %>% 
+  mutate(variable = gsub("z.trial", "Trial*", variable)) %>% 
+  mutate(variable = gsub("sex1", "Sex (Male)", variable)) %>%
+  rename(
+    Predictor = variable,
+    Estimate = mean,
+    SD = sd,
+    MAD = mad,
+    `2.5% CrI` = q2.5, 
+    `97.5% CrI` = q97.5, 
+    `Bulk ESS` = ess_bulk,
+    `Tail ESS` = ess_tail) %>%
+  mutate(
+    `95% CrI` = paste0("[", sprintf("%.2f", `2.5% CrI`), ", ", sprintf("%.2f", `97.5% CrI`), "]"),
+    `Bulk ESS` = format(round(`Bulk ESS`), big.mark = ","),
+    `Tail ESS` = format(round(`Tail ESS`), big.mark = ",")) %>%
+  select(Predictor, Estimate, SD, MAD, `95% CrI`, `Bulk ESS`, `Tail ESS`)
+
+
+ft <- flextable(S1.item.coef.table.fin) %>%
+  theme_apa() %>%
+  set_caption("suppl-S1item-coef-table") %>%
+  fontsize(size = 8, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = "Note. Estimates represent posterior means with 95% equal-tailed credible intervals (CrIs). MAD indicates Median Absolute Deviation. ESS refers to effective sample size. R̂ values omitted as they are all ~1 indicating convergence.  * = variables were standardized.") %>%
+  fontsize(part = "footer", size = 8) %>%  
+  autofit()
+ft
+
+```
+\newpage
+
+
+\newpage
+
+```{r plot-study1itemintercepts, fig.cap = "*Item-Level Random Intercepts by Condition.*", fig.align = "center", echo = FALSE, out.width = "96%"}
+
+knitr::include_graphics(knitr::plot_crop("../illustrations/S1S2S3_item_plot.png"))
+
+```
+
+
+
 
 ## Study 1
 
@@ -38,14 +89,3 @@ Additional Tables and illustrations for the convenience of the reader. Add illus
 
 ## Study 3
 Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
-
-\newpage
-
-```{r plot-study1itemintercepts, fig.cap = "*Item-Level Random Intercepts by Condition* And some additional text here for explanation", fig.align = "center", echo = FALSE, out.width = "98%"}
-
-knitr::include_graphics(knitr::plot_crop("../illustrations/S1S2S3_item_plot.png"))
-
-```
-
-
-

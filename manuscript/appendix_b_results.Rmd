@@ -302,6 +302,9 @@ ft <- flextable(rep.s3.freq) %>%
 ft
 ```
 
+
+
+
 ```{r symlit_rep_plottaskdifficulty, eval= F}
 
 # aggregate proportion of correct choices and number of trials for each individual

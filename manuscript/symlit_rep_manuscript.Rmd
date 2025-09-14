@@ -43,7 +43,7 @@ authornote: |
     
     *Ethics, consent and conflict of interest*: This study confirms with recognized standards (e.g. the Declaration of Helsinki) and was approved by an internal ethics committee at the Max-Planck-Institute for Evolutionary Anthropology. Informed consent has been obtained from all participants. The authors declare no conflict of interest. 
     
-    *Scientific Integrity and Openness*: The data and code necessary to reproduce the analyses presented here are publicly accessible, as are the materials necessary to attempt to replicate the findings. Analyses were also pre-registered. Data, code, materials, and the preregistration for this research are available at the following URL XXX Repo XXX.
+    *Scientific Integrity and Openness*: The data and code necessary to reproduce the analyses presented here are publicly accessible, as are the materials necessary to attempt to replicate the findings. Analyses were also pre-registered. Data, code, materials, and the preregistration for this research are available at the following XXXLINKXXX.
     
     *Acknowledgments*: We are thankful to Susanne Mauritz for her help in the organization of the study and to Valerie Jurgenson and Cynthia Pones for help with data collection. We would like to thank Anne Deiglmayr for hosting this project in her research group and for her continuous support. Finally, we are very thankful to all parents and children participating in the study. Gregor Kachel was supported by the German Research Foundation (Deutsche Forschungsgemeinschaft) under project number 429220405.
 
@@ -63,7 +63,7 @@ footnotelist      : no
 output:
   papaja::apa6_doc: default
     
-appendix: # to change filenames, also see end of s
+appendix: # to change filenames, also see end of document
 - "appendix_a_participants.Rmd"
 - "appendix_b_results.Rmd"
 - "appendix_c_additional.Rmd"
@@ -73,9 +73,8 @@ editor_options:
     wrap: 72
 ---
 
-
-
 <!-- Packages, Setup, Read data for all studies, and prepare for analyses -->
+
 ```{r setup, include = FALSE}
 library("papaja")
 r_refs("library.bib")
@@ -291,9 +290,8 @@ add_colour <- function(df) {
 
 ```
 
-
-
 <!-- Prepare Demographics -->
+
 ```{r S1S2s3_participant_demographics, echo=F, eval=T}
 
 rep.age.table.data  <- rep.data %>% 
@@ -481,10 +479,8 @@ ggsave(
 
 ```
 
-
-
-
 <!-- Run full and null models for all three studies (not evaluated to save time) -->
+
 ```{r rep_s1_bayes, echo = FALSE, include=F, eval=F, results='asis'}
 
 # NOTE: this is section is not evaluated to save time during knitting
@@ -677,9 +673,8 @@ saveRDS(S3.weights, "../models/S3.weights.rds")
 
 ```
 
-
-
 <!-- Diagnostics for all three studies -->
+
 ```{r rep_s1_inspect, echo = FALSE, include=F, eval=T, results='asis'}
 
 S1.full.bm <- readRDS("../models/S1.full.bm.rds")
@@ -871,9 +866,8 @@ S3.null.coef <- summarise_draws(as_draws_df(S3.null.bm)) %>%
 
 ```
 
-
-
 <!-- Prepare Data for Plotting -->
+
 ```{r rep_S1_bayes_fullmodel_prep_prepplotting, echo=FALSE, eval=T, warning = F, message=F}
 
 # load model from rds
@@ -1074,9 +1068,8 @@ p3  <- add_colour(p3)
 
 ```
 
-
-
 <!-- Plotting with stimuli -->
+
 ```{r rep_S1_stim_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
 
 
@@ -2085,9 +2078,8 @@ ggsave(
 
 ```
 
-
-
 <!-- Run additional item models for all three studies (not evaluated to save time) -->
+
 ```{r S1S2S3_item_model,echo=FALSE, eval=F, warning = F, message=F}
 
 # Main analysis:
@@ -2144,13 +2136,9 @@ saveRDS(S3.item.model, "../models/S3.item.model.rds")
 
 ```
 
-```{r S1S2S3_item_ppcheck_rhat_bulkESS, echo=FALSE, eval=T, warning = F, message=F}
-# read in models
-S1.item.model <- readRDS("../models/S1.item.model.rds")
-S2.item.model <- readRDS("../models/S2.item.model.rds")
-S3.item.model <- readRDS("../models/S3.item.model.rds")
+```{r S1S2S3_item_ppcheck_rhat_bulkESS_coefftables, echo=FALSE, eval=T, warning = F, message=F}
 
-### POSTERIOR PREDICTICE CHECKS
+# POSTERIOR PREDICTICE CHECKS ###################
 # pp_check(S1.item.model)
 # pp_check(S1.item.model, type = "bars")
 # 
@@ -2168,58 +2156,7 @@ S3.item.model <- readRDS("../models/S3.item.model.rds")
 # summary(S2.item.model) # Intercept 1.09      0.25     0.60
 # summary(S3.item.model) # Intercept 1.06      0.21     0.64
 
-# For reporting in text:
-
-#Study 1
-S1.item.coef <- summarise_draws(as_draws_df(S1.item.model)) %>%
-  filter(grepl("^b_", variable) |
-         grepl("^sd_", variable)) %>%
-  mutate(variable = gsub("b_", "", variable)) %>%
-  mutate(variable = gsub("condition", "", variable)) %>%
-  data.frame(row.names = "variable")
-
-# all > 1000
-# mean(S1.item.coef$ess_bulk)
-# min(S1.item.coef$ess_bulk)
-# max(S1.item.coef$ess_bulk)
-# # all = 1  
-# mean(S1.item.coef$rhat)
-# min(S1.item.coef$rhat)
-# max(S1.item.coef$rhat)
-
-#Study 2
-S2.item.coef <- summarise_draws(as_draws_df(S2.item.model)) %>%
-  filter(grepl("^b_", variable) |
-         grepl("^sd_", variable)) %>%
-  mutate(variable = gsub("b_", "", variable)) %>%
-  mutate(variable = gsub("condition", "", variable)) %>%
-  data.frame(row.names = "variable")
-
-# # all > 1000
-# mean(S2.item.coef$ess_bulk)
-# min(S2.item.coef$ess_bulk)
-# max(S2.item.coef$ess_bulk)
-# # all = 1  
-# mean(S2.item.coef$rhat)
-# min(S2.item.coef$rhat)
-# max(S2.item.coef$rhat)
-
-#Study 3
-S3.item.coef <- summarise_draws(as_draws_df(S3.item.model)) %>%
-  filter(grepl("^b_", variable) |
-         grepl("^sd_", variable)) %>%
-  mutate(variable = gsub("b_", "", variable)) %>%
-  mutate(variable = gsub("condition", "", variable)) %>%
-  data.frame(row.names = "variable")
-
-# # all > 1000
-# mean(S3.item.coef$ess_bulk)
-# min(S3.item.coef$ess_bulk)
-# max(S3.item.coef$ess_bulk)
-# # all = 1  
-# mean(S3.item.coef$rhat)
-# min(S3.item.coef$rhat)
-# max(S3.item.coef$rhat)
+# S1 item model prepping for text and table ####################
 
 
 ```
@@ -2450,7 +2387,7 @@ ggsave(
   filename = "../illustrations/S1S2S3_item_plot.pdf",
   plot = S1S2S3_item_plot,
   width = 17,
-  height = 22,
+  height = 21,
   units = "cm",
   dpi = 600   
 )
@@ -2459,7 +2396,7 @@ ggsave(
   filename = "../illustrations/S1S2S3_item_plot.png",
   plot = S1S2S3_item_plot,
   width = 17,
-  height = 22,
+  height = 21,
   units = "cm",
   dpi = 600   
 )
@@ -2468,7 +2405,7 @@ ggsave(
   filename = "../illustrations/S1S2S3_item_plot.jpg",
   plot = S1S2S3_item_plot,
   width = 17,
-  height = 22,
+  height = 21,
   units = "cm",
   dpi = 600   
 )
@@ -2476,10 +2413,69 @@ ggsave(
 
 ```
 
+```{r rep_s1_item_inspect, echo = FALSE, include=F, eval=T, results='asis'}
 
+S1.item.model
+
+
+S1.full.bm <- readRDS("../models/S1.full.bm.rds")
+S1.null.bm <- readRDS("../models/S1.null.bm.rds")
+
+S1.comp <- readRDS("../models/S1.comp.rds")
+S1.weights <- readRDS("../models/S1.weights.rds")
+
+### POSTERIOR PREDICTICE CHECKS
+### Check plots ...they look good, as expected in binomial models
+# pp_check(S1.full.bm)
+# pp_check(S1.null.bm)
+# pp_check(S1.full.bm, type = "bars")
+# pp_check(S1.null.bm, type = "bars")
+
+### EFFECTICE SAMPLE SIZES
+### inspect rhat --> always 1 --> good
+### inspect Bull_ESS --> always > 1000 --> good
+# summary(S1.full.bm)
+# summary(S1.null.bm)
+
+# for reporting BULK_ESS and Coefficients
+S1.full.coef <- summarise_draws(as_draws_df(S1.full.bm)) # ! standard is just 90% CrI
+
+# NOTE: # as_draws_df() from posterior uses 90% CrIs
+# we preregistered using 2.5% and 97.5% quantiles
+draws_df <- as_draws_df(S1.full.bm)
+quantiles_df <- as.data.frame(t(apply(draws_df, 2, quantile, probs = c(0.025, 0.975))))
+quantiles_df <- tibble::rownames_to_column(quantiles_df, var = "variable")
+names(quantiles_df)[2:3] <- c("q2.5", "q97.5")
+
+S1.full.coef <- left_join(S1.full.coef, quantiles_df, by = "variable") 
+
+# for table in appendix:
+S1.full.coef.table <- S1.full.coef
+
+# for reporting in text:
+S1.full.coef <- S1.full.coef %>% 
+  filter(grepl("^b_", variable)) %>% 
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  data.frame(row.names = "variable")
+
+S1.null.coef <- summarise_draws(as_draws_df(S1.null.bm)) %>%
+  filter(grepl("^b_", variable))
+# 
+# mean(S1.full.coef$ess_bulk)
+# min(S1.full.coef$ess_bulk)
+# max(S1.full.coef$ess_bulk)
+# 
+# mean(S1.null.coef$ess_bulk)
+# min(S1.null.coef$ess_bulk)
+# max(S1.null.coef$ess_bulk)
+
+
+```
 
 
 <!-- weitere zahlen -->
+
 ```{r summaryresults,  echo=FALSE, warning=F, message=F, eval=T}
 
 p_all <- rbind(p1,p2,p3) %>% arrange(months)
@@ -2517,12 +2513,13 @@ communication that children acquire at the end of the first year
 [@liszkowski2012prelinguistic; @tomasello2007new]. Following this
 achievement, children soon become able to use iconic gestures, learn
 their first words and begin to form propositions over the course of the
-second year of life [@Tomasello2010origins; @tomasello2009cultural]. While at first lacking an understanding of the
-dual nature of symbolic means of communication, they soon come to grasp
-the standing-for-relationship of symbols in the third year of life. In
-order to better understand this process, researchers have worked on
-gesture, words, photographs, representative drawings, maps, models,
-simulacra, figurines and sound symbolism [@callaghan2015development;
+second year of life [@tomasello2010origins; @tomasello2009cultural].
+While at first lacking an understanding of the dual nature of symbolic
+means of communication, they soon come to grasp the
+standing-for-relationship of symbols in the third year of life. In order
+to better understand this process, researchers have worked on gesture,
+words, photographs, representative drawings, maps, models, simulacra,
+figurines and sound symbolism [@callaghan2015development;
 @Tomasello1999do; @tomasello1997comprehension]. Notably, symbolic
 behavior per se does not require symbolic insight [@namy2017symbols],
 which is to say that children may be successful communicators and grasp
@@ -2547,7 +2544,7 @@ A similar developmental trajectory has been observed in the
 understanding of graphic representations. Iconicity provides an entry
 point in this domain and even in the first year, infants are sensitive
 to the similarity between a picture and its 3D referent
-[deloache1998grasping]. While pictures can incite manual exploration
+[@deloache1998grasping]. While pictures can incite manual exploration
 before the first birthday [@pierroutsakos2003infants] this is replaced
 with pointing to the depiction in the second year
 [@deloache1998grasping]. Around the same age, toddlers understand that
@@ -2556,7 +2553,7 @@ pictures refer to concepts [@allen2004both] in learning words: 15- and
 objects and from objects to pictures [@ganea2008transfer]. From 2,5 to 4
 children use the shape of drawings to interpret them as long as the
 drawings are presented to them as having been produced intentionally
-[@gelman1998shape]. Yet, Callaghan [@callaghan1999early] found that
+[@gelman1998shape]. Yet, Callaghan [-@callaghan1999early] found that
 two-year-olds were still at chance selecting an item depicted in
 representative drawings whereas three- and four-year-olds succeeded. One
 of the few studies sampling children’s age continuously due to the
@@ -2565,7 +2562,7 @@ arguably rapid changes between two and four years of age
 months of age using age in months as a predictor in standard linear
 regression [@ganea2008transfer]. Children’s comprehension of graphic
 depictions remains fragile until the end of the third year. In another
-series of studies, Callaghan [@callaghan2000factors] presented children
+series of studies, Callaghan [-@callaghan2000factors] presented children
 either with a realistic pencil drawing, a stylized drawing or a model
 replica and then prompted children to choose what was depicted from a
 set of two realistic presentations. 30-months-olds did not benefit from
@@ -2626,20 +2623,19 @@ as metonomy or ellipsis, and requires an inductive pragmatic reference
 on the side of the listener that is mastered by children at the age of
 three [@falkum2017moustache]. Omissions in depiction are an important
 aspect of developing conventions and streamlining communication
-[@goldin1977development; ] as well as they are an interesting minimal
-step towards abstraction as they are still basically iconic, yet only
-showing a part or aspect of the referent. At least for basic geometrical
-shapes, we know that while the production and completion of shapes in
-drawing [@cox2005pictorial; @daugli2016young] develops throughout the
-preschool years, shape recognition and naming are robust in the third
-and fourth year [@ZAMBRZYCKA2017144; @verdine2017shape;
-@verdine2016shape] and the ability to mentally complete canonical
-geometric shapes is already nascent in early infancy
-[@kellman1983perception; @valenza2006perceptual], making part-whole
-relationships on the level of geometric figures an ideal target for an
-investigation into slightly abstract symbol-reference relationships that
-young children may be able to read at the beginning of the preschool
-years.
+[@goldin1977development] as well as they are an interesting minimal step
+towards abstraction as they are still basically iconic, yet only showing
+a part or aspect of the referent. At least for basic geometrical shapes,
+we know that while the production and completion of shapes in drawing
+[@cox2005pictorial; @daugli2016young] develops throughout the preschool
+years, shape recognition and naming are robust in the third and fourth
+year [@ZAMBRZYCKA2017144; @verdine2017shape; @verdine2016shape] and the
+ability to mentally complete canonical geometric shapes is already
+nascent in early infancy [@kellman1983perception;
+@valenza2006perceptual], making part-whole relationships on the level of
+geometric figures an ideal target for an investigation into slightly
+abstract symbol-reference relationships that young children may be able
+to read at the beginning of the preschool years.
 
 A highly abstract means of reference that is still rooted in iconicity
 may be the metaphorical use of form or shape, for example, by referring
@@ -2693,9 +2689,9 @@ occurs in, as when a child may try to convey the concept of a big dog by
 making it occupy the entire piece paper it is drawing on
 [@cox2005pictorial]. Children are able to make spontaneous or productive
 size comparisons at three years of age and begin to use size words size
-words (big), size superlatives (biggest), or quantifiers (more, most)
-[@ferry2025bigger], yet young children are most accurate with bigger and
-only gradually gain competence with words like smaller, shorter or
+words (*big*), size superlatives (*biggest*), or quantifiers (more, most)
+[@ferry2025bigger], yet young children are most accurate with *bigger*
+and only gradually gain competence with words like smaller, shorter or
 longer [@frausel2020origins]. When presented with an array of graphic
 stimuli, preschoolers can reliably point at, for example, the smallest
 or largest item in a set [@haun2011conformity]. While three and four
@@ -2722,7 +2718,7 @@ implicit and explicit number systems [@carey2019ontogenetic]. Infants
 already have an implicit proximate grasp of differences in number
 [@starr2013number] with one versus three being one of the most early
 comparisons possible, which is also frequently used as the most simple
-tasks in comparative work [@eckert2022does, @xu2007number;
+tasks in comparative work [@eckert2022does; @xu2007number;
 @carey2000origin]. Preschoolers growing up in industrialized
 environments are constantly surrounded by math tasks in the form of
 various games [@daucourt2021home] as well as preschool curricula
@@ -2733,9 +2729,9 @@ principle, that is basic understanding of the relation of number words
 and fixed quantities [@silver2022environmental; @carey2019ontogenetic]
 and they are able to use that knowledge in practical everyday contexts,
 for example when comparing comparing numbers with magnitudes smaller
-than 5 [@wynn1990children]. In match-to-sample tasks, children
-spontaneously infer number as a basis of comparison at 48–60
-months[@kroupin2022you].
+than five [@wynn1990children]. In match-to-sample tasks, children
+spontaneously infer number as a basis of comparison at 48–60 months
+[@kroupin2022you].
 
 From this review of children’s ability to appreciate various basic
 dimensions of graphic depictions and their sensitivity to these as means
@@ -2770,8 +2766,8 @@ informative for research about the acquisition or emergence of
 communicative systems despite spanning an age-range where children
 become competent users of script, numerals or drawings. Notably, the
 producers’ cooperative intentions are key in individuating the symbols’
-meaning within the practical context of a the coordination game employed
-int the studies below [@namy2017symbols], which has been shown to be key
+meaning within the practical context of the coordination game employed
+in the studies below [@namy2017symbols], which has been shown to be key
 for success in other symbolic tasks such as the scale-model task
 [@deloache2011early], maps [@liben2013role], and drawings
 [@callaghan2000factors].
@@ -2823,9 +2819,9 @@ supervised children during data collection and occasionally reacted with
 a fixed set of verbal prompts when children were not following the
 presentation ("Oh look, the game continues!"). Test sessions always took
 place in a quiet separate room. See figure \@ref(fig:plot-figure-setup)
-for an illustration of the setup.
+A for an illustration of the setup.
 
-```{r plot-figure-setup, fig.cap = "*Setup.* Experimenters were sitting behind the children in order to not distract them while supervising data collection.", fig.align = "center", echo = FALSE, out.width = "98%"}
+```{r plot-figure-setup, fig.cap = "*Setup, Stimuli and Trial Structure.* Panel A shows the setup during testing. Experimenters were sitting behind the children in order to not distract them while supervising data collection. Panel B shows all elements contributing to an item of a possible test trial consisting of two target and one of two possible cues. Panel C exemplifies how two targets and one of the cues can be arranged in a specific test trial. Panel D shows a familiarization trial and Panel E shows a test trial.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/setup complete.png"))
 
@@ -2841,12 +2837,12 @@ lowered. Children were now prompted to touch the hiding place and in
 doing so the barrier of their choice was lifted to reveal the banana
 again if they chose correctly. The experimental script played back
 prerecorded feedback upon children's choice ("yes, great job!"; "No,
-that's not it. Let's try again!") during the familiarization (cf.
-Appendix B, figure \@ref(fig:suppl-plot-setupfamtest) A). In order to
-succeed during familiarization, children solely had to remember where
-the item went and touch this part of the screen a few seconds later. To
-ensure that children were familiar with the goal of the game and the
-touch interface, they first had to complete a set of four to eight
+that's not it. Let's try again!") during the familiarization (cf. figure
+\@ref(fig:plot-figure-setup) D). In order to succeed during
+familiarization, children solely had to remember where the item went and
+touch this part of the screen a few seconds later. To ensure that
+children were familiar with the goal of the game and the touch
+interface, they first had to complete a set of four to eight
 familiarization trials with a success rate of 75%. In case a child did
 not reply correctly in three out of four trials, another four
 familiarization trials were provided. If the child was correct in six
@@ -2875,8 +2871,8 @@ square and the paper displayed a simple outline drawing of one the
 shapes. Upon making a choice by touching the hiding places, children
 received no feedback and there was no reveal animation. Rather,
 children's choice was acknowledged with neutral feedback ("Ah, thank
-you") leading over to the next trial (cf. Appendix B, figure
-\@ref(fig:suppl-plot-setupfamtest) B).
+you") leading over to the next trial (cf. figure
+\@ref(fig:plot-figure-setup) E).
 
 Except for the geometric shapes displayed on the hiding places and the
 respective drawing, the experimental presentation was identical for all
@@ -2891,7 +2887,7 @@ minor deviations of the total number of trials per condition that were
 submitted to analysis. For an overview of the average number of trials
 participants received in each condition, see tables
 \@ref(tab:suppl-descriptives-S1), \@ref(tab:suppl-descriptives-S2) and
-\@ref(tab:suppl-descriptives-S3) in Appendix C. In line with the
+\@ref(tab:suppl-descriptives-S3) in Appendix B. In line with the
 preregistration, children had to complete a minimum of eight test trials
 to be included in analysis. Respective exclusions are reported
 separately for each study.
@@ -2921,33 +2917,22 @@ target and the other as a distractor. For counterbalancing, a second
 referent was designed to refer to the other target, such that across
 participants the same referents serve equally often as targets and
 distractors. For an illustration of trial composition, see figure
-\@ref(fig:suppl-plot-setup-compose) in appendix B. For each of the
-conditions in the three studies below, four sets of stimuli were
-designed, consisting of two blue shapes serving as target or distractor,
-and two drawings that could serve as cues. Each condition covers a
-particular type of symbol-referent relationship via four stimulus
-versions with two variations each. For an example, consider figure
-\@ref(fig:suppl-plot-S1-stimuli) in appendix B. Panel (A) shows all
-stimuli for the *Representation* condition. The first column exemplifies
-a set of targets (a blue square and circle) and referents (outline
-drawings of a square and circle). During test, participants are
-presented with four test trials per condition, each composed of the
-shapes of a single column. During testing, a child sees each trial
-combination only once and with only one of the two possible cues. Across
-children, the position (left/right) of the referent, and the identity of
-the cue are counterbalanced.
+\@ref(fig:plot-figure-setup) B and C. For each of the conditions in the
+three studies below, four sets of stimuli were designed, consisting of
+two blue shapes serving as target or distractor, and two drawings that
+could serve as cues. Each condition covers a particular type of
+symbol-referent relationship via four stimulus versions with two
+variations each. For an example, consider figure \@ref(fig:plot-study1).
+The first box in Panel B shows all stimuli for the *Representation*
+condition. The first column exemplifies a set of targets (a blue square
+and circle) and referents (outline drawings of a square and circle).
+During test, participants are presented with four test trials per
+condition, each composed of the shapes of a single column. During
+testing, a child sees each trial combination only once and with only one
+of the two possible cues. Across children, the position (left/right) of
+the referent, and the identity of the cue are counterbalanced.
 
 ## Data Handling and Analyses
-
-*Symbolic development has been documented to undergo rapid transition
-within three to six months intervals [@deloache2011early;
-@callaghan2015development; @Tomasello1999do]. Despite this, researchers
-mostly bin subjects by years of age and, thereby, lose information
-[@cohen1983cost; @maxwell1993bivariate]. The studies presented below use
-children’s age in months as a continuous variable. To draw inferences,
-we followed the approach of House and colleagues [@House2017diverse;
-@House2013ontogeny] and plotted the model estimates graphically as a
-smoothed curve surrounded by the respective confidence intervals.*
 
 In each test trial, participants were prompted to touch one of the two
 choice options. Choices were logged by the experimental script and
@@ -2972,27 +2957,43 @@ their 95% Credible Interval (CrI). In each study, the condition
 hypothesized as the most simple was set as the reference level within
 conditions to make interpretation of model estimates convenient. All
 Bayesian models used default priors and were run in Stan [@RStan] via
-the function *brm* of the package *brms* [@burkner2017brms]. To answer
-the main research question of when children as a group systematically
-make correct choices in any of the conditions outlined below, we use
-fitted models to predict the developmental trajectory (with 95% CrI) of
-group level performance drawn from values of the posterior predicted
-distribution via the function *fitted*. These trajectories and CrIs were
-plotted by age. The criterion for settling when children performed above
-chance was the point at which the lower bound of the 95% CrI for a
-particular trajectory did no longer overlap with a mid-line demarcating
-the 50% chance level. All analyses were preregistered prior to data
-collection. Analyses deviate from the preregistered analyses when
-comparing models via ELPD differences [@sivula2020uncertainty]. This was
-simply not as common by the time of preregistration. For the convenience
-of the reader, we also provide conventional analyses binning
-participants according to their age in years. To test whether
+the function *brm* of the package *brms* [@burkner2017brms].
+
+To answer the main research question of when children as a group
+systematically make correct choices in any of the conditions outlined
+below, we followed the approach of House and colleagues
+[@House2017diverse; @House2013ontogeny] and plotted the model estimates
+graphically as a smoothed curve surrounded by the respective confidence
+intervals. We fitted models to predict the developmental trajectory
+(with 95% CrI) of group level performance drawn from values of the
+posterior predicted distribution via the function *fitted*. These
+trajectories and CrIs were plotted by age. The criterion for settling
+when children performed above chance was the point at which the lower
+bound of the 95% CrI for a particular trajectory did no longer overlap
+with a mid-line demarcating the 50% chance level. All analyses were
+preregistered prior to data collection. Analyses deviate from the
+preregistered analyses when comparing models via ELPD differences
+[@sivula2020uncertainty]. This was simply not as common by the time of
+preregistration.
+
+For the convenience of the reader, we also provide conventional analyses
+binning participants according to their age in years. To test whether
 group-level performance was above chance in all experimental groups,
 two-tailed one-sample t-tests with a chance level set to .5 were
 computed and are accompanied by Cohen's *d* as a standardized effect
-size for significance testing (cf. Appendix C Tables
+size for significance testing (cf. Appendix B Tables
 \@ref(tab:suppl-descriptives-S1), \@ref(tab:suppl-descriptives-S2) and
 \@ref(tab:suppl-descriptives-S3)).
+
+In addition to our main analyses, we preregistered an additional
+exploratory analyses for evaluating item-level effects separately in
+each study. For this we added a crossed random effect for items,
+allowing the relationship between age and performance to vary across
+items (correct \~ condition\*z.age + z.trial + sex + (z.trial \|
+subid)). Due to the lower number of individual items within a task, we
+expect this model to be less diagnostic with regard to our main research
+question. However, it adds detail about the equivalence of items within
+conditions.
 
 # Study 1
 
@@ -3012,40 +3013,39 @@ children will first succeed with *Representation*, then *Pars Pro Toto*,
 
 To make the four conditions in study 1 as comparable as possible, they
 are all employing the same target stimuli (cf. figure
-\@ref(fig:suppl-plot-S1-stimuli), top rows in panels A-B; appendix B).
-In addition the two referents within a trial can be seen as the round
-and square equivalents of each other which makes their overall
-appearance even more similar and aids matching the surface they cover.
-For the condition *Representation,* the graphical cue is a direct
-representation, that is an outline drawing, of the referent. The second
-condition, *Pars Pro Toto,* refers to the targets by means of a
-part-whole relationship. This is still in principle representational but
-provides less information and may require children to complete the
-shapes according to gestalt principles. While this completion is easiest
-in the first column in panels A to B (ibid.) due to the canonical shapes
-(square, circle) it is less obvious in columns 2 to 4 (ibid.) with the
+\@ref(fig:plot-study1), panels A and B). In addition the two referents
+within a trial can be seen as the round and square equivalents of each
+other which makes their overall appearance even more similar and aids
+matching the surface they cover. For the condition *Representation,* the
+graphical cue is a direct representation, that is an outline drawing, of
+the referent. The second condition, *Pars Pro Toto,* refers to the
+targets by means of a part-whole relationship. This is still in
+principle representational but provides less information and may require
+children to complete the shapes according to gestalt principles. While
+this completion is easiest in the first two items of *Pars pro Toto* due
+to the canonical shapes (square, circle) it is less obvious with the
 less canonical shapes albeit they are vertically and horizontally
-symmetrical on purpose. For comparability, *Pars Pro Toto* uses the same
-graphical cues as *Representation* but cut in half at a horizontal
-mid-line. A Stimulus set of an individual trial either uses the top or
-bottom half, but both variations are counterbalanced across trials.
-Stimulus variations with a division at the vertical axis were avoided as
-such cues are likely to have been read as arrows by children of the age
-that were tested here [@kachelarrowsInPrep]. Two further conditions
-aimed to abstract from the original representational symbol-referent
-relationship by providing graphical analogies in form. In both *Simple
-Form Analogy* and *Complex Form Analogy* the cue was an abstract line
-drawing being more round or rectangular, thereby referring to either the
-round or rectangular equivalent of the target shapes. As this has not
-been done before in developmental research, our aim was to provide two
-versions of form analogies both supporting children's comprehension in
-distinct ways. In *Simple Form Analogy*, the cues are less dense and
-therefore more simple to grasp, whereas the more complex versions in
-*Complex Form Analogy* provide more information. Arguably either
-variation may support feature extraction. As before, the cues in both
-conditions are direct equivalents with either round or edgy drawing line
-progressions. For an overview of all stimuli in Study 1, see figure
-\@ref(fig:suppl-plot-S1-stimuli) in appendix B.
+symmetrical on purpose (cf. \@ref(fig:plot-study1) B, box 2). For
+comparability, *Pars Pro Toto* uses the same graphical cues as
+*Representation* but cut in half at a horizontal mid-line. A Stimulus
+set of an individual trial either uses the top or bottom half, but both
+variations are counterbalanced across trials. Stimulus variations with a
+division at the vertical axis were avoided as such cues are likely to
+have been read as arrows by children of the age that were tested here
+[@kachelarrowsInPrep]. Two further conditions aimed to abstract from the
+original representational symbol-referent relationship by providing
+graphical analogies in form. In both *Simple Form Analogy* and *Complex
+Form Analogy* the cue was an abstract line drawing being more round or
+rectangular, thereby referring to either the round or rectangular
+equivalent of the target shapes. As this has not been done before in
+developmental research, our aim was to provide two versions of form
+analogies both supporting children's comprehension in distinct ways. In
+*Simple Form Analogy*, the cues are less dense and therefore more simple
+to grasp, whereas the more complex versions in *Complex Form Analogy*
+provide more information. Arguably either variation may support feature
+extraction. As before, the cues in both conditions are direct
+equivalents with either round or edgy drawing line progressions. For an
+overview of all stimuli in Study 1, see figure \@ref(fig:plot-study1) B.
 
 ## Participants
 
@@ -3080,7 +3080,9 @@ A total of `r sum(rep.s1.trials$Trials)` trials (mean per condition =
 analysis. The full model notation was
 `correct ~ condition*z.age + z.trial + sex + (z.trial | subid)`. In
 addition, a null model lacking the interaction of condition and age was
-fitted.
+fitted. An additional exploratory analysis included an item level random
+effect (Model notation
+`correct ~ condition*z.age +z.trial +z.sex +(z.trial|id) +(z.age|item)`).
 
 ## Results
 
@@ -3107,16 +3109,13 @@ log predictive density (ELPD) corroborates this (ELPD WAIC; full model =
 `r round(S1.comp["S1.full.bm", "elpd_waic"],2)`; null model =
 `r round(S1.comp["S1.null.bm", "elpd_waic"],2)`). The standard error of
 the difference in predictive accuracy (SE =
-`r round(S1.comp["S1.null.bm", "se_diff"],2)`), however is numerically
-larger than the difference itself (ELPD diff =
-`r round(S1.comp["S1.null.bm", "elpd_diff"],2)`) **[MB: hier hattest du
-"lower" geschrieben. die rule of thumb wäre aber dass der diff 2\*mal
-größer sein sollte als der SE].** While the full model slightly exceeds
-in predictive power, evidence in favor of this model is not decisive. A
-similar comparison via Leave-One-Out Cross-Validation (LOO) provided
-essentially the same results. In absence of conclusive evidence for
-either model, we report the results for the full model in line with the
-preregistration.
+`r round(S1.comp["S1.null.bm", "se_diff"],2)`) is not much larger than
+the difference itself (ELPD diff =
+`r round(S1.comp["S1.null.bm", "elpd_diff"],2)`). Hence, evidence in
+favor of this model is not decisive. A similar comparison via
+Leave-One-Out Cross-Validation (LOO) provided essentially the same
+results. In absence of conclusive evidence for either model, we report
+the results for the full model in line with the preregistration.
 
 Relative to the *Representation* condition, the *Simple Form Analogy*
 ($\beta$ = `r S1.full.coef["SimpleFormAnalogy", "mean"]`, 95% CrI
@@ -3129,12 +3128,8 @@ lower probability of correct responses. The *Pars Pro Toto* condition
 has no clear difference from the reference condition ($\beta$ =
 `r S1.full.coef["ParsProToto", "mean"]`, 95% CrI
 [`r S1.full.coef["ParsProToto", "q2.5"]`,
-`r S1.full.coef["ParsProToto", "q97.5"]`). Interaction terms between age
-and condition were not reliably different from zero. The developmental
-curves for each condition have essentially similar trajectories.
-Interaction effects with age were not relevant with the exception of
-*Pars Pro Toto* **[MB: das ist verwirrend, erst sagst du sie sind nicht
-reelvant und dann sagst du doch für eine Bedingung].** Here, the
+`r S1.full.coef["ParsProToto", "q97.5"]`). Interaction effects with age
+were not relevant with the exception of *Pars Pro Toto*. Here, the
 interaction with age was positive and just above zero ($\beta$ =
 `r S1.full.coef["ParsProToto:z.age", "mean"]`, 95% CrI
 [`r S1.full.coef["ParsProToto:z.age", "q2.5"]`,
@@ -3164,13 +3159,13 @@ criterion at `r p1$months[p1$condition == "Simple Form Analogy"]` and
 `r p1$months[p1$condition == "Complex Form Analogy"]` months
 respectively. For a side-by-side comparison of the developmental
 trajectories in the four conditions of study 1, see figure
-\@ref(fig:plot-study1). See appendix C table
+\@ref(fig:plot-study1). See appendix B table
 \@ref(tab:suppl-S1-coef-table) for a full overview of coefficients for
 the full model, and table \@ref(tab:suppl-descriptives-S1) for
 additional conventional analyses binning participants according to their
 age in years.
 
-```{r plot-study1, fig.cap = "*Stimuli and Developmental Trajectories for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
+```{r plot-study1, fig.cap = "*Stimuli and Developmental Trajectories for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/S1_complete.png"))
 
@@ -3275,7 +3270,7 @@ alternate for the related cue and target, they are aligned up- or
 downwards. As in study 1, cues in *Orientation of Feature* were oriented
 on a vertical axis, to counter interpretations as arrow-like cues
 [@kachelarrowsInPrep]. For an overview of all stimuli per condition in
-Study 2, see figure \@ref(fig:suppl-plot-S2-stimuli) in appendix B.
+Study 2, see figure \@ref(fig:plot-study2).
 
 ## Participants
 
@@ -3303,7 +3298,9 @@ A total of `r sum(rep.s2.trials$Trials)` trials (mean per condition =
 analysis. The full model notation was
 `correct ~ condition*z.age + z.trial + sex + (z.trial | subid)`. In
 addition, a null model lacking the interaction of condition and age was
-fitted.
+fitted as well as an exploratory model including an item-level random
+effect (Model notation
+`correct ~ condition*z.age +z.trial +z.sex +(z.trial|id) +(z.age|item)`).
 
 ## Results
 
@@ -3367,11 +3364,11 @@ easiest task in study 2. Then in quick succession, children succeed in
 side-by-side comparison of the developmental trajectories, see figure
 \@ref(fig:plot-study2). For an additional conventional analysis binning
 participants according to their age in years, see table
-\@ref(tab:suppl-descriptives-S2) in appendix C. See appendix C table
+\@ref(tab:suppl-descriptives-S2) in appendix B. See appendix B table
 \@ref(tab:suppl-S2-coef-table) and table
 \@ref(tab:suppl-descriptives-S2) for an overview of model coefficients.
 
-```{r plot-study2, fig.cap = "*Stimuli and Developmental Trajectories for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
+```{r plot-study2, fig.cap = "*Stimuli and Developmental Trajectories for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/S2_complete.png"))
 
@@ -3398,8 +3395,7 @@ Gestalt principles, children generally come to perform above chance
 closely around the fourth birthday. Arguably, all four of these
 conditions still have an iconic aspect to them with regard to the
 overall gestalt of the displays. Study 3 set out to further reduce the
-amount of iconicity and investigate fully abstract symbol-referent
-relationships.
+amount of iconicity and investigate fully abstract reference.
 
 # Study 3
 
@@ -3435,29 +3431,28 @@ that are either small or large with regard to the reference frame they
 are presented in. To make cue and target shapes as distinct as possible
 they are again employing either squares or circles respectively or fully
 abstract shapes such as a random scribble or straight lines (cf. figure
-\@ref(fig:suppl-plot-S3-stimuli), A). For comparability, *Size of
-Feature* employs the exact same cues as *Size of Object*, but features
-target shapes with either a relatively large or small void, opening, or
-protrusion. In *Number of Object*, cues and targets are composed of
-different shapes with some being simple line drawings. The displayed
-quantities were 1 versus 3, and 2 versus 4. Already in infancy children
-can discriminate 1 versus 3 [@feigenson2002representations]. Three- and
-four-year-olds can reliably distinguish these magnitudes explicitly and
-implicitly without counting [@mix2002quantitative;
-@halberda2008developmental; @huntley2000preschoolers]. Special attention
-was paid to the arrangement of the objects to ensure that the cue and
-target objects do not share visually similarity by forming a similar
-pattern, which is difficult as such small number arrays lend themselves
-to being grouped into canonical shapes by Gestalt principles such as
-proximity and closure. This issue was addressed by presenting the
-targets depicting the magnitudes three and four as if outlining
-irregular shapes. By contrast, the corresponding cues were aligned along
-a vertical of horizontal axis. For comparability, *Number of Feature*
-employs the same cues as *Number of Object*. To evoke a sense of
-quantity in the closed forms serving as referents, the target shapes in
-*Number of Feature* either have salient protrusions, or partial areas
-resulting from incisions. For an overview of all stimuli presented in
-Study 3, see figure \@ref(fig:suppl-plot-S3-stimuli) in appendix B.
+\@ref(fig:plot-study3) B). For comparability, *Size of Feature* employs
+the exact same cues as *Size of Object*, but features target shapes with
+either a relatively large or small void, opening, or protrusion. In
+*Number of Object*, cues and targets are composed of different shapes
+with some being simple line drawings. The displayed quantities were 1
+versus 3, and 2 versus 4. Already in infancy children can discriminate 1
+versus 3 [@feigenson2002representations]. Three- and four-year-olds can
+reliably distinguish these magnitudes explicitly and implicitly without
+counting [@mix2002quantitative; @halberda2008developmental;
+@huntley2000preschoolers]. Special attention was paid to the arrangement
+of the objects to ensure that the cue and target objects do not share
+visually similarity by forming a similar pattern, which is difficult as
+such small number arrays lend themselves to being grouped into canonical
+shapes by Gestalt principles such as proximity and closure. This issue
+was addressed by presenting the targets depicting the magnitudes three
+and four as if outlining irregular shapes. By contrast, the
+corresponding cues were aligned along a vertical of horizontal axis. For
+comparability, *Number of Feature* employs the same cues as *Number of
+Object*. To evoke a sense of quantity in the closed forms serving as
+referents, the target shapes in *Number of Feature* either have salient
+protrusions, or partial areas resulting from incisions. For an overview
+of all stimuli presented in Study 3, see figure \@ref(fig:plot-study3).
 
 ## Participants
 
@@ -3485,8 +3480,11 @@ condition = `r mean(rep.s3.trials$Trials)`, range:
 `r min(rep.s3.trials$Trials)` - `r max(rep.s3.trials$Trials)`) from
 `r rep.age.table.data["study3", "N"]` participants were submitted for
 analysis. Data were analyzed both with a full model
-(`correct ~ condition*z.age + z.trial + sex + (z.trial | subid)`) and a
-null model lacking the interaction of condition and age.
+(`correct ~ condition*z.age + z.trial + sex + (z.trial | subid)`), a
+null model lacking the interaction of condition and age and an
+additional exploratory model including an item-level random effect
+(Model notation
+`correct ~ condition*z.age +z.trial +z.sex +(z.trial|id) +(z.age|item)`).
 
 ## Results
 
@@ -3529,36 +3527,39 @@ participants were substantially less accurate in *Size of Feature* (beta
 `r S3.full.coef["SizeofFeature", "q97.5"]`). A smaller, marginal effect
 was observed in *Number of Feature* ($\beta$ =
 `r S3.full.coef["NumberofFeature", "mean"]`, 95% CrI
-[`r S3.full.coef["NumberofFeature", "q2.5"]`,
-`r S3.full.coef["NumberofFeature", "q97.5"]`). *Number of Object* (beta
-= `r S3.full.coef["NumberofObject", "mean"]`, 95% CrI
+[`r S3.full.coef["NumberofFeature", "q2.5"]`,`r S3.full.coef["NumberofFeature", "q97.5"]`).
+*Number of Object* ($\beta$ =
+`r S3.full.coef["NumberofObject", "mean"]`, 95% CrI
 [`r S3.full.coef["NumberofObject", "q2.5"]`,
 `r S3.full.coef["NumberofObject", "q97.5"]`) did not differ reliably
 from *Size of Object*. Age moderated performance less strongly in *Size
-of Feature* ($\beta$ = `r S3.full.coef["SizeofFeature:z.age", "mean"]`)
-and *Number of Feature* ($\beta$ =
-`r S3.full.coef["NumberofFeature:z.age", "mean"]`) **[MB: warum kein 95%
-CRI hier]**, suggesting lower developmental gains compared to *Size of
-Object*. Generally, the conditions relying on feature-based reference
-are associated with lower overall performance and weaker developmental
-gains. The best overview of the relative performance across conditions
-is provided by plotting the model estimates (cf. figure
-\@ref(fig:plot-study3)). Children succeed in most conditions just after
-the fourth birthday. Model estimates indicate group level success in
-*Size of Object* at `r p3$months[p3$condition == "Size of Object"]`
-months, *Number of Object* at
-`r p3$months[p3$condition == "Number of Object"]` months, and *Number of
-Feature* at `r p3$months[p3$condition == "Number of Feature"]` months.
-The exception to this pattern is *Size of Feature* where children master
-the task no sooner than `r p3$months[p3$condition == "Size of Feature"]`
-months of age. For an overview of model coefficients see table table
-\@ref(tab:suppl-S3-coef-table), appendix C. For alternative analyses
+of Feature* ($\beta$ = `r S3.full.coef["SizeofFeature:z.age", "mean"]`,
+95% CrI [`r S3.full.coef["SizeofFeature:z.age", "q2.5"]`,
+`r S3.full.coef["SizeofFeature:z.age", "q97.5"]`) and *Number of
+Feature* ($\beta$ = `r S3.full.coef["NumberofFeature:z.age", "mean"]`,
+95% CrI [`r S3.full.coef["NumberofFeature:z.age", "q2.5"]`,
+`r S3.full.coef["NumberofFeature:z.age", "q97.5"]`), suggesting lower
+developmental gains compared to *Size of Object*. Generally, the
+conditions relying on feature-based reference are associated with lower
+overall performance and weaker developmental gains. The best overview of
+the relative performance across conditions is provided by plotting the
+model estimates (cf. figure \@ref(fig:plot-study3)). Children succeed in
+most conditions just after the fourth birthday. Model estimates indicate
+group level success in *Size of Object* at
+`r p3$months[p3$condition == "Size of Object"]` months, *Number of
+Object* at `r p3$months[p3$condition == "Number of Object"]` months, and
+*Number of Feature* at
+`r p3$months[p3$condition == "Number of Feature"]` months. The exception
+to this pattern is *Size of Feature* where children master the task no
+sooner than `r p3$months[p3$condition == "Size of Feature"]` months of
+age. For an overview of model coefficients see table table
+\@ref(tab:suppl-S3-coef-table), appendix B. For alternative analyses
 binning children by year of age, please see table
 \@ref(tab:suppl-descriptives-S3) (ibid).
 
-```{r plot-study3, fig.cap = "*Developmental Trajectories for all Conditions in Study 3.* Panels illustrate example stimulus combinations (distractor, cue, target) and results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level and the dots represent individual means. The coloured dots and annotation indicate when performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "100%"}
+```{r plot-study3, fig.cap = "*Developmental Trajectories for all Conditions in Study 3.* Panels illustrate example stimulus combinations (distractor, cue, target) and results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level and the dots represent individual means. The coloured dots and annotation indicate when performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
-knitr::include_graphics(knitr::plot_crop("../illustrations/plot_study3.png"))
+knitr::include_graphics(knitr::plot_crop("../illustrations/S3_complete.png"))
 
 ```
 
@@ -3571,89 +3572,23 @@ We find limited support for the hypothesis that the feature conditions
 are generally more demanding. However, that children succeed a month
 earlier in *Number of Object* than in *Size of Object* as hypothesized
 is negligible especially in the context of the four year age-range that
-is considered here. Taken together the results may better be interpreted
-as further indicating that children are solving analogy-based
-symbol-referent relationships just after the fourth birthday, as if -
-provided that a critical level of reasoning development is attained -
-children can generally dismiss surface level features and focus on
-conceptional dimensions [@gentner1988metaphor; @richland2006children]
-and flexibly employ their analogical reasoning skills in communicative
-contexts regardless of the specific conceptual dimensions such as number
-or size.
-
-The late success at 59 months in *Size of Feature* is slightly
-ambiguous. *Size of Feature* stands out as the most difficult condition
-in the series of studies presented here and is definitely quite
-demanding as it is a highly conceptual symbol-referent relationship and
-the only condition that requires children to consider proportions within
-the composition of the target stimulus. However, given that the
-developmental trajectory is quite flat and the CrI comparably wide, the
-operationalization or graphical implementation of the concept *Size of
-Feature* may simply not have been ideal and salient enough **[MB: würde
-ich vll nochmal gucken ob Du eine inhaltlicher erklärung findest - 1.
-weil die Stimuli sehr sorgfältig kreiert wurden und 2. weil das alle
-anderen ergebnisse auch in Frage stellt (könnte ja auch sein, dass die
-stimuli eher schwer waren und wir daher alles unterschätzen).].** *Size
-of Object* demonstrates that children generally can grasp form analogies
-earlier with the exact same cues and *Absolute Position* and *Relative
-Position* from study 2 indicate that children can also master
-figure-ground relationships or relational patterns in targets even prior
-to the fourth birthday. It is reasonable to assume that children could
-succeed slightly earlier in *Size of Feature* if the opening or bumps
-representing the size relationship in the target displays would simply
-be more pronounced.
-
-*NEW NEW NEW Out of the 12 conditions, Size of Feature posed the biggest
-challenge for participants. While children generally are able to solve
-this type of task by 59 months, it is striking that the same group
-appears generally able to comprehend cues based on size almost then
-months earlier. It is also unlikely that extracting the relevant
-dimension from the target referents is per se more difficult when it
-comes to its features as the feature and object versions of number are
-both solved at the same time and also much earlier. The most
-conservative interpretation for this outlier is that the specific
-operationalization of this condition falls short of providing a graphic
-implementation that was salient and accessible enough that children can
-comprehend it as soon as they are ready to grasp this symbol-referent
-dimension on a conceptual level. The small and large features of the
-stimuli should simply have been more pronounced. Fortunately this does
-not undermine the main findings of study three, namely that
-symbol-referent relationships based on size and number are solved by
-children just after their fourth birthday. Yet the finding for Size of
-Feature raises the question of whether the stimuli used in the twelve
-conditions above are prototypical and intuitive to a degree that they
-can sufficiently exemplify a symbol-referent relationship to draw
-developmental conclusions. In any of the conditions, could children
-succeed earlier with stimuli that are more conducive to their
-understanding? Our reply would be that, while this is possible, results
-with other stimulus variations will still be solved at very similar
-ages. More important, however, is not at what specific month or day of
-age children can solve an item but their relative onset. The great
-strength of the studies reported here is that they are all presented
-using an extremely simple paradigm and the exact same presentation
-across all studies and partially even in a within-subjects-design.
-Furthermore, the conditions were carefully designed to provide the most
-straightforward stimuli, as for example number only uses quantitative
-differences that children can grasp immediately and early in development
-(refXXX wie bei stimulus design), as were the shapes employed as
-referents in study 1 (refXXX wie bei stimulus design). NEW NEW NEW*
-
-# Additional Analyses
-
-In addition to our main analyses, we preregistered an additional
-analyses for exploring item level effects seperately in each study. For
-this we add a crossed random effect for items, allowing the relationship
-between age and performance to vary across items (correct \~
-condition\*z.age + z.trial + sex + (z.trial \| subid)). Due to the lower
-number of individual items within a task, we expect this model to be
-less diagnostic with regard to our main research question. However, it
-adds detail about the equivalence of items within conditions.
-
-## Study 1
-
-## Study 2
-
-## Study 3
+is considered here. *Size of Feature* stands out as the most difficult
+condition in the series of studies presented here with group-level
+success at 59 months. It is arguably quite demanding as it is a highly
+conceptual symbol-referent relationship and the only condition that
+requires children to consider proportions within the composition of the
+target stimulus. *Size of Object* demonstrates that children generally
+can grasp form analogies earlier with the exact same cues and *Absolute
+Position* and *Relative Position* from study 2 indicate that children
+can also master figure-ground relationships or relational patterns in
+targets even prior to the fourth birthday. Taken together, results
+further indicate that children are solving analogy-based symbol-referent
+relationships just after the fourth birthday, as if - provided that a
+critical level of reasoning development is attained - children can
+generally dismiss surface level features and focus on conceptional
+dimensions [@gentner1988metaphor; @richland2006children] and flexibly
+employ their analogical reasoning skills in communicative contexts
+regardless of the specific conceptual dimensions such as number or size.
 
 # Discussion
 
@@ -3740,7 +3675,7 @@ feature of a graphic display (bump, opening, indentation) appears more
 salient than its overall orientation is surprising but aligns with
 recent work on children’s spontaneous ability to read asymmetric shapes
 as unconventional arrow cues, already prior to 48 months
-[@kachel_deixis_in_prep]. In summary, Study 2 addresses an interesting
+[@kachelarrowsInPrep]. In summary, Study 2 addresses an interesting
 caveat in previous research by presenting stimulus sets where symbol and
 referent feature different shapes but are composed in similar ways.
 While this requires uncovering abstract relations, these relations are
@@ -3955,4 +3890,3 @@ representation.
 
 ```{r child = "appendix_c_additional.Rmd"}
 ```
-
