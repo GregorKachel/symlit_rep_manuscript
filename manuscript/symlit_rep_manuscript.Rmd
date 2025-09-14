@@ -531,15 +531,6 @@ saveRDS(S1.null.bm, "../models/S1.null.bm.rds")
 saveRDS(S1.comp, "../models/S1.comp.rds")
 saveRDS(S1.weights, "../models/S1.weights.rds")
 
-### item level model
-# S1.item.bm<-brm(correct~condition+z.age+z.trial+z.sex+(z.trial|subid)+ (z.age|item), 
-#                data= rep.S1.bayes.data, 
-#                family=bernoulli(),
-#                chains = 4,
-#                iter= 2000,
-#                cores= 4)
-
-
 ```
 
 ```{r rep_s2_bayes, echo = FALSE, include=F, eval=F, results='asis'}
@@ -2136,7 +2127,71 @@ saveRDS(S3.item.model, "../models/S3.item.model.rds")
 
 ```
 
-```{r S1S2S3_item_ppcheck_rhat_bulkESS_coefftables, echo=FALSE, eval=T, warning = F, message=F}
+```{r S1S2S3_itemvsfull_comp, echo=FALSE, eval=F, warning = F, message=F}
+
+### MODEL COMPARISON
+
+# STUDY 1 - item vs full #######################################
+S1.itemvsfull.comp <- loo_compare(S1.item.model, S1.full.bm, 
+                                  criterion = "waic")%>%as_tibble(rownames = "index")
+
+S1.itemvsfull.comp  <- data.frame(S1.itemvsfull.comp , row.names = "index")
+
+S1.itemvsfull.weights <- model_weights(S1.item.model, S1.full.bm, criterion = "waic") 
+S1.itemvsfull.weights <- S1.itemvsfull.weights %>% as_tibble(rownames = "index")
+S1.itemvsfull.weights <- data.frame(S1.itemvsfull.weights, row.names = "index")
+
+saveRDS(S1.itemvsfull.comp, "../models/S1.itemvsfull.comp.rds")
+saveRDS(S1.itemvsfull.weights, "../models/S1.itemvsfull.weights.rds")
+
+
+# STUDY 2 - item vs full #######################################
+S2.itemvsfull.comp <- loo_compare(S2.item.model, S2.full.bm, 
+                                  criterion = "waic")%>%as_tibble(rownames = "index")
+
+S2.itemvsfull.comp  <- data.frame(S2.itemvsfull.comp , row.names = "index")
+
+S2.itemvsfull.weights <- model_weights(S2.item.model, S2.full.bm, criterion = "waic") 
+S2.itemvsfull.weights <- S2.itemvsfull.weights %>% as_tibble(rownames = "index")
+S2.itemvsfull.weights <- data.frame(S2.itemvsfull.weights, row.names = "index")
+
+saveRDS(S2.itemvsfull.comp, "../models/S2.itemvsfull.comp.rds")
+saveRDS(S2.itemvsfull.weights, "../models/S2.itemvsfull.weights.rds")
+
+
+# STUDY 3 - item vs full #######################################
+S3.itemvsfull.comp <- loo_compare(S3.item.model, S3.full.bm, 
+                                  criterion = "waic")%>%as_tibble(rownames = "index")
+
+S3.itemvsfull.comp  <- data.frame(S3.itemvsfull.comp , row.names = "index")
+
+S3.itemvsfull.weights <- model_weights(S3.item.model, S3.full.bm, criterion = "waic") 
+S3.itemvsfull.weights <- S3.itemvsfull.weights %>% as_tibble(rownames = "index")
+S3.itemvsfull.weights <- data.frame(S3.itemvsfull.weights, row.names = "index")
+
+saveRDS(S3.itemvsfull.comp, "../models/S3.itemvsfull.comp.rds")
+saveRDS(S3.itemvsfull.weights, "../models/S3.itemvsfull.weights.rds")
+
+
+```
+
+
+```{r S1_item_ppcheck_rhat_bulkESS_coefftables, echo=FALSE, eval=T, warning = F, message=F}
+
+S1.item.model <- readRDS("../models/S1.item.model.rds")
+S1.itemvsfull.comp <- readRDS("../models/S1.itemvsfull.comp.rds")
+S1.itemvsfull.weights <- readRDS("../models/S1.itemvsfull.weights.rds")
+
+S2.item.model <- readRDS("../models/S2.item.model.rds")
+S2.itemvsfull.comp <- readRDS("../models/S2.itemvsfull.comp.rds")
+S2.itemvsfull.weights <- readRDS("../models/S2.itemvsfull.weights.rds")
+
+
+S3.item.model <- readRDS("../models/S3.item.model.rds")
+S3.itemvsfull.comp <- readRDS("../models/S3.itemvsfull.comp.rds")
+S3.itemvsfull.weights <- readRDS("../models/S3.itemvsfull.weights.rds")
+
+
 
 # POSTERIOR PREDICTICE CHECKS ###################
 # pp_check(S1.item.model)
@@ -2156,35 +2211,91 @@ saveRDS(S3.item.model, "../models/S3.item.model.rds")
 # summary(S2.item.model) # Intercept 1.09      0.25     0.60
 # summary(S3.item.model) # Intercept 1.06      0.21     0.64
 
+
+
+
+
 # S1 item model prepping for text and table ####################
 
+# for reporting BULK_ESS and Coefficients
+S1.item.coef <- summarise_draws(as_draws_df(S1.item.model)) # ! standard is just 90% CrI
+
+# NOTE: # as_draws_df() from posterior uses 90% CrIs
+# we preregistered using 2.5% and 97.5% quantiles
+draws_df <- as_draws_df(S1.item.model)
+quantiles_df <- as.data.frame(t(apply(draws_df, 2, quantile, probs = c(0.025, 0.975))))
+quantiles_df <- tibble::rownames_to_column(quantiles_df, var = "variable")
+names(quantiles_df)[2:3] <- c("q2.5", "q97.5")
+
+S1.item.coef <- left_join(S1.item.coef, quantiles_df, by = "variable") 
+
+# for table in appendix:
+S1.item.coef.table <- S1.item.coef
+
+# for reporting in text:
+S1.item.coef <- S1.item.coef %>% 
+  slice(1:16) %>%
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  data.frame(row.names = "variable")
+
+
+
+# S2 item model prepping for text and table ####################
+
+# for reporting BULK_ESS and Coefficients
+S2.item.coef <- summarise_draws(as_draws_df(S2.item.model)) # ! standard is just 90% CrI
+
+# NOTE: # as_draws_df() from posterior uses 90% CrIs
+# we preregistered using 2.5% and 97.5% quantiles
+draws_df <- as_draws_df(S2.item.model)
+quantiles_df <- as.data.frame(t(apply(draws_df, 2, quantile, probs = c(0.025, 0.975))))
+quantiles_df <- tibble::rownames_to_column(quantiles_df, var = "variable")
+names(quantiles_df)[2:3] <- c("q2.5", "q97.5")
+
+S2.item.coef <- left_join(S2.item.coef, quantiles_df, by = "variable") 
+
+# for table in appendix:
+S2.item.coef.table <- S2.item.coef
+
+# for reporting in text:
+S2.item.coef <- S2.item.coef %>% 
+  slice(1:16) %>%
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  data.frame(row.names = "variable")
+
+
+
+# S3 item model prepping for text and table ####################
+
+# for reporting BULK_ESS and Coefficients
+S3.item.coef <- summarise_draws(as_draws_df(S3.item.model)) # ! standard is just 90% CrI
+
+# NOTE: # as_draws_df() from posterior uses 90% CrIs
+# we preregistered using 2.5% and 97.5% quantiles
+draws_df <- as_draws_df(S3.item.model)
+quantiles_df <- as.data.frame(t(apply(draws_df, 2, quantile, probs = c(0.025, 0.975))))
+quantiles_df <- tibble::rownames_to_column(quantiles_df, var = "variable")
+names(quantiles_df)[2:3] <- c("q2.5", "q97.5")
+
+S3.item.coef <- left_join(S3.item.coef, quantiles_df, by = "variable") 
+
+
+
+# for table in appendix:
+S3.item.coef.table <- S3.item.coef
+
+
+# for reporting in text:
+S3.item.coef <- S3.item.coef %>% 
+  slice(1:16) %>%
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  data.frame(row.names = "variable")
 
 ```
 
-```{r S1S2S3_itemvsfull_comp, echo=FALSE, eval=T, warning = F, message=F}
-
-### MODEL COMPARISON
-
-# STUDY 1 - item vs full
-S1.itemvsfull.comp <- loo_compare(S1.item.model, S1.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
-S1.itemvsfull.comp  <- data.frame(S1.itemvsfull.comp , row.names = "index")
-
-# S1.itemvsfull.comp
-
-# STUDY 2 - item vs full
-S2.itemvsfull.comp <- loo_compare(S2.item.model, S2.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
-S2.itemvsfull.comp  <- data.frame(S2.itemvsfull.comp , row.names = "index")
-
-# S2.itemvsfull.comp
-
-# STUDY 3 - item vs full
-S3.itemvsfull.comp <- loo_compare(S3.item.model, S3.full.bm, criterion = "waic")%>%as_tibble(rownames = "index")
-S3.itemvsfull.comp  <- data.frame(S3.itemvsfull.comp , row.names = "index")
-
-# S3.itemvsfull.comp
-
-
-```
 
 ```{r S1S2S3_item_plotting, echo=FALSE, eval=T, warning = F, message=F}
 
@@ -2413,7 +2524,7 @@ ggsave(
 
 ```
 
-```{r rep_s1_item_inspect, echo = FALSE, include=F, eval=T, results='asis'}
+```{r rep_s1_item_unclear, echo = FALSE, include=F, eval=F, results='asis'}
 
 S1.item.model
 
@@ -3165,6 +3276,56 @@ the full model, and table \@ref(tab:suppl-descriptives-S1) for
 additional conventional analyses binning participants according to their
 age in years.
 
+111
+
+An exploratory model with additional item-level random effects showed that item variation was 
+Item intercept 
+($\beta$ = `r S1.item.coef["sd_item__Intercept", "mean"]`, 95% CrI
+[`r S1.item.coef["sd_item__Intercept", "q2.5"]`,
+`r S1.item.coef["sd_item__Intercept", "q97.5"]`)
+
+and the age effect varied slightly across items 
+($\beta$ = `r S1.item.coef["sd_item__z.age", "mean"]`, 95% CrI
+[`r S1.item.coef["sd_item__z.age", "q2.5"]`,
+`r S1.item.coef["sd_item__z.age", "q97.5"]`)
+
+The correlation between item difficulty and item-specific age slopes was uncertain 
+(ρ = `r S1.item.coef["cor_item__Intercept__z.age", "mean"]`, 95% CrI
+[`r S1.item.coef["cor_item__Intercept__z.age", "q2.5"]`,
+`r S1.item.coef["cor_item__Intercept__z.age", "q97.5"]`)
+
+Comparing the models using weights based on the Widely Applicable Information Criterion (WAIC) yielded
+full model `r round(S1.itemvsfull.weights["S1.full.bm","value"]*100,2)`% 
+null model `r round(S1.itemvsfull.weights["S1.item.model","value"]*100,2)`% 
+
+Directly comparing the models' WAIC via expected log predictive density (ELPD) corroborates this 
+(ELPD WAIC; 
+full model = `r round(S1.itemvsfull.comp["S1.full.bm", "elpd_waic"],2)`; 
+item model = `r round(S1.itemvsfull.comp["S1.item.model", "elpd_waic"],2)`). 
+The standard error of the difference in predictive accuracy 
+(SE =`r round(S1.itemvsfull.comp["S1.item.model", "se_diff"],2)`) is not much larger than the difference itself (ELPD diff = `r round(S1.itemvsfull.comp["S1.item.model", "elpd_diff"],2)`).
+
+For on overview of item level logg odds see figure \@ref(fig:plot-study123itemintercepts)
+For coefficients see table \@ref(tab:suppl-S1item-coef-table)
+
+XXX
+**Smaller random-effect SDs, with wide CIs near zero → item-level variation is weaker and could even be negligible.
+Correlation between intercept and age slope is highly uncertain.
+Suggests that items as a grouping factor may not explain much additional variation.
+sd(Intercept) = 0.16 [0.01, 0.40] --> Items differ slightly in baseline difficulty,  
+0.16 log-odds corresponds to ~4 percentage points of accuracy --> effect of item is small
+sd(z.age) = 0.14 [0.01, 0.34] --> modest variation across items in how strongly it interacts with age. 
+effect size is small: ±0.14 log-odds ≈ ±3–4 percentage points per 1 SD in age.
+cor(Intercept, z.age) = 0.35 [-0.84, 0.98] → uncertain. there is no clear age effect for slightly easier or slightly more difficult items
+SUMMARY: Item-level effects are relatively small. Items are fairly homogeneous.
+
+Model comp full model and item model
+The two models have virtually identical predictive performance.
+The difference in WAIC (≈ 1.6) is tiny compared to its uncertainty (SE ≈ 39).
+The elpd_diff is well within one standard error of zero, meaning there’s no credible evidence that adding item-level random effects improves or harms predictive accuracy.
+Notice that S1.item.model has a higher p_waic (88.5 vs. 80.5) → it’s a more complex model (greater effective number of parameters), but that complexity does not translate into better predictive fit.**
+
+
 ```{r plot-study1, fig.cap = "*Stimuli and Developmental Trajectories for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/S1_complete.png"))
@@ -3368,6 +3529,41 @@ participants according to their age in years, see table
 \@ref(tab:suppl-S2-coef-table) and table
 \@ref(tab:suppl-descriptives-S2) for an overview of model coefficients.
 
+
+222
+
+An exploratory model with additional item-level random effects showed that item variation was 
+Item intercept 
+($\beta$ = `r S2.item.coef["sd_item__Intercept", "mean"]`, 95% CrI
+  [`r S2.item.coef["sd_item__Intercept", "q2.5"]`,
+    `r S2.item.coef["sd_item__Intercept", "q97.5"]`)
+
+and the age effect varied slightly across items 
+($\beta$ = `r S2.item.coef["sd_item__z.age", "mean"]`, 95% CrI
+  [`r S2.item.coef["sd_item__z.age", "q2.5"]`,
+    `r S2.item.coef["sd_item__z.age", "q97.5"]`)
+
+The correlation between item difficulty and item-specific age slopes was uncertain 
+(ρ = `r S2.item.coef["cor_item__Intercept__z.age", "mean"]`, 95% CrI
+  [`r S2.item.coef["cor_item__Intercept__z.age", "q2.5"]`,
+    `r S2.item.coef["cor_item__Intercept__z.age", "q97.5"]`)
+
+Comparing the models using weights based on the Widely Applicable Information Criterion (WAIC) yielded
+full model `r round(S2.itemvsfull.weights["S2.full.bm","value"]*100,2)`% 
+null model `r round(S2.itemvsfull.weights["S2.item.model","value"]*100,2)`% 
+
+Directly comparing the models' WAIC via expected log predictive density (ELPD) corroborates this 
+(ELPD WAIC; 
+full model = `r round(S2.itemvsfull.comp["S2.full.bm", "elpd_waic"],2)`; 
+item model = `r round(S2.itemvsfull.comp["S2.item.model", "elpd_waic"],2)`). 
+The standard error of the difference in predictive accuracy 
+(SE =`r round(S2.itemvsfull.comp["S2.item.model", "se_diff"],2)`) is not much larger than the difference itself (ELPD diff = `r round(S2.itemvsfull.comp["S2.item.model", "elpd_diff"],2)`).
+
+For on overview of item level logg odds see figure \@ref(fig:plot-study123itemintercepts)
+For coefficients see table \@ref(tab:suppl-S2item-coef-table)
+
+
+
 ```{r plot-study2, fig.cap = "*Stimuli and Developmental Trajectories for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/S2_complete.png"))
@@ -3562,6 +3758,42 @@ binning children by year of age, please see table
 knitr::include_graphics(knitr::plot_crop("../illustrations/S3_complete.png"))
 
 ```
+
+
+333
+
+
+An exploratory model with additional item-level random effects showed that item variation was 
+Item intercept 
+($\beta$ = `r S3.item.coef["sd_item__Intercept", "mean"]`, 95% CrI
+  [`r S3.item.coef["sd_item__Intercept", "q2.5"]`,
+    `r S3.item.coef["sd_item__Intercept", "q97.5"]`)
+
+and the age effect varied slightly across items 
+($\beta$ = `r S3.item.coef["sd_item__z.age", "mean"]`, 95% CrI
+  [`r S3.item.coef["sd_item__z.age", "q2.5"]`,
+    `r S3.item.coef["sd_item__z.age", "q97.5"]`)
+
+The correlation between item difficulty and item-specific age slopes was uncertain 
+(ρ = `r S3.item.coef["cor_item__Intercept__z.age", "mean"]`, 95% CrI
+  [`r S3.item.coef["cor_item__Intercept__z.age", "q2.5"]`,
+    `r S3.item.coef["cor_item__Intercept__z.age", "q97.5"]`)
+
+Comparing the models using weights based on the Widely Applicable Information Criterion (WAIC) yielded
+full model `r round(S3.itemvsfull.weights["S3.full.bm","value"]*100,2)`% 
+null model `r round(S3.itemvsfull.weights["S3.item.model","value"]*100,2)`% 
+
+Directly comparing the models' WAIC via expected log predictive density (ELPD) corroborates this 
+(ELPD WAIC; 
+full model = `r round(S3.itemvsfull.comp["S3.full.bm", "elpd_waic"],2)`; 
+item model = `r round(S3.itemvsfull.comp["S3.item.model", "elpd_waic"],2)`). 
+The standard error of the difference in predictive accuracy 
+(SE =`r round(S3.itemvsfull.comp["S3.item.model", "se_diff"],2)`) is not much larger than the difference itself (ELPD diff = `r round(S3.itemvsfull.comp["S3.item.model", "elpd_diff"],2)`).
+
+For on overview of item level logg odds see figure \@ref(fig:plot-study123itemintercepts)
+For coefficients see table \@ref(tab:suppl-S3item-coef-table)
+
+
 
 ## Discussion
 

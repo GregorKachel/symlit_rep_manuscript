@@ -24,7 +24,7 @@ S1.item.coef.table <- S1.item.coef
 #   data.frame(row.names = "variable")
 
 S1.item.coef.table.fin <- S1.item.coef.table %>% 
-  slice(1:24) %>% 
+  slice(1:16) %>% 
   # filter(grepl("^b_", variable)) %>% 
   mutate(variable = gsub("b_", "", variable)) %>% 
   mutate(variable = gsub("condition", "", variable)) %>% 
@@ -33,6 +33,13 @@ S1.item.coef.table.fin <- S1.item.coef.table %>%
   mutate(variable = gsub("z.age", "Age*", variable)) %>% 
   mutate(variable = gsub("z.trial", "Trial*", variable)) %>% 
   mutate(variable = gsub("sex1", "Sex (Male)", variable)) %>%
+  mutate(
+    variable = gsub("sd_item__ Intercept", "Item Intercept (SD)", variable),
+    variable = gsub("sd_item__Age\\*", "Item × Age Slope (SD)", variable),
+    variable = gsub("sd_subid__ Intercept", "Subject Intercept (SD)", variable),
+    variable = gsub("sd_subid__Trial\\*", "Subject × Trial slope (SD)", variable),
+    variable = gsub("cor_item__ Intercept__Age\\*", "Correlation: Item Intercept & Age Slope", variable),
+    variable = gsub("cor_subid__ Intercept__Trial\\*", "Correlation: Subject Intercept & Trial Slope", variable)) %>% 
   rename(
     Predictor = variable,
     Estimate = mean,
@@ -48,9 +55,42 @@ S1.item.coef.table.fin <- S1.item.coef.table %>%
     `Tail ESS` = format(round(`Tail ESS`), big.mark = ",")) %>%
   select(Predictor, Estimate, SD, MAD, `95% CrI`, `Bulk ESS`, `Tail ESS`)
 
+# add line to highlight the random effects section
+S1.item.coef.table.fin <- bind_rows(
+  S1.item.coef.table.fin[1:10, ],
+  tibble(
+    Predictor = "Random Effects",
+    Estimate = NA_real_,
+    SD = NA_real_,
+    MAD = NA_real_,
+    `95% CrI` = "",
+    `Bulk ESS` = "",
+    `Tail ESS` = ""
+  ),
+  S1.item.coef.table.fin[11:16, ]
+)
 
 
-summary(S1.item.model)
+# ft <- flextable(S1.item.coef.table.fin) %>%
+#   theme_apa() %>%
+#   set_caption("suppl-S1-item-table") %>%
+#   fontsize(size = 8, part = "all") %>%
+#   set_table_properties(layout = "autofit") %>%
+#   add_footer_lines(values = "Note. Estimates represent posterior means with 95% equal-tailed credible intervals (CrIs). MAD indicates Median Absolute Deviation. ESS refers to effective sample size. R̂ values omitted as they are all ~1 indicating convergence.  * = variables were standardized.") %>%
+#   fontsize(part = "footer", size = 8) %>%  
+#   autofit()
+# ft
 
-ranef(S1.item.model)$item
 
+ft <- flextable(S1.item.coef.table.fin) %>%
+  theme_apa() %>%
+  set_caption("suppl-S1-item-table") %>%
+  fontsize(size = 8, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = "Note. Estimates represent posterior means with 95% equal-tailed credible intervals (CrIs). MAD indicates Median Absolute Deviation. ESS refers to effective sample size. R̂ values omitted as they are all ~1 indicating convergence.  * = variables were standardized.") %>%
+  fontsize(part = "footer", size = 8) %>%
+  bold(i = ~ Predictor == "Random effects", bold = TRUE, part = "body") %>% 
+  merge_h(i = ~ Predictor == "Random effects") %>% # merge across columns
+  autofit()
+
+ft

@@ -1,10 +1,17 @@
 
-
 # Appendix E - Additional Analyses 
 
-```{r suppl-S1item-coef-table, tab.cap = "Study 1 - Posterior Estimates for the Full Model with item-level random effects.", eval = T}
+```{r plot-study123itemintercepts, fig.cap = "*Item-Level Random Intercepts by Condition.*", fig.align = "center", echo = FALSE, out.width = "96%"}
+
+knitr::include_graphics(knitr::plot_crop("../illustrations/S1S2S3_item_plot.png"))
+
+```
+\newpage
+
+```{r suppl-S1item-coef-table, tab.cap = "Study 1 - Posterior Estimates for Exploratory Model with Item-Level Random Effects.", eval = T}
 
 S1.item.coef.table.fin <- S1.item.coef.table %>% 
+  slice(1:16) %>% 
   # filter(grepl("^b_", variable)) %>% 
   mutate(variable = gsub("b_", "", variable)) %>% 
   mutate(variable = gsub("condition", "", variable)) %>% 
@@ -13,6 +20,13 @@ S1.item.coef.table.fin <- S1.item.coef.table %>%
   mutate(variable = gsub("z.age", "Age*", variable)) %>% 
   mutate(variable = gsub("z.trial", "Trial*", variable)) %>% 
   mutate(variable = gsub("sex1", "Sex (Male)", variable)) %>%
+  mutate(
+    variable = gsub("sd_item__ Intercept", "Item Intercept (SD)", variable),
+    variable = gsub("sd_item__Age\\*", "Item × Age Slope (SD)", variable),
+    variable = gsub("sd_subid__ Intercept", "Subject Intercept (SD)", variable),
+    variable = gsub("sd_subid__Trial\\*", "Subject × Trial slope (SD)", variable),
+    variable = gsub("cor_item__ Intercept__Age\\*", "Correlation: Item Intercept & Age Slope", variable),
+    variable = gsub("cor_subid__ Intercept__Trial\\*", "Correlation: Subject Intercept & Trial Slope", variable)) %>% 
   rename(
     Predictor = variable,
     Estimate = mean,
@@ -28,6 +42,32 @@ S1.item.coef.table.fin <- S1.item.coef.table %>%
     `Tail ESS` = format(round(`Tail ESS`), big.mark = ",")) %>%
   select(Predictor, Estimate, SD, MAD, `95% CrI`, `Bulk ESS`, `Tail ESS`)
 
+# add line to highlight the random effects section
+S1.item.coef.table.fin <- bind_rows(
+  S1.item.coef.table.fin[1:10, ],
+  tibble(
+    Predictor = "Random Effects",
+    Estimate = NA_real_,
+    SD = NA_real_,
+    MAD = NA_real_,
+    `95% CrI` = "",
+    `Bulk ESS` = "",
+    `Tail ESS` = ""
+  ),
+  S1.item.coef.table.fin[11:16, ]
+)
+
+
+# ft <- flextable(S1.item.coef.table.fin) %>%
+#   theme_apa() %>%
+#   set_caption("suppl-S1-item-table") %>%
+#   fontsize(size = 8, part = "all") %>%
+#   set_table_properties(layout = "autofit") %>%
+#   add_footer_lines(values = "Note. Estimates represent posterior means with 95% equal-tailed credible intervals (CrIs). MAD indicates Median Absolute Deviation. ESS refers to effective sample size. R̂ values omitted as they are all ~1 indicating convergence.  * = variables were standardized.") %>%
+#   fontsize(part = "footer", size = 8) %>%  
+#   autofit()
+# ft
+
 
 ft <- flextable(S1.item.coef.table.fin) %>%
   theme_apa() %>%
@@ -35,57 +75,156 @@ ft <- flextable(S1.item.coef.table.fin) %>%
   fontsize(size = 8, part = "all") %>%
   set_table_properties(layout = "autofit") %>%
   add_footer_lines(values = "Note. Estimates represent posterior means with 95% equal-tailed credible intervals (CrIs). MAD indicates Median Absolute Deviation. ESS refers to effective sample size. R̂ values omitted as they are all ~1 indicating convergence.  * = variables were standardized.") %>%
-  fontsize(part = "footer", size = 8) %>%  
+  fontsize(part = "footer", size = 8) %>%
+  bold(i = ~ Predictor == "Random effects", bold = TRUE, part = "body") %>% 
+  merge_h(i = ~ Predictor == "Random effects") %>% # merge across columns
   autofit()
+
 ft
 
 ```
 \newpage
 
+```{r suppl-S2item-coef-table, tab.cap = "Study 2 - Posterior Estimates for Exploratory Model with Item-Level Random Effects.", eval = T}
 
-\newpage
 
-```{r plot-study1itemintercepts, fig.cap = "*Item-Level Random Intercepts by Condition.*", fig.align = "center", echo = FALSE, out.width = "96%"}
 
-knitr::include_graphics(knitr::plot_crop("../illustrations/S1S2S3_item_plot.png"))
+S2.item.coef.table.fin <- S2.item.coef.table %>% 
+  slice(1:16) %>% 
+  # filter(grepl("^b_", variable)) %>% 
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  mutate(variable = gsub("([^ ])([A-Z])", "\\1 \\2", variable)) %>% 
+  mutate(variable = gsub("of", " of", variable)) %>% 
+  mutate(variable = gsub(":", " × ", variable)) %>% 
+  mutate(variable = gsub("z.age", "Age*", variable)) %>% 
+  mutate(variable = gsub("z.trial", "Trial*", variable)) %>% 
+  mutate(variable = gsub("sex1", "Sex (Male)", variable)) %>%
+  mutate(
+    variable = gsub("sd_item__ Intercept", "Item Intercept (SD)", variable),
+    variable = gsub("sd_item__Age\\*", "Item × Age Slope (SD)", variable),
+    variable = gsub("sd_subid__ Intercept", "Subject Intercept (SD)", variable),
+    variable = gsub("sd_subid__Trial\\*", "Subject × Trial slope (SD)", variable),
+    variable = gsub("cor_item__ Intercept__Age\\*", "Correlation: Item Intercept & Age Slope", variable),
+    variable = gsub("cor_subid__ Intercept__Trial\\*", "Correlation: Subject Intercept & Trial Slope", variable)) %>% 
+  rename(
+    Predictor = variable,
+    Estimate = mean,
+    SD = sd,
+    MAD = mad,
+    `2.5% CrI` = q2.5, 
+    `97.5% CrI` = q97.5, 
+    `Bulk ESS` = ess_bulk,
+    `Tail ESS` = ess_tail) %>%
+  mutate(
+    `95% CrI` = paste0("[", sprintf("%.2f", `2.5% CrI`), ", ", sprintf("%.2f", `97.5% CrI`), "]"),
+    `Bulk ESS` = format(round(`Bulk ESS`), big.mark = ","),
+    `Tail ESS` = format(round(`Tail ESS`), big.mark = ",")) %>%
+  select(Predictor, Estimate, SD, MAD, `95% CrI`, `Bulk ESS`, `Tail ESS`)
+
+# add line to highlight the random effects section
+S2.item.coef.table.fin <- bind_rows(
+  S2.item.coef.table.fin[1:10, ],
+  tibble(
+    Predictor = "Random Effects",
+    Estimate = NA_real_,
+    SD = NA_real_,
+    MAD = NA_real_,
+    `95% CrI` = "",
+    `Bulk ESS` = "",
+    `Tail ESS` = ""
+  ),
+  S2.item.coef.table.fin[11:16, ]
+)
+
+
+ft <- flextable(S2.item.coef.table.fin) %>%
+  theme_apa() %>%
+  set_caption("suppl-S2-item-table") %>%
+  fontsize(size = 8, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = "Note. Estimates represent posterior means with 95% equal-tailed credible intervals (CrIs). MAD indicates Median Absolute Deviation. ESS refers to effective sample size. R̂ values omitted as they are all ~1 indicating convergence.  * = variables were standardized.") %>%
+  fontsize(part = "footer", size = 8) %>%
+  bold(i = ~ Predictor == "Random effects", bold = TRUE, part = "body") %>% 
+  merge_h(i = ~ Predictor == "Random effects") %>% # merge across columns
+  autofit()
+
+ft
 
 ```
+\newpage
+
+```{r suppl-S3item-coef-table, tab.cap = "Study 3 - Posterior Estimates for Exploratory Model with Item-Level Random Effects.", eval = T}
+
+
+
+S3.item.coef.table.fin <- S3.item.coef.table %>% 
+  slice(1:16) %>% 
+  # filter(grepl("^b_", variable)) %>% 
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  mutate(variable = gsub("([^ ])([A-Z])", "\\1 \\2", variable)) %>% 
+  mutate(variable = gsub("of", " of", variable)) %>% 
+  mutate(variable = gsub(":", " × ", variable)) %>% 
+  mutate(variable = gsub("z.age", "Age*", variable)) %>% 
+  mutate(variable = gsub("z.trial", "Trial*", variable)) %>% 
+  mutate(variable = gsub("sex1", "Sex (Male)", variable)) %>%
+  mutate(
+    variable = gsub("sd_item__ Intercept", "Item Intercept (SD)", variable),
+    variable = gsub("sd_item__Age\\*", "Item × Age Slope (SD)", variable),
+    variable = gsub("sd_subid__ Intercept", "Subject Intercept (SD)", variable),
+    variable = gsub("sd_subid__Trial\\*", "Subject × Trial slope (SD)", variable),
+    variable = gsub("cor_item__ Intercept__Age\\*", "Correlation: Item Intercept & Age Slope", variable),
+    variable = gsub("cor_subid__ Intercept__Trial\\*", "Correlation: Subject Intercept & Trial Slope", variable)) %>% 
+  rename(
+    Predictor = variable,
+    Estimate = mean,
+    SD = sd,
+    MAD = mad,
+    `2.5% CrI` = q2.5, 
+    `97.5% CrI` = q97.5, 
+    `Bulk ESS` = ess_bulk,
+    `Tail ESS` = ess_tail) %>%
+  mutate(
+    `95% CrI` = paste0("[", sprintf("%.2f", `2.5% CrI`), ", ", sprintf("%.2f", `97.5% CrI`), "]"),
+    `Bulk ESS` = format(round(`Bulk ESS`), big.mark = ","),
+    `Tail ESS` = format(round(`Tail ESS`), big.mark = ",")) %>%
+  select(Predictor, Estimate, SD, MAD, `95% CrI`, `Bulk ESS`, `Tail ESS`)
+
+# add line to highlight the random effects section
+S3.item.coef.table.fin <- bind_rows(
+  S3.item.coef.table.fin[1:10, ],
+  tibble(
+    Predictor = "Random Effects",
+    Estimate = NA_real_,
+    SD = NA_real_,
+    MAD = NA_real_,
+    `95% CrI` = "",
+    `Bulk ESS` = "",
+    `Tail ESS` = ""
+  ),
+  S3.item.coef.table.fin[11:16, ]
+)
+
+
+ft <- flextable(S3.item.coef.table.fin) %>%
+  theme_apa() %>%
+  set_caption("suppl-S3-item-table") %>%
+  fontsize(size = 8, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = "Note. Estimates represent posterior means with 95% equal-tailed credible intervals (CrIs). MAD indicates Median Absolute Deviation. ESS refers to effective sample size. R̂ values omitted as they are all ~1 indicating convergence.  * = variables were standardized.") %>%
+  fontsize(part = "footer", size = 8) %>%
+  bold(i = ~ Predictor == "Random effects", bold = TRUE, part = "body") %>% 
+  merge_h(i = ~ Predictor == "Random effects") %>% # merge across columns
+  autofit()
+
+ft
+
+
+
+```
+\newpage
 
 
 
 
-## Study 1
-
-Smaller random-effect SDs, with wide CIs near zero → item-level variation is weaker and could even be negligible.
-
-Correlation between intercept and age slope is highly uncertain.
-
-Suggests that items as a grouping factor may not explain much additional variation.
-
-sd(Intercept) = 0.16 [0.01, 0.40] --> Items differ slightly in baseline difficulty,  
-0.16 log-odds corresponds to ~4 percentage points of accuracy --> effect of item is small
-
-sd(z.age) = 0.14 [0.01, 0.34] --> modest variation across items in how strongly it interacts with age. 
-effect size is small: ±0.14 log-odds ≈ ±3–4 percentage points per 1 SD in age.
-
-cor(Intercept, z.age) = 0.35 [-0.84, 0.98] → uncertain. there is no clear age effect for slightly easier or slightly more difficult items
-
-SUMMARY: Item-level effects are relatively small. Items are fairly homogeneous.
-
-Model comp full model and item model
-
-The two models have virtually identical predictive performance.
-
-The difference in WAIC (≈ 1.6) is tiny compared to its uncertainty (SE ≈ 39).
-
-The elpd_diff is well within one standard error of zero, meaning there’s no credible evidence that adding item-level random effects improves or harms predictive accuracy.
-
-Notice that S1.item.model has a higher p_waic (88.5 vs. 80.5) → it’s a more complex model (greater effective number of parameters), but that complexity does not translate into better predictive fit.
-
-
-## Study 2
-Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
-
-
-## Study 3
-Additional Tables and illustrations for the convenience of the reader. Add illustrations they said; it will add value they said.
