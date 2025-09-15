@@ -3096,7 +3096,7 @@ size for significance testing (cf. Appendix B Tables
 \@ref(tab:suppl-descriptives-S1), \@ref(tab:suppl-descriptives-S2) and
 \@ref(tab:suppl-descriptives-S3)).
 
-In addition to our main analyses, we preregistered an additional
+**000** In addition to our main analyses, we preregistered an additional
 exploratory analyses for evaluating item-level effects separately in
 each study. For this we added a crossed random effect for items,
 allowing the relationship between age and performance to vary across
@@ -3276,61 +3276,14 @@ the full model, and table \@ref(tab:suppl-descriptives-S1) for
 additional conventional analyses binning participants according to their
 age in years.
 
-111
-
-An exploratory model with additional item-level random effects showed that item variation was 
-Item intercept 
-($\beta$ = `r S1.item.coef["sd_item__Intercept", "mean"]`, 95% CrI
-[`r S1.item.coef["sd_item__Intercept", "q2.5"]`,
-`r S1.item.coef["sd_item__Intercept", "q97.5"]`)
-
-and the age effect varied slightly across items 
-($\beta$ = `r S1.item.coef["sd_item__z.age", "mean"]`, 95% CrI
-[`r S1.item.coef["sd_item__z.age", "q2.5"]`,
-`r S1.item.coef["sd_item__z.age", "q97.5"]`)
-
-The correlation between item difficulty and item-specific age slopes was uncertain 
-(ρ = `r S1.item.coef["cor_item__Intercept__z.age", "mean"]`, 95% CrI
-[`r S1.item.coef["cor_item__Intercept__z.age", "q2.5"]`,
-`r S1.item.coef["cor_item__Intercept__z.age", "q97.5"]`)
-
-Comparing the models using weights based on the Widely Applicable Information Criterion (WAIC) yielded
-full model `r round(S1.itemvsfull.weights["S1.full.bm","value"]*100,2)`% 
-null model `r round(S1.itemvsfull.weights["S1.item.model","value"]*100,2)`% 
-
-Directly comparing the models' WAIC via expected log predictive density (ELPD) corroborates this 
-(ELPD WAIC; 
-full model = `r round(S1.itemvsfull.comp["S1.full.bm", "elpd_waic"],2)`; 
-item model = `r round(S1.itemvsfull.comp["S1.item.model", "elpd_waic"],2)`). 
-The standard error of the difference in predictive accuracy 
-(SE =`r round(S1.itemvsfull.comp["S1.item.model", "se_diff"],2)`) is not much larger than the difference itself (ELPD diff = `r round(S1.itemvsfull.comp["S1.item.model", "elpd_diff"],2)`).
-
-For on overview of item level logg odds see figure \@ref(fig:plot-study123itemintercepts)
-For coefficients see table \@ref(tab:suppl-S1item-coef-table)
-
-XXX
-**Smaller random-effect SDs, with wide CIs near zero → item-level variation is weaker and could even be negligible.
-Correlation between intercept and age slope is highly uncertain.
-Suggests that items as a grouping factor may not explain much additional variation.
-sd(Intercept) = 0.16 [0.01, 0.40] --> Items differ slightly in baseline difficulty,  
-0.16 log-odds corresponds to ~4 percentage points of accuracy --> effect of item is small
-sd(z.age) = 0.14 [0.01, 0.34] --> modest variation across items in how strongly it interacts with age. 
-effect size is small: ±0.14 log-odds ≈ ±3–4 percentage points per 1 SD in age.
-cor(Intercept, z.age) = 0.35 [-0.84, 0.98] → uncertain. there is no clear age effect for slightly easier or slightly more difficult items
-SUMMARY: Item-level effects are relatively small. Items are fairly homogeneous.
-
-Model comp full model and item model
-The two models have virtually identical predictive performance.
-The difference in WAIC (≈ 1.6) is tiny compared to its uncertainty (SE ≈ 39).
-The elpd_diff is well within one standard error of zero, meaning there’s no credible evidence that adding item-level random effects improves or harms predictive accuracy.
-Notice that S1.item.model has a higher p_waic (88.5 vs. 80.5) → it’s a more complex model (greater effective number of parameters), but that complexity does not translate into better predictive fit.**
-
-
 ```{r plot-study1, fig.cap = "*Stimuli and Developmental Trajectories for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/S1_complete.png"))
 
 ```
+
+**111** An exploratory model with additional item-level random effects showed that the variability of intercepts at the item level was small ($\beta$ = `r S1.item.coef["sd_item__Intercept", "mean"]`, 95% CrI [`r S1.item.coef["sd_item__Intercept", "q2.5"]`,`r S1.item.coef["sd_item__Intercept", "q97.5"]`). Likewise there is only modest variation for the effect of age across items ($\beta$ = `r S1.item.coef["sd_item__z.age", "mean"]`, 95% CrI [`r S1.item.coef["sd_item__z.age", "q2.5"]`,`r S1.item.coef["sd_item__z.age", "q97.5"]`).
+The correlation between item difficulty and item-specific age slopes was highly uncertain (ρ = `r S1.item.coef["cor_item__Intercept__z.age", "mean"]`, 95% CrI [`r S1.item.coef["cor_item__Intercept__z.age", "q2.5"]`,`r S1.item.coef["cor_item__Intercept__z.age", "q97.5"]`). Model weights based on the WAIC suggested that the full model was more likely to provide accurate predictions (weight =  `r round(S1.itemvsfull.weights["S1.full.bm","value"]*100,2)`% ) compared to the item model (weight = `r round(S1.itemvsfull.weights["S1.item.model","value"]*100,2)`%).The estimated difference in expected log predictive density (elpd) between models, however, was not much larger than the difference itself  (ELPD diff = `r round(S1.itemvsfull.comp["S1.item.model", "elpd_diff"],2)`), indicating considerable uncertainty as to whether either model was preferable. For on overview of logg odds for all items across conditions see figure \@ref(fig:plot-study123itemintercepts). For a full overview of coefficients and the random effects structure of the item model see table \@ref(tab:suppl-S1item-coef-table). Taken together, item-level effects appear negligible.
 
 ## Discussion
 
@@ -3529,46 +3482,13 @@ participants according to their age in years, see table
 \@ref(tab:suppl-S2-coef-table) and table
 \@ref(tab:suppl-descriptives-S2) for an overview of model coefficients.
 
-
-222
-
-An exploratory model with additional item-level random effects showed that item variation was 
-Item intercept 
-($\beta$ = `r S2.item.coef["sd_item__Intercept", "mean"]`, 95% CrI
-  [`r S2.item.coef["sd_item__Intercept", "q2.5"]`,
-    `r S2.item.coef["sd_item__Intercept", "q97.5"]`)
-
-and the age effect varied slightly across items 
-($\beta$ = `r S2.item.coef["sd_item__z.age", "mean"]`, 95% CrI
-  [`r S2.item.coef["sd_item__z.age", "q2.5"]`,
-    `r S2.item.coef["sd_item__z.age", "q97.5"]`)
-
-The correlation between item difficulty and item-specific age slopes was uncertain 
-(ρ = `r S2.item.coef["cor_item__Intercept__z.age", "mean"]`, 95% CrI
-  [`r S2.item.coef["cor_item__Intercept__z.age", "q2.5"]`,
-    `r S2.item.coef["cor_item__Intercept__z.age", "q97.5"]`)
-
-Comparing the models using weights based on the Widely Applicable Information Criterion (WAIC) yielded
-full model `r round(S2.itemvsfull.weights["S2.full.bm","value"]*100,2)`% 
-null model `r round(S2.itemvsfull.weights["S2.item.model","value"]*100,2)`% 
-
-Directly comparing the models' WAIC via expected log predictive density (ELPD) corroborates this 
-(ELPD WAIC; 
-full model = `r round(S2.itemvsfull.comp["S2.full.bm", "elpd_waic"],2)`; 
-item model = `r round(S2.itemvsfull.comp["S2.item.model", "elpd_waic"],2)`). 
-The standard error of the difference in predictive accuracy 
-(SE =`r round(S2.itemvsfull.comp["S2.item.model", "se_diff"],2)`) is not much larger than the difference itself (ELPD diff = `r round(S2.itemvsfull.comp["S2.item.model", "elpd_diff"],2)`).
-
-For on overview of item level logg odds see figure \@ref(fig:plot-study123itemintercepts)
-For coefficients see table \@ref(tab:suppl-S2item-coef-table)
-
-
-
 ```{r plot-study2, fig.cap = "*Stimuli and Developmental Trajectories for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The coloroured dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/S2_complete.png"))
 
 ```
+
+**222** An exploratory model including item-level random effects indicated modest variability ($\beta$ = `r S2.item.coef["sd_item__Intercept", "mean"]`, 95% CrI [`r S2.item.coef["sd_item__Intercept", "q2.5"]`,`r S2.item.coef["sd_item__Intercept", "q97.5"]`). The variability of age effects across items was small ($\beta$ = `r S2.item.coef["sd_item__z.age", "mean"]`, 95% CrI [`r S2.item.coef["sd_item__z.age", "q2.5"]`, `r S2.item.coef["sd_item__z.age", "q97.5"]`), suggesting that the effect of age was fairly consistent across items. The correlation between item intercepts and age slopes was near zero and highly uncertain (ρ = `r S2.item.coef["cor_item__Intercept__z.age", "mean"]`, 95% CrI [`r S2.item.coef["cor_item__Intercept__z.age", "q2.5"]`,`r S2.item.coef["cor_item__Intercept__z.age", "q97.5"]`), providing no reliable evidence that slightly easier or difficult items varied in age-related gains. Comparing the models using WAIC weights showed that including item-level random effects in Study 2 did not provide a clear advantage in out-of-sample predictive accuracy (full model `r round(S2.itemvsfull.weights["S2.full.bm","value"]*100,2)`%; item model `r round(S2.itemvsfull.weights["S2.item.model","value"]*100,2)`%). Directly comparing the models corroborates this (ELPD WAIC; full model = `r round(S2.itemvsfull.comp["S2.full.bm", "elpd_waic"],2)`; item model = `r round(S2.itemvsfull.comp["S2.item.model", "elpd_waic"],2)`). The difference in expected log predictive density was negligible (ELPD diff = `r round(S2.itemvsfull.comp["S2.item.model", "elpd_diff"],2)`), and within the range of sampling uncertainty (SE =`r round(S2.itemvsfull.comp["S2.item.model", "se_diff"],2)`). For an overview of item level variability across conditions see figure \@ref(fig:plot-study123itemintercepts). For a full table of coefficients and random effects of the exploratory model see table \@ref(tab:suppl-S2item-coef-table). Taken together, the inclusion of item-level random effects did not meaningfully improve model fit and both models account for the data equally well.
 
 ## Discussion
 
@@ -3759,41 +3679,9 @@ knitr::include_graphics(knitr::plot_crop("../illustrations/S3_complete.png"))
 
 ```
 
-
-333
-
-
-An exploratory model with additional item-level random effects showed that item variation was 
-Item intercept 
-($\beta$ = `r S3.item.coef["sd_item__Intercept", "mean"]`, 95% CrI
-  [`r S3.item.coef["sd_item__Intercept", "q2.5"]`,
-    `r S3.item.coef["sd_item__Intercept", "q97.5"]`)
-
-and the age effect varied slightly across items 
-($\beta$ = `r S3.item.coef["sd_item__z.age", "mean"]`, 95% CrI
-  [`r S3.item.coef["sd_item__z.age", "q2.5"]`,
-    `r S3.item.coef["sd_item__z.age", "q97.5"]`)
-
-The correlation between item difficulty and item-specific age slopes was uncertain 
-(ρ = `r S3.item.coef["cor_item__Intercept__z.age", "mean"]`, 95% CrI
-  [`r S3.item.coef["cor_item__Intercept__z.age", "q2.5"]`,
-    `r S3.item.coef["cor_item__Intercept__z.age", "q97.5"]`)
-
-Comparing the models using weights based on the Widely Applicable Information Criterion (WAIC) yielded
-full model `r round(S3.itemvsfull.weights["S3.full.bm","value"]*100,2)`% 
-null model `r round(S3.itemvsfull.weights["S3.item.model","value"]*100,2)`% 
-
-Directly comparing the models' WAIC via expected log predictive density (ELPD) corroborates this 
-(ELPD WAIC; 
-full model = `r round(S3.itemvsfull.comp["S3.full.bm", "elpd_waic"],2)`; 
-item model = `r round(S3.itemvsfull.comp["S3.item.model", "elpd_waic"],2)`). 
-The standard error of the difference in predictive accuracy 
-(SE =`r round(S3.itemvsfull.comp["S3.item.model", "se_diff"],2)`) is not much larger than the difference itself (ELPD diff = `r round(S3.itemvsfull.comp["S3.item.model", "elpd_diff"],2)`).
-
-For on overview of item level logg odds see figure \@ref(fig:plot-study123itemintercepts)
-For coefficients see table \@ref(tab:suppl-S3item-coef-table)
-
-
+**333** To evaluate the equivalence of items within conditions, item-level random effects were included in an exploratory model showing that item variation at the intercept was moderate ($\beta$ = `r S3.item.coef["sd_item__Intercept", "mean"]`, 95% CrI [`r S3.item.coef["sd_item__Intercept", "q2.5"]`,`r S3.item.coef["sd_item__Intercept", "q97.5"]`) and that the effect of age varied slightly across items ($\beta$ = `r S3.item.coef["sd_item__z.age", "mean"]`, 95% CrI [`r S3.item.coef["sd_item__z.age", "q2.5"]`,`r S3.item.coef["sd_item__z.age", "q97.5"]`). Again, the correlation between item difficulty and item-specific age slopes was moderately positive but uncertain (ρ = `r S3.item.coef["cor_item__Intercept__z.age", "mean"]`, 95% CrI [`r S3.item.coef["cor_item__Intercept__z.age", "q2.5"]`,`r S3.item.coef["cor_item__Intercept__z.age", "q97.5"]`) providing weak evidence that easier items had stronger age-related gains.
+Comparing the models using WAIC weights showed that the item model had higher predictive power (full model `r round(S3.itemvsfull.weights["S3.full.bm","value"]*100,2)`%; item model `r round(S3.itemvsfull.weights["S3.item.model","value"]*100,2)`%). Directly comparing the models' WAIC via ELPDs corroborates this (full model = `r round(S3.itemvsfull.comp["S3.full.bm", "elpd_waic"],2)`; 
+item model = `r round(S3.itemvsfull.comp["S3.item.model", "elpd_waic"],2)`). The difference in expected log predictive density favored the item model (ELPD diff = `r round(S3.itemvsfull.comp["S3.full.bm", "elpd_diff"],2)`), though the uncertainty around this estimate suggests that the evidence is not decisive (SE =`r round(S3.itemvsfull.comp["S3.full.bm", "se_diff"],2)`). Graphically exploring item-level variability via logg odds indicates that items are still very similar with their estimated deviation from the intercept still including zero (cf. figure \@ref(fig:plot-study123itemintercepts)). For an overview of coefficients and random effects see table \@ref(tab:suppl-S3item-coef-table) in appendix 3. Taken together, further exploring the data by including item-level random effects yielded moderate variability which means in study 3 there is modest evidence for variability due to item level effects. However these are small compared to participant random effects. Model comparisons provided no strong evidence for deterring from our preregistered analysis.
 
 ## Discussion
 
