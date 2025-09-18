@@ -1,0 +1,30 @@
+For the most part, (1) previous studies had a restricted focus on symbol-referent relationships that are based in similarity and iconicity (cf. Callaghan & Corbit, 2015). In addition, while experience with symbols is supposed to influence children’s performance in the tasks outlined below, (2) the role of children’s individual knowledge of conventional symbols has not been put into perspective with their performance (DeLoache, 2011). Furthermore, developmental psychology often establishes cognitive growth by comparing the performance of two or more age-groups, but (3) studies using children’s absolute age as a continuous variable have the potential to follow the trajectories of cognitive development on a much more fine-grained base (Callaghan & Corbit, 2015). Finally, to limit the influence of framing and task demands on children’s performance across cognitive domains, (4) it would be ideal to use the same paradigm and setup across studies when investigating different aspects of young children’s symbolic competence. 
+
+Even in the graphic representations of the paleolithic, abstract and geometric signs outnumber figurative images (von Petzinger, 2017).
+
+
+What type of graphic symbols are we presenting here? 
+traditional view of symbols as arbitrary (no relation to its referent), decontextualized from its original learning environment, and conventionalized.
+however here: intentionally produced by the sender and also to some extent the receiver; [@namy2017symbols]
+
+The possible frame of reference is dichotomous and children’s performance is not taxed by switching modalities, although three-year-olds have been demonstrated to grasp reference from drawings to real-world objects [@callaghan2000factors]. 
+
+To the extend that children’s cognitive abilities  excel when confronted with novel problems that they do not know how to solve,  the tasks here 
+…
+
+
+All experiments presented  touch-screen laptops or tablets allowing children to respond by simply touching the relevant target areas on the display. Touchscreens provide a very intuitive and efficient testing environment working well even with very young children (Frank et al., 2016; Zack et al., 2009). A training and warm-up procedure ensure that participants are thoroughly familiarized with the affordances and requirements of this medium. 
+While the task itself is framed in a narrative symbolic context, namely a picture-book-style choice-task, this should not be an obstacle for the current project. Several studies show that children are able to grasp the meaning of pictures and cartoons well before their second birthday (Callaghan & Corbit, 2015). The aim of the studies outlined here is not to investigate children’s general understanding of symbolic artefacts such as photographs or pictures, but rather whether they are able to use graphic symbols to solve a search-task in a communicative and playful narrative context, especially if the symbol-referent relationship is not primarily established through iconicity.
+
+
+Sample sizes aim at collecting a fairly robust data set with at least 20 observations per participant and 20 participants per age-group (Simmons, Nelson, & Simonsohn, 2011). 
+Touchscreen devices have been successfully used with children of 15 months of age (Zack et al. 2009) and appear to be generally suitable and engaging for toddlers and preschoolers (Frank et al. 2016; Hermes, Rakoczy, & Behne, 2018). At no point do children experience emotional or physical stress or criticism.
+
+
+
+
+REVIEW callaghan reference (Stimulus Sets // Dimensions // graphic primitives)
+In a dichotomous symbolic object-choice task, children are playing a game of hide and seek in which a helpful character provides them with cues hinting towards one of two targets on screen. As a baseline, study B1 will establish when children solve the simple task of choosing an item that is depicted by the cue in an iconic way. In study B2 the cues will be more abstract representing only a part of the target. In study B3, the symbol referent relationship will not be iconic. Rather, the cue refers to the target by means of an analogy in shape. In study B4, the relation between cue and target is established by means of their relative size. Large cues refer to the larger target, small cues to the smaller target. In study B5, targets have a feature that can easily be counted. The cue refers to the target by depicting the respective number. Finally, targets in study B6 are asymmetric along at least one axis. The spatial relation of the cues reflects the orientation of the target. 
+
+
+
