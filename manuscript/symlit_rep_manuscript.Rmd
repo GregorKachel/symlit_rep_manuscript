@@ -64,9 +64,7 @@ output:
   papaja::apa6_doc: default
     
 appendix: # to change filenames, also see end of document
-- "appendix_a_participants.Rmd"
-- "appendix_b_results.Rmd"
-- "appendix_c_additional.Rmd"
+- "symlit_rep_appendix.Rmd"
 
 editor_options: 
   markdown: 
@@ -2175,7 +2173,6 @@ saveRDS(S3.itemvsfull.weights, "../models/S3.itemvsfull.weights.rds")
 
 ```
 
-
 ```{r S1_item_ppcheck_rhat_bulkESS_coefftables, echo=FALSE, eval=T, warning = F, message=F}
 
 S1.item.model <- readRDS("../models/S1.item.model.rds")
@@ -2295,7 +2292,6 @@ S3.item.coef <- S3.item.coef %>%
   data.frame(row.names = "variable")
 
 ```
-
 
 ```{r S1S2S3_item_plotting, echo=FALSE, eval=T, warning = F, message=F}
 
@@ -2584,8 +2580,7 @@ S1.null.coef <- summarise_draws(as_draws_df(S1.null.bm)) %>%
 
 ```
 
-
-<!-- weitere zahlen -->
+<!-- other things not used so far -->
 
 ```{r summaryresults,  echo=FALSE, warning=F, message=F, eval=T}
 
@@ -2593,6 +2588,29 @@ p_all <- rbind(p1,p2,p3) %>% arrange(months)
 p_all <- data.frame(p_all, row.names = "condition")
 
 ```
+
+```{r symlit_rep_plottaskdifficulty, eval= F}
+
+# aggregate proportion of correct choices and number of trials for each individual
+rep_difficultyplot.data  <- rep.data %>% 
+  filter(valid != "drop" & trial != "NA") %>% 
+  group_by(study, title, condition, subid, agey, aged) %>%
+  arrange(condition, subid, agey, aged) %>%
+  summarise("correct" = round(mean(correct)*100, 2),
+            "trials" = length(valid))
+
+difficulty.plot <- ggplot(rep_difficultyplot.data, 
+                    aes(x=reorder(condition, -correct), y=correct, colour = condition)) +
+  geom_hline(yintercept=50, linetype="dashed", color = "black") +
+  geom_boxplot() +
+  geom_jitter() +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+difficulty.plot
+
+```
+
 
 <!-- Hier gehts los -->
 
@@ -3997,16 +4015,5 @@ representation.
 ```
 
 \newpage
-
-```{r child = "appendix_a_participants.Rmd"}
-```
-
-\newpage
-
-```{r child = "appendix_b_results.Rmd"}
-```
-
-\newpage
-
-```{r child = "appendix_c_additional.Rmd"}
+```{r child = "symlit_rep_appendix.Rmd"}
 ```
