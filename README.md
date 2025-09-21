@@ -1,4 +1,4 @@
-## PREVIC: An adaptive parent report measure of expressive vocabulary in children between 3 and 8 years of age
+## Young Children’s Spontaneous Comprehension of Symbol-Referent Relationships in the Graphic Domain.
 
 ------------------------------------------------------------------------
 
@@ -6,20 +6,20 @@
 
 ------------------------------------------------------------------------
 
-Kachel, G., ... (2025). [Amazing paper](https://link.springer.com/article/10.3758/s13428-025-02615-4). *Best Journal*, 57, 95.
+Kachel, G., Haun, D. & Bohn, M. (2025). [Young Children’s Spontaneous Comprehension of Symbol-Referent Relationships in the Graphic Domain](https://osf.io/preprints/psyarxiv). *PsyArXiv*, September 21st.
 
 ### Structure
 
 ```         
 .
-├── scripts
-    ├── analysis.Rmd          <-- all analysis code, including item selection and validity study
-    ├── val_adaptive.Rmd      <-- guide for how to reproduce the validation study of the ML estimator used for the adaptive test
-    ├── validate_ML_est       <-- files needed for validation
-    └── visuals.Rmd           <-- reproduce figures in paper
-├── data                      <-- data files
-    └── final_item_list.csv   <-- list of items in the PREVIC
-├── graphs                    <-- figures in paper
-├── paper                     <-- reproducible manuscript file
-└── saves                     <-- saved model outputs
+├── experiments
+    ├── S1_repandform_ongoing           <-- Complete code fur running the experiment in study 1 
+    ├── S2_orientationposition_ongoing  <-- Complete code fur running the experiment in study 2
+    └── S3_sizenumber_ongoing           <-- Complete code fur running the experiment in study 3
+├── data                                <-- data files
+    └── symlitrep_final_data.rds        <-- final data set for all studies
+├── illustrations                       <-- illustrations and stimuli
+├── manuscript                          <-- reproducible manuscript and supplements
+├── preregistration                     <-- PDF Preregistrations for all studies as available on aspredicted.com
+└── models                              <-- saved model outputs for all analyses
 ```
