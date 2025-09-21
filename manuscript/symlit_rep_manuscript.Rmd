@@ -3239,29 +3239,29 @@ the results for the full model in line with the preregistration.
 Relative to the *Representation* condition, the *Simple Form Analogy*
 ($\beta$ = `r S1.full.coef["SimpleFormAnalogy", "mean"]`, 95% CrI
 [`r S1.full.coef["SimpleFormAnalogy", "q2.5"]`,
-`r S1.full.coef["SimpleFormAnalogy", "q97.5"]`) and *Complex Form
+`r S1.full.coef["SimpleFormAnalogy", "q97.5"]`]) and *Complex Form
 Analogy* ($\beta$ = `r S1.full.coef["ComplexFormAnalogy", "mean"]`, 95%
 CrI [`r S1.full.coef["ComplexFormAnalogy", "q2.5"]`,
-`r S1.full.coef["ComplexFormAnalogy", "q97.5"]`) have a considerably
+`r S1.full.coef["ComplexFormAnalogy", "q97.5"]`]) have a considerably
 lower probability of correct responses. The *Pars Pro Toto* condition
 has no clear difference from the reference condition ($\beta$ =
 `r S1.full.coef["ParsProToto", "mean"]`, 95% CrI
 [`r S1.full.coef["ParsProToto", "q2.5"]`,
-`r S1.full.coef["ParsProToto", "q97.5"]`). Interaction effects with age
+`r S1.full.coef["ParsProToto", "q97.5"]`]). Interaction effects with age
 were not relevant with the exception of *Pars Pro Toto*. Here, the
 interaction with age was positive and just above zero ($\beta$ =
 `r S1.full.coef["ParsProToto:z.age", "mean"]`, 95% CrI
 [`r S1.full.coef["ParsProToto:z.age", "q2.5"]`,
-`r S1.full.coef["ParsProToto:z.age", "q97.5"]`), suggesting that
+`r S1.full.coef["ParsProToto:z.age", "q97.5"]`]), suggesting that
 performance increased more steeply across the age range than in the
 reference condition *Representation*. Generally, participants’
 performance improved with age in all conditions ($\beta$ =
 `r S1.full.coef["z.age", "mean"]`, 95% CrI
-[`r S1.full.coef["z.age", "q2.5"]`, `r S1.full.coef["z.age", "q97.5"]`).
+[`r S1.full.coef["z.age", "q2.5"]`, `r S1.full.coef["z.age", "q97.5"]`]).
 In contrast, trial number has no clear effect on performance ($\beta$ =
 `r S1.full.coef["z.trial", "mean"]`, 95% CrI
 [`r S1.full.coef["z.trial", "q2.5"]`,
-`r S1.full.coef["z.trial", "q97.5"]`), suggesting no evidence for
+`r S1.full.coef["z.trial", "q97.5"]`]), suggesting no evidence for
 learning or fatigue throughout the test session.
 
 Finally, by tracing when the lower bound of the 95% CrI exceeds the
@@ -3450,22 +3450,22 @@ analyses using the full model is reported below.
 
 Across all conditions, performance improved with both age ($\beta$ =
 `r S2.full.coef["z.age", "mean"]`, 95% CrI
-[`r S2.full.coef["z.age", "q2.5"]`, `r S2.full.coef["z.age", "q97.5"]`)
+[`r S2.full.coef["z.age", "q2.5"]`, `r S2.full.coef["z.age", "q97.5"]`])
 and slightly with trial number ($\beta$ =
 `r S2.full.coef["z.trial", "mean"]`, 95% CrI
 [`r S2.full.coef["z.trial", "q2.5"]`,
-`r S2.full.coef["z.trial", "q97.5"]`). Relative to *Absolute Position*,
+`r S2.full.coef["z.trial", "q97.5"]`]). Relative to *Absolute Position*,
 children were generally less likely to correctly solve *Relative
 Position* ($\beta$ = `r S2.full.coef["RelativePosition", "mean"]`, 95%
 CrI [`r S2.full.coef["RelativePosition", "q2.5"]`,
-`r S2.full.coef["RelativePosition", "q97.5"]`). Performance in
+`r S2.full.coef["RelativePosition", "q97.5"]`]). Performance in
 *Orientation of Object* ($\beta$ =
 `r S2.full.coef["OrientationofObject", "mean"]`, 95% CrI
 [`r S2.full.coef["OrientationofObject", "q2.5"]`,
-`r S2.full.coef["OrientationofObject", "q97.5"]`) and *Orientation of
+`r S2.full.coef["OrientationofObject", "q97.5"]`]) and *Orientation of
 Feature* ($\beta$ = `r S2.full.coef["OrientationofFeature", "mean"]`,
 95% CrI [`r S2.full.coef["OrientationofFeature", "q2.5"]`,
-`r S2.full.coef["OrientationofFeature", "q97.5"]`) was not substantially
+`r S2.full.coef["OrientationofFeature", "q97.5"]`]) was not substantially
 different from the reference category when considering the full age
 range. Interaction terms between age and condition were not credibly
 different from zero, suggesting similar developmental patterns for all
@@ -3635,29 +3635,29 @@ the preregistration.
 
 Overall, children's performance increased with age ($\beta$ =
 `r S3.full.coef["z.age", "mean"]`, 95% CrI
-[`r S3.full.coef["z.age", "q2.5"]`, `r S3.full.coef["z.age", "q97.5"]`)
+[`r S3.full.coef["z.age", "q2.5"]`, `r S3.full.coef["z.age", "q97.5"]`])
 and with trial number ($\beta$ = `r S3.full.coef["z.trial", "mean"]`,
 95% CrI [`r S3.full.coef["z.trial", "q2.5"]`,
-`r S3.full.coef["z.trial", "q97.5"]`), indicating general improvement
+`r S3.full.coef["z.trial", "q97.5"]`]), indicating general improvement
 across development and time-on-task. Relative to *Size of Object*,
 participants were substantially less accurate in *Size of Feature* (beta
 = `r S3.full.coef["SizeofFeature", "mean"]`, 95% CrI
 [`r S3.full.coef["SizeofFeature", "q2.5"]`,
-`r S3.full.coef["SizeofFeature", "q97.5"]`). A smaller, marginal effect
+`r S3.full.coef["SizeofFeature", "q97.5"]`]). A smaller, marginal effect
 was observed in *Number of Feature* ($\beta$ =
 `r S3.full.coef["NumberofFeature", "mean"]`, 95% CrI
-[`r S3.full.coef["NumberofFeature", "q2.5"]`,`r S3.full.coef["NumberofFeature", "q97.5"]`).
+[`r S3.full.coef["NumberofFeature", "q2.5"]`,`r S3.full.coef["NumberofFeature", "q97.5"]`]).
 *Number of Object* ($\beta$ =
 `r S3.full.coef["NumberofObject", "mean"]`, 95% CrI
 [`r S3.full.coef["NumberofObject", "q2.5"]`,
-`r S3.full.coef["NumberofObject", "q97.5"]`) did not differ reliably
+`r S3.full.coef["NumberofObject", "q97.5"]`]) did not differ reliably
 from *Size of Object*. Age moderated performance less strongly in *Size
 of Feature* ($\beta$ = `r S3.full.coef["SizeofFeature:z.age", "mean"]`,
 95% CrI [`r S3.full.coef["SizeofFeature:z.age", "q2.5"]`,
-`r S3.full.coef["SizeofFeature:z.age", "q97.5"]`) and *Number of
+`r S3.full.coef["SizeofFeature:z.age", "q97.5"]`]) and *Number of
 Feature* ($\beta$ = `r S3.full.coef["NumberofFeature:z.age", "mean"]`,
 95% CrI [`r S3.full.coef["NumberofFeature:z.age", "q2.5"]`,
-`r S3.full.coef["NumberofFeature:z.age", "q97.5"]`), suggesting lower
+`r S3.full.coef["NumberofFeature:z.age", "q97.5"]`]), suggesting lower
 developmental gains compared to *Size of Object*. Generally, the
 conditions relying on feature-based reference are associated with lower
 overall performance and weaker developmental gains. The best overview of
