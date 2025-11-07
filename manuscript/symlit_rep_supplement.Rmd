@@ -2544,6 +2544,107 @@ S1.null.coef <- summarise_draws(as_draws_df(S1.null.bm)) %>%
 
 ```
 
+# Graphic Overview of Participants and Exclusions
+```{r suppl-participants-dots, fig.cap = "Distribution of Participants across the age-range in all three studies. Dots represent individuals. Colors indicate their respective sex.", fig.align = "center", echo = FALSE, out.width = "80%"}
+
+knitr::include_graphics(knitr::plot_crop("../illustrations/plot_supp_participants_S123.png"))
+
+```
+
+```{r suppl-exclusions-dots, fig.cap = "Distribution of Exclusions across the age-range in all three studies. Dots represent individuals. Colors indicate why children where not submitted to analyses.", fig.align = "center", echo = FALSE, out.width = "70%"}
+
+knitr::include_graphics(knitr::plot_crop("../illustrations/plot_supp_exclusions_S123.png"))
+
+```
+
+# Model Diagnostics and Comparisons
+
+## Study 1
+Posterior predictive checks (PPC) for both full and null model indicated
+excellent fit of observed data and model predictions. Rhat values in
+both models were equal to one, indicating convergence across all chains.
+Effective sample sizes for all fixed effects in the full model (Bulk
+ESS, mean = `r round(mean(S1.full.coef$ess_bulk), 0)`, range
+`r round(min(S1.full.coef$ess_bulk), 0)` -
+`r round(max(S1.full.coef$ess_bulk), 0)`) and the null model (Bulk ESS,
+mean = `r round(mean(S1.null.coef$ess_bulk), 0)`, range
+`r round(min(S1.null.coef$ess_bulk), 0)` -
+`r round(max(S1.null.coef$ess_bulk), 0)`) were \> 1000, indicating
+reliable posterior estimations.
+
+Comparing the models using weights based on the Widely Applicable
+Information Criterion (WAIC) yielded
+`r round(S1.weights["S1.full.bm","value"]*100,2)`% of the model weight
+for the full model, and
+`r round(S1.weights["S1.null.bm","value"]*100,2)`% for the null model.
+Hence, the full model generally had a higher probability of making
+accurate predictions. Directly comparing the models' WAIC via expected
+log predictive density (ELPD) corroborates this (ELPD WAIC; full model =
+`r round(S1.comp["S1.full.bm", "elpd_waic"],2)`; null model =
+`r round(S1.comp["S1.null.bm", "elpd_waic"],2)`). The standard error of
+the difference in predictive accuracy (SE =
+`r round(S1.comp["S1.null.bm", "se_diff"],2)`) is not much larger than
+the difference itself (ELPD diff =
+`r round(S1.comp["S1.null.bm", "elpd_diff"],2)`). Hence, evidence in
+favor of this model is not decisive. A similar comparison via
+Leave-One-Out Cross-Validation (LOO) provided essentially the same
+results. In absence of conclusive evidence for either model, we report
+the results for the full model in line with the preregistration.
+
+## Study 2
+
+For both full and null model, PPCs indicate excellent fit of observed
+data and model predictions. Rhat values in both models were equal to
+one, indicating convergence across all chains. Effective sample sizes
+for all fixed effects in the full model (Bulk ESS, mean =
+`r round(mean(S2.full.coef$ess_bulk), 0)`, range
+`r round(min(S2.full.coef$ess_bulk), 0)` -
+`r round(max(S2.full.coef$ess_bulk), 0)`) and the null model (Bulk ESS,
+mean = `r round(mean(S2.null.coef$ess_bulk), 0)`, range
+`r round(min(S2.null.coef$ess_bulk), 0)` -
+`r round(max(S2.null.coef$ess_bulk), 0)`) were \> 1000, indicating
+reliable posterior estimations.
+
+To compare model performance, we evaluated the WAIC estimates. The null
+model showed a slightly better predictive performance (ELPD =
+`r round(S2.comp["S2.null.bm","elpd_waic"],2)`) compared to the full
+model (ELPD = `r round(S2.comp["S2.full.bm","elpd_waic"],2)`). WAIC
+values also indicate better performance of the null model (WAIC =
+`r round(S2.comp["S2.null.bm", "waic"],2)`) over the full model (WAIC =
+`r round(S2.comp["S2.full.bm", "waic"],2)`). However, the difference
+between models (ELPD Diff =
+`r round(S2.comp["S2.full.bm", "elpd_diff"],2)`) falls within the bounds
+of uncertainty (SE = `r round(S2.comp["S2.full.bm", "se_diff"],2)`),
+suggesting no advantage in predictive accuracy. Hence, the preregistered
+analyses using the full model is reported below.
+
+## Study 3
+PPCs indicated excellent fit of observed data and model predictions in
+both models. Model diagnostics were drawn for the full and null model in
+study 3. Rhat values in both models were equal to one, indicating
+convergence across all chains. Effective sample sizes for all fixed
+effects in the full model (Bulk ESS, mean =
+`r round(mean(S3.full.coef$ess_bulk), 0)`, range
+`r round(min(S3.full.coef$ess_bulk), 0)` -
+`r round(max(S3.full.coef$ess_bulk), 0)`) and the null model (Bulk ESS,
+mean = `r round(mean(S3.null.coef$ess_bulk), 0)`, range
+`r round(min(S3.null.coef$ess_bulk), 0)` -
+`r round(max(S3.null.coef$ess_bulk), 0)`) were \> 1000, indicating
+reliable posterior estimations.
+
+When comparing performance, the full model showed a better fit (ELPD =
+`r round(S3.comp["S3.full.bm","elpd_waic"],2)`) relative to the null
+model (ELPD = `r round(S3.comp["S3.null.bm","elpd_waic"],2)`). The WAIC
+values also favored the full model (WAIC =
+`r round(S3.comp["S3.full.bm", "waic"],2)`) over the null model (WAIC =
+`r round(S3.comp["S3.null.bm", "waic"],2)`). Despite the slightly lower
+WAIC and higher ELPD of the full model, the difference in predictive
+accuracy (ELPD Diff = `r round(S3.comp["S3.null.bm", "elpd_diff"],2)`)
+remains almost within the range of sampling uncertainty (SE =
+`r round(S3.comp["S3.null.bm", "se_diff"],2)`). In the absence of
+substantial differences, the full model is reported below in line with
+the preregistration.
+
 # Additional Analyses including  item-level random effects
 
 In addition to our main analyses, we preregistered additional exploratory analyses for evaluating item-level effects separately in each study. For this we added a crossed random effects for items, allowing the relationship between age and performance to vary across items (correct \~ condition\*z.age + z.trial + sex + (z.trial \|subid)). Due to the lower number of individual items within a task, we expected these models to be less diagnostic with regard to our main research question. However, the analyses provides detail about the equivalence of items within conditions.
@@ -2785,4 +2886,304 @@ knitr::include_graphics(knitr::plot_crop("../illustrations/S1S2S3_item_plot.png"
 
 ```
 
+\newpage
+```{r suppl-S1-coef-table, tab.cap = "Study 1 - Posterior Estimates for the Full Model.", eval = T}
 
+S1.full.coef.table.fin <- S1.full.coef.table %>% 
+  filter(grepl("^b_", variable)) %>% 
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  mutate(variable = gsub("([^ ])([A-Z])", "\\1 \\2", variable)) %>% 
+  mutate(variable = gsub(":", " × ", variable)) %>% 
+  mutate(variable = gsub("z.age", "Age*", variable)) %>% 
+  mutate(variable = gsub("z.trial", "Trial*", variable)) %>% 
+  mutate(variable = gsub("sex1", "Sex (Male)", variable)) %>%
+  rename(
+    Predictor = variable,
+    Estimate = mean,
+    SD = sd,
+    MAD = mad,
+    `2.5% CrI` = q2.5, 
+    `97.5% CrI` = q97.5, 
+    `Bulk ESS` = ess_bulk,
+    `Tail ESS` = ess_tail) %>%
+  mutate(
+    `95% CrI` = paste0("[", sprintf("%.2f", `2.5% CrI`), ", ", sprintf("%.2f", `97.5% CrI`), "]"),
+    `Bulk ESS` = format(round(`Bulk ESS`), big.mark = ","),
+    `Tail ESS` = format(round(`Tail ESS`), big.mark = ",")) %>%
+  select(Predictor, Estimate, SD, MAD, `95% CrI`, `Bulk ESS`, `Tail ESS`)
+
+
+ft <- flextable(S1.full.coef.table.fin) %>%
+  theme_apa() %>%
+  set_caption("suppl-S1-coef-table") %>%
+  fontsize(size = 8, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = "Note. Estimates represent posterior means with 95% equal-tailed credible intervals (CrIs). MAD indicates Median Absolute Deviation. ESS refers to effective sample size. R̂ values omitted as they are all ~1 indicating convergence.  * = variables were standardized.") %>%
+  fontsize(part = "footer", size = 8) %>%  
+  autofit()
+ft
+
+```
+\newpage
+
+```{r suppl-descriptives-S1, tab.cap = "Study 1 - Descriptives and Conventional Analyses.", eval = T}
+
+#library(scales) 
+# required for rounding pvalues, is part of tidyverse but needs to be loaded again? ## it occurs when functions are overwritten multiple times
+
+rep.s1.freq <- rep.S1.bayes.data %>% 
+  mutate(Age = paste0(agey, "-year-olds"),
+         Condition = condition) %>% 
+  group_by(Condition, Age, subid) %>% 
+  summarise("correct" = mean(correct),
+            "trials" = n()) %>% 
+  ungroup() %>% 
+  group_by(Condition, Age) %>%
+   summarise(N = n_distinct(subid),
+             trials = sum(trials),
+             "trials/N" = round(sum(trials)/n_distinct(subid), 2),
+             "M" = round(mean(correct)*100, 2),
+             "SD" = round(sd(correct)*100, 2),
+             p = pvalue(t.test((correct), mu = 0.5)$p.value, accuracy = .001),
+             df= t.test((correct), mu = 0.5)$parameter,
+             "t(N-1)" = round(t.test((correct), mu = 0.5)$statistic, 2),
+             d = round(cohensD((correct), mu = 0.5), 2)) %>% 
+  rename(Trials = trials,
+    `Trials/N` = `trials/N`)
+
+# # delete duplicate labels in age by turning age into character and replacing duplicates
+rep.s1.freq$Condition <- as.character(rep.s1.freq$Condition)
+rep.s1.freq$Condition[duplicated(rep.s1.freq$Condition)] <- ""
+
+# kable(rep.s1.freq) %>%
+# kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+# apa_table(
+#   rep.s1.freq
+#   , caption = "Descriptive Statistics for Study 1"
+#   , note = "This table was created by Gregor."
+#   , escape = TRUE
+# )
+
+# apa_table(
+#   rep.s1.freq,
+#   caption = "Descriptive Statistics for Study 1",
+#   escape = TRUE,
+#   font_size = "small"
+# )
+
+ft <- flextable(rep.s1.freq) %>%
+  theme_apa() %>%
+  set_caption("suppl-descriptives-S1") %>%
+  fontsize(size = 7.9, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = c(
+    "Note. Descriptive and inferential statistics by age group and condition. Performance (*M*, *SD*) is percent correct responses.*p*, *t*, and *d* reflect one-sample t-tests vs. chance level (0.5). *Trials* = total trials across participants; *Trials/N* = average per participant."
+  )) %>%
+  fontsize(part = "footer", size = 7.9) %>%
+  padding(padding.left = 1, padding.right = 1, part = "all") %>%
+  autofit()
+
+ft
+
+```
+\newpage
+
+```{r suppl-S2-coef-table, tab.cap = "Study 2 - Posterior Estimates for the Full Model.", eval = T}
+
+S2.full.coef.table.fin <- S2.full.coef.table %>% 
+  filter(grepl("^b_", variable)) %>% 
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  mutate(variable = gsub("([^ ])([A-Z])", "\\1 \\2", variable)) %>%
+  mutate(variable = gsub("of", " of", variable)) %>% 
+  mutate(variable = gsub(":", " × ", variable)) %>% 
+  mutate(variable = gsub("z.age", "Age*", variable)) %>% 
+  mutate(variable = gsub("z.trial", "Trial*", variable)) %>% 
+  mutate(variable = gsub("sex1", "Sex (Male)", variable)) %>%
+  rename(
+    Predictor = variable,
+    Estimate = mean,
+    SD = sd,
+    MAD = mad,
+    `2.5% CrI` = q2.5, 
+    `97.5% CrI` = q97.5, 
+    `Bulk ESS` = ess_bulk,
+    `Tail ESS` = ess_tail) %>%
+  mutate(
+    `95% CrI` = paste0("[", sprintf("%.2f", `2.5% CrI`), ", ", sprintf("%.2f", `97.5% CrI`), "]"),
+    `Bulk ESS` = format(round(`Bulk ESS`), big.mark = ","),
+    `Tail ESS` = format(round(`Tail ESS`), big.mark = ",")) %>%
+  select(Predictor, Estimate, SD, MAD, `95% CrI`, `Bulk ESS`, `Tail ESS`)
+
+
+ft <- flextable(S2.full.coef.table.fin) %>%
+  theme_apa() %>%
+  set_caption("suppl-S2-coef-table") %>%
+  fontsize(size = 8, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = "Note. Estimates represent posterior means with 95% equal-tailed credible intervals (CrIs). MAD indicates Median Absolute Deviation. ESS refers to effective sample size. R̂ values omitted as they are all ~1 indicating convergence.  * = variables were standardized.") %>%
+  fontsize(part = "footer", size = 8) %>%  
+  autofit()
+ft
+
+```
+\newpage
+
+```{r suppl-descriptives-S2, tab.cap = "Study 2 - Descriptives and Conventional Analyses.", eval = T}
+
+#library(scales) 
+# required for rounding pvalues, is part of tidyverse but needs to be loaded again? ## it occurs when functions are overwritten multiple times
+
+rep.s2.freq <- rep.S2.bayes.data %>% 
+  mutate(Age = paste0(agey, "-year-olds"),
+         Condition = condition) %>% 
+  group_by(Condition, Age, subid) %>% 
+  summarise("correct" = mean(correct),
+            "trials" = n()) %>% 
+  ungroup() %>% 
+  group_by(Condition, Age) %>%
+   summarise(N = n_distinct(subid),
+             trials = sum(trials),
+             "trials/N" = round(sum(trials)/n_distinct(subid), 2),
+             "M" = round(mean(correct)*100, 2),
+             "SD" = round(sd(correct)*100, 2),
+             p = pvalue(t.test((correct), mu = 0.5)$p.value, accuracy = .001),
+             df= t.test((correct), mu = 0.5)$parameter,
+             "t(N-1)" = round(t.test((correct), mu = 0.5)$statistic, 2),
+             d = round(cohensD((correct), mu = 0.5), 2)) %>% 
+  rename(Trials = trials,
+    `Trials/N` = `trials/N`)
+
+# # delete duplicate labels in age by turning age into character and replacing duplicates
+rep.s2.freq$Condition <- as.character(rep.s2.freq$Condition)
+rep.s2.freq$Condition[duplicated(rep.s2.freq$Condition)] <- ""
+
+# kable(rep.s1.freq) %>%
+# kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+# apa_table(
+#   rep.s2.freq
+#   , caption = "Descriptive Statistics for Study 2"
+#   , note = "This table was created by Gregor."
+#   , escape = TRUE
+# )
+
+# apa_table(
+#   rep.s2.freq,
+#   caption = "Descriptive Statistics for Study 2",
+#   escape = TRUE,
+#   font_size = "small"
+# )
+
+
+ft <- flextable(rep.s2.freq) %>%
+  theme_apa() %>%
+  set_caption("suppl-descriptives-S2") %>%
+  fontsize(size = 7.9, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = c(
+    "Note. Descriptive and inferential statistics by age group and condition. Performance (*M*, *SD*) is percent correct responses.*p*, *t*, and *d* reflect one-sample t-tests vs. chance level (0.5). *Trials* = total trials across participants; *Trials/N* = average per participant."
+  )) %>%
+  fontsize(part = "footer", size = 7.9) %>%
+  autofit()
+
+ft
+
+```
+\newpage
+
+```{r suppl-S3-coef-table, tab.cap = "Study 3 - Posterior Estimates for the Full Model.", eval = T}
+
+S3.full.coef.table.fin <- S3.full.coef.table %>% 
+  filter(grepl("^b_", variable)) %>% 
+  mutate(variable = gsub("b_", "", variable)) %>% 
+  mutate(variable = gsub("condition", "", variable)) %>% 
+  mutate(variable = gsub("([^ ])([A-Z])", "\\1 \\2", variable)) %>%
+  mutate(variable = gsub("of", " of", variable)) %>% 
+  mutate(variable = gsub(":", " × ", variable)) %>% 
+  mutate(variable = gsub("z.age", "Age*", variable)) %>% 
+  mutate(variable = gsub("z.trial", "Trial*", variable)) %>% 
+  mutate(variable = gsub("sex1", "Sex (Male)", variable)) %>%
+  rename(
+    Predictor = variable,
+    Estimate = mean,
+    SD = sd,
+    MAD = mad,
+    `2.5% CrI` = q2.5, 
+    `97.5% CrI` = q97.5, 
+    `Bulk ESS` = ess_bulk,
+    `Tail ESS` = ess_tail) %>%
+  mutate(
+    `95% CrI` = paste0("[", sprintf("%.2f", `2.5% CrI`), ", ", sprintf("%.2f", `97.5% CrI`), "]"),
+    `Bulk ESS` = format(round(`Bulk ESS`), big.mark = ","),
+    `Tail ESS` = format(round(`Tail ESS`), big.mark = ",")) %>%
+  select(Predictor, Estimate, SD, MAD, `95% CrI`, `Bulk ESS`, `Tail ESS`)
+
+
+ft <- flextable(S3.full.coef.table.fin) %>%
+  theme_apa() %>%
+  set_caption("suppl-S3-coef-table") %>%
+  fontsize(size = 8, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = "Note. Estimates represent posterior means with 95% equal-tailed credible intervals (CrIs). MAD indicates Median Absolute Deviation. ESS refers to effective sample size. R̂ values omitted as they are all ~1 indicating convergence.  * = variables were standardized.") %>%
+  fontsize(part = "footer", size = 8) %>%  
+  autofit()
+ft
+
+```
+\newpage
+
+```{r suppl-descriptives-S3, tab.cap = "Study 3 - Descriptives and Conventional Analyses.", eval = T, warning=F}
+
+#library(scales) 
+# required for rounding pvalues, is part of tidyverse but needs to be loaded again? ## it occurs when functions are overwritten multiple times
+
+rep.s3.freq <- rep.S3.bayes.data %>% 
+  mutate(Age = paste0(agey, "-year-olds"),
+         Condition = condition) %>% 
+  group_by(Condition, Age, subid) %>% 
+  summarise("correct" = mean(correct),
+            "trials" = n()) %>% 
+  ungroup() %>% 
+  group_by(Condition, Age) %>%
+   summarise(N = n_distinct(subid),
+             trials = sum(trials),
+             "trials/N" = round(sum(trials)/n_distinct(subid), 2),
+             "M" = round(mean(correct)*100, 2),
+             "SD" = round(sd(correct)*100, 2),
+             p = pvalue(t.test((correct), mu = 0.5)$p.value, accuracy = .001),
+             df= t.test((correct), mu = 0.5)$parameter,
+             "t(N-1)" = round(t.test((correct), mu = 0.5)$statistic, 2),
+             d = round(cohensD((correct), mu = 0.5), 2)) %>% 
+  rename(Trials = trials,
+    `Trials/N` = `trials/N`)
+
+# # delete duplicate labels in age by turning age into character and replacing duplicates
+rep.s3.freq$Condition <- as.character(rep.s3.freq$Condition)
+rep.s3.freq$Condition[duplicated(rep.s3.freq$Condition)] <- ""
+
+# kable(rep.s1.freq) %>%
+# kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+# apa_table(
+#   rep.s3.freq,
+#   caption = "Descriptive Statistics for Study 3",
+#   escape = TRUE,
+#   font_size = "small"
+# )
+
+ft <- flextable(rep.s3.freq) %>%
+  theme_apa() %>%
+  set_caption("suppl-descriptives-S3") %>%
+  fontsize(size = 7.9, part = "all") %>%
+  set_table_properties(layout = "autofit") %>%
+  add_footer_lines(values = c(
+    "Note. Descriptive and inferential statistics by age group and condition. Performance (*M*, *SD*) is percent correct responses.*p*, *t*, and *d* reflect one-sample t-tests vs. chance level (0.5). *Trials* = total trials across participants; *Trials/N* = average per participant."
+  )) %>%
+  fontsize(part = "footer", size = 7.9) %>%
+  autofit()
+
+ft
+```

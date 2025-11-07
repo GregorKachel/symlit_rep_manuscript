@@ -1,0 +1,31 @@
+---
+title: "reste markdown"
+output: html_document
+date: "2025-11-07"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Reste Markdown
+[@Tomasello1999do; @tomasello1997comprehension]
+
+
+Notably, symbolic behavior per se does not require symbolic insight [@namy2017symbols], which is to say that children may be successful communicators and grasp their interlocutors communicative acts or intentions but still lack insight into the standing-for relationship of symbols: the idea that something stands for something else. 
+
+One of the few studies sampling children’s age continuously due to the arguably rapid changes between two and four years of age found gradual improvement between 15 and 30 months [@ganea2008transfer]. 
+
+Graphical representations naturally abstract from the reference they intend to depict by leaving out detail as it is generally sufficient for conveying the idea of - for example - a person without drawing their fingers. Reducing representation to a certain compositional element can also be evocative of a concept but is already typical for more abstract symbolic communication, for example, drawing a crown on a map may indicate the position of a royal residence. Using an aspect or part of something in reference to a whole is common in rhetorical figures such as metonomy or ellipsis, and requires an inductive pragmatic reference on the side of the listener that is mastered by children at the age of three [@falkum2017moustache]. 
+
+
+Notably, the producers’ cooperative intentions are key in individuating the symbols’ meaning within the practical context of the coordination game employed in the studies below [@namy2017symbols], which has been shown to be key for success in other symbolic tasks such as the scale-model task [@deloache2011early], maps [@liben2013role], and drawings [@callaghan2000factors].
+
+ The final sample approximates an equal distribution of male and female participants and aligns with conventions in the field in providing a minimum of 24 participants per study and year of age. 
+ 
+ 
+ They were contacted via a database of participants for child development studies to which their parents had voluntarily signed up. 
+ 
+ In the most basic experimental condition in study one (Representation), each hiding place, for example, showed either a solid blue circle or square and the paper displayed a simple outline drawing of one the shapes. Upon making a choice by touching the hiding places, children received no feedback and there was no reveal animation. 
+ 
+ Stimulus variations with a division at the vertical axis were avoided as such cues are likely to have been read as arrows by children of the age that were tested here [@kachelarrowsInPrep]. 
