@@ -48,9 +48,9 @@ authornote: |
     *Acknowledgments*: We are thankful to Susanne Mauritz for her help in the organization of the study and to Valerie Jurgenson and Cynthia Pones for help with data collection. We would like to thank Anne Deiglmayr for hosting this project in her research group and for her continuous support. This research was supported by the Max Planck Society for the Advancement of Science. Gregor Kachel was supported by the German Research Foundation (Deutsche Forschungsgemeinschaft) under project number 429220405.
 
 abstract: |
-  The developmental literature testifies to young children’s remarkable communicative skills in language and gesture, but much less is known about the domain of graphical communication. In three coordinated studies with identical procedures, young children’s ability to spontaneously comprehend unfamiliar graphic symbols was tested in a simple object-choice task across a wide variety of symbol-referent relationships. In four conditions per study, reference was established via representation, part-whole relationships, analogies in size, number and form and gestalt-like principles such as orientation, alignment or figure-ground relations. The samples comprise German-speaking children continuously spread from the third to the seventh birthday (Study 1, N = 106; Study 2, N = 99; Study 3, N = 99). While children are generally able to use direct representations to identify the correct target item already prior to their third birthday, group-level success in all other conditions was observed later, but well before school age. Converging results from conditions employing several abstract and conceptual symbol-referent relationships point to a qualitative shift in symbolic competence around the fourth birthday. Together, this set of studies explores the conceptual continuum from iconic to abstract graphical representations and, therein, provides one of the most comprehensive, robust and systematic investigations of young children’s ability to find meaning in unfamiliar graphic symbols - a largely unexplored component of graphic communication.
+  Young children’s communicative skills in language and gesture are well documented, yet much less is known about their ability to interpret graphical symbols. Across three coordinated studies using identical procedures, we examined children’s spontaneous comprehension of unfamiliar graphic symbols in a simple object-choice task spanning a broad range of symbol–referent relationships. Each study included four conditions in which reference was established through direct representation, part–whole relations, analogies in size, number, and form, or gestalt principles such as orientation, alignment, and figure–ground organization. Participants were German-speaking children continuously sampled from age 3 to 7 (Study 1, N = 106, 51 female; Study 2, N = 99, 49 female; Study 3, N = 99, 55 female). Children reliably used direct representations to identify target objects before age 3, whereas group-level success in the more abstract conditions emerged later but consistently before school entry. Converging evidence across conditions involving abstract or conceptual correspondences indicates a qualitative shift in symbolic competence around age 4. Together, these studies trace children’s developing ability to understand graphical reference across a continuum from iconic to abstract and offer one of the most systematic investigations to date of how young children derive meaning from unfamiliar graphic symbols.
   
-keywords          : "Symbolic Literacy, Graphic Communication, Pragmatics, Symbol-Referent-Relationships, Symbol Grounding, Iconicity, Representation, Analogical Reasoning, Gestalt Principles, Shape, Size, Number, Form, Orientation, Spatial Relations"
+keywords          : "Graphic Communication, Pragmatics, Symbol-Referent-Relationships, Iconicity, Representation, Analogical Reasoning"
 
 wordcount         : "12.420"
 bibliography      : ["library.bib"]
@@ -2611,6 +2611,20 @@ difficulty.plot
 
 <!-- Hier gehts los -->
 
+## Lay Summary
+
+Young children are skilled at understanding spoken language and
+gestures, but much less is known about how they make sense of drawings
+or other simple visual symbols. We explored how children aged 3 to 7
+interpret unfamiliar graphic symbols in a game where they had to choose
+the correct object based on a drawing. Across three studies, we tested
+many kinds of symbol–object relationships, ranging from clear pictures
+to abstract cues based on shape, size, number, or spatial arrangement.
+Children understood direct drawings very early, but their ability to
+interpret more abstract symbols emerged around the fourth birthday.
+These findings show how children gradually learn to find meaning in
+increasingly complex visual symbols.
+
 # Introduction
 
 Children’s developing understanding of symbols in language, gesture or
@@ -2648,7 +2662,7 @@ with pointing to the depiction in the second year
 [@deloache1998grasping]. Around the same age, toddlers understand that
 pictures refer to concepts [@allen2004both] in learning words: 15- and
 18-month-olds can extend newly learned labels both from pictures to
-objects and from objects to pictures [@ganea2008transfer]. From 2,5 to 4
+objects and from objects to pictures [@ganea2008transfer]. From 2,5 to 4,
 children use the shape of drawings to interpret them as long as the
 drawings are presented to them as having been produced intentionally
 [@gelman1998shape]. Yet, Callaghan [-@callaghan1999early] found that
@@ -2674,7 +2688,7 @@ no challenge for children older than three [@kroupin2022you].
 
 Direct investigations into children’s ability to use conceptual
 dimensions other than similarity or iconicity in the graphic domain are
-rare. Due to the graphical representations being static in time and
+rare. Given that graphical representations are static in time and
 limited to 2D-space, the conceptual dimensions along which information
 can be encoded is finite. Apart from representations capturing the
 actual shape of what they are depicting, discussions of graphic
@@ -2763,7 +2777,7 @@ Size is a relative property of graphical content and requires a
 comparison between items, for example when drawing a big and small dog,
 or an appreciation of an item’s relation to the frame of reference it
 occurs in, as when a child may try to convey the concept of a big dog by
-making it occupy the entire piece paper it is drawing on
+making it occupy the entire piece of paper it is drawing on
 [@cox2005pictorial]. Children are able to make spontaneous or productive
 size comparisons at three years of age and begin to use size words size
 words (*big*), size superlatives (*biggest*), or quantifiers (more,
@@ -3019,8 +3033,7 @@ collection. Analyses deviate from the preregistered analyses when
 comparing models via ELPD differences [@sivula2020uncertainty]. This was
 simply not as common by the time of preregistration.
 
-For brevity, model diagnostics and full-null comparisons as well as
-tables outlining the coefficients for all analyses were moved to the
+For brevity, tables outlining the coefficients for the final models were moved to the
 supplementary materials along with the exploratory item-level analyses
 outlined above. The supplements also provide conventional analyses
 binning participants according to their age in years. To test whether
@@ -3101,6 +3114,37 @@ excluded due to technical issues. A total of
 analysis.
 
 ## Results
+
+Posterior predictive checks (PPC) for both full and null model indicated
+excellent fit of observed data and model predictions. Rhat values in
+both models were equal to one, indicating convergence across all chains.
+Effective sample sizes for all fixed effects in the full model (Bulk
+ESS, mean = `r round(mean(S1.full.coef$ess_bulk), 0)`, range
+`r round(min(S1.full.coef$ess_bulk), 0)` -
+`r round(max(S1.full.coef$ess_bulk), 0)`) and the null model (Bulk ESS,
+mean = `r round(mean(S1.null.coef$ess_bulk), 0)`, range
+`r round(min(S1.null.coef$ess_bulk), 0)` -
+`r round(max(S1.null.coef$ess_bulk), 0)`) were \> 1000, indicating
+reliable posterior estimations.
+
+Comparing the models using weights based on the Widely Applicable
+Information Criterion (WAIC) yielded
+`r round(S1.weights["S1.full.bm","value"]*100,2)`% of the model weight
+for the full model, and
+`r round(S1.weights["S1.null.bm","value"]*100,2)`% for the null model.
+Hence, the full model generally had a higher probability of making
+accurate predictions. Directly comparing the models' WAIC via expected
+log predictive density (ELPD) corroborates this (ELPD WAIC; full model =
+`r round(S1.comp["S1.full.bm", "elpd_waic"],2)`; null model =
+`r round(S1.comp["S1.null.bm", "elpd_waic"],2)`). The standard error of
+the difference in predictive accuracy (SE =
+`r round(S1.comp["S1.null.bm", "se_diff"],2)`) is not much larger than
+the difference itself (ELPD diff =
+`r round(S1.comp["S1.null.bm", "elpd_diff"],2)`). Hence, evidence in
+favor of this model is not decisive. A similar comparison via
+Leave-One-Out Cross-Validation (LOO) provided essentially the same
+results. In absence of conclusive evidence for either model, we report
+the results for the full model in line with the preregistration.
 
 Relative to the *Representation* condition, the *Simple Form Analogy*
 ($\beta$ = `r S1.full.coef["SimpleFormAnalogy", "mean"]`, 95% CrI
@@ -3240,6 +3284,31 @@ analysis.
 
 ## Results
 
+For both full and null model, PPCs indicate excellent fit of observed
+data and model predictions. Rhat values in both models were equal to
+one, indicating convergence across all chains. Effective sample sizes
+for all fixed effects in the full model (Bulk ESS, mean =
+`r round(mean(S2.full.coef$ess_bulk), 0)`, range
+`r round(min(S2.full.coef$ess_bulk), 0)` -
+`r round(max(S2.full.coef$ess_bulk), 0)`) and the null model (Bulk ESS,
+mean = `r round(mean(S2.null.coef$ess_bulk), 0)`, range
+`r round(min(S2.null.coef$ess_bulk), 0)` -
+`r round(max(S2.null.coef$ess_bulk), 0)`) were \> 1000, indicating
+reliable posterior estimations.
+
+To compare model performance, we evaluated the WAIC estimates. The null
+model showed a slightly better predictive performance (ELPD =
+`r round(S2.comp["S2.null.bm","elpd_waic"],2)`) compared to the full
+model (ELPD = `r round(S2.comp["S2.full.bm","elpd_waic"],2)`). WAIC
+values also indicate better performance of the null model (WAIC =
+`r round(S2.comp["S2.null.bm", "waic"],2)`) over the full model (WAIC =
+`r round(S2.comp["S2.full.bm", "waic"],2)`). However, the difference
+between models (ELPD Diff =
+`r round(S2.comp["S2.full.bm", "elpd_diff"],2)`) falls within the bounds
+of uncertainty (SE = `r round(S2.comp["S2.full.bm", "se_diff"],2)`),
+suggesting no advantage in predictive accuracy. Hence, the preregistered
+analyses using the full model is reported below.
+
 Across all conditions, performance improved with both age ($\beta$ =
 `r S2.full.coef["z.age", "mean"]`, 95% CrI
 [`r S2.full.coef["z.age", "q2.5"]`, `r S2.full.coef["z.age", "q97.5"]`])
@@ -3375,6 +3444,32 @@ analysis.
 
 ## Results
 
+PPCs indicated excellent fit of observed data and model predictions in
+both models. Model diagnostics were drawn for the full and null model in
+study 3. Rhat values in both models were equal to one, indicating
+convergence across all chains. Effective sample sizes for all fixed
+effects in the full model (Bulk ESS, mean =
+`r round(mean(S3.full.coef$ess_bulk), 0)`, range
+`r round(min(S3.full.coef$ess_bulk), 0)` -
+`r round(max(S3.full.coef$ess_bulk), 0)`) and the null model (Bulk ESS,
+mean = `r round(mean(S3.null.coef$ess_bulk), 0)`, range
+`r round(min(S3.null.coef$ess_bulk), 0)` -
+`r round(max(S3.null.coef$ess_bulk), 0)`) were \> 1000, indicating
+reliable posterior estimations.
+
+When comparing performance, the full model showed a better fit (ELPD =
+`r round(S3.comp["S3.full.bm","elpd_waic"],2)`) relative to the null
+model (ELPD = `r round(S3.comp["S3.null.bm","elpd_waic"],2)`). The WAIC
+values also favored the full model (WAIC =
+`r round(S3.comp["S3.full.bm", "waic"],2)`) over the null model (WAIC =
+`r round(S3.comp["S3.null.bm", "waic"],2)`). Despite the slightly lower
+WAIC and higher ELPD of the full model, the difference in predictive
+accuracy (ELPD Diff = `r round(S3.comp["S3.null.bm", "elpd_diff"],2)`)
+remains almost within the range of sampling uncertainty (SE =
+`r round(S3.comp["S3.null.bm", "se_diff"],2)`). In the absence of
+substantial differences, the full model is reported below in line with
+the preregistration.
+
 Overall, children's performance increased with age ($\beta$ =
 `r S3.full.coef["z.age", "mean"]`, 95% CrI
 [`r S3.full.coef["z.age", "q2.5"]`, `r S3.full.coef["z.age", "q97.5"]`])
@@ -3471,8 +3566,8 @@ choices. While cues are highly similar and targets even identical,
 children solve Pars Pro Toto no sooner than at 38 months of age. This
 demonstrates that by three years of age, children’s symbolic competence
 is still fragile if additional steps such as the straightforward
-completion of canonic shape is necessary for referential inference. Two
-further conditions aimed at abstracting from the cue representations
+completion of a canonic shape is necessary for referential inference.
+Two further conditions aimed at abstracting from the cue representations
 while still retaining characteristic features of the target shapes with
 regard to an analogy in form, namely whether they were more round or
 edgy. *Simple Form Analogy* employed simple shapes as cues with success
@@ -3545,7 +3640,7 @@ showing specifically how accessible various ways of conveying meaning in
 graphic design may be. Second, the reduced accuracy in analogy-based and
 feature-referenced tasks are both consistent with evidence that younger
 children tend to focus on surface features rather than relations
-[@richland2006children, @rattermann1998more; @gentner2017analogy],
+[@richland2006children; @rattermann1998more; @gentner2017analogy],
 making tasks that require attentional shifting or nested comparison
 structures particularly demanding [@halford1998processing]. Relational
 or abstract as opposed to feature‑based processing taxes working memory
@@ -3654,6 +3749,8 @@ foundation for precisely the future work outlined here and already
 address an important caveat in our understanding of children's growing
 aptitude in graphic communication: the conceptual space spanning from
 iconic to abstract graphical representation.
+
+\newpage
 
 # References
 
