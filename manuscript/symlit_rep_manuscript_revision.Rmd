@@ -2993,19 +2993,20 @@ boxplot_S3
 
 <!-- Hier gehts los -->
 
-## Lay Summary
+## Lay Summary (max. 120 words)
 
 Young children are skilled at understanding spoken language and
-gestures, but much less is known about how they make sense of drawings
-or other simple visual symbols. We explored how children aged 3 to 7
-interpret unfamiliar graphic symbols in a game where they had to choose
-the correct object based on a drawing. Across three studies, we tested
-many kinds of symbol–object relationships, ranging from clear pictures
-to abstract cues based on shape, size, number, or spatial arrangement.
-Children understood direct drawings very early, but their ability to
-interpret more abstract symbols emerged around the fourth birthday.
-These findings show how children gradually learn to find meaning in
-increasingly complex visual symbols.
+gestures, but much less is known about how they make sense of graphic
+communication. We explored how children aged 3 to 7 interpret unfamiliar
+graphic displays in a picture-book-style game of hide and seek where
+they had to choose the correct hiding place based on a drawn cue. Across
+three studies, we tested many kinds of symbol–object relationships,
+ranging from clear pictures to abstract cues based on shape, size,
+number, orientation or spatial arrangement. Children followed
+representational drawings at three, but the understanding of more
+abstract symbols emerged around the fourth birthday. These findings show
+how children gradually learn to find meaning in increasingly complex
+visual symbols even prior to literacy.
 
 # Introduction
 
@@ -3058,15 +3059,19 @@ from a set of two referents. 30-months-olds did not benefit from
 iconicity and failed to use pictures and replicas as symbols.
 36-month-olds succeeded in all conditions and benefitted from iconicity
 and the availability of verbal labels during the task
-[@callaghan2000factors; @DeLoache1995early]. Matching graphic
-representations with each other is much less demanding or even so
-trivial that it is rarely employed in experimental contexts. Finding a
-graphical item in a drawn scene as is often done in picture-book reading
-routines or visual search paradigms and is generally accessible for
-children at the end of the third year [@gerhardstein2002development].
-Matching identical items in match-to-sample tasks is occasionally used
-as a training in research on analogical reasoning and generally provides
-no challenge for children older than three [@kroupin2022you].
+[@callaghan2000factors; @DeLoache1995early].
+
+xxxxxxxxxxxxxxxxxx
+
+Matching graphic representations with each other is much less demanding
+or even so trivial that it is rarely employed in experimental contexts.
+Finding a graphical item in a drawn scene as is often done in
+picture-book reading routines or visual search paradigms and is
+generally accessible for children at the end of the third year
+[@gerhardstein2002development]. Matching identical items in
+match-to-sample tasks is occasionally used as a training in research on
+analogical reasoning and generally provides no challenge for children
+older than three [@kroupin2022you].
 
 The literature focuses on iconicity and similarity relations where
 children
@@ -3086,6 +3091,12 @@ relationships, studies in graphic communication rely on studies like:\
 -   x
 
 -   y
+
+logic of the object-choice task and the steps involved
+
+introduce the term "graphic symbols" in contrast to verbal or gestural
+and maybe in contrast to conventional graphic symbols like letters or
+numerals.
 
 Often such studies require children
 
@@ -3124,6 +3135,11 @@ By reducing the stimuli,
     the most straightforward wa of depicting the referent? Yet, all
     systems of communication rely on abstraction, reduce effort, reduce
     dimensions. Conventionalized systems of reference may
+
+Symbolic OBJECT CHOICE STEP BY STEP...match to sample, pragmatic
+inference,
+
+xxxxxxxxxxxxxxxxxx
 
 Direct investigations into children’s ability to use symbol-referent
 relationships other than similarity or iconicity in the graphic domain
@@ -3333,12 +3349,16 @@ several experimenter teams in parallel, the final samples slightly
 exceed this preregistered minimum sample size. The final sample
 approximates an equal distribution of male and female participants and
 aligns with conventions in the field in providing a minimum of 24
-participants per study and year of age. All participants were recruited
-in Leipzig, a medium-sized European city, and came from a predominantly
-white population of middle to high income families. Children were
-largely tested in day- and after school-care, and occasionally in the
-lab or at home. Data collection took place from June 2022 to February
-2023.
+participants per study and year of age. For an overview of the
+distribution of all children included in the analyses across the
+age-range see supplement figure 1. Figure 2 from the supplements shows
+the age-distribution of all children that participated but were not
+submitted to analyses due to the exclusion criteria outlined below. All
+participants were recruited in Leipzig, a medium-sized European city,
+and came from a predominantly white population of middle to high income
+families. Children were largely tested in day- and after school-care,
+and occasionally in the lab or at home. Data collection took place from
+June 2022 to February 2023.
 
 ## Setup and Procedure
 
@@ -3432,7 +3452,11 @@ During test, participants are presented with four test trials per
 condition, each composed of the shapes of a single column. During
 testing, a child sees each trial combination only once and with only one
 of the two possible cues. Across children, the position (left/right) of
-the referent, and the identity of the cue are counterbalanced.
+the referent, and the identity of the cue are counterbalanced. For the
+convenience of the reader, all stimuli employed across studies are
+presented with the results for each condition in figures
+\@ref(fig:plot-study1), \@ref(fig:plot-study2), and
+\@ref(fig:plot-study3) respectively.
 
 ## Data Handling and Analyses
 
@@ -3476,10 +3500,13 @@ when children performed above chance was the point at which the lower
 bound of the 95% CrI for a particular trajectory did no longer overlap
 with a mid-line demarcating the 50% chance level (e.g.
 @ref(fig:plot-study1), @ref(fig:plot-study3), @ref(fig:plot-study3)).
-All analyses were preregistered prior to data collection. Analyses
-deviate from the preregistered analyses when comparing models via ELPD
-differences [@sivula2020uncertainty]. This was simply not as common by
-the time of preregistration.
+All analyses and hypotheses about the relative difficulty of conditions
+were preregistered prior to data collection. Preregistrations did not
+include point predictions about the age of success for each condition.
+In this respect, analyses are exploratory. Finally, our analyses deviate
+from the preregistration when comparing models via ELPD differences
+[@sivula2020uncertainty]. This was simply not as common by the time of
+preregistration.
 
 For brevity, tables outlining the coefficients for the final models were
 moved to the supplementary materials along with the exploratory
@@ -3534,7 +3561,7 @@ versions of form analogies both supporting children's comprehension in
 distinct ways. In *Simple Form Analogy*, the cues are less dense and
 therefore simpler to grasp, whereas the more complex versions in
 *Complex Form Analogy* provide more information. For an overview of all
-stimuli in Study 1, see figure \@ref(fig:plot-study1) B.
+stimuli employed in Study 1, see figure \@ref(fig:plot-study1) B.
 
 ## Participants and Sample
 
@@ -3603,7 +3630,7 @@ Analogy* ($\beta$ = `r S1.full.coef["ComplexFormAnalogy", "mean"]`, 95%
 CrI [`r S1.full.coef["ComplexFormAnalogy", "q2.5"]`,
 `r S1.full.coef["ComplexFormAnalogy", "q97.5"]`]) have a considerably
 lower probability of correct responses. The *Pars Pro Toto* condition
-has no clear difference from the reference condition ($\beta$ =
+has no clear difference from the *Representation* condition ($\beta$ =
 `r S1.full.coef["ParsProToto", "mean"]`, 95% CrI
 [`r S1.full.coef["ParsProToto", "q2.5"]`,
 `r S1.full.coef["ParsProToto", "q97.5"]`]). Interaction effects with age
@@ -3613,8 +3640,8 @@ interaction with age was positive and just above zero ($\beta$ =
 [`r S1.full.coef["ParsProToto:z.age", "q2.5"]`,
 `r S1.full.coef["ParsProToto:z.age", "q97.5"]`]), suggesting that
 performance increased more steeply across the age range than in the
-reference condition *Representation*. Generally, participants’
-performance improved with age in all conditions ($\beta$ =
+*Representation* condition*.* Generally, participants’ performance
+improved with age in all conditions ($\beta$ =
 `r S1.full.coef["z.age", "mean"]`, 95% CrI
 [`r S1.full.coef["z.age", "q2.5"]`,
 `r S1.full.coef["z.age", "q97.5"]`]). In contrast, trial number has no
@@ -3709,8 +3736,8 @@ horizontal, vertical, or diagonal axis with rising or falling slope. The
 shapes are distinct oblong elipses and rectangles or abstract shapes
 with more or less round or square features. For *Orientation of
 Feature*, targets and cues are either circles or squares with a salient
-feature like an opening or a dent. For an overview of all stimuli per
-condition in Study 2, see figure \@ref(fig:plot-study2).
+feature like an opening or a dent. For an overview of all stimuli used
+in Study 2, see figure \@ref(fig:plot-study2).
 
 ## Participants and Sample
 
@@ -3779,12 +3806,12 @@ CrI [`r S2.full.coef["RelativePosition", "q2.5"]`,
 Feature* ($\beta$ = `r S2.full.coef["OrientationofFeature", "mean"]`,
 95% CrI [`r S2.full.coef["OrientationofFeature", "q2.5"]`,
 `r S2.full.coef["OrientationofFeature", "q97.5"]`]) was not
-substantially different from the reference category when considering the
-full age range. Interaction terms between age and condition were not
-credibly different from zero, suggesting similar developmental patterns
-for all conditions. For a side-by-side comparison of the developmental
-trajectories and the respective ages of group-level success, see figure
-\@ref(fig:plot-study2).
+substantially different from the reference category *Absolute Position*
+when considering the full age range. Interaction terms between age and
+condition were not credibly different from zero, suggesting similar
+developmental patterns for all conditions. For a side-by-side comparison
+of the developmental trajectories and the respective ages of group-level
+success, see figure \@ref(fig:plot-study2).
 
 ```{r plot-study2, fig.cap = "*Stimuli and Developmental Trajectories for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The colored dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
@@ -3822,12 +3849,12 @@ The final study features symbol-referent relationships that are based on
 analogies in size or number without cues and targets sharing
 similarities in other visual aspects, and while avoiding to draw on
 conventions in graphic communication. In order to correctly interpret
-the symbol-referent relationships employed here, children need to assign
-or extract conceptual order in graphical displays. Such processes can be
-fostered or obstructed by surface level features of the stimuli at hand
-which makes it harder to assess whether the age at which children master
-a task - our primary aim of investigation - depends more on the ability
-to generally form symbol-referent relationships from analogies or from
+the symbol-referent relationships employed here, children need to infer
+conceptual order in graphical displays. Such processes can be fostered
+or obstructed by surface level features of the stimuli at hand which
+makes it harder to assess whether the age at which children master a
+task - our primary aim of investigation - depends more on the ability to
+generally form symbol-referent relationships from analogies or from
 children's developing ability to process visual complexity. The two base
 conditions of study three are *Size of Object* and *Size of Number.*
 Here the cues refer to a target shape as a whole via an analogy in size
@@ -4008,6 +4035,19 @@ iconicity as a way of creating meaning and compared performance across
 binned age-groups, the three studies presented here map development
 continuously using a highly simple and streamlined procedure across
 various conceptual dimensions.
+
+By design, the three studies provide a conservative test case of
+children's ability to find meaning in the symbol-referent relationships
+presented. Participants are never directly instructed to search specific
+similarities across cue and target nor prompted to find matches per se
+as is commonly done in match-to-sample designs (e.g. "Which ones go
+together?"). Rather children were told that their interlocutor would
+like to help them find an item in a game of hide and seek and would
+create a drawing for them. Children then had to infer that the
+interlocutors drawings my be read as novel symbolic cues referring to
+either of the two target referents. To prevent learning or demand
+effects across trials, children did not receive feedback on their
+choices and were presented with a novel stimulus pairing in each trial.
 
 In Study 1, we found that in *Representation* - with cues that are
 direct outline drawings of the items they refer to - children are
