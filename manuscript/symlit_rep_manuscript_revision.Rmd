@@ -3199,9 +3199,9 @@ robust across cultures [@cwiek2022bouba] and children appear sensitive
 to sound symbolism matching words and shapes by about 30 months of age
 [@maurer2006shape; @imai2008sound; @fort2018symbouki] and for matching
 actions with gestures or vocalizations at 36 months [@bohn2019natural].
-There is currently no data on whether children are sensitive to an
+**There is currently no data on whether children are sensitive to an
 agreement in the overall properties of a shape or the impression that
-its form conveys for grounding reference.
+its form conveys for grounding reference.**
 
 GESTALT
 
@@ -3473,7 +3473,7 @@ standardized prior to modeling. The full model notation was
 `correct ~ condition*z.age + z.trial + sex + (z.trial | subid)`. To
 evaluate the relevance of age and condition for children’s performance,
 a full model was compared with a reduced model lacking the interaction
-of age and condition using Widely Applicable Information Criterion
+of age and condition using the Widely Applicable Information Criterion
 (WAIC) scores and weights [@mcelreath2018statistical] as well as the
 difference in Expected Log Predictive Density (ELPD) via the function
 *loo_compare*. In all studies, the preregistered full model appeared
@@ -3489,24 +3489,23 @@ via the function *brm* of the package *brms* [@burkner2017brms].
 
 To answer the main research question of when children as a group
 systematically make correct choices and perform above chance in any of
-the conditions outlined below, we followed the approach of House and
-colleagues [@House2013ontogeny] and plotted the model estimates
-graphically as a smoothed curve surrounded by the respective confidence
-intervals. We fitted models to predict the developmental trajectory
-(with 95% CrI) of group level performance drawn from values of the
-posterior predicted distribution via the function *fitted*. These
-trajectories and CrIs were plotted by age. The criterion for settling
-when children performed above chance was the point at which the lower
-bound of the 95% CrI for a particular trajectory did no longer overlap
-with a mid-line demarcating the 50% chance level (e.g.
-@ref(fig:plot-study1), @ref(fig:plot-study3), @ref(fig:plot-study3)).
-All analyses and hypotheses about the relative difficulty of conditions
-were preregistered prior to data collection. Preregistrations did not
-include point predictions about the age of success for each condition.
-In this respect, analyses are exploratory. Finally, our analyses deviate
-from the preregistration when comparing models via ELPD differences
-[@sivula2020uncertainty]. This was simply not as common by the time of
-preregistration.
+the conditions tested, we followed the approach of House and colleagues
+[@House2013ontogeny] and plotted the model estimates as a smoothed curve
+surrounded by the respective confidence intervals. We fitted models to
+predict the developmental trajectory (with 95% CrI) of group level
+performance drawn from values of the posterior predicted distribution
+via the function *fitted*. These trajectories and CrIs were plotted by
+age. The criterion for settling when children performed above chance was
+the point at which the lower bound of the 95% CrI for a particular
+trajectory did no longer overlap with a mid-line demarcating the 50%
+chance level (e.g. @ref(fig:plot-study1), @ref(fig:plot-study3),
+@ref(fig:plot-study3)). All analyses and hypotheses about the relative
+difficulty of conditions were preregistered prior to data collection.
+Preregistrations did not include point predictions about the age of
+success for each condition. In this respect, analyses are exploratory.
+Finally, our analyses deviate from the preregistration when comparing
+models via ELPD differences [@sivula2020uncertainty]. This was simply
+not as common by the time of preregistration.
 
 For brevity, tables outlining the coefficients for the final models were
 moved to the supplementary materials along with the exploratory
