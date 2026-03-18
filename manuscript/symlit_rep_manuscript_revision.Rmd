@@ -48,7 +48,7 @@ authornote: |
     *Acknowledgments*: We are thankful to Susanne Mauritz for her help in the organization of the study and to Valerie Jurgenson and Cynthia Pones for help with data collection. We would like to thank Anne Deiglmayr for hosting this project in her research group and for her continuous support. This research was supported by the Max Planck Society for the Advancement of Science. Gregor Kachel was supported by the German Research Foundation (Deutsche Forschungsgemeinschaft) under project number 429220405.
 
 abstract: |
-  Young children’s communicative skills in language and gesture are well documented, yet much less is known about their ability to interpret graphical symbols. Across three coordinated studies using identical procedures, we examined children’s spontaneous comprehension of unfamiliar graphic symbols in a simple object-choice task spanning a broad range of symbol–referent relationships. Each study included four conditions in which reference was established through direct representation, part–whole relations, analogies in size, number, and form, or gestalt principles such as orientation, alignment, and figure–ground organization. Participants were German-speaking children continuously sampled from age 3 to 7 (Study 1, N = 106, 51 female; Study 2, N = 99, 49 female; Study 3, N = 99, 55 female). Children reliably used direct representations to identify target objects before age 3, whereas group-level success in the more abstract conditions emerged later but consistently before school entry. Converging evidence across conditions involving abstract or conceptual correspondences indicates a major shift in symbolic competence around age 4. Together, these studies trace children’s developing ability to understand graphical reference across a continuum from iconic to abstract and offer one of the most systematic investigations to date of how young children derive meaning from unfamiliar graphic symbols.
+  Young children’s communicative skills in language and gesture are well documented, yet much less is known about their ability to interpret graphical symbols. Across three coordinated studies using identical procedures, we examined children’s spontaneous comprehension of unfamiliar graphic symbols in a simple object-choice task spanning a broad range of symbol–referent relationships. Each study included four conditions in which reference was established through direct representation, part–whole relations, analogies in size, number, and form, or gestalt principles such as orientation, alignment, and figure–ground organization. Participants were 304 German-speaking children continuously sampled from age 3 to 7 (Study 1, N = 106, 51 female; Study 2, N = 99, 49 female; Study 3, N = 99, 55 female). Children reliably used direct representations to identify target objects before age 3, whereas group-level success in the more abstract conditions emerged later but consistently before school entry. Converging evidence across conditions involving abstract or conceptual correspondences indicates a major shift in symbolic competence around age 4. Together, these studies trace children’s developing ability to understand graphical reference across a continuum from iconic to abstract and offer one of the most systematic investigations to date of how young children derive meaning from unfamiliar graphic symbols.
   
 keywords          : "Graphic Communication, Pragmatics, Symbol-Referent-Relationships, Iconicity, Representation, Analogical Reasoning"
 
@@ -3139,8 +3139,17 @@ By reducing the stimuli,
     systems of communication rely on abstraction, reduce effort, reduce
     dimensions. Conventionalized systems of reference may
 
+
+GENTNER:
+**The more different the two comparands, the more abstract the generalization and the greater the scope of transfer. But, the more different the two comparands, (a) the less likely children are to spontaneously compare them; and (b) the less likely children [and other novices] are to be able to align them.**
+gentner2017analogy
+
 Symbolic OBJECT CHOICE STEP BY STEP...match to sample, pragmatic
 inference,
+
+acknowledge: 
+test is pragmatically slightly awkward
+test is "just match-to-sample"
 
 xxxxxxxxxxxxxxxxxx
 
@@ -3176,7 +3185,7 @@ PARS PRO TOTO
 Omissions in depiction are an important aspect of developing conventions
 and streamlining communication [@goldin1977development] as well as they
 are an interesting minimal step towards abstraction as they are still
-basically iconic, yet only showing a part or aspect of the referent. At
+basically iconic, yet only showing a part or aspect of the target. At
 least for basic geometrical shapes, we know that while the production
 and completion of shapes in drawing [@cox2005pictorial;
 @daugli2016young] develops throughout the preschool years, shape
@@ -3318,10 +3327,10 @@ produced in a specific and highly restricted context where symbol and
 referent align in certain conceptual dimensions with decreasing
 iconicity. Therefore, they focus on children’s pragmatic competencies
 and their ability to identify shared features across graphic displays
-used as target and referent. To the extent that children are highly
+used as cue and target. To the extent that children are highly
 unlikely to have encountered the specific graphic cues used here, our
-findings showcase their ability to grasp a novel symbolic practice and
-acquire novel symbols. This may limit the influence of children’s
+findings showcase their ability to grasp and
+acquire novel symbol-referent pairings. This may limit the influence of children’s
 knowledge of conventional symbols on performance and make results more
 robust and informative for research about the acquisition or emergence
 of communicative systems despite spanning an age-range where children
@@ -3344,7 +3353,7 @@ All stimuli, experiments, data and analyses are available at:
 ## Data Collection and Setup
 
 In order to continuously trace the development of symbolic competences
-across the preschool years, for each study we aimed to test two children
+across the preschool years, for each study we aimed to test a minimum of two children
 per month of age between the third and the seventh birthday for a total
 of 96 participants balancing male and female participants. As children
 participated on the basis of availability and data were collected by
@@ -3373,7 +3382,7 @@ set of verbal prompts when children were not following the presentation
 ("Oh look, the game continues!"). See figure
 \@ref(fig:plot-figure-setup) A for an illustration of the setup.
 
-```{r plot-figure-setup, fig.cap = "*Setup, Stimuli and Trial Structure.* Panel A shows the setup during testing. Experimenters were sitting behind the children in order to not distract them while supervising data collection. Panel B shows all elements contributing to an item of a possible test trial consisting of two target and one of two possible cues. Panel C exemplifies how two targets and one of the cues can be arranged in a specific test trial. Panel D shows a familiarization trial and Panel E shows a test trial.", fig.align = "center", echo = FALSE, out.width = "95%"}
+```{r plot-figure-setup, fig.cap = "*Setup, Stimuli and Trial Structure.* Panel A shows the setup during testing. Experimenters were sitting behind the children in order to not distract them while supervising data collection. Panel B shows all elements contributing to an item of a possible test trial consisting of two choice options and one of two possible cues. Panel C exemplifies how two choice options and one of the cues were arranged for a specific test trial. Panel D shows a familiarization trial and Panel E shows a test trial.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/setup complete.png"))
 
@@ -3406,7 +3415,7 @@ After the hiding phase, the monkey held up a piece of paper and a
 pencil. Pencil movement and a short scribble sound indicated that the
 monkey was drawing. Finally, participants were prompted with the phrase
 "Where is the banana?" and the monkey's drawing was placed in the center
-between the two barriers. The drawing served as a cue to guide
+between the two hiding places. The drawing served as a cue to guide
 children's choice. Children's choice was acknowledged with neutral
 feedback ("Ah, thank you") leading to the next trial (cf. figure
 \@ref(fig:plot-figure-setup) E).
@@ -3414,7 +3423,7 @@ feedback ("Ah, thank you") leading to the next trial (cf. figure
 A single trial lasted roughly 20 to 60 seconds, depending on how swiftly
 children chose. Each study presented four different experimental
 conditions with four trials each in a blocked order for a maximum of 16
-test trials. Unique graphic displays were used on every trial. Test
+test trials. Unique combinations of graphic displays were used on every trial. Test
 sessions lasted about 12 minutes in total. The order of conditions was
 counterbalanced across participants. Children occasionally wished to
 stop before completing all trials, resulting in minor deviations of the
@@ -3429,18 +3438,17 @@ to be included in analysis.
 The context in the studies presented below is provided by a game of hide
 and seek and the options are two hiding places that are distinct by
 means of the graphic displays they are marked with. The aim was to test
-at what age children become able to spontaneously use graphic displays
-employing various dimensions of symbol-referent relationships. For this,
-the graphic displays presented as referents were designed to saliently
+at what age children become able to spontaneously match cue and target
+along various dimensions of symbol-referent relationships. For this,
+the graphic displays presented as choice options were designed to saliently
 differ in one relevant dimension and to be as similar as possible with
-regard to other surface features. The referent, on the other hand, was a
+regard to other features. The cue, on the other hand, was a
 reduced and less straight-lined graphic display akin to a hand drawing
-that had something in common with one of the referents and is thereby
-referring to it while it remains distinct with regard to other surface
-features. In test trials, one of the possible referents serves as a
+that had something in common with one of the choice options and was thereby
+referring to it. In test trials, one of the choice options serves as a
 target and the other as a distractor. For counterbalancing, a second
-referent was designed to refer to the other target, such that across
-participants the same referents serve equally often as targets and
+cue was designed to refer to the other choice option, such that across
+participants the same choice options serve equally often as targets and
 distractors. For an illustration of trial composition, see figure
 \@ref(fig:plot-figure-setup) B and C. For each of the conditions in the
 three studies below, four sets of stimuli were designed, consisting of
@@ -3450,12 +3458,12 @@ symbol-referent relationship via four stimulus versions with two
 variations each. For an example, consider figure \@ref(fig:plot-study1).
 The first box in Panel B shows all stimuli for the *Representation*
 condition. The first column exemplifies a set of targets (a blue square
-and circle) and referents (outline drawings of a square and circle).
+and circle) and cues (outline drawings of a square and circle).
 During test, participants are presented with four test trials per
 condition, each composed of the shapes of a single column. During
 testing, a child sees each trial combination only once and with only one
 of the two possible cues. Across children, the position (left/right) of
-the referent, and the identity of the cue are counterbalanced. For the
+the target, and the identity of the cue are counterbalanced. For the
 convenience of the reader, all stimuli employed across studies are
 presented with the results for each condition in figures
 \@ref(fig:plot-study1), \@ref(fig:plot-study2), and
@@ -3464,7 +3472,7 @@ presented with the results for each condition in figures
 ## Data Handling and Analyses
 
 Upon touching the screen, children's choices were logged and immediately
-coded as correct or incorrect by the experimental script. The analyses
+coded as correct or incorrect by the coee running the stimulus presentation. The analyses
 modeled children’s binary choices to estimate the probability of
 interpreting cues correctly and evaluate how this varied as a function
 of age and condition. We fitted Bayesian logistic generalized linear
@@ -3529,8 +3537,8 @@ target (*Representation*). From this, three further conditions were
 derived that were also employing form or shape as a means for
 establishing reference but that were less iconic by either reducing the
 amount of information provided (*Pars Pro Toto*), or the amount of
-similarity between symbol and referent (*Simple Form Analogy*, *Complex
-Form Analogy).* We hypothesized (and preregistered) that as a group,
+similarity between cue and target (*Simple Form Analogy*, *Complex
+Form Analogy).* Our preregistered hypothesis was that as a group,
 children will first succeed with *Representation*, then *Pars Pro Toto*,
 *Simple Form Analogy* and finally *Complex Form Analogy*.
 
@@ -3538,10 +3546,10 @@ children will first succeed with *Representation*, then *Pars Pro Toto*,
 
 To make the four conditions in study 1 as comparable as possible, they
 are all employing the same target stimuli (cf. figure
-\@ref(fig:plot-study1), panels A and B). In addition the two referents
+\@ref(fig:plot-study1), panels A and B). In addition the two cues
 within a trial can be seen as the round and square equivalents of each
 other. For the condition *Representation,* the graphical cue is an
-outline drawing, of the referent. The second condition, *Pars Pro Toto,*
+outline drawing, of the target. The second condition, *Pars Pro Toto,*
 refers to the targets by means of a part-whole relationship. This is
 still in principle representational but provides less information and
 may require children to complete the shapes according to gestalt
@@ -3748,7 +3756,7 @@ seven-year-old children (M = `r rep.age.table.data["study2", "Mean"]`
 months, SD = `r rep.age.table.data["study2", "SD"]` months, range
 `r rep.age.table.data["study2", "Min"]` -
 `r rep.age.table.data["study2", "Max"]` months;
-`r rep.age.table.data["study2", "female"]` female) participated. In
+`r rep.age.table.data["study2", "female"]` female) participated. None of these children participated in study 1. In
 addition, a total of `r rep.drop.table.data["study2", "N"]` children
 (`r rep.drop.table.data["study2", "female"]` female) were tested but
 excluded from analysis for failing familiarization (N =
@@ -3896,7 +3904,7 @@ and four as if outlining irregular shapes. By contrast, the
 corresponding cues were aligned along a vertical of horizontal axis. For
 comparability, *Number of Feature* employs the same cues as *Number of
 Object*. To evoke a sense of quantity in the closed forms serving as
-referents, the target shapes in *Number of Feature* either have salient
+choice options, the target shapes in *Number of Feature* either have salient
 protrusions, or partial areas resulting from incisions. For an overview
 of all stimuli presented in Study 3, see figure \@ref(fig:plot-study3).
 
@@ -3907,7 +3915,7 @@ seven-year-old children (M = `r rep.age.table.data["study3", "Mean"]`
 months, SD = `r rep.age.table.data["study3", "SD"]` months, range
 `r rep.age.table.data["study3", "Min"]` -
 `r rep.age.table.data["study3", "Max"]` months;
-`r rep.age.table.data["study3", "female"]` female) participated. In
+`r rep.age.table.data["study3", "female"]` female) participated. None of these had participated in the previous studies. In
 addition, `r rep.drop.table.data["study3", "N"]` children
 (`r rep.drop.table.data["study3", "female"]` female) were tested but
 excluded for low performance during familiarization (N =
@@ -4047,9 +4055,8 @@ together?"). Rather children were told that their interlocutor would
 like to help them find an item in a game of hide and seek and would
 create a drawing for them. Children then had to infer that the
 interlocutors drawings my be read as novel symbolic cues referring to
-either of the two target referents. To prevent learning or demand
-effects across trials, children did not receive feedback on their
-choices and were presented with a novel stimulus pairing in each trial.
+either choice option. To prevent learning or demand
+effects across trials, children did not receive feedback for their responses and were presented with a novel stimulus pairing in each trial.
 
 In Study 1, we found that in *Representation* - with cues that are
 direct outline drawings of the items they refer to - children are
@@ -4102,20 +4109,20 @@ months - in the complementary condition *Orientation of Feature*. In
 this condition, the cues and targets had a feature like a bump or an
 opening that is oriented either up- or downward. In summary, Study 2
 addresses an interesting caveat in previous research by presenting
-stimulus sets where symbol and referent feature different shapes but are
+stimulus sets where cue and target feature different shapes but are
 composed in similar ways. While this requires uncovering abstract
 relations, these relations are by design still based on resemblance on
 the level of the overall composition, and hence, cover a middle ground
 between iconic and abstract representations.
 
 Study 3 set out to further reduce iconicity by drawing abstract
-analogies in size and number. Number of Object featured graphic displays
-with one or three items per target or referent. Number of Feature reuses
+analogies in size and number. *Number of Object* featured graphic displays
+with one or three items for target and distractor. *Number of Feature* reuses
 the same cues but employs targets varying in number with regard to
 salient features (e.g., spikes or dents). Children succeed in both
 conditions at 50 months. A different pattern emerges for the two
 conditions featuring size relationships. Children succeed at 49 months
-of age in Size of Object, but ten months later in Size of Feature in
+of age in *Size of Object*, but ten months later in *Size of Feature* in
 which target and distractor figures have a small or large opening, bump
 or hole. This aligns with research showing that while preschoolers are
 generally sensitive to the canonical size of objects depicted in
