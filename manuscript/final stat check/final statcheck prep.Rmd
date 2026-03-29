@@ -1,0 +1,54 @@
+
+
+# 
+# t(15) = 4.00, p = .001.
+
+study1_check <- rep.s1.freq %>% 
+  mutate(reporting_text =
+           
+           paste0("\nfor the ",
+                 Age,
+                 "(", Condition, ")",
+                 " we found a result (t(", 
+                 df,
+                 ") = ",
+                 `t(N-1)`,
+                 ", p = ",
+                 p , ")"
+                 )
+         )
+
+study2_check <- rep.s2.freq %>% 
+  mutate(reporting_text =
+           
+           paste0("\nfor the ",
+                  Age,
+                  " we found a result (t(", 
+                  df,
+                  ") = ",
+                  `t(N-1)`,
+                  ", p = ",
+                  p , ")"
+           )
+  )
+
+study3_check <- rep.s3.freq %>% 
+  mutate(reporting_text =
+           
+           paste0("\nfor the ",
+                  Age,
+                  " we found a result (t(", 
+                  df,
+                  ") = ",
+                  `t(N-1)`,
+                  ", p = ",
+                  p , ")"
+           )
+  )
+
+
+final_check <- rbind(study1_check, study2_check, study3_check)
+
+
+
+final_check$reporting_text
