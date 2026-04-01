@@ -1,0 +1,147 @@
+---
+title: "RESTE INTRO"
+output: pdf_document
+date: "2026-04-01"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## RESTE
+
+A similar developmental trajectory has been observed in the understanding of graphic representations. Iconicity provides an entry point in this domain and even in the first year, infants are sensitive to the similarity between a picture and its 3D referent [@deloache1998grasping]. While pictures can incite manual exploration before the first birthday [@pierroutsakos2003infants] this is replaced with pointing to the depiction in the second year [@deloache1998grasping]. Around the same age, toddlers understand that pictures refer to concepts [@allen2004both] in learning words: 15- and 18-month-olds can extend newly learned labels both from pictures to objects and from objects to pictures [@ganea2008transfer]. From 2,5 to 4, children use the shape of drawings to interpret them as long as the drawings are presented to them as having been produced intentionally [@gelman1998shape]. Yet, Callaghan [-@callaghan1999early] found that two-year-olds were still at chance selecting an item depicted in representative drawings whereas three- and four-year-olds succeeded. Children’s comprehension of graphic depictions remains fragile until the end of the third year. Callaghan [-@callaghan2000factors] presented children either with a realistic pencil drawing, a stylized drawing or a replica model and then prompted children to choose what was depicted from a set of two referents. 30-months-olds did not benefit from iconicity and failed to use pictures and replicas as symbols. 36-month-olds succeeded in all conditions and benefitted from iconicity and the availability of verbal labels during the task [@callaghan2000factors; @DeLoache1995early].
+
+xxxxxxxxxxxxxxxxxx
+
+Matching graphic representations with each other is much less demanding or even so trivial that it is rarely employed in experimental contexts. Finding a graphical item in a drawn scene as is often done in picture-book reading routines or visual search paradigms and is generally accessible for children at the end of the third year [@gerhardstein2002development]. Matching identical items in match-to-sample tasks is occasionally used as a training in research on analogical reasoning and generally provides no challenge for children older than three [@kroupin2022you].
+
+Very relevant moore light switch [@moore2013three]
+
+The literature focuses on iconicity and similarity relations where children
+
+On the other hand, it may be possible to establish reference drawing on more abstract or conceptual symbol-referent relationships such as size, number, orientation, position or gestalt principles.
+
+When departing from this to - for example - specifically investigate the role of size as a dimension for establishing symbol-referent relationships, studies in graphic communication rely on studies like:
+
+bloom 1981
+
+<!-- -->
+
+x
+
+y
+
+logic of the object-choice task and the steps involved
+
+introduce the term "graphic symbols" in contrast to verbal or gestural and maybe in contrast to conventional graphic symbols like letters or numerals.
+
+Often such studies require children
+
+to switch from 3D to 2D contexts,
+
+test only one symbol-referent relation, often not in isolated form
+
+involve the depiction of real word objects –\> interference issues that may aid establishing reference by familiarity, conventionalized icons, or familiar and canonic ways of representation (e.g. a house as a square with a triangle on top)
+
+involve few trials
+
+making it hard to compare results across experiments
+
+another methodological problem may be
+
+In order to sketch out when children as a group understand when various symbol-referent relationships and sketch out
+
+By reducing the stimuli,
+
+Do it in the most boiled down form... if they cannot do it here, all other cases may simply be more demanding
+
+The tasks are then very similar to match-to-sample designs (xxx,xxx,), however, presented in a communicative context. Thereby, they add to the match-to-sample literature by showing when children can actually put their analogical reasoning skills to work for solving a communicative communication game.
+
+Violate Gricean Maxime: Why should an interlocutor not always choose the most straightforward wa of depicting the referent? Yet, all systems of communication rely on abstraction, reduce effort, reduce dimensions. Conventionalized systems of reference may
+
+Gentner, D., & Hoyos, C. (2017). Analogy and abstraction. Topics in cognitive science, 9(3), 672-693.
+
+GENTNER: The more different the two comparands, the more abstract the generalization and the greater the scope of transfer. But, the more different the two comparands, (a) the less likely children are to spontaneously compare them; and (b) the less likely children [and other novices] are to be able to align them. gentner2017analogy
+
+EF demands in MTS as motivation for hypotheses why - for example - relational matches are more demanding than identity matches makes it much easier to transition towards the hypotheses in a straightforward manner
+
+Symbolic OBJECT CHOICE STEP BY STEP...match to sample, pragmatic inference,
+
+acknowledge: test is pragmatically slightly awkward test is "just match-to-sample"
+
+In the standard analysis of this setup, children need to
+
+from the beginning (treating objects as symbols) Callaghan requires EF suppressing the object representation
+
+In the discussion we outline specifically how EF skills may help with the demands of our task working memory: exploring perspectives inhibition: stay on task even when demanding suppression of irrelevant information: ignoring shape as it not relevant in most task cognitive flexibility: being able to switch modes of interpretation across conditions
+
+Panesi, S., & Morra, S. (2021). Executive function, language, and the toddler’s discovery of representational drawing. Frontiers in Psychology, 12, 659569.
+
+Spencer, M., & Cutting, L. E. (2021). Relations among executive function, decoding, and reading comprehension: An investigation of sex differences. Discourse Processes, 58(1), 42-59.
+
+Cartwright K. B. (2015). Executive function and reading comprehension: The critical role of cognitive flexibility. In Parris SR. & Headley K. (Eds.), Comprehension instruction: Research-based best practices (3rd ed., pp. 56–71).
+
+Cartwright, K. B. (2007). The contribution of graphophonological-semantic flexibility to reading comprehension in college students: Implications for a less simple view of reading. Journal of Literacy Research, 39(2), 173-193.
+
+→ child sees a graphic of a "Red Cross." Cognitive flexibility is what allows them to shift from seeing it as "plus sign" or "two lines" to "a place for help/medical care" based on the environment.
+
+Diamond, A. (2013). Executive functions. Annual Review of Psychology, 64, 135–168. <https://doi.org/10.1146/annurev-psych-113011-143750>
+
+Diamond (2013) → without top-down regulation visual system is overwhelmed in MTS while a 3-year-old can understand a rule (e.g., "match these graphics by color"), they cannot easily inhibit that rule when a new one is introduced
+
+Zelazo, P. D., Müller, U., Frye, D., & Marcovitch, S. (2003). The development of executive function in early childhood. Monographs of the Society for Research in Child Development, 68(3, Serial No. 274), i–151. <https://doi.org/10.1111/j.0037-976X.2003.00261.x>
+
+→ MTS success depends on reflection. A child must reflect on the graphic sample to extract its features;
+
+Long, B., Moher, M., Carey, S., & Konkle, T. (2019). Real-world size is automatically encoded in preschoolers’ object representations. Journal of Experimental Psychology: Human Perception and Performance, 45(7), 863.
+
+Callaghan, T. C. (1990). Texture segregation in young children. In Advances in psychology (Vol. 69, pp. 175-195). North-Holland.
+
+Shepp, B. E., Barrett, S. E., & Kolbet, L. L. (1987). The development of selective attention: Holistic perception versus resource allocation. Journal of Experimental Child Psychology, 43(2), 159-180.
+
+Diamond, A., Carlson, S. M., & Beck, D. M. (2005). Preschool children's performance in task switching on the dimensional change card sort task: Separating the dimensions aids the ability to switch. Developmental Neuropsychology, 28(2), 689–729. <https://doi.org/10.1207/s15326942dn2802_7>
+
+p\. 36 – There is some early work on children’s production of pictorial symbols showing that children use a wholistic approach and attend to features that will distinguish the referent only later, or if given a prompt that their drawing is difficult to interpret <https://doi.org/10.1111/1467-8624.00096> The publication by Callaghan (1999) is highly relevant and we are already citing it in the introduction and discussion.
+
+Communicative cues may be: → drawings and replica Callaghan, T. C. (2000). Factors affecting children's graphic symbol use in the third year: Language, similarity, and iconicity. Cognitive Development, 15(2), 185-214.
+
+→ pointing, marker, replica Tomasello, M., Call, J., & Gluckman, A. (1997). Comprehension of novel communicative signs by apes and human children. Child development, 68(6), 1067-1080.
+
+→ lights light up above the hiding place Moore, R., Liebal, K., & Tomasello, M. (2013). Three-year-olds understand communicative intentions without language, gestures, or gaze. Interaction Studies, 14(1), 62-80.
+
+Bohn, M., Kachel, G., & Tomasello, M. (2019). Young children spontaneously recreate core properties of language in a new modality. Proceedings of the National Academy of Sciences, 116(51), 26072-26077.
+
+Tolar, T. D., Lederberg, A. R., Gokhale, S., & Tomasello, M. (2008). The development of the ability to recognize the meaning of iconic signs. Journal of Deaf Studies and Deaf Education, 13(2), 225-240.
+
+Bohn, M., Call, J., & Tomasello, M. (2016). Comprehension of iconic gestures by chimpanzees and human children. Journal of experimental child psychology, 142, 1-17.
+
+While preschoolers are generally sensitive to the canonical size of objects depicted in graphical displays [@long2019real; @cox2005pictorial; @bloom1998intention] they are much less likely to spontaneously extract size relations among abstract shapes [@kroupin2022you].
+
+xxxxxxxxxxxxxxxxxx
+
+Direct investigations into children’s ability to use symbol-referent relationships other than similarity or iconicity in the graphic domain are rare. Given that graphical representations are static in time and limited to 2D-space, the conceptual dimensions along which information can be encoded is finite. Apart from representations capturing the actual shape of what they are depicting, discussions of graphic communication generally identify primitives or “visual variables” as fundamental elements for encoding information. These variables are position, size, number, orientation, relational and gestalt-principles, as well as continuous visual properties such as brightness, color (hue) or texture [@cleveland1984graphical; @stevenson2014visual]. The former group takes precedence in conceptual implementation due to their discreteness. After all, a conventional sign or representative drawing can evoke the same concept regardless of the color or brightness it is implemented with. On the perceptual level, object, color, quantity, size are easier to process than relational properties or figural analogies such as orientation and position [@stevenson2014visual; @donnelly2007visual]. BUT
+
+WHY why why are the perceptual dimensions of color, quantity, size etc easier to process than relational properties or orientation, position? Is this a perceptual mechanism at work? Or attentional? Is this mechanism operating at this age range?
+
+Similar successions have been documented throughout the preschool years. Children are first able to understand iconic signs or depictions around the third birthday, whereas more conceptual or analogical dimensions are appreciated only at four to five years of age [@callaghan2000factors]. Defining the precise ages and relative developmental trajectories for children’s sensitivity to using these graphic primitives as conveying meaning and disambiguating reference provides crucial insights into children’s developing symbolic competence.
+
+PARS PRO TOTO
+
+Omissions in depiction are an important aspect of developing conventions and streamlining communication [@goldin1977development] as well as they are an interesting minimal step towards abstraction as they are still basically iconic, yet only showing a part or aspect of the target. At least for basic geometrical shapes, we know that while the production and completion of shapes in drawing [@cox2005pictorial; @daugli2016young] develops throughout the preschool years, shape recognition and naming are robust in the third and fourth year [@ZAMBRZYCKA2017144; @verdine2017shape; @verdine2016shape] and the ability to mentally complete canonical geometric shapes is already nascent in early infancy [@kellman1983perception; @valenza2006perceptual], making part-whole relationships on the level of geometric figures an ideal target for an investigation into slightly abstract symbol-reference relationships that young children may be able to read at the beginning of the preschool years.
+
+FORM ANALOGY
+
+A highly abstract means of reference that is still rooted in iconicity may be the metaphorical use of form or shape, for example, by referring to something pointy, sharp or spiky with an edgy or more clear cut rectangular drawing [@knoeferle2017drives]. Again, this is common in language and became a focus of research studying sound symbolism in the lexicon [@bermudez2020sound; @sidhu2025sound], as well as actions and gesture [@margiotoudi2020action; @bohn2019natural]. The phenomenon is robust across cultures [@cwiek2022bouba] and children appear sensitive to sound symbolism matching words and shapes by about 30 months of age [@maurer2006shape; @imai2008sound; @fort2018symbouki] and for matching actions with gestures or vocalizations at 36 months [@bohn2019natural]. There is currently no data on whether children are sensitive to an agreement in the overall properties of a shape or the impression that its form conveys for grounding reference.
+
+GESTALT
+
+As with the other dimensions reported above, there is evidence that children are sensitive to Gestalt principles like closure and spatial dimensions of composition position, orientation and alignment in graphic displays but there is virtually no data on how likely children are to perceive such aspects of graphical stimuli to convey meaning. Closure appears to be a basic principle for graphic production, as children rarely draw overlapping figures [@cox2005pictorial; @piaget1997mental]. Relative position is intuitively used by children even in their earliest figural drawings when arranging items in scenes, such as children next to an ice-cream van, but also when achieving “intellectual realism” in depicting complex objects [@luquet2001children]. That is, while children’s drawings may not look realistic per se, they are true to the invariant organisation of a depicted item via the relative position of the defining elements: when drawing a car, the wheels will be added at the bottom rather than on top [@cox2005pictorial]. In both cases, relative position and orientation on the level of the individual object or scene may be discussed as iconic. A more abstract or conceptual use of relative position for conveying information is present in children’s developing ability to read maps. An intuitive understanding of basic maps allowing children to extract relational directions such as “behind me” or “in front of me” is accessible by four years of age and even so in the absence of training [@landau1986early] but iconicity is again very important for grasping the conceptual space depicted in maps [@liben2013role]. Likewise, 4-year-olds can use geometric information from maps to navigate real space [@shusterman2008young], but the more demanding transfer from maps to real-world settings with larger spatial arrays is unstable prior to six to seven years of age [@uttal1989young; @blades1994development].
+
+SIZE
+
+Size is a relative property of graphical content and requires a comparison between items, for example when drawing a big and small dog, or an appreciation of an item’s relation to the frame of reference it occurs in, as when a child may try to convey the concept of a big dog by making it occupy the entire piece of paper it is drawing on [@cox2005pictorial]. Children are able to make spontaneous or productive size comparisons at three years of age and begin to use size words (big), size superlatives (biggest), or quantifiers (more, most) [@ferry2025bigger], yet young children are most accurate with bigger and only gradually gain competence with words like smaller, shorter or longer [@frausel2020origins]. When presented with an array of graphic stimuli, preschoolers can reliably point at, for example, the smallest or largest item in a set [@haun2011conformity]. While three- and four-year-olds can identify larger or smaller graphic items, the canonical size of the depicted objects can interfere leading to stroop-like errors [@long2019real]. When presented with three different geometric shapes in matching or non-matching dimensions (e.g. large, large, small) in match-to-sample tasks, children are quite unlikely to spontaneously infer size as the basis for matching even around the fourth birthday [@kroupin2022you]. One of the few studies using size as a way for grounding reference, investigated the role of the producers intentions in identifying concepts in ambiguous scribble drawings that were presented to participants as aiming to depict, for example, a small spider next to a big house. Children here made use of spatial analogies beginning at three years of age but appeared to benefit more as they turned four [@bloom1998intention].
+
+NUMBER
+
+Number, is another relational concept, and an absolute primitive in graphic communication [@ifrah2000universal; @cooperrider2019career] likely to be the conceptual space that the very first historic systems of writing were trying to capture. Judgments of quantity have been studied extensively in developmental psychology and identified both implicit and explicit number systems [@carey2019ontogenetic]. Infants already have an implicit proximate grasp of differences in number [@starr2013number] with one versus three being one of the most early comparisons possible, which is also frequently used as the most simple tasks in comparative work [@eckert2022does; @xu2007number; @carey2000origin]. Preschoolers growing up in industrialized environments are constantly surrounded by math tasks in the form of various games [@daucourt2021home] as well as preschool curricula incentivizing a playful engagement with quantities, number symbols and shapes [@kucharz2012elementarbildung; @schmidt2021fruhpadagogische]. By four years of age, children have a basic grasp of the cardinal principle, that is basic understanding of the relation of number words and fixed quantities [@silver2022environmental; @carey2019ontogenetic] and they are able to use that knowledge in practical everyday contexts, for example when comparing comparing numbers with magnitudes smaller than five [@wynn1990children]. In match-to-sample tasks, children spontaneously infer number as a basis of comparison between four and five years of age [@kroupin2022you].
