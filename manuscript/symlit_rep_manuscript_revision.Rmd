@@ -3765,70 +3765,81 @@ visual symbols even prior to literacy.
 
 # Introduction
 
-Children’s developing understanding of symbols in language, gesture or
-symbolic artefacts is central to their enculturation and demonstrates
-cognitive capacities that define the human mind [@Tomasello2014natural;
-@Vygotsky1980mind]. The acquisition of language and – much later –
-literacy [@Dehaene2009reading; @Bruner1996culture; @olson1994world] are
-arguably two of the most significant achievements in cultural learning
-that individuals undergo with dramatic consequences for their cognitive
-abilities [@karmiloff1994beyond]. In order to better understand the
-underlying processes, researchers have worked on gesture, words,
-photographs, representative drawings, maps, models, simulacra, figurines
-and sound symbolism and with children from infancy to up to the
-preschool years [@callaghan2015development].
+The development of symbolic understanding—encompassing language,
+gesture, and symbolic artifacts—is a cornerstone of human enculturation
+and a hallmark of the cognitive capacities defining the human mind
+[@Tomasello2014natural; @Vygotsky1980mind]. Within this developmental
+trajectory, the acquisition of oral language and the subsequent mastery
+of literacy [@Dehaene2009reading; @Bruner1996culture; @olson1994world]
+represent two of the most transformative milestones in cultural
+learning, each yielding profound consequences for individual cognitive
+architecture [@karmiloff1994beyond]. To elucidate the mechanisms
+underlying these shifts, researchers have examined how children from
+infancy through the preschool years negotiate various symbolic media,
+including gestures, words, photographs, representative drawings, maps,
+models, and sound symbolism [@callaghan2015development].
 
-A central paradigm in this line of work is the symbolic object-choice
-task. In a typical procedure, an experimenter invites a child to play a
-game of hide and seek. First children are familiarized with the goal of
-the hiding game - retrieving a desired object from one of two
-containers - during a set of initial trials in which that object may be
-hidden in plain sight and child is praised for uncovering it. During the
-test phase, children cannot observe where the desired item is hidden.
-They are now motivated to search but naive with regard to the hiding
-place. During test trials, the experimenter will now provide some from
-of communicative cue guiding children's choices. Now, children are
-provided access to the containers and to choose either option. In order
-to probe children's developing appreciation for various forms of
-symbolic behavior, researchers have used communicative cues such as gaze
-and reaching [@sodian2004infants], pointing [@Tomasello2007new;
-@behne2012twelve], arrows, markers and replica [@Leekam2010adults,
-@Tomasello1997comprehension, @callaghan2000factors], iconic gestures
-[@Tomasello1999do], fotos, drawings [@Callaghan2000factors] or even
-switching on a light [@moore2013three].
+A central paradigm in this line of research is the symbolic
+object-choice task. In a standard procedure, children are invited to
+engage in a "hide-and-seek" game. Participants are first familiarized
+with the game's objective—retrieving a target object from one of two
+containers—through initial trials where the object is hidden in plain
+sight and successful retrieval is socially reinforced. At test, the
+hiding process is obscured, leaving the child motivated to search but
+unaware of the object's location. At this juncture, the experimenter
+provides a specific communicative cue to guide the child's choice. To
+probe the ontogeny of symbolic appreciation, researchers have
+manipulated the nature of these cues, employing social signals such as
+gaze and reaching [@sodian2004infants] or pointing [@Tomasello2007new;
+@behne2012twelve], as well as more abstract or iconic referents such as
+arrows, markers, replicas [@Leekam2010adults;
+@Tomasello1997comprehension; @callaghan2000factors], iconic gestures
+[@Tomasello1999do], photographs and drawings [@Callaghan2000factors], or
+even arbitrary signals like the activation of a light [@moore2013three].
+In the standard analysis of this paradigm [@tomasello2010origins],
+children must navigate several inferential layers. Within a cooperative
+framework, the child must first construe the interaction as a joint
+endeavor, perceiving the experimenter as a helpful and competent
+partner. This social attribution allows the child to treat the cue not
+as a random event, but as a relevant communicative act intended to
+coordinate behavior. Successful retrieval then requires a dual
+inference: the child must map the symbol-referent relationship—whether
+based on deixis (pointing, markers), iconicity (replicas, gestures), or
+spatio-temporal contiguity (light signals)—while simultaneously
+recognizing the cue’s contextual relevance to their immediate goal.
+Thus, the task demands both a structural match between cue and target
+and a pragmatic inference regarding communicative intent.
 
-In a standard analysis of this paradigm [@tomasello2010origins],
-children are required to make several inferences. They need keep in mind
-the goal of finding the target while construing the situation as a
-cooperative joint endeavor and perceiving their partner as intent on and
-competent in helping them. This forms the basis for appreciating the cue
-provided as relevant to their goal of finding the desired item. In order
-to arrive at the correct container, they further then need to match cue
-and target object. To do so, the experimenters cue is not is not just a
-random act or object but serves as a means to coordinate behavior, and
-hence becomes symbolic. The symbol-referent relationship may be based in
-deictic reference (pointing, arrows, markers), iconicity (replica,
-iconic gesture) or at least some peculiar spatio-temporal contiguity
-(turning on a light), but simply discovering some form of similarity or
-contiguity does not suffice. To motivate appropriate behavior, children
-are required infer a match between cue and target and make the
-communicative inference of its particular relevance in context.
-
-While there is a set of naturally meaningful behaviors such as pointing
-and gaze, that children understand at the end of the third your, less
-natural behavior external means of communication are understood much
-later. The work of Judy DeLoache and colleagues has been of seminal
-importance in sketching children’s ability to exploit the informative
-value of symbolic artefacts. In various studies, they have prompted
-children to find the location of a hidden toy by providing them with
-cues in the form of scale models, pictures, videos and maps representing
-a search space [@deloache2004becoming]. Whereas even 30-month-old
-children fail to retrieve hidden items by using instructions based on
-replicas like a model-room, 36-month-olds excel. This pattern of results
-in symbolic object-choice-tasks has been replicated many times by her
-group and other labs [@deloache2011early] and demonstrates that
-children’s symbolic understanding undergoes a rapid development in the
-third year of life [@deloache2004becoming; @callaghan2015development].
+Although infants grasp naturally meaningful behaviors like pointing and
+gaze by the end of their first year, their ability to exploit less
+transparent symbolic artifacts emerges significantly later. The seminal
+work of DeLoache and colleagues has been instrumental in charting this
+progression, demonstrating that children’s capacity to use scale models,
+pictures, videos, and maps as informative tools undergoes a rapid
+transformation during the third year of life [@deloache2004becoming;
+@deloache2011early]. A robust finding across this literature is the
+30-to-36-month transition: while 30-month-olds typically fail to use a
+scale model to locate a hidden item, 36-month-olds excel, suggesting a
+newfound mastery of the "dual representation" required to see an
+artifact as both an object and a symbol [@deloache2004becoming;
+@callaghan2015development]. A parallel developmental trajectory is
+evident in the domain of graphic representation. While infants as young
+as nine months are sensitive to the similarity between a picture and its
+3D referent [@deloache1998grasping], actual symbolic comprehension
+develops gradually. A next step may be when early manual exploration of
+depictions is replaced by pointing during the second year
+[@deloache1998grasping], or when by 18 months, toddlers can begin to
+extend labels between objects and their pictorial counterparts
+[@ganea2008transfer]. Functional use of grpahic representations in
+choice tasks remains fragile until approximately age three. For
+instance, while children as young as 2.5 years may use shape to
+interpret drawings when intentionality is clear [@gelman1998shape],
+Callaghan [-@callaghan1999early] found that two-year-olds still struggle
+to select items based on representative drawings. This fragility is
+underscored by findings that 30-month-olds often fail to benefit from
+iconicity in either drawings or replicas, whereas 36-month-olds reliably
+succeed across varying levels of stylization [@callaghan2000factors;
+@DeLoache1995early].
 
 From this review of children’s ability to appreciate various basic
 dimensions of graphic depictions and their sensitivity to these as means
@@ -3848,22 +3859,22 @@ depicting actual real world objects. Here familiarity with the depicted
 object, its canonical features and even conventional ways of drawing
 them may interfere with the aim of investigating cognitive capacities
 rather than knowledge of culturally imbued graphic conventions, script
-or icons. undefined
+or icons.
 
 By contrast, the studies below investigate young children’s spontaneous
 comprehension of unfamiliar graphic symbols that gain meaning from being
 produced in a specific and highly restricted context where symbol and
 referent align in certain conceptual dimensions with decreasing
-iconicity. Therefore, they focus on children’s pragmatic competencies
-and their ability to identify shared features across graphic displays
-used as cue and target. To the extent that children are highly unlikely
-to have encountered the specific graphic cues used here, our findings
-showcase their ability to grasp and acquire novel symbol-referent
-pairings. This may limit the influence of children’s knowledge of
-conventional symbols on performance and make results more robust and
-informative for research about the acquisition or emergence of
-communicative systems despite spanning an age-range where children
-become competent users of script, numerals or drawings.
+iconicity. Therefore, they focus on children’s ability to identify
+shared features across graphic displays used as cue and target and their
+pragmatic competencies for using such matches in context. To the extent
+that children are highly unlikely to have encountered the specific
+graphic cues used here, our findings showcase their ability to grasp and
+acquire novel symbol-referent pairings. This may limit the influence of
+children’s knowledge of conventional symbols on performance and make
+results more robust and informative for research about the acquisition
+or emergence of communicative systems despite spanning an age-range
+where children become competent users of script, numerals or drawings.
 
 # General Methods
 

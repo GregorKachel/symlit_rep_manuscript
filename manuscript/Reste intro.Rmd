@@ -14,9 +14,19 @@ A similar developmental trajectory has been observed in the understanding of gra
 
 xxxxxxxxxxxxxxxxxx
 
-Matching graphic representations with each other is much less demanding or even so trivial that it is rarely employed in experimental contexts. Finding a graphical item in a drawn scene as is often done in picture-book reading routines or visual search paradigms and is generally accessible for children at the end of the third year [@gerhardstein2002development]. Matching identical items in match-to-sample tasks is occasionally used as a training in research on analogical reasoning and generally provides no challenge for children older than three [@kroupin2022you].
+Matching graphic representations with each other is much less demanding or even so trivial that it is rarely employed in experimental contexts. Finding a graphical item in a drawn scene as is often done in picture-book reading routines or visual search paradigms and is generally accessible for children at the end of the third year [@gerhardstein2002development].
 
-Very relevant moore light switch [@moore2013three]
+MTS MTS MTS MTS MTS
+
+Matching identical items in match-to-sample tasks is occasionally used as a training in research on analogical reasoning and generally provides no challenge for children older than three [@kroupin2022you].
+
+When presented with three different geometric shapes in matching or non-matching dimensions (e.g. large, large, small) in match-to-sample tasks, children are quite unlikely to spontaneously infer size as the basis for matching even around the fourth birthday [@kroupin2022you].
+
+In match-to-sample tasks, children spontaneously infer number as a basis of comparison between four and five years of age [@kroupin2022you].
+
+GENTNER: The more different the two comparands, the more abstract the generalization and the greater the scope of transfer. But, the more different the two comparands, (a) the less likely children are to spontaneously compare them; and (b) the less likely children [and other novices] are to be able to align them. gentner2017analogy
+
+MTS MTS MTS MTS MTS
 
 The literature focuses on iconicity and similarity relations where children
 
@@ -27,12 +37,6 @@ When departing from this to - for example - specifically investigate the role of
 bloom 1981
 
 <!-- -->
-
-x
-
-y
-
-logic of the object-choice task and the steps involved
 
 introduce the term "graphic symbols" in contrast to verbal or gestural and maybe in contrast to conventional graphic symbols like letters or numerals.
 
@@ -61,8 +65,6 @@ The tasks are then very similar to match-to-sample designs (xxx,xxx,), however, 
 Violate Gricean Maxime: Why should an interlocutor not always choose the most straightforward wa of depicting the referent? Yet, all systems of communication rely on abstraction, reduce effort, reduce dimensions. Conventionalized systems of reference may
 
 Gentner, D., & Hoyos, C. (2017). Analogy and abstraction. Topics in cognitive science, 9(3), 672-693.
-
-GENTNER: The more different the two comparands, the more abstract the generalization and the greater the scope of transfer. But, the more different the two comparands, (a) the less likely children are to spontaneously compare them; and (b) the less likely children [and other novices] are to be able to align them. gentner2017analogy
 
 EF demands in MTS as motivation for hypotheses why - for example - relational matches are more demanding than identity matches makes it much easier to transition towards the hypotheses in a straightforward manner
 
@@ -104,12 +106,6 @@ Diamond, A., Carlson, S. M., & Beck, D. M. (2005). Preschool children's performa
 
 p\. 36 – There is some early work on children’s production of pictorial symbols showing that children use a wholistic approach and attend to features that will distinguish the referent only later, or if given a prompt that their drawing is difficult to interpret <https://doi.org/10.1111/1467-8624.00096> The publication by Callaghan (1999) is highly relevant and we are already citing it in the introduction and discussion.
 
-Communicative cues may be: → drawings and replica Callaghan, T. C. (2000). Factors affecting children's graphic symbol use in the third year: Language, similarity, and iconicity. Cognitive Development, 15(2), 185-214.
-
-→ pointing, marker, replica Tomasello, M., Call, J., & Gluckman, A. (1997). Comprehension of novel communicative signs by apes and human children. Child development, 68(6), 1067-1080.
-
-→ lights light up above the hiding place Moore, R., Liebal, K., & Tomasello, M. (2013). Three-year-olds understand communicative intentions without language, gestures, or gaze. Interaction Studies, 14(1), 62-80.
-
 Bohn, M., Kachel, G., & Tomasello, M. (2019). Young children spontaneously recreate core properties of language in a new modality. Proceedings of the National Academy of Sciences, 116(51), 26072-26077.
 
 Tolar, T. D., Lederberg, A. R., Gokhale, S., & Tomasello, M. (2008). The development of the ability to recognize the meaning of iconic signs. Journal of Deaf Studies and Deaf Education, 13(2), 225-240.
@@ -140,8 +136,10 @@ As with the other dimensions reported above, there is evidence that children are
 
 SIZE
 
-Size is a relative property of graphical content and requires a comparison between items, for example when drawing a big and small dog, or an appreciation of an item’s relation to the frame of reference it occurs in, as when a child may try to convey the concept of a big dog by making it occupy the entire piece of paper it is drawing on [@cox2005pictorial]. Children are able to make spontaneous or productive size comparisons at three years of age and begin to use size words (big), size superlatives (biggest), or quantifiers (more, most) [@ferry2025bigger], yet young children are most accurate with bigger and only gradually gain competence with words like smaller, shorter or longer [@frausel2020origins]. When presented with an array of graphic stimuli, preschoolers can reliably point at, for example, the smallest or largest item in a set [@haun2011conformity]. While three- and four-year-olds can identify larger or smaller graphic items, the canonical size of the depicted objects can interfere leading to stroop-like errors [@long2019real]. When presented with three different geometric shapes in matching or non-matching dimensions (e.g. large, large, small) in match-to-sample tasks, children are quite unlikely to spontaneously infer size as the basis for matching even around the fourth birthday [@kroupin2022you]. One of the few studies using size as a way for grounding reference, investigated the role of the producers intentions in identifying concepts in ambiguous scribble drawings that were presented to participants as aiming to depict, for example, a small spider next to a big house. Children here made use of spatial analogies beginning at three years of age but appeared to benefit more as they turned four [@bloom1998intention].
+Size is a relative property of graphical content and requires a comparison between items, for example when drawing a big and small dog, or an appreciation of an item’s relation to the frame of reference it occurs in, as when a child may try to convey the concept of a big dog by making it occupy the entire piece of paper it is drawing on [@cox2005pictorial]. Children are able to make spontaneous or productive size comparisons at three years of age and begin to use size words (big), size superlatives (biggest), or quantifiers (more, most) [@ferry2025bigger], yet young children are most accurate with bigger and only gradually gain competence with words like smaller, shorter or longer [@frausel2020origins]. When presented with an array of graphic stimuli, preschoolers can reliably point at, for example, the smallest or largest item in a set [@haun2011conformity]. While three- and four-year-olds can identify larger or smaller graphic items, the canonical size of the depicted objects can interfere leading to stroop-like errors [@long2019real].
+
+One of the few studies using size as a way for grounding reference, investigated the role of the producers intentions in identifying concepts in ambiguous scribble drawings that were presented to participants as aiming to depict, for example, a small spider next to a big house. Children here made use of spatial analogies beginning at three years of age but appeared to benefit more as they turned four [@bloom1998intention].
 
 NUMBER
 
-Number, is another relational concept, and an absolute primitive in graphic communication [@ifrah2000universal; @cooperrider2019career] likely to be the conceptual space that the very first historic systems of writing were trying to capture. Judgments of quantity have been studied extensively in developmental psychology and identified both implicit and explicit number systems [@carey2019ontogenetic]. Infants already have an implicit proximate grasp of differences in number [@starr2013number] with one versus three being one of the most early comparisons possible, which is also frequently used as the most simple tasks in comparative work [@eckert2022does; @xu2007number; @carey2000origin]. Preschoolers growing up in industrialized environments are constantly surrounded by math tasks in the form of various games [@daucourt2021home] as well as preschool curricula incentivizing a playful engagement with quantities, number symbols and shapes [@kucharz2012elementarbildung; @schmidt2021fruhpadagogische]. By four years of age, children have a basic grasp of the cardinal principle, that is basic understanding of the relation of number words and fixed quantities [@silver2022environmental; @carey2019ontogenetic] and they are able to use that knowledge in practical everyday contexts, for example when comparing comparing numbers with magnitudes smaller than five [@wynn1990children]. In match-to-sample tasks, children spontaneously infer number as a basis of comparison between four and five years of age [@kroupin2022you].
+Number, is another relational concept, and an absolute primitive in graphic communication [@ifrah2000universal; @cooperrider2019career] likely to be the conceptual space that the very first historic systems of writing were trying to capture. Judgments of quantity have been studied extensively in developmental psychology and identified both implicit and explicit number systems [@carey2019ontogenetic]. Infants already have an implicit proximate grasp of differences in number [@starr2013number] with one versus three being one of the most early comparisons possible, which is also frequently used as the most simple tasks in comparative work [@eckert2022does; @xu2007number; @carey2000origin]. Preschoolers growing up in industrialized environments are constantly surrounded by math tasks in the form of various games [@daucourt2021home] as well as preschool curricula incentivizing a playful engagement with quantities, number symbols and shapes [@kucharz2012elementarbildung; @schmidt2021fruhpadagogische]. By four years of age, children have a basic grasp of the cardinal principle, that is basic understanding of the relation of number words and fixed quantities [@silver2022environmental; @carey2019ontogenetic] and they are able to use that knowledge in practical everyday contexts, for example when comparing comparing numbers with magnitudes smaller than five [@wynn1990children].
