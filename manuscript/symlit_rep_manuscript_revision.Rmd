@@ -3765,50 +3765,44 @@ visual symbols even prior to literacy.
 
 # Introduction
 
-The development of symbolic understanding—encompassing language,
-gesture, and symbolic artifacts—is a cornerstone of human enculturation
+The development of symbolic understanding - encompassing language,
+gesture, and symbolic artifacts -is a cornerstone of human enculturation
 and a hallmark of the cognitive capacities defining the human mind
 [@Tomasello2014natural; @Vygotsky1980mind]. Within this developmental
 trajectory, the acquisition of oral language and the subsequent mastery
 of literacy [@Dehaene2009reading; @Bruner1996culture; @olson1994world]
 represent two of the most transformative milestones in cultural
-learning, each yielding profound consequences for individual cognitive
+learning, each yielding profound consequences for children's cognitive
 architecture [@karmiloff1994beyond]. To elucidate the mechanisms
 underlying these shifts, researchers have examined how children from
 infancy through the preschool years negotiate various symbolic media,
 including gestures, words, photographs, representative drawings, maps,
 models, and sound symbolism [@callaghan2015development].
 
-A central paradigm in this line of research is the symbolic
-object-choice task. In a standard procedure, children are invited to
-engage in a "hide-and-seek" game. Participants are first familiarized
-with the game's objective—retrieving a target object from one of two
-containers—through initial trials where the object is hidden in plain
-sight and successful retrieval is socially reinforced. At test, the
-hiding process is obscured, leaving the child motivated to search but
-unaware of the object's location. At this juncture, the experimenter
-provides a specific communicative cue to guide the child's choice. To
-probe the ontogeny of symbolic appreciation, researchers have
-manipulated the nature of these cues, employing social signals such as
-gaze and reaching [@sodian2004infants] or pointing [@Tomasello2007new;
-@behne2012twelve], as well as more abstract or iconic referents such as
-arrows, markers, replicas [@Leekam2010adults;
-@Tomasello1997comprehension; @callaghan2000factors], iconic gestures
-[@Tomasello1999do], photographs and drawings [@Callaghan2000factors], or
-even arbitrary signals like the activation of a light [@moore2013three].
-In the standard analysis of this paradigm [@tomasello2010origins],
-children must navigate several inferential layers. Within a cooperative
-framework, the child must first construe the interaction as a joint
-endeavor, perceiving the experimenter as a helpful and competent
-partner. This social attribution allows the child to treat the cue not
-as a random event, but as a relevant communicative act intended to
-coordinate behavior. Successful retrieval then requires a dual
-inference: the child must map the symbol-referent relationship—whether
-based on deixis (pointing, markers), iconicity (replicas, gestures), or
-spatio-temporal contiguity (light signals)—while simultaneously
-recognizing the cue’s contextual relevance to their immediate goal.
-Thus, the task demands both a structural match between cue and target
-and a pragmatic inference regarding communicative intent.
+The symbolic object-choice task serves as a primary paradigm for
+investigating these capacities. In a typical procedure, children engage
+in a "hide-and-seek" game where, after familiarization with the goal of
+retrieving a target from one of two containers, the hiding process is
+obscured. At test, the experimenter provides a communicative cue to
+guide the search. Researchers have manipulated these cues to probe the
+ontogeny of symbolic appreciation, ranging from social signals like gaze
+and reaching [@sodian2004infants] or pointing [@Tomasello2007new;
+@behne2012twelve] to more abstract or iconic referents such as arrows,
+markers, replicas [@Leekam2010adults; @Tomasello1997comprehension;
+@callaghan2000factors], iconic gestures [@Tomasello1999do;
+@bohn2019natural], photographs [@callaghan2000factors], and arbitrary
+signals like turning on a light [@moore2013three]. Standard analyses of
+this paradigm [@tomasello2010origins] suggest that success requires
+navigating several inferential layers. Within a cooperative framework,
+the child must first construe the interaction as a joint endeavor with a
+competent partner, allowing them to treat the cue as a deliberate
+communicative act rather than a random event. Retrieval then
+necessitates a dual inference: mapping the symbol-referent
+relationship—whether via deixis, iconicity, or spatio-temporal
+contiguity—while simultaneously recognizing the cue’s pragmatic
+relevance to the immediate goal. Ultimately, the task demands both a
+structural match between cue and target and a functional grasp of the
+cue’s symbolic intent.
 
 Although infants grasp naturally meaningful behaviors like pointing and
 gaze by the end of their first year, their ability to exploit less
@@ -3823,58 +3817,175 @@ scale model to locate a hidden item, 36-month-olds excel, suggesting a
 newfound mastery of the "dual representation" required to see an
 artifact as both an object and a symbol [@deloache2004becoming;
 @callaghan2015development]. A parallel developmental trajectory is
-evident in the domain of graphic representation. While infants as young
-as nine months are sensitive to the similarity between a picture and its
-3D referent [@deloache1998grasping], actual symbolic comprehension
-develops gradually. A next step may be when early manual exploration of
-depictions is replaced by pointing during the second year
-[@deloache1998grasping], or when by 18 months, toddlers can begin to
-extend labels between objects and their pictorial counterparts
-[@ganea2008transfer]. Functional use of grpahic representations in
-choice tasks remains fragile until approximately age three. For
-instance, while children as young as 2.5 years may use shape to
-interpret drawings when intentionality is clear [@gelman1998shape],
-Callaghan [-@callaghan1999early] found that two-year-olds still struggle
-to select items based on representative drawings. This fragility is
-underscored by findings that 30-month-olds often fail to benefit from
-iconicity in either drawings or replicas, whereas 36-month-olds reliably
-succeed across varying levels of stylization [@callaghan2000factors;
+evident in the domain of graphic representation: functional use of
+graphic representations in choice tasks remains fragile until
+approximately age three. For instance, while children as young as 2.5
+years may use shape to interpret drawings when intentionality is clear
+[@gelman1998shape], Callaghan [-@callaghan1999early] found that
+two-year-olds still struggle to select items based on representative
+drawings. This fragility is underscored by findings that 30-month-olds
+often fail to benefit from iconicity in either drawings or replicas,
+whereas 36-month-olds reliably succeed in object-choice-tasks across
+varying levels of stylization [@callaghan2000factors;
 @DeLoache1995early].
 
-From this review of children’s ability to appreciate various basic
-dimensions of graphic depictions and their sensitivity to these as means
-for conveying information, we can identify a couple of research
-desiderata. Most striking is the literature’s focus on similarity and
-iconicity [@callaghan2015development]. Mappings between symbol and
-referent can take place along a number of conceptual dimensions and few
-studies explicitly address these. Against this background, a systematic
-and comprehensive investigation of the conceptual dimensions along which
-graphic symbols can be imbued with meaning, will help to evaluate the
-extent to which children’s competence is specific to certain types of
-symbol-referent-relationships or generalizes across mappings based on
-analogy in form, size, number, or Gestalt principles.
+Hence, from 36 months onward, it may be productive to investigate
+whether children can comprehend symbol-referent-relationships that are
+less dependent on iconicity. Any symbol-referent-relationship that
+children can spontaneously use early may be of particular relevance for
+our understanding of emerging and graphical literacy and the development
+of graphic systems of communication. While iconicity provides an entry
+point for symbol-grounding in graphic communication
+[@callaghan2000factors] much like in the gestural domain
+[@callaghan2015development; @fay2014iconicity; @bohn2019natural], it is
+generally also possible to establish reference via more abstract or
+conceptual symbol-referent relationships such as size, number,
+orientation, position or gestalt principles serving as fundamental
+principles for encoding information in the graphic domain
+[@cleveland1984graphical; @stevenson2014visual; @donnelly2007visual].
+Defining the precise ages and relative developmental trajectories for
+children’s sensitivity to using these graphic primitives as conveying
+meaning and for disambiguating reference in object-choice-tasks will
+provide crucial insights into children’s developing symbolic competence
+and the interplay of communicative and analogical capacities.
 
-The strong focus on iconicity often goes together with graphic stimuli
-depicting actual real world objects. Here familiarity with the depicted
-object, its canonical features and even conventional ways of drawing
-them may interfere with the aim of investigating cognitive capacities
-rather than knowledge of culturally imbued graphic conventions, script
-or icons.
+To explore the continuum from iconic or representational to more
+conceptual and abstract symbol-referent relationships in step-wise
+manner, it will be helpful to gradually reduce resemblance between cue
+and target. As an alternative to using varying levels of realism in
+designing communicative cues [@callaghan2000factors], it also possible
+to reduce cues such that they only present part of their respective
+target as often occurs naturally when streamlining communication and
+developing conventions [@goldin1977development]. Part-whole
+relationships on the level of geometric figures could be an ideal target
+for an investigation into slightly abstract symbol-reference
+relationships as shape recognition and naming are robust in the third
+and fourth year [@ZAMBRZYCKA2017144; @verdine2017shape;
+@verdine2016shape] and the ability to mentally complete canonical
+geometric shapes is already nascent in early infancy
+[@kellman1983perception; @valenza2006perceptual], yet there is currently
+no data on when children may be able to use pars pro toto cues in an
+object-choice context.
 
-By contrast, the studies below investigate young children’s spontaneous
-comprehension of unfamiliar graphic symbols that gain meaning from being
-produced in a specific and highly restricted context where symbol and
-referent align in certain conceptual dimensions with decreasing
-iconicity. Therefore, they focus on children’s ability to identify
-shared features across graphic displays used as cue and target and their
-pragmatic competencies for using such matches in context. To the extent
-that children are highly unlikely to have encountered the specific
-graphic cues used here, our findings showcase their ability to grasp and
-acquire novel symbol-referent pairings. This may limit the influence of
-children’s knowledge of conventional symbols on performance and make
-results more robust and informative for research about the acquisition
-or emergence of communicative systems despite spanning an age-range
-where children become competent users of script, numerals or drawings.
+Another way of reducing iconicity may be the metaphorical use of form,
+such as using sharp or spiky drawings to refer to "pointy" concepts
+[@knoeferle2017drives]. This phenomenon is central to research on sound
+symbolism within the lexicon [@bermudez2020sound; @sidhu2025sound], as
+well as in studies of action and gesture [@margiotoudi2020action;
+@bohn2019natural]. Robust across cultures [@cwiek2022bouba], this
+sensitivity emerges around 30 months for word-shape matching
+[@maurer2006shape; @imai2008sound; @fort2018symbouki] and by 36 months
+for matching actions with vocalizations or gestures [@bohn2019natural].
+Despite these findings, it remains unknown whether children can utilize
+the global properties or "impressions" of a shape’s form to ground
+reference in the graphic domain alone.
+
+To minimize iconicity in symbol-referent relationships, cues and targets
+may share global properties like orientation and alignment rather than
+specific shapes. Children demonstrate an early sensitivity to these
+compositional principles in their drawings, maintaining realistic
+spatial configurations (e.g. placing wheels beneath a car when drawing)
+and avoiding figure overlap [@cox2005pictorial; @piaget1997mental;
+@luquet2001children]. However, there is virtually no data on how likely
+children are to use Gestalt principles as a basis for forming
+symbol-referent relationships, except for the use of relative position
+the developing ability to read maps. While four-year-olds possess an
+intuitive grasp of relational directions (e.g., "behind" or "in front")
+in basic maps [@landau1986early], iconicity remains an important
+scaffold for their conceptual understanding [@liben2013role].
+Furthermore, although preschoolers can use geometric map information for
+local navigation [@shusterman2008young], the ability to transfer these
+relational cues to large-scale spatial arrays does not stabilize until
+age six or seven [@uttal1989young; @blades1994development].
+
+Finally, alignment between cue and target may also be based on analogies
+in size and number disregarding shape. Size is a relative property of
+graphical content and requires a comparison, for example when drawing a
+big and small object or conveying size by making an object occupy a
+large part of the frame of reference [@cox2005pictorial]. Children are
+able to make spontaneous or productive size comparisons at three years
+of age and begin to use size words (*big*), size superlatives
+(*biggest*), or quantifiers (*more*, *most*) [@ferry2025bigger], yet
+young children are most accurate with *bigger* and only gradually gain
+competence with words like *smaller*, *shorter* or *longer*
+[@frausel2020origins]. When presented with an array of graphic stimuli,
+preschoolers can reliably point at, for example, the smallest or largest
+item in a set [@haun2011conformity]. One of the few studies using size
+as a way for grounding reference, investigated the role of the producers
+intentions in identifying concepts in ambiguous scribble drawings that
+were presented to participants as aiming to depict, for example, a small
+spider next to a big house. Children here made use of spatial analogies
+beginning at three years of age but appeared to benefit more as they
+turned four [@bloom1998intention]. Similarly, number is a relational
+primitive and a foundational element of graphic communication
+[@ifrah2000universal; @cooperrider2019career]. Sensitivity to number
+develops from an infant’s implicit grasp of proximate numerical
+differences [@starr2013number; @xu2007number; @carey2000origin] to an
+explicit understanding of numerical systems [@carey2019ontogenetic].
+Supported by early home environments [@daucourt2021home] and preschool
+curricula [@kucharz2012elementarbildung; @schmidt2021fruhpadagogische],
+children typically master the cardinality principle by age four
+[@silver2022environmental; @carey2019ontogenetic]. This allows them to
+apply numerical knowledge in practical contexts, such as comparing
+magnitudes smaller than five [@wynn1990children; @eckert2022does].
+
+While children appear generally sensitive to and able to make
+comparisons along the conceptual dimensions of shape, orientation, size
+and number, studies directly testing them as grounds for establishing
+reference are very rare. A highly valuable point of reference can be
+found in the literature on relational and non-relational match to sample
+tasks where studies often comprise various stimulus sets or conditions
+probing these matching dimensions. While shapes in match-to-sample (MTS)
+tasks poses little challenge for children beyond age three
+[@kroupin2022you; @gerhardstein2002development], utilizing relational
+dimensions like size or number remains difficult. Even by age four,
+children rarely spontaneously infer size as a matching criterion in
+three-item MTS arrays, and success in number-based matching typically
+emerges between ages four and five [@kroupin2022you]. These difficulties
+intensify in relational match-to-sample (RMTS) tasks, which require
+coordinating at least six items to identify higher-order patterns of
+identity (AA, BB, AB) or difference (AB, BA, BB). Mastery across
+dimensions is generally absent prior to age five, as the task requires
+navigating abstract generalizations and suppressing prepotent responses
+to superficial features—taxing both executive function and working
+memory [@kroupin2022importance; @kroupin2022you; @gentner2017analogy].
+However, performance can be scaffolded. Four-year-olds succeed when
+relations are embedded in causal narratives [@goddu2020transformations],
+and even three-year-olds improve following explicit training with the
+terms *same* and *different* [@christie2014language].
+
+A critical distinction exists between these paradigms and symbolic
+object-choice tasks. In MTS/RMTS, children are explicitly instructed to
+find matches as an end in itself. Conversely, the object-choice context
+requires an additional communicative inference: children must recognize
+that a cue was produced intentionally to guide their behavior and that
+its meaning derives from a specific relation to a target. Consequently,
+symbolic object-choice tasks represent a more demanding and ecologically
+valid testing ground, revealing whether young children can deploy their
+nascent analogical reasoning skills within a practical, goal-directed
+interaction. In addition,
+
+The prevailing literature’s heavy reliance on similarity and iconicity
+[@callaghan2015development] leaves the broader scope of children’s
+symbolic flexibility largely unexplored. Because most studies employ
+depictions of real-world objects, results may be confounded by
+children’s familiarity with canonical features [@long2019real] or
+cultural graphic conventions. To address these research desiderata, the
+present work provides a systematic investigation into the diverse
+conceptual dimensions along which graphic symbols can be imbued with
+meaning and traces development continuously through the pre-school years
+employing the symbolic object-choice task as one coherent and simple
+paradigm. By utilizing novel abstract graphic displays as both cue and
+target, this study isolates children’s ability to identify conceptual
+features and apply pragmatic inferences in context, largely independent
+of prior knowledge of script, numerals, or conventional icons.
+Furthermore, by omitting training, instruction, or feedback, our
+approach ensures that responses reflect what children find naturally
+meaningful. Consequently, the studies below showcase young children's
+capacity to spontaneously grasp novel symbol-referent pairings,
+providing critical insights into the learnability and potentially the
+emergence of communicative systems during a developmental period of
+increasing conventional symbolic mastery.
 
 # General Methods
 
