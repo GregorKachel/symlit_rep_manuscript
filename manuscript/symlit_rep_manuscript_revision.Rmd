@@ -4203,10 +4203,10 @@ shape as a means for establishing reference but that were less iconic by
 either reducing the amount of information provided (*Pars Pro Toto*), or
 the amount of similarity between cue and target (*Simple Form Analogy,
 Complex Form Analogy*). With *Pars Pro Toto* likely being more
-challenging than Representation due to the completion required, and form
-analogies being relatively abstract, our preregistered hypothesis was
-that as a group, children will first succeed with *Representation*, then
-*Pars Pro Toto*, *Simple Form Analogy* and finally *Complex Form
+challenging than *Representation* due to the completion required, and
+form analogies being relatively abstract, our preregistered hypothesis
+was that as a group, children will first succeed with *Representation*,
+then *Pars Pro Toto*, *Simple Form Analogy* and finally *Complex Form
 Analogy*.
 
 ## Stimuli
@@ -4367,36 +4367,22 @@ group level success coming to pass first with *Representation*, then
 
 # Study 2
 
-The final study features symbol-referent relationships that are based on
-analogies in size or number without cues and targets sharing
-similarities in other visual aspects, and while avoiding to draw on
-conventions in graphic communication. In order to correctly interpret
-the symbol-referent relationships employed here, children need to infer
-conceptual order in graphical displays. Such processes can be fostered
-or obstructed by surface level features of the stimuli at hand which
-makes it harder to assess whether the age at which children master a
-task - our primary aim of investigation - depends more on the ability to
-generally form symbol-referent relationships from analogies or from
-children's developing ability to process visual complexity. The two base
-conditions of study three are *Size of Object* and *Size of Number.*
-Here the cues refer to a target shape as a whole via an analogy in size
-or number. As a continuous magnitude, size may be easier to grasp and
-compare for children than discrete concepts [@leibovich2017sense]. They
-are complemented by the conditions *Size of Feature* and *Number of
-Feature* in which the cues refer to a salient aspect of the target
-stimuli. In these cases, extracting conceptual information is arguably
-more demanding. Children need to shift attention from a holistic
-apprehension to exploring specific aspects in isolation, which should
-make feature tasks more demanding [@callaghan1990texture;
-@shepp1987development; @diamond2016preschool]. The overall performance
-across the ages as well as the relative offset in the age at which
-children solve a task based on symbol-referent relationships targeting
-objects or their features, can then serve to evaluate such surface-level
-effects across two different domains. Prior to data collection, we
-hypothesized that children will succeed earlier with symbol-referent
-relationships based in size than in number, and that children will
-succeed earlier when cues refer to a target object per se rather than a
-salient feature thereof.
+The conditions in study 2 continue to abstract from a representational
+symbol-referent relationship by using different shapes for both cue and
+target stimuli. The conditions here, draw on gestalt-principles like
+figure-ground-relationship, continuity and parallelism. The
+symbol-referent-relationship in *Absolute Position* is established by
+the respective cue and target sharing the same position with regard to
+the reference frame they occur in. In *Relative Position* cue and target
+are each composed of two shapes. Reference is established by the
+respective shapes being closer or further apart or sharing a position on
+a horizontal or vertical axis. For *Orientation of Object*, symbol and
+cue are aligned along the same axis. The final condition, *Orientation
+of Feature* employs cue and target shapes with a salient feature that is
+either oriented up- or downward. The preregistered hypothesis, assumed
+children to perform above chance first in *Orientation of Object*, then
+*Orientation of Feature*, *Absolute Position* and finally *Relative
+Position*.
 
 ## Stimuli
 
