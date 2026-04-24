@@ -3851,22 +3851,28 @@ meaning and for disambiguating reference in object-choice-tasks will
 provide crucial insights into children’s developing symbolic competence
 and the interplay of communicative and analogical capacities.
 
-To explore the continuum from iconic or representational to more
-conceptual and abstract symbol-referent relationships, it will be
-helpful to gradually reduce resemblance between cue and target. As an
-alternative to using varying levels of realism in designing
-communicative cues [@callaghan2000factors], it is also possible to
-reduce cues such that they only present part of their respective target
-as often occurs naturally when streamlining communication and developing
-conventions [@goldin1977development]. Part-whole relationships on the
-level of geometric figures could be an ideal target for an investigation
-into slightly abstract symbol-reference relationships as shape
-recognition and naming are robust in the third and fourth year
-[@ZAMBRZYCKA2017144; @verdine2017shape; @verdine2016shape] and the
-ability to mentally complete canonical geometric shapes is already
-nascent in early infancy [@kellman1983perception;
-@valenza2006perceptual], yet there is currently no data on when children
-may be able to use pars pro toto cues in an object-choice context.
+To explore the continuum from iconic to abstract symbolic relationships,
+researchers can systematically reduce the resemblance between cue and
+target. Rather than varying levels of pictorial realism
+[@callaghan2000factors], one can minimize similarity to isolate the
+conceptual foundations of the mapping. While using such "reduced" cues
+may appear to violate the Gricean maxims of quantity (providing
+sufficient information) and manner (avoiding obscurity)
+[@grice1991studies], children are well-accustomed to suboptimal
+communication in daily life. Through processes like streamlining and
+conventionalization, they frequently encounter and successfully navigate
+ambiguous utterances; indeed, they often master and enjoy the
+interpretive decoding required in communicative games like charades
+[@bohn2019natural]. An interesting case in question may be Pars Pro Toto
+in the graphic domain: part-whole relationships on the level of
+geometric figures could be an ideal target for an investigation into
+slightly abstract symbol-reference relationships as shape recognition
+and naming are robust in the third and fourth year [@ZAMBRZYCKA2017144;
+@verdine2017shape; @verdine2016shape] and the ability to mentally
+complete canonical geometric shapes is already nascent in early infancy
+[@kellman1983perception; @valenza2006perceptual], yet there is currently
+no data on when children may be able to use pars pro toto cues in an
+object-choice context.
 
 Another way of reducing iconicity may be the metaphorical use of form,
 such as using sharp or spiky drawings to refer to more square or round
@@ -3927,7 +3933,7 @@ Supported by early home environments [@daucourt2021home] and preschool
 curricula [@kucharz2012elementarbildung; @schmidt2021fruhpadagogische],
 children typically master the cardinality principle by age four
 [@silver2022environmental; @carey2019ontogenetic]. Preschoolers are well
-euqipped to successfully apply their implicit and explicit numerical
+equipped to successfully apply their implicit and explicit numerical
 knowledge in practical contexts, such as comparing magnitudes smaller
 than five [@wynn1990children].
 
@@ -3966,7 +3972,7 @@ valid testing ground, revealing whether young children can deploy their
 nascent analogical reasoning skills within a practical, goal-directed
 interaction.
 
-From this overview, several research desidarata emerge. The prevailing
+From this overview, several research desiderata emerge. The prevailing
 literature’s heavy reliance on similarity and iconicity in the context
 of graphic communication [@callaghan2015development] leaves the broader
 scope of children’s symbolic flexibility largely unexplored. Because
@@ -4008,22 +4014,21 @@ All stimuli, experiments, data and analyses are available at:
 In order to continuously trace the development of symbolic competences
 across the preschool years, for each study we aimed to test a minimum of
 two children per month of age between the third and the seventh birthday
-for a total of 96 participants balancing male and female participants.
-As children participated on the basis of availability and data were
-collected by several experimenter teams in parallel, the final samples
-slightly exceed this preregistered minimum sample size. The final sample
-approximates an equal distribution of male and female participants and
-aligns with conventions in the field in providing a minimum of 24
-participants per study and year of age. For an overview of the
-distribution of all children included in the analyses across the
-age-range see supplement figure 1. Figure 2 from the supplements shows
-the age-distribution of all children that participated but were not
-submitted to analyses due to the exclusion criteria outlined below. All
-participants were recruited in Leipzig, a medium-sized European city,
-and came from a predominantly white population of middle to high income
-families. Children were largely tested in day- and after school-care,
-and occasionally in the lab or at home. Data collection took place from
-June 2022 to February 2023.
+for a total of 96 participants. The final sample approximates an equal
+distribution of male and female participants and aligns with conventions
+in the field in providing a minimum of 24 participants per study and
+year of age. As children participated on the basis of availability and
+data were collected by several experimenter teams in parallel, the
+number of participants slightly exceed the preregistered minimum sample
+size. For an overview of the distribution of all children included in
+the analyses across the age-range see supplement figure 1. Figure 2 from
+the supplements shows the age-distribution of all children that
+participated but were not submitted to analyses due to the exclusion
+criteria outlined below. All participants were recruited in Leipzig, a
+medium-sized European city, and came from a predominantly white
+population of middle to high income families. Children were largely
+tested in day- and after school-care, and occasionally in the lab or at
+home. Data collection took place from June 2022 to February 2023.
 
 ## Setup and Procedure
 
@@ -4041,7 +4046,7 @@ knitr::include_graphics(knitr::plot_crop("../illustrations/setup complete.png"))
 
 ```
 
-*Familiarisation.* First, the experimental script introduced a cartoon
+*Familiarization.* First, the experimental script introduced a cartoon
 monkey. This character placed two cups on the bottom left and right side
 of the screen. After holding up a banana, one of the barriers was
 lifted, the banana was placed underneath one of the cups and the barrier
@@ -4063,13 +4068,14 @@ but their data was not submitted to analysis.
 cartoon character had an idea for a new game. Now, children were not
 allowed to see where the banana would be hidden, but that the monkey
 would help them find it. The cartoon character was established as a
-knowledgeable and benevolent partner in a cooperative coordination game.
-After the hiding phase, the monkey held up a piece of paper and a
-pencil. Pencil movement and a short scribble sound indicated that the
-monkey was drawing. Finally, participants were prompted with the phrase
-"Where is the banana?" and the monkey's drawing was placed in the center
-between the two hiding places. The drawing served as a cue to guide
-children's choice. Children's choice was acknowledged with neutral
+knowledgeable and benevolent partner in a cooperative coordination game
+("Coco is going to help you find the banana. Coco is drawing something
+for you."). After the hiding phase, the monkey held up a piece of paper
+and a pencil. Pencil movement and a short scribble sound indicated that
+the monkey was drawing. Finally, participants were prompted with the
+phrase "Where is the banana?" and the monkey's drawing was placed in the
+center between the two hiding places. The drawing served as a cue to
+guide children's choice. Children's choice was acknowledged with neutral
 feedback ("Ah, thank you") leading to the next trial (cf. figure
 \@ref(fig:plot-figure-setup) E).
 
@@ -4113,13 +4119,13 @@ The first box in Panel B shows all stimuli for the *Representation*
 condition. The first column exemplifies a set of targets (a blue square
 and circle) and cues (outline drawings of a square and circle). During
 test, participants are presented with four test trials per condition,
-each composed of the shapes of a single column. During testing, a child
-sees each trial combination only once and with only one of the two
-possible cues. Across children, the position (left/right) of the target,
-and the identity of the cue are counterbalanced. For the convenience of
-the reader, all stimuli employed across studies are presented with the
-results for each condition in figures \@ref(fig:plot-study1),
-\@ref(fig:plot-study2), and \@ref(fig:plot-study3) respectively.
+each composed of the shapes of a single column. A child sees each trial
+combination only once and with only one of the two possible cues. Across
+children, the position (left/right) of the target, and the identity of
+the cue are counterbalanced. For the convenience of the reader, all
+stimuli employed across studies are presented with the results for each
+condition in figures \@ref(fig:plot-study1), \@ref(fig:plot-study2), and
+\@ref(fig:plot-study3) respectively.
 
 ## Data Handling and Analyses
 
@@ -4132,8 +4138,8 @@ allows to estimate the probability of success while accounting for
 uncertainty and individual differences, and because it allows mapping
 linear predictors to a probability between 0 and 1 via a link function.
 Our analyses modeled children's binary choices (correct vs. incorrect)
-using fixed effects for condition, age as well as their interaction as
-primary predictors. In addition, we included a fixed effect of trial
+using fixed effects for condition and age, as well as their interaction
+as primary predictors. In addition, we included a fixed effect of trial
 number, to control for learning or fatigue, and a fixed effect of sex.
 To account for the possibility that some children may be better at the
 task than others, we included random intercepts for each participant. We
@@ -4213,32 +4219,31 @@ Analogy*.
 
 To make the four conditions in study 1 as comparable as possible, they
 are all employing the same target stimuli (cf. figure
-\@ref(fig:plot-study1), panels A and B). In addition the two cues within
-a trial can be seen as the round and square equivalents of each other.
-For the condition *Representation,* the graphical cue is an outline
-drawing, of the target. The second condition, *Pars Pro Toto,* refers to
-the targets by means of a part-whole relationship. This is still in
-principle representational but provides less information and may require
-children to complete the shapes according to gestalt principles. While
-this completion is easiest in the first two items of *Pars pro Toto* due
-to the canonical shapes (square, circle) it is less obvious with the
-less canonical shapes albeit they are vertically and horizontally
-symmetrical on purpose (cf. \@ref(fig:plot-study1) B, box 2). For
-comparability, *Pars Pro Toto* uses the same graphical cues as
-*Representation* but cut in half at a horizontal mid-line. A Stimulus
-set of an individual trial either uses the top or bottom half, but both
-variations are counterbalanced across trials. Two further conditions
-aimed to abstract from the original representational symbol-referent
-relationship by providing graphical analogies in form. In both *Simple
-Form Analogy* and *Complex Form Analogy* the cue was an abstract line
-drawing being more round or rectangular, thereby referring to either the
-round or rectangular equivalent of the target shapes. As this has not
-been done before in developmental research, our aim was to provide two
-versions of form analogies both supporting children's comprehension in
-distinct ways. In *Simple Form Analogy*, the cues are less dense and
-therefore simpler to grasp, whereas the more complex versions in
-*Complex Form Analogy* provide more information. For an overview of all
-stimuli employed in Study 1, see figure \@ref(fig:plot-study1) B.
+\@ref(fig:plot-study1), panels A and B). In addition, the two cues
+within a trial can be seen as the round and square equivalents of each
+other. In *Representation,* the graphical cue is an outline drawing of
+the target. The second condition, *Pars Pro Toto,* refers to the targets
+by means of a part-whole relationship. This requires children to
+complete the shapes according to gestalt principles. While this is
+easiest in the first two items of *Pars pro Toto* due to the canonical
+shapes (square, circle) it is less obvious with the less canonical
+shapes albeit they are vertically and horizontally symmetrical on
+purpose (cf. \@ref(fig:plot-study1) B, box 2). For comparability, *Pars
+Pro Toto* uses the same graphical cues as *Representation* but cut in
+half at a horizontal mid-line. A Stimulus set of an individual trial
+either uses the top or bottom half, but both variations are
+counterbalanced across trials. Two further conditions aimed to abstract
+from the original representational symbol-referent relationship by
+providing graphical analogies in form. In both *Simple Form Analogy* and
+*Complex Form Analogy* the cue was an abstract line drawing being more
+round or rectangular, thereby referring to either the round or
+rectangular equivalent of the target shapes. As this has not been done
+before in developmental research, our aim was to provide two versions of
+form analogies both supporting children's comprehension in distinct
+ways. In *Simple Form Analogy*, the cues are less dense and therefore
+simpler to grasp, whereas the more complex versions in *Complex Form
+Analogy* provide more information. For an overview of all stimuli
+employed in Study 1, see figure \@ref(fig:plot-study1) B.
 
 ## Participants and Sample
 
@@ -4379,10 +4384,14 @@ respective shapes being closer or further apart or sharing a position on
 a horizontal or vertical axis. For *Orientation of Object*, symbol and
 cue are aligned along the same axis. The final condition, *Orientation
 of Feature* employs cue and target shapes with a salient feature that is
-either oriented up- or downward. The preregistered hypothesis, assumed
-children to perform above chance first in *Orientation of Object*, then
-*Orientation of Feature*, *Absolute Position* and finally *Relative
-Position*.
+either oriented up- or downward. Because processing whole objects is
+generally less demanding than isolating constituent features, and
+because the position conditions require coordinating relations between
+objects or reference frames [@richland2006children; @rattermann1998more;
+@gentner2017analogy; @halford1998processing], our preregistered
+hypothesis predicted a developmental hierarchy with success first in
+*Orientation of Object*, followed by *Orientation of Feature*, *Absolute
+Position*, and finally *Relative Position*.
 
 ## Stimuli
 
@@ -4394,16 +4403,15 @@ For *Relative Position*, two trials present target stimuli that are
 closer together or further apart, as well as another two trials with
 target components being aligned on a horizontal or vertical axis. To
 ensure that cue and target are maximally distinct in all dimensions,
-cues and target items do not allign on the same axis. As in study 1,
-cues and targets are either round and rectangular shapes in these
-conditions. To convey a sense of direction in *Orientation of Object,*
-cues and targets feature elongated shapes that are aligned either on a
-horizontal, vertical, or diagonal axis with rising or falling slope. The
-shapes are distinct oblong elipses and rectangles or abstract shapes
-with more or less round or square features. For *Orientation of
-Feature*, targets and cues are either circles or squares with a salient
-feature like an opening or a dent. For an overview of all stimuli used
-in Study 2, see figure \@ref(fig:plot-study2).
+cues and target items do not align on the same axis. To convey a sense
+of direction in *Orientation of Object,* cues and targets feature
+elongated shapes that are aligned either on a horizontal, vertical, or
+diagonal axis with rising or falling slope. The shapes are distinct
+oblong ellipses and rectangles or abstract shapes with more or less
+round or square features. For *Orientation of Feature*, targets and cues
+are either circles or squares with a salient feature like an opening or
+a dent. For an overview of all stimuli used in Study 2, see figure
+\@ref(fig:plot-study2).
 
 ## Participants and Sample
 
@@ -4654,7 +4662,7 @@ the relative performance across conditions and the corresponding age of
 success is provided by plotting the model estimates (cf. figure
 \@ref(fig:plot-study3)).
 
-```{r plot-study3, fig.cap = "*Developmental Trajectories for all Conditions in Study 3.* Panels illustrate example stimulus combinations (distractor, cue, target) and results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level and the dots represent individual means. The coloured dots and annotation indicate when performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "95%"}
+```{r plot-study3, fig.cap = "*Stimuli and Developmental Trajectories for Study 3.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The colored dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/S3_complete.png"))
 
@@ -4678,8 +4686,8 @@ earlier in *Number of Object* than in *Size of Object* as hypothesized
 is negligible especially in the context of the four-year age-range that
 is considered here. While *Size of Object* demonstrates when children
 can grasp size analogies earlier, *Size of Feature* stands out as the
-most difficult condition in this series of studies. Success herer
-equires shifting attention from general appearance to nested object
+most difficult condition in this series of studies. Success here
+requires shifting attention from general appearance to nested object
 features and this ability develops considerably throughout the preschool
 years [@shepp1987development; @callaghan1990texture;
 @diamond2016preschool].
@@ -4729,7 +4737,7 @@ second condition, *Pars Pro Toto*, used the same targets as
 figures to guide children’s choices, which children can use at 38 months
 of age. This demonstrates that by three years of age, children’s
 symbolic competence is still fragile if additional steps such as the
-straightforward completion of a canonic shape is necessary for
+straightforward completion of a canonical shape is necessary for
 referential inference. Two further conditions aimed at abstracting from
 the cue while still retaining characteristic features of the target
 shapes with regard to an analogy in form, namely whether they were more
@@ -4738,10 +4746,10 @@ success at 50 months and 47 months. This is the first time a
 developmental setup features an abstract analogy in shape as a means of
 disambiguation in graphic communication. Taken together, study 1
 provides a within-subjects comparison of young children’s ability to
-read representational, metonymical and metaphorical uses of form in
-graphic communication, showing that while iconicity marks the entry
-point for the comprehension of graphic cues, more abstract
-representations are only accessible by the fourth year.
+read representational and metaphorical uses of form in graphic
+communication, showing that while iconicity marks the entry point for
+the comprehension of graphic cues, more abstract representations are
+only accessible by the fourth year.
 
 Study 2 explored whether children can infer symbol-referent
 relationships based on orientation and position. In *Absolute Position*,
@@ -4825,7 +4833,8 @@ evidence for sequences in the ages of success. Rather, children appear
 to master all symbol-referent relationships almost at the same point in
 time, which is highly indicative of a major shift in pragmatic and
 analogical reasoning skills in the fourth year that drive children’s
-ability for solving communicative coordination problems.
+ability for solving communicative coordination problems
+[@bohn2019young].
 
 To the extent that the studies presented above highlight the fourth
 birthday as a milestone in symbolic development, this connects to a rich
@@ -4881,7 +4890,7 @@ practical context of a versatile communicative coordination game
 requiring both relational reasoning and pragmatic inference
 [@cooperrider2017gesture].
 
-The research described here has limitations that future research needs
+The studies described here have limitations that future research needs
 to address. The combinations of outline drawings and geometric shapes we
 used here could also be presented in a standard match-to-sample
 procedure in which children are solely asked to find a match between cue
@@ -4889,9 +4898,9 @@ and target. When directly instructed to match stimuli and without the
 need for considering context, children may succeed earlier. To connect
 the work presented here with the literature on analogical reasoning,
 future work should present children with the same set of stimuli in the
-context of both paradigms. A general problem is that the project aims to
-establish robust developmental trajectories but does so only in a
-single, industrialized population [@henrich2010weirdest]. Future work
+context of both paradigms. Another general problem is that the project
+aims to establish robust developmental trajectories but does so only in
+a single, industrialized population [@henrich2010weirdest]. Future work
 needs to address the role of enculturation and specifically the
 influence of permanent exposure to symbolic and pictorial illustrations,
 writing and numbers or depictions featuring canonical shapes - ideally
@@ -4909,12 +4918,12 @@ the development of communication systems broadly construed
 [@bohn2019young; @raviv2018systematicity; @nolle2020language;
 @callaghan1999early]. The results here demonstrate that at least by the
 age of four, they would be apt receivers of symbolic creations whose
-reference is based on iconicity, metonymy, alignment, orientation, as
+reference is based on iconicity, synecdoche, alignment, orientation, as
 well as analogies in form, size and number.
 
 Taken together, our work provides one of the most comprehensive, robust
 and systematic investigations of young children’s ability to find
-meaning in unfamiliar graphic symbols and may provide a benchmark data
+meaning in unfamiliar graphic displays and may provide a benchmark data
 set for the development of preschoolers symbolic competence. Its
 straightforward streamlined design, conceptual breadth, robust sample,
 and open but fine-grained statistical approach offer a reliable
