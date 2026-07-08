@@ -1,0 +1,324 @@
+---
+title             : "The title"
+shorttitle        : "Title"
+
+author: 
+  - name          : "First Author"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+    role: # Contributorship roles (e.g., CRediT, https://credit.niso.org/)
+      - "Conceptualization"
+      - "Writing - Original Draft Preparation"
+      - "Writing - Review & Editing"
+  - name          : "Ernst-August Doelle"
+    affiliation   : "1,2"
+    role:
+      - "Writing - Review & Editing"
+      - "Supervision"
+
+affiliation:
+  - id            : "1"
+    institution   : "Wilhelm-Wundt-University"
+  - id            : "2"
+    institution   : "Konstanz Business School"
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
+  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
+  One sentence clearly stating the **general problem** being addressed by  this particular study.
+  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
+  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
+  One or two sentences to put the results into a more **general context**.
+  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : "r-references.bib"
+
+floatsintext      : no
+linenumbers       : yes
+draft             : no
+mask              : no
+
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+r_refs("r-references.bib")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+
+# CUT FROM MAIN MANUSCRIPT
+
+# introduction
+To explore the continuum from iconic to abstract symbolic relationships, researchers can systematically reduce the resemblance between cue and target. Rather than varying levels of pictorial realism [@callaghan2000factors], one can minimize similarity to isolate the conceptual foundations of the mapping. While using such "reduced" cues may appear to violate the Gricean maxims of quantity (providing sufficient information) and manner (avoiding obscurity) [@grice1991studies], children are well-accustomed to suboptimal communication in daily life. Through processes like streamlining and conventionalization, they frequently encounter and successfully navigate ambiguous utterances; indeed, they often master and enjoy the interpretive decoding required in communicative games like charades [@bohn2019natural]. An interesting case in question may be Pars Pro Toto in the graphic domain: part-whole relationships on the level of geometric figures could be an ideal target for an investigation into slightly abstract symbol-reference relationships as shape recognition and naming are robust in the third and fourth year [@ZAMBRZYCKA2017144; @verdine2017shape; @verdine2016shape] and the ability to mentally complete canonical geometric shapes is already nascent in early infancy [@kellman1983perception; @valenza2006perceptual], yet there is currently no data on when children may be able to use pars pro toto cues in an object-choice context.
+
+Another way of reducing iconicity may be the metaphorical use of form, such as using sharp or spiky drawings to refer to more square or round shapes [@knoeferle2017drives]. This phenomenon is central to research on sound symbolism within the lexicon [@bermudez2020sound; @sidhu2025sound], as well as in studies of action and gesture [@margiotoudi2020action; @bohn2019natural]. Robust across cultures [@cwiek2022bouba], this sensitivity emerges around 30 months for word-shape matching [@maurer2006shape; @imai2008sound; @fort2018symbouki] and by 36 months for matching actions with gestures [@bohn2019natural]. Despite these findings, it remains unknown whether children can utilize the global properties or "impressions" of a shape’s form to ground reference in the graphic domain alone.
+
+To minimize iconicity in symbol-referent relationships, cues and targets may share global properties like orientation and alignment rather than specific shapes. Children demonstrate an early sensitivity to these compositional principles in their drawings, maintaining realistic spatial configurations (e.g. placing wheels beneath a car when drawing) and avoiding figure overlap [@cox2005pictorial; @piaget1997mental; @luquet2001children]. However, there is virtually no data on how likely children are to use Gestalt principles as a basis for forming symbol-referent relationships, except for the use of relative position in the developing ability to read maps. While four-year-olds possess an intuitive grasp of relational directions (e.g., "behind" or "in front") in basic maps [@landau1986early], iconicity remains an important scaffold for their conceptual understanding [@liben2013role]. Furthermore, although preschoolers can use geometric map information for local navigation [@shusterman2008young], the ability to transfer these relational cues to large-scale spatial arrays does not stabilize until age six or seven [@uttal1989young; @blades1994development].
+
+Finally, alignment between cue and target may also be based on analogies in size and number disregarding shape. Size is a relative property of graphical content and requires a comparison, for example when drawing a big and small object or conveying size by making an object occupy a large part of the frame of reference [@cox2005pictorial]. Children are able to make spontaneous or productive size comparisons at three years of age and begin to use size words (big), size superlatives (biggest), or quantifiers (more, most) [@ferry2025bigger], yet young children are most accurate with bigger and only gradually gain competence with words like smaller, shorter or longer [@frausel2020origins]. When presented with an array of graphic stimuli, preschoolers can reliably point at, for example, the smallest or largest item in a set [@haun2011conformity]. One of the few studies using size as a way for grounding reference, investigated the role of the producers intentions in identifying concepts in ambiguous scribble drawings that were presented to participants as aiming to depict, for example, a small spider next to a big house. Children here made use of spatial analogies beginning at three years of age but appeared to benefit more as they turned four [@bloom1998intention]. Similarly, number is a relational primitive and a foundational element of graphic communication [@ifrah2000universal; @cooperrider2019career]. Sensitivity to number per se develops from an infant’s implicit grasp of proximate numerical differences [@starr2013number; @xu2007number; @carey2000origin] to an explicit understanding of numerical systems [@carey2019ontogenetic]. Supported by early home environments [@daucourt2021home] and preschool curricula [@kucharz2012elementarbildung; @schmidt2021fruhpadagogische], children typically master the cardinality principle by age four [@silver2022environmental; @carey2019ontogenetic]. Preschoolers are well equipped to successfully apply their implicit and explicit numerical knowledge in practical contexts, such as comparing magnitudes smaller than five [@wynn1990children].
+
+
+# conclusion
+
+Taken together, our work provides one of the most comprehensive, robust and systematic investigations of young children’s ability to find meaning in unfamiliar graphic displays and may provide a benchmark data set for the development of preschoolers symbolic competence. Its straightforward streamlined design, conceptual breadth, robust sample, and open but fine-grained statistical approach offer a reliable foundation for precisely the future work outlined here and already address an important caveat in our understanding of children's growing aptitude in graphic communication: the conceptual space spanning from iconic to abstract graphical representation.
+
+
+
+Finally, cognitive flexibility is not only key for viewing the same stimulus from different conceptual angles but also specifically for switching modes of interpretation across conditions [@cuevas2014longitudinal; @willoughby2012executive].
+
+<!-- The final sample approximates an equal -->
+<!-- distribution of male and female participants and aligns with conventions -->
+<!-- in the field in providing a minimum of 24 participants per study and -->
+<!-- year of age. A -->
+
+
+
+## Data Collection and Setup
+
+<!-- In order to continuously trace the development of symbolic competences -->
+<!-- across the preschool years, for each study we aimed to test a minimum of -->
+<!-- two children per month of age between the third and the seventh birthday -->
+<!-- for a total of 96 participants. The final sample approximates an equal -->
+<!-- distribution of male and female participants and aligns with conventions -->
+<!-- in the field in providing a minimum of 24 participants per study and -->
+<!-- year of age. As children participated on the basis of availability and -->
+<!-- data were collected by several experimenter teams in parallel, the -->
+<!-- number of participants slightly exceed the preregistered minimum sample -->
+<!-- size. For an overview of the distribution of all children included in -->
+<!-- the analyses across the age-range see supplement figure 1. Figure 2 from -->
+<!-- the supplements shows the age-distribution of all children that -->
+<!-- participated but were not submitted to analyses due to the exclusion -->
+<!-- criteria outlined below. All participants were recruited in Leipzig, a -->
+<!-- medium-sized European city, and came from a predominantly white -->
+<!-- population of middle to high income families. Children were largely -->
+<!-- tested in day- and after school-care, and occasionally in the lab or at -->
+<!-- home. Data collection took place from June 2022 to February 2023. -->
+
+<!-- ## Setup and Procedure -->
+<!-- During test sessions, a child and an experimenter sat down together to -->
+<!-- play a picture-book-style hiding game presented on a touch-screen -->
+<!-- laptop. Verbal instructions were played back by the experimental script. -->
+<!-- Experimenters supervised children and occasionally reacted with a fixed -->
+<!-- set of verbal prompts when children were not following the presentation -->
+<!-- ("Oh look, the game continues!"). See figure -->
+<!-- \@ref(fig:plot-figure-setup) A for an illustration of the setup. -->
+
+<!-- ```{r plot-figure-setup, fig.cap = "*Setup, Stimuli and Trial Structure.* Panel A shows the setup during testing. Experimenters were sitting behind the children in order to not distract them while supervising data collection. Panel B shows all elements contributing to an item of a possible test trial consisting of two choice options and one of two possible cues. Panel C exemplifies how two choice options and one of the cues were arranged for a specific test trial. Panel D shows a familiarization trial and Panel E shows a test trial.", fig.align = "center", echo = FALSE, out.width = "95%"} -->
+
+<!-- knitr::include_graphics(knitr::plot_crop("../illustrations/setup complete.png")) -->
+
+<!-- ``` -->
+<!-- **ALT-TEXT FIGURE 1** Illustrations of the experimental setup labelled A to E. Panel A shows how child and experimenter were seated during the study, Panel B and C illustrating how the stimuli were arranged on screen and Panels D and E providing a picture-sequence of the steps in the familiarization and test trials.  -->
+
+<!-- *Familiarization.* First, the experimental script introduced a cartoon -->
+<!-- monkey. This character placed two cups on the bottom left and right side -->
+<!-- of the screen. After holding up a banana, one of the barriers was -->
+<!-- lifted, the banana was placed underneath one of the cups and the barrier -->
+<!-- was lowered. Children were now prompted to touch the hiding place and in -->
+<!-- doing so the barrier of their choice was lifted to reveal the banana if -->
+<!-- they chose correctly. The experimental script provided feedback upon -->
+<!-- children's choice ("yes, great job!"; "No, that's not it. Let's try -->
+<!-- again!") during the familiarization (cf. figure -->
+<!-- \@ref(fig:plot-figure-setup) D). To ensure that children were familiar -->
+<!-- with the goal of the game and the touch interface, they first had to -->
+<!-- complete a set of four to eight familiarization trials with a success -->
+<!-- rate of 75%. In case a child did not reply correctly in three out of -->
+<!-- four trials, another four familiarization trials were provided. If the -->
+<!-- child was correct in six out of eight trials, she was included in the -->
+<!-- main sample. Children that did not succeed were allowed to participate -->
+<!-- but their data was not submitted to analysis. -->
+
+<!-- *Test.* The main phase of the study commenced with announcing that the -->
+<!-- cartoon character had an idea for a new game. Now, children were not -->
+<!-- allowed to see where the banana would be hidden, but that the monkey -->
+<!-- would help them find it. The cartoon character was established as a -->
+<!-- knowledgeable and benevolent partner in a cooperative coordination game -->
+<!-- ("Coco is going to help you find the banana. Coco is drawing something -->
+<!-- for you."). After the hiding phase, the monkey held up a piece of paper -->
+<!-- and a pencil. Pencil movement and a short scribble sound indicated that -->
+<!-- the monkey was drawing. Finally, participants were prompted with the -->
+<!-- phrase "Where is the banana?" and the monkey's drawing was placed in the -->
+<!-- center between the two hiding places. The drawing served as a cue to -->
+<!-- guide children's choice. Children's choice was acknowledged with neutral -->
+<!-- feedback ("Ah, thank you") leading to the next trial (cf. figure -->
+<!-- \@ref(fig:plot-figure-setup) E). -->
+
+<!-- A single trial lasted roughly 20 to 60 seconds, depending on how swiftly -->
+<!-- children chose. Each study presented four different experimental -->
+<!-- conditions with four trials each in a blocked order for a maximum of 16 -->
+<!-- test trials. Unique combinations of graphic displays were used on every -->
+<!-- trial. Test sessions lasted about 12 minutes in total. The order of -->
+<!-- conditions was counterbalanced across participants. Children -->
+<!-- occasionally wished to stop before completing all trials, resulting in -->
+<!-- minor deviations of the total number of trials per condition that were -->
+<!-- submitted to analysis. For an overview of the average number of trials -->
+<!-- participants received in each condition, see supplementary materials. In -->
+<!-- line with the preregistration, children had to complete a minimum of -->
+<!-- eight test trials to be included in analysis. -->
+
+<!-- ## Stimuli and Counterbalancing -->
+
+<!-- The context in the studies presented below is provided by a game of hide -->
+<!-- and seek and the options are two hiding places that are distinct by -->
+<!-- means of the graphic displays they are marked with. The aim was to test -->
+<!-- at what age children become able to spontaneously match cue and target -->
+<!-- along various dimensions of symbol-referent relationships. For this, the -->
+<!-- graphic displays presented as choice options were designed to saliently -->
+<!-- differ in one relevant dimension and to be as similar as possible with -->
+<!-- regard to other features. The cue, on the other hand, was a reduced and -->
+<!-- less straight-lined graphic display akin to a hand drawing that had -->
+<!-- something in common with one of the choice options and was thereby -->
+<!-- referring to it. In test trials, one of the choice options serves as a -->
+<!-- target and the other as a distractor. For counterbalancing, a second cue -->
+<!-- was designed to refer to the other choice option, such that across -->
+<!-- participants the same choice options serve equally often as targets and -->
+<!-- distractors. For an illustration of trial composition, see figure -->
+<!-- \@ref(fig:plot-figure-setup) B and C. For each of the conditions in the -->
+<!-- three studies below, four sets of stimuli were designed, consisting of -->
+<!-- two blue shapes serving as target or distractor, and two drawings that -->
+<!-- could serve as cues. Each condition covers a particular type of -->
+<!-- symbol-referent relationship via four stimulus versions with two -->
+<!-- variations each. For an example, consider figure \@ref(fig:plot-study1). -->
+<!-- The first box in Panel B shows all stimuli for the *Representation* -->
+<!-- condition. The first column exemplifies a set of targets (a blue square -->
+<!-- and circle) and cues (outline drawings of a square and circle). During -->
+<!-- test, participants are presented with four test trials per condition, -->
+<!-- each composed of the shapes of a single column. A child sees each trial -->
+<!-- combination only once and with only one of the two possible cues. Across -->
+<!-- children, the position (left/right) of the target, and the identity of -->
+<!-- the cue are counterbalanced. For the convenience of the reader, all -->
+<!-- stimuli employed across studies are presented with the results for each -->
+<!-- condition in figures \@ref(fig:plot-study1), \@ref(fig:plot-study2), and -->
+<!-- \@ref(fig:plot-study3) respectively. -->
+
+<!-- ## Data Handling and Analyses -->
+<!-- Upon touching the screen, children's choices were logged and immediately -->
+<!-- coded as correct or incorrect by the code running the stimulus -->
+<!-- presentation. To evaluate how children’s ability to interpret cues -->
+<!-- varies by age and condition, we employed Bayesian Logistic Generalized -->
+<!-- Linear Mixed Models (GLMMs). This mode of analysis is appropriate as it -->
+<!-- allows to estimate the probability of success while accounting for -->
+<!-- uncertainty and individual differences, and because it allows mapping -->
+<!-- linear predictors to a probability between 0 and 1 via a link function. -->
+<!-- Our analyses modeled children's binary choices (correct vs. incorrect) -->
+<!-- using fixed effects for condition and age, as well as their interaction -->
+<!-- as primary predictors. In addition, we included a fixed effect of trial -->
+<!-- number, to control for learning or fatigue, and a fixed effect of sex. -->
+<!-- To account for the possibility that some children may be better at the -->
+<!-- task than others, we included random intercepts for each participant. We -->
+<!-- also included random slopes for trial number, allowing potential effects -->
+<!-- of learning or fatigue to vary from child to child. To facilitate -->
+<!-- processing and interpretability, age and trial number were standardized -->
+<!-- to a natural mean of 0 prior to modeling. The full model notation was -->
+<!-- `correct ~ condition*z.age + z.trial + sex + (z.trial | subid)`. In line -->
+<!-- with best-practice conventions, we evaluated the relevance of age and -->
+<!-- condition for children’s performance prior to interpreting coefficients. -->
+<!-- For this, the full model outlined above was compared with a reduced -->
+<!-- model lacking the interaction of age and condition. To assess the fit -->
+<!-- and relative explanatory power of either model, we used Widely -->
+<!-- Applicable Information Criterion (WAIC) scores and weights -->
+<!-- [@mcelreath2018statistical] as well as the difference in Expected Log -->
+<!-- Predictive Density (ELPD) via the function *loo_compare* -->
+<!-- [@sivula2020uncertainty]. Across all studies, the preregistered full -->
+<!-- model proved superior or equally predictive. Model estimates were -->
+<!-- inspected for the different predictors including their 95% Credible -->
+<!-- Interval (CrI). In each study, the condition hypothesized as the most -->
+<!-- simple was set as the reference level within conditions. All models were -->
+<!-- implemented in Stan [@RStan] via the function *brm* of the package -->
+<!-- *brms* [@burkner2017brms]. -->
+
+<!-- In order to answer our main research question of when children -->
+<!-- systematically perform above chance in each condition, we followed the -->
+<!-- approach of House and colleagues [@House2013ontogeny] and plotted the -->
+<!-- model estimates as a smoothed curve surrounded by Credible Intervals -->
+<!-- (CrI). We generated developmental trajectories with 95% CrIs from the -->
+<!-- posterior predicted distribution via the function *fitted* and plotted -->
+<!-- them with children's age on the horizontal axis and the probability of -->
+<!-- correct choices on the vertical axis. Chance level was marked via a 50% -->
+<!-- chance line for orientation. Children as a group were considered to -->
+<!-- perform above chance only when the lower bound of the 95% CrI no longer -->
+<!-- overlapped with the 50% chance line (e.g. figures -->
+<!-- \@ref(fig:plot-study1), \@ref(fig:plot-study2), and -->
+<!-- \@ref(fig:plot-study3)). -->
+
+<!-- All analyses and our hypotheses about the relative difficulty of -->
+<!-- conditions were preregistered prior to data collection. However, the -->
+<!-- specific age-point predictions are exploratory, and our use of ELPD for -->
+<!-- model comparison [@sivula2020uncertainty] represents a modern refinement -->
+<!-- over the methods available at the time of preregistration. To -->
+<!-- additionally evaluate variability at the level of the items tested, -->
+<!-- additional exploratory analyses included item level random effects -->
+<!-- (Model notation -->
+<!-- `correct ~ condition*z.age +z.trial +z.sex +(z.trial|id) +(z.age|item)`). -->
+<!-- For brevity, tables outlining the coefficients for the final models were -->
+<!-- moved to the supplementary materials along with the exploratory -->
+<!-- item-level analyses outlined above. The supplements also provide -->
+<!-- conventional analyses binning participants according to their age in -->
+<!-- years for readers that are less familiar with the analyses described -->
+<!-- above. In the supplements, two-tailed one-sample t-tests with a chance -->
+<!-- level set to .5 were computed for participants binned according to year -->
+<!-- of age. Here, Cohen’s *d* is provided as a standardized effect size for -->
+<!-- significance testing. -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+# References
+
+::: {#refs custom-style="Bibliography"}
+:::
