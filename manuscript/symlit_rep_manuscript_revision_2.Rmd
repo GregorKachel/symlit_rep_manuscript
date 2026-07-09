@@ -3768,8 +3768,8 @@ visual symbols prior to literacy.
 
 The development of symbolic understanding - encompassing language,
 gesture, and symbolic artifacts - is a cornerstone of human
-enculturation and a hallmark of the cognitive capacities defining the
-human mind [@Tomasello2014natural; @Vygotsky1980mind]. Within this
+enculturation and a hallmark of cognitive capacities defining the human
+mind [@Tomasello2014natural; @Vygotsky1980mind]. Within this
 developmental trajectory, the acquisition of oral language and the
 subsequent mastery of literacy [@Dehaene2009reading; @Bruner1996culture;
 @olson1994world] represent two of the most transformative milestones in
@@ -3946,9 +3946,8 @@ per month of age between the third and the seventh birthday for a total
 of 96 participants. As children participated on the basis of
 availability and data were collected by several experimenter teams in
 parallel, the number of participants slightly exceed the preregistered
-minimum sample size. In study 1, sample of
-`r rep.age.table.data["study1", "N"]` children (M =
-`r rep.age.table.data["study1", "Mean"]` months, SD =
+minimum sample size. A sample of `r rep.age.table.data["study1", "N"]`
+children (M = `r rep.age.table.data["study1", "Mean"]` months, SD =
 `r rep.age.table.data["study1", "SD"]` months, range
 `r rep.age.table.data["study1", "Min"]` -
 `r rep.age.table.data["study1", "Max"]` months;
@@ -3977,7 +3976,7 @@ took place from June 2022 to February 2023. For an overview and
 comparison of the distribution of all children included in the analyses
 of studies 1-3, see supplement figure 1. Figure 2 from the supplements
 shows the age-distribution of all children that participated but were
-not submitted to analyses due to the exclusion criteria outlined below.
+not submitted to analyses due to the exclusion criteria outlined above.
 
 ## Setup and Procedure
 
@@ -3995,11 +3994,7 @@ knitr::include_graphics(knitr::plot_crop("../illustrations/setup complete.png"))
 
 ```
 
-**ALT-TEXT FIGURE 1** *A set of illustrations labelled A to E with panel
-A showing how child and experimenter were seated during the study, Panel
-B and C illustrating how the stimuli were arranged on screen and Panels
-D and E providing a picture-sequence of the steps in the familiarization
-and test trials.*
+**ALT-TEXT FIGURE 1** *A set of illustrations labelled A to E with panel A showing how child and experimenter were seated during the study, Panel B and C illustrating how the stimuli were arranged on screen and Panels D and E providing a picture-sequence of the steps in the familiarization and test trials.*
 
 *Familiarization.* First, the experimental script introduced a cartoon
 monkey. This character placed two cups on the bottom left and right side
@@ -4055,7 +4050,7 @@ choice-options in the hiding game were designed to saliently differ in
 one relevant dimension and to be as similar as possible with regard to
 other features. The cues were reduced and less straight-lined graphic
 displays akin to hand drawings and matching either choice option. Across
-participants the same choice options serve equally often as targets and
+participants the same choice options served equally often as targets and
 distractors. Across children, the position (left/right) of the target,
 and the identity of the cue were counterbalanced. For an illustration of
 trial composition, see figure \@ref(fig:plot-figure-setup) B and C. For
@@ -4069,15 +4064,15 @@ possible cues.
 
 To make the four conditions in study 1 as comparable as possible, they
 were all employing the same target stimuli (cf. figure
-\@ref(fig:plot-study1), panels A and B). In the condition
-*Representation,* the graphical cue is an outline drawing of the target.
-The second condition, *Pars Pro Toto,* refers to the targets by means of
-a part-whole relationship. This requires children to complete the shapes
-according to gestalt principles. While this is easiest in the first two
-items of *Pars pro Toto* due to the canonical shapes (square, circle) it
-is less obvious with the less canonical shapes albeit they are
-vertically and horizontally symmetrical on purpose (cf.
-\@ref(fig:plot-study1) B, box 2). Two further conditions aimed to
+\@ref(fig:plot-study1stimuli)). In the condition
+*Representation,* the graphical cue was an outline drawing of the
+target. The second condition, *Pars Pro Toto,* refered to the targets by
+means of a part-whole relationship. This required children to complete
+the shapes according to gestalt principles. While this was easiest in
+the first two items of *Pars pro Toto* due to the canonical shapes
+(square, circle) it was less obvious with the less canonical shapes
+albeit they were vertically and horizontally symmetrical on purpose (cf.
+\@ref(fig:plot-study1stimuli) B, box 2). Two further conditions aimed to
 abstract from the original representational symbol-referent relationship
 by providing graphical analogies in form. In both *Simple Form Analogy*
 and *Complex Form Analogy* the cue was an abstract line drawing being
@@ -4086,9 +4081,15 @@ rectangular equivalent of the target shapes. As this has not been done
 before in developmental research, our aim was to provide two versions of
 form analogies both supporting children's comprehension in distinct
 ways. In *Simple Form Analogy*, the cues are less dense and therefore
-simpler to grasp, whereas the more complex versions in *Complex Form
-Analogy* provide more information. For an overview of all stimuli
-employed in Study 1, see figure XXX \@ref(fig:plot-study1) B.
+simpler to grasp, whereas the more complex versions in *Complex Form Analogy* provide more information. For an overview of all stimuli employed in Study 1, see figure \@ref(fig:plot-study1stimuli).
+
+```{r plot-study1stimuli, fig.cap = "*Stimuli for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), and (B) all items of the four conditions.", fig.align = "center", echo = FALSE, out.width = "95%"}
+
+knitr::include_graphics(knitr::plot_crop("../illustrations/heat_complete.png"))
+
+```
+
+**ALT-TEXT FIGURE \@ref(fig:plot-study1stimuli)** *A panel of illustrations of the stimulus material used in study 1. The top-row shows an example for a specific trial (cue, target, distractor), the second row has 4x4 matrices with all stimuli of the conditions.*
 
 ## Data Handling and Analyses
 
@@ -4135,7 +4136,7 @@ children's age on the horizontal axis and the probability of correct
 choices on the vertical axis. Chance level was marked via a 50% chance
 line for orientation. Children as a group were considered to perform
 above chance only when the lower bound of the 95% CrI no longer
-overlapped with the 50% chance line (e.g. figures XXX
+overlapped with the 50% chance line (e.g. figures
 \@ref(fig:plot-study1), \@ref(fig:plot-study2), and
 \@ref(fig:plot-study3)). Thereby, we can estimate a month of age for
 each condition that anchors an approximate developmental window during
@@ -4198,21 +4199,15 @@ clear effect on performance ($\beta$ =
 `r S1.full.coef["z.trial", "q97.5"]`]), suggesting no evidence for
 learning or fatigue throughout the test session. For a side-by-side
 comparison of the developmental trajectories in the four conditions of
-study 1 and estimates for the ages of success, see figure
-\@ref(fig:plot-study1).
+study 1 and estimates for the ages of success, see figure \@ref(fig:plot-study1).
 
-```{r plot-study1, fig.cap = "*Stimuli and Developmental Trajectories for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The colored dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "95%"}
+```{r plot-study1, fig.cap = "*Developmental Trajectories for Study 1.* Transparent dots represent individual means for participants. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level. The colored dots and annotations indicate when children's performance exceeds chance level. Overlays provide example stimuli for each condition.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/S1_complete.png"))
 
 ```
 
-**ALT-TEXT FIGURE 2** A panel of illustrations providing examples and
-results for all four experimental conditions in study 1. The top-row
-shows an example for a specific trial (cue, target, distractor), the
-second row has 4x4 matrices with all stimuli of the conditions, and the
-bottom row indicates the developmental trajectories by plotting the
-proportion of correct choices against children's ages.
+**ALT-TEXT FIGURE \@ref(fig:plot-study1)** *A panel of illustrations providing results and example stimuli for all four experimental conditions in study 1. Smoothed lines show developmental trajectories as the proportion of correct choices against children's ages.*
 
 ## Discussion
 
@@ -4231,7 +4226,7 @@ iconic representation. As the pragmatics of the task are identical
 across conditions, delayed success with other stimuli is unlikely to be
 due to pragmatic inference but rather an inability to grasp the
 symbol-referent-relationship in question. When providing less
-information as in *Pars Pro Toto,* children succeed later at about
+information as in *Pars Pro Toto,* children succeed at about
 `r p1$months[p1$condition == "Pars Pro Toto"]` months. The interaction
 with age shows that performance improves more quickly over time. In the
 more abstract conditions *Simple Form Analogy* and *Complex Form
@@ -4240,22 +4235,22 @@ Analogy*, preschoolers meet criterion at approximately
 `r p1$months[p1$condition == "Complex Form Analogy"]` months
 respectively. While both are still based in iconicity, in so far as
 their interpretation involves a sense of resemblance with regard to
-their shape [@winter2026defining], they are quite abstract and demanding
-at the same time. With regard to the influence of surface features,
-group level success occurs slightly earlier with the reduced cues
-employed in *Simple Form Analogy* [@richland2006children]. As such,
-these findings provide estimates for developmental windows when mastery
-of these symbol-referent-relationships is likely to occur: around the
-third birthday for the highly iconic conditions and around the fourth
-birthday for analogies in form. Finally, the results are perfectly in
-line with the hypothesized developmental succession of group level
-success coming to pass first with *Representation*, then *Pars Pro
-Toto*, *Simple Form Analogy* and *Complex Form Analogy*.
+their shape [@winter2026defining], they are quite abstract and
+demanding. With regard to the influence of surface features, group level
+success occurs slightly earlier with the reduced cues employed in
+*Simple Form Analogy* [@richland2006children]. As such, these findings
+provide estimates for developmental windows when mastery of these
+symbol-referent-relationships is likely to occur: around the third
+birthday for the highly iconic conditions and around the fourth birthday
+for analogies in form. Finally, the results are perfectly in line with
+the hypothesized developmental succession of group level success coming
+to pass first with *Representation*, then *Pars Pro Toto*, *Simple Form
+Analogy* and *Complex Form Analogy*.
 
 # Study 2
 
-Study 2 continues to trace the development symbolic competencies across
-the preschool-years while reducing iconicity in the
+Study 2 continues to trace the development of symbolic competencies
+across the preschool-years while reducing iconicity in the
 symbol-referent-relationships. Here, the experimental conditions employ
 different shapes for both cue and target stimuli but draw on
 gestalt-principles like figure-ground-relationship, continuity and
@@ -4308,18 +4303,27 @@ analysis.
 shapes as cue and target (e.g. circle vs. square, cross). In *Absolute
 Position* target positions were placed in top and bottom, or central and
 peripheral conditions in half of trails. For *Relative Position*, two
-trials present target stimuli that are closer together or further apart,
-as well as another two trials with target components being aligned on a
-horizontal or vertical axis. To ensure that cue and target are maximally
-distinct in all dimensions, cues and target items do not align on the
-same axis. To convey a sense of direction in *Orientation of Object,*
-cues and targets feature elongated shapes that are aligned either on a
-horizontal, vertical, or diagonal axis with rising or falling slope. The
-shapes are distinct oblong ellipses and rectangles or less regular
-shapes with more or less round or square features. For *Orientation of
-Feature*, targets and cues are either circles or squares with a salient
-feature like an opening or a dent. For an overview of all stimuli used
-in Study 2, see figure \@ref(fig:plot-study2).
+trials present target stimuli that were closer together or further
+apart, as well as another two trials with target components being
+aligned on a horizontal or vertical axis. To ensure that cue and target
+are maximally distinct in all dimensions, cues and target items did not
+align on the same axis. To convey a sense of direction in *Orientation
+of Object,* cues and targets featured elongated shapes that were aligned
+either on a horizontal, vertical, or diagonal axis with rising or
+falling slope. The shapes were distinct oblong ellipses and rectangles
+or less regular shapes with more or less round or square features. For
+*Orientation of Feature*, targets and cues were either circles or
+squares with a salient feature like an opening or a dent. For an
+overview of all stimuli used in Study 2, see figure
+\@ref(fig:plot-study2stimuli).
+
+```{r plot-study2stimuli, fig.cap = "*Stimuli for Study 2.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), and (B) all items of the four conditions.", fig.align = "center", echo = FALSE, out.width = "95%"}
+
+knitr::include_graphics(knitr::plot_crop("../illustrations/heat_complete.png"))
+
+```
+
+**ALT-TEXT FIGURE \@ref(fig:plot-study2stimuli)** *A panel of illustrations of the stimulus material used in Study 2. The top-row shows an example for a specific trial (cue, target, distractor), the second row has 4x4 matrices with all stimuli of the conditions.*
 
 ## Results
 
@@ -4353,18 +4357,13 @@ developmental patterns for all conditions. For a side-by-side comparison
 of the developmental trajectories and estimates for ages of group-level
 success, see figure \@ref(fig:plot-study2).
 
-```{r plot-study2, fig.cap = "*Stimuli and Developmental Trajectories for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The colored dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "95%"}
+```{r plot-study2, fig.cap = "*Developmental Trajectories for Study 2.* Transparent dots represent individual means for participants. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level. The colored dots and annotations indicate when children's performance exceeds chance level. Overlays provide example stimuli for each condition.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/S2_complete.png"))
 
 ```
 
-**ALT-TEXT FIGURE 3** A panel of illustrations providing examples and
-results for all four experimental conditions in study 2. The top-row
-shows an example for a specific trial (cue, target, distractor), the
-second row has 4x4 matrices with all stimuli of the conditions, and the
-bottom row indicates the developmental trajectories by plotting the
-proportion of correct choices against children's ages.
+**ALT-TEXT FIGURE \@ref(fig:plot-study2)** *A panel of illustrations providing results and example stimuli for all four experimental conditions in study 2. Smoothed lines show developmental trajectories as the proportion of correct choices against children's ages.*
 
 ## Discussion
 
@@ -4391,27 +4390,27 @@ these tasks around the fourth birthday.
 
 # Study 3
 
-The final study features symbol-referent relationships that are based on
-analogies in size or number without cues and targets sharing
+The final study features symbol-referent relationships that were based
+on analogies in size or number without cues and targets sharing
 similarities in other visual aspects, and while avoiding to draw on
 conventions in graphic communication. In order to correctly interpret
-the symbol-referent relationships employed here, children need to focus
-on structural features of the graphical displays. Such processes can be
-fostered or obstructed by surface level features of the stimuli at hand
-which makes it harder to assess whether the age at which children master
-a task - our primary aim of investigation - depends more on the ability
-to generally form symbol-referent relationships from analogies or from
-children's developing ability to process visual complexity. The two base
-conditions of study three are *Size of Object* and *Size of Number.*
-Here the cues refer to a target shape as a whole via an analogy in size
-or number. As a continuous magnitude, size may be easier to grasp and
-compare for children than discrete magnitudes [@leibovich2017sense].
-They are complemented by the conditions *Size of Feature* and *Number of
-Feature* in which the cues refer to a salient aspect of the target
-stimuli. In these cases, extracting relevant information is arguably
-more demanding. Children need to shift attention from a holistic
-apprehension to exploring specific aspects in isolation, which should
-make feature tasks more demanding [@callaghan1990texture;
+the symbol-referent relationships employed here, children needed to
+focus on structural features of the graphical displays. Such processes
+can be fostered or obstructed by surface level features of the stimuli
+at hand which makes it harder to assess whether the age at which
+children master a task - our primary aim of investigation - depends more
+on the ability to generally form symbol-referent relationships from
+analogies or from children's developing ability to process visual
+complexity. The two base conditions of study 3 are *Size of Object* and
+*Size of Number.* Here the cues refered to a target shape as a whole via
+an analogy in size or number. As a continuous magnitude, size may be
+easier to grasp and compare for children than discrete magnitudes
+[@leibovich2017sense]. Both are complemented by the conditions *Size of
+Feature* and *Number of Feature* in which the cues refered to a salient
+aspect of the target stimuli. In these cases, extracting relevant
+information is arguably more demanding. Children need to shift attention
+from a holistic apprehension to exploring specific aspects in isolation,
+which should make feature tasks more demanding [@callaghan1990texture;
 @shepp1987development; @diamond2016preschool]. The overall performance
 across the ages as well as the relative offset in the age at which
 children solve a task based on symbol-referent relationships targeting
@@ -4453,15 +4452,15 @@ analysis.
 
 ## Stimuli
 
-In *Size of Object* the targets in a each trial are identical shapes
-that are either small or large with regard to the frame they are
+In *Size of Object* the targets in a each trial were identical shapes
+that were either small or large with regard to the frame they are
 presented in. To make cue and target shapes as distinct as possible they
-are again employing either squares or circles respectively or less
+were again employing either squares or circles respectively or less
 canonical shapes such as a random scribble or straight lines (cf. figure
-\@ref(fig:plot-study3) B). For comparability, *Size of Feature* employs
+\@ref(fig:plot-study3stimuli) B). For comparability, *Size of Feature* employed
 the same cues as *Size of Object*, but features target shapes with
 either a relatively large or small void, opening, or protrusion. In
-*Number of Object*, cues and targets are composed of different shapes
+*Number of Object*, cues and targets were composed of different shapes
 with some being simple line drawings. The displayed quantities were 1
 versus 3, and 2 versus 4. Three- and four-year-olds can reliably
 distinguish these magnitudes explicitly and implicitly without counting
@@ -4472,10 +4471,16 @@ the magnitudes three and four as if outlining irregular shapes. By
 contrast, the corresponding cues were aligned along a vertical of
 horizontal axis. For comparability, *Number of Feature* employs the same
 cues as *Number of Object*. To evoke a sense of quantity in the closed
-forms serving as choice options, the target shapes in *Number of
-Feature* either have salient protrusions, or partial areas resulting
-from incisions. For an overview of all stimuli presented in Study 3, see
-figure \@ref(fig:plot-study3).
+forms serving as choice options, the target shapes in *Number of Feature* either had salient protrusions, or partial areas resulting from incisions. For an overview of all stimuli presented in Study 3, see
+figure \@ref(fig:plot-study3stimuli).
+
+```{r plot-study3stimuli, fig.cap = "*Stimuli for Study 3.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), and (B) all items of the four conditions.", fig.align = "center", echo = FALSE, out.width = "95%"}
+
+knitr::include_graphics(knitr::plot_crop("../illustrations/heat_complete.png"))
+
+```
+
+**ALT-TEXT FIGURE \@ref(fig:plot-study3stimuli)** *A panel of illustrations of the stimulus material used in Study 3. The top-row shows an example for a specific trial (cue, target, distractor), the second row has 4x4 matrices with all stimuli of the conditions.*
 
 ## Results
 
@@ -4516,18 +4521,13 @@ the relative performance across conditions and the corresponding
 estimates for the age of success is provided in figure
 \@ref(fig:plot-study3).
 
-```{r plot-study3, fig.cap = "*Stimuli and Developmental Trajectories for Study 3.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), (B) all items of the respective conditions and (C) results. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CIs. The dashed line demarcates chance level and the dots represent individual means. The colored dots and annotation indicate when children's performance exceeds chance level.", fig.align = "center", echo = FALSE, out.width = "95%"}
+```{r plot-study3, fig.cap = "*Developmental Trajectories for Study 3.* Transparent dots represent individual means for participants. Coloured lines indicate smoothed mean performance by age. Shaded areas represent 95% CrIs. The dashed line demarcates chance level. The colored dots and annotations indicate when children's performance exceeds chance level. Overlays provide example stimuli for each condition.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
 knitr::include_graphics(knitr::plot_crop("../illustrations/S3_complete.png"))
 
 ```
 
-**ALT-TEXT FIGURE 4** A panel of illustrations providing examples and
-results for all four experimental conditions in study 3. The top-row
-shows an example for a specific trial (cue, target, distractor), the
-second row has 4x4 matrices with all stimuli of the conditions, and the
-bottom row indicates the developmental trajectories by plotting the
-proportion of correct choices against children's ages.
+**ALT-TEXT FIGURE \@ref(fig:plot-study3)** *A panel of illustrations providing results and example stimuli for all four experimental conditions in study 3. Smoothed lines show developmental trajectories as the proportion of correct choices against children's ages.*
 
 ## Discussion
 
@@ -4549,7 +4549,7 @@ negligible especially as the estimates for months of success should be
 interpreted as indicators for relevant developmental age-ranges. While
 *Size of Object* demonstrates when children can grasp size analogies,
 *Size of Feature* stands out as the most difficult condition in the
-series of studies reported above. Success here requires shifting
+series of studies reported above. Success here required shifting
 attention from general appearance to nested object features and this
 ability develops considerably throughout the preschool years
 [@shepp1987development; @callaghan1990texture; @diamond2016preschool].
@@ -4578,10 +4578,10 @@ streamlined procedure across various types of visual analogies.
 
 By design, the three studies provide a conservative test case of
 children's ability to find meaning in the symbol-referent relationships
-presented. Participants are never directly instructed to search specific
-similarities across cue and target nor prompted to find matches per se
-as is commonly done in match-to-sample designs (e.g. "Which ones go
-together?"). Rather children were told that their interlocutor would
+presented. Participants were never directly instructed to search
+specific similarities across cue and target nor prompted to find matches
+per se as is commonly done in match-to-sample designs (e.g. "Which ones
+go together?"). Rather children were told that their interlocutor would
 like to help them find an item in a game of hide and seek and would
 create a drawing for them. Children then had to infer that the
 interlocutors drawings may be read as novel symbolic cues referring to
