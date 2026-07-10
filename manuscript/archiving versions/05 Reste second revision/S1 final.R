@@ -1,9 +1,8 @@
-
 # plotexample Representation.png
-image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[1], ".png")) 
-image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[2], ".png"))
-image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[3], ".png")) 
-image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[4], ".png")) 
+image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[1], ".png")) 
+image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[2], ".png"))
+image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[3], ".png")) 
+image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[4], ".png")) 
 
 image_1_grob <- rasterGrob(image_1, interpolate = TRUE)
 image_2_grob <- rasterGrob(image_2, interpolate = TRUE)
@@ -13,45 +12,45 @@ image_4_grob <- rasterGrob(image_4, interpolate = TRUE)
 # plot1 -----------------------------------------
 
 # 1. Label definieren
-label <- paste(levels(d2$condition)[1])
+label <- paste(levels(d1$condition)[1])
 
 # 2. Plot erstellen
 plot1 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
   geom_point(
-    data = d2 %>% filter(condition == levels(condition)[1]),
+    data = d1 %>% filter(condition == levels(condition)[1]),
     aes(x = ageinyears, y = mean, colour = colour),
     alpha = 0.5, shape = 1, size = 2
   ) +
   
   geom_smooth(
-    data = f2 %>% filter(condition == levels(condition)[1]),
+    data = f1 %>% filter(condition == levels(condition)[1]),
     aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
   geom_point(
-    data = p2 %>% filter(condition == levels(condition)[1]),
+    data = p1 %>% filter(condition == levels(condition)[1]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
   geom_point(
-    data = p2 %>% filter(condition == levels(condition)[1]),
+    data = p1 %>% filter(condition == levels(condition)[1]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
   geom_text(
-    data = p2 %>% filter(condition == levels(condition)[1]),
+    data = p1 %>% filter(condition == levels(condition)[1]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
     angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
-    data = p2 %>% filter(condition == levels(condition)[1]),
+    data = p1 %>% filter(condition == levels(condition)[1]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
     angle = 90, size = 4, vjust = 0.5
@@ -77,7 +76,7 @@ plot1 <- ggplot() +
     legend.position = "none",
     panel.grid.minor = element_blank(),
     # axis.title.y = element_blank(),
-    axis.title.x = element_blank(),
+     axis.title.x = element_blank(),
     
     plot.title = element_text(face = "bold", hjust = 0.5, size = 14) 
     
@@ -92,44 +91,44 @@ plot1 <- ggplot() +
 # plot2 ---------------
 
 # 1. Label definieren
-label <- paste(levels(d2$condition)[2])
+label <- paste(levels(d1$condition)[2])
 # 2. Plot erstellen
 plot2 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
   geom_point(
-    data = d2 %>% filter(condition == levels(condition)[2]),
+    data = d1 %>% filter(condition == levels(condition)[2]),
     aes(x = ageinyears, y = mean, colour = colour),
     alpha = 0.5, shape = 1, size = 2
   ) +
   
   geom_smooth(
-    data = f2 %>% filter(condition == levels(condition)[2]),
+    data = f1 %>% filter(condition == levels(condition)[2]),
     aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
   geom_point(
-    data = p2 %>% filter(condition == levels(condition)[2]),
+    data = p1 %>% filter(condition == levels(condition)[2]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
   geom_point(
-    data = p2 %>% filter(condition == levels(condition)[2]),
+    data = p1 %>% filter(condition == levels(condition)[2]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
   geom_text(
-    data = p2 %>% filter(condition == levels(condition)[2]),
+    data = p1 %>% filter(condition == levels(condition)[2]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
     angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
-    data = p2 %>% filter(condition == levels(condition)[2]),
+    data = p1 %>% filter(condition == levels(condition)[2]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
     angle = 90, size = 4, vjust = 0.5
@@ -155,7 +154,7 @@ plot2 <- ggplot() +
     legend.position = "none",
     panel.grid.minor = element_blank(),
     # axis.title.y = element_blank(),
-    axis.title.x = element_blank(),
+     axis.title.x = element_blank(),
     
     plot.title = element_text(face = "bold", hjust = 0.5, size = 14) 
     
@@ -169,44 +168,44 @@ plot2 <- ggplot() +
 # plot3 ----------------------
 
 # 1. Label definieren
-label <- paste(levels(d2$condition)[3])
+label <- paste(levels(d1$condition)[3])
 # 2. Plot erstellen
 plot3 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
   geom_point(
-    data = d2 %>% filter(condition == levels(condition)[3]),
+    data = d1 %>% filter(condition == levels(condition)[3]),
     aes(x = ageinyears, y = mean, colour = colour),
     alpha = 0.5, shape = 1, size = 2
   ) +
   
   geom_smooth(
-    data = f2 %>% filter(condition == levels(condition)[3]),
+    data = f1 %>% filter(condition == levels(condition)[3]),
     aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
   geom_point(
-    data = p2 %>% filter(condition == levels(condition)[3]),
+    data = p1 %>% filter(condition == levels(condition)[3]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
   geom_point(
-    data = p2 %>% filter(condition == levels(condition)[3]),
+    data = p1 %>% filter(condition == levels(condition)[3]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
   geom_text(
-    data = p2 %>% filter(condition == levels(condition)[3]),
+    data = p1 %>% filter(condition == levels(condition)[3]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
     angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
-    data = p2 %>% filter(condition == levels(condition)[3]),
+    data = p1 %>% filter(condition == levels(condition)[3]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
     angle = 90, size = 4, vjust = 0.5
@@ -232,16 +231,16 @@ plot3 <- ggplot() +
     legend.position = "none",
     panel.grid.minor = element_blank(),
     # axis.title.y = element_blank(),
-    axis.title.x = element_blank(),
+     axis.title.x = element_blank(),
     # HIER OPTIONAL: Styling für den Titel (z. B. fett und zentriert
     plot.title = element_text(
-      face = "bold", 
-      hjust = 0.5, 
-      size = 14,
-      # t = top, r = right, b = bottom, l = left
-      margin = margin(t = 0, r = 0, b = 60, l = 0, unit = "pt") 
-    )
-  ) +
+        face = "bold", 
+        hjust = 0.5, 
+        size = 14,
+        # t = top, r = right, b = bottom, l = left
+        margin = margin(t = 0, r = 0, b = 60, l = 0, unit = "pt") 
+      )
+    ) +
   annotation_custom(
     grob = image_3_grob, 
     # Positionierung im Koordinatensystem des Hauptplots (x, y)
@@ -251,45 +250,45 @@ plot3 <- ggplot() +
 # plot4 --------------------
 
 # 1. Label definieren
-label <- paste(levels(d2$condition)[4])
+label <- paste(levels(d1$condition)[4])
 
 # 2. Plot erstellen
 plot4 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
   geom_point(
-    data = d2 %>% filter(condition == levels(condition)[4]),
+    data = d1 %>% filter(condition == levels(condition)[4]),
     aes(x = ageinyears, y = mean, colour = colour),
     alpha = 0.5, shape = 1, size = 2
   ) +
   
   geom_smooth(
-    data = f2 %>% filter(condition == levels(condition)[4]),
+    data = f1 %>% filter(condition == levels(condition)[4]),
     aes(x = age, y = Estimate, ymin = Q2.5, ymax = Q97.5, fill = colour, colour = colour),
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
   geom_point(
-    data = p2 %>% filter(condition == levels(condition)[4]),
+    data = p1 %>% filter(condition == levels(condition)[4]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
   geom_point(
-    data = p2 %>% filter(condition == levels(condition)[4]),
+    data = p1 %>% filter(condition == levels(condition)[4]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
   geom_text(
-    data = p2 %>% filter(condition == levels(condition)[4]),
+    data = p1 %>% filter(condition == levels(condition)[4]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
     angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
-    data = p2 %>% filter(condition == levels(condition)[4]),
+    data = p1 %>% filter(condition == levels(condition)[4]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
     angle = 90, size = 4, vjust = 0.5
@@ -316,7 +315,7 @@ plot4 <- ggplot() +
     panel.grid.minor = element_blank(),
     # axis.title.y = element_blank(),
     axis.title.x = element_blank(),
-    
+
     plot.title = element_text(face = "bold", hjust = 0.5, size = 14) 
     
   ) +
@@ -328,21 +327,59 @@ plot4 <- ggplot() +
 
 # combine -----------------
 library(patchwork)
-S2_complete <- plot1 | plot2 | plot3 | plot4 + 
+S1_complete <- plot1 | plot2 | plot3 | plot4 + 
   plot_layout(guides = "collect", axes = "collect")
 
 
 
-S2_complete[[2]] <- S2_complete[[2]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
-S2_complete[[3]] <- S2_complete[[3]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
-S2_complete[[4]] <- S2_complete[[4]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
+S1_complete[[2]] <- S1_complete[[2]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
+S1_complete[[3]] <- S1_complete[[3]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
+S1_complete[[4]] <- S1_complete[[4]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
 
 
-S2_complete <-S2_complete +
-  plot_annotation(
-    caption = "Age in Years", # This acts as your global X label
-    theme = theme(
-      plot.caption = element_text(size = rel(0.9), face = "bold", hjust = 0.52, margin = margin(t = 0))))
+S1_complete <-S1_complete +
+plot_annotation(
+  caption = "Age in Years", # This acts as your global X label
+  theme = theme(
+    plot.caption = element_text(size = rel(0.9), face = "bold", hjust = 0.52, margin = margin(t = 0))))
 
-S2_complete + canvas(width=27, height= 10, units="cm", dpi = 600)
+S1_complete + canvas(width=27, height= 10, units="cm", dpi = 600)
+
+
+# saving images ###############################
+
+ggsave(
+  filename = "../illustrations/S1_complete.pdf",
+  plot = S1_complete,
+  width = 27,
+  height = 10,
+  units = "cm",
+  dpi = 600)
+
+# shell.exec("../illustrations/S1_complete.pdf")
+
+ggsave(
+  filename = "./../illustrations/S1_complete.jpg",
+  plot = S1_complete,
+  width = 27,
+  height = 10,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S1_complete.png",
+  plot = S1_complete,
+  width = 27,
+  height = 10,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S1_complete.svg",
+  plot = S1_complete,
+  width = 27,
+  height = 10,
+  units = "cm",
+  dpi = 600)
+
 

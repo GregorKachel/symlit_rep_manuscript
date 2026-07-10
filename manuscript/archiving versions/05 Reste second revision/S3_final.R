@@ -328,21 +328,54 @@ plot4 <- ggplot() +
 
 # combine -----------------
 library(patchwork)
-S2_complete <- plot1 | plot2 | plot3 | plot4 + 
+S3_complete <- plot1 | plot2 | plot3 | plot4 + 
   plot_layout(guides = "collect", axes = "collect")
 
+S3_complete[[2]] <- S3_complete[[2]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
+S3_complete[[3]] <- S3_complete[[3]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
+S3_complete[[4]] <- S3_complete[[4]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
 
 
-S2_complete[[2]] <- S2_complete[[2]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
-S2_complete[[3]] <- S2_complete[[3]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
-S2_complete[[4]] <- S2_complete[[4]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
-
-
-S2_complete <-S2_complete +
+S3_complete <- S3_complete +
   plot_annotation(
     caption = "Age in Years", # This acts as your global X label
     theme = theme(
       plot.caption = element_text(size = rel(0.9), face = "bold", hjust = 0.52, margin = margin(t = 0))))
 
-S2_complete + canvas(width=27, height= 10, units="cm", dpi = 600)
+S3_complete + canvas(width=27, height= 10, units="cm", dpi = 600)
+
+
+ggsave(
+  filename = "../illustrations/S3_complete.pdf",
+  plot = S3_complete,
+  width = 27,
+  height = 10,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S3_complete.jpg",
+  plot = S3_complete,
+  width = 27,
+  height = 10,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S3_complete.png",
+  plot = S3_complete,
+  width = 27,
+  height = 10,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S3_complete.svg",
+  plot = S3_complete,
+  width = 27,
+  height = 10,
+  units = "cm",
+  dpi = 600)
+
+
 

@@ -1058,31 +1058,25 @@ p3  <- add_colour(p3)
 
 <!-- Plotting with stimuli -->
 
-```{r rep_S1_stim_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
-
-# load images ###################################
+```{r rep_S1_plot_final, echo=FALSE, eval=F, warning = F, message=F}
 
 # plotexample Representation.png
-image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[1], ".png"))
+image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[1], ".png")) 
 image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[2], ".png"))
-image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[3], ".png"))
-image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[4], ".png"))
-# stimuli Representation.png
-image_1_2 <- image_read(paste0("../illustrations/stimuli ", levels(d1$condition)[1], ".png"))
-image_2_2 <- image_read(paste0("../illustrations/stimuli ", levels(d1$condition)[2], ".png"))
-image_3_3 <- image_read(paste0("../illustrations/stimuli ", levels(d1$condition)[3], ".png"))
-image_4_4 <- image_read(paste0("../illustrations/stimuli ", levels(d1$condition)[4], ".png"))
-# create grobs
+image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[3], ".png")) 
+image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[4], ".png")) 
+
 image_1_grob <- rasterGrob(image_1, interpolate = TRUE)
 image_2_grob <- rasterGrob(image_2, interpolate = TRUE)
 image_3_grob <- rasterGrob(image_3, interpolate = TRUE)
 image_4_grob <- rasterGrob(image_4, interpolate = TRUE)
-image_1_2_grob <- rasterGrob(image_1_2, interpolate = TRUE)
-image_2_2_grob <- rasterGrob(image_2_2, interpolate = TRUE)
-image_3_2_grob <- rasterGrob(image_3_3, interpolate = TRUE)
-image_4_2_grob <- rasterGrob(image_4_4, interpolate = TRUE)
 
-# plot 1 #####################
+# plot1 -----------------------------------------
+
+# 1. Label definieren
+label <- paste(levels(d1$condition)[1])
+
+# 2. Plot erstellen
 plot1 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1098,58 +1092,69 @@ plot1 <- ggplot() +
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
-  # shape 21 uses both fill (inside) and colour (stroke)
   geom_point(
     data = p1 %>% filter(condition == levels(condition)[1]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
-  # constant black overlay: set outside aes()
   geom_point(
     data = p1 %>% filter(condition == levels(condition)[1]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
-  # text: move color/fontface outside aes()
   geom_text(
     data = p1 %>% filter(condition == levels(condition)[1]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
     data = p1 %>% filter(condition == levels(condition)[1]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   scale_colour_identity() +
   scale_fill_identity() +
-  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +labs(x = "Age", y = "Proportion Correct") +
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  
+  labs(title = label, x = "Age", y = "Proportion Correct") + 
+  
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3), clip = "off") +
+  
   theme_minimal(base_size = 13) +
   theme(
     plot.margin = margin(0, 0, 0, 0, "pt"),
     axis.ticks.length = unit(0.0, "pt"),
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1), # Hinweis: size ist in neueren ggplot-Versionen 'linewidth'
     strip.text = element_blank(),
     strip.background = element_blank(),
     axis.title = element_text(face = "bold", size = rel(0.8)),
     axis.text = element_text(size = rel(0.8)),
     legend.position = "none",
     panel.grid.minor = element_blank(),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank())
-  
+    # axis.title.y = element_blank(),
+     axis.title.x = element_blank(),
+    
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14) 
+    
+  ) +
+  annotation_custom(
+    grob = image_1_grob, 
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    xmin = 3, xmax = 7,  
+    ymin = 1.45)
 
+# plot2 ---------------
 
-plot1
-
-# plot 2 ##################
+# 1. Label definieren
+label <- paste(levels(d1$condition)[2])
+# 2. Plot erstellen
 plot2 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1165,55 +1170,68 @@ plot2 <- ggplot() +
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
-  # shape 21 uses both fill (inside) and colour (stroke)
   geom_point(
     data = p1 %>% filter(condition == levels(condition)[2]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
-  # constant black overlay: set outside aes()
   geom_point(
     data = p1 %>% filter(condition == levels(condition)[2]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
-  # text: move color/fontface outside aes()
   geom_text(
     data = p1 %>% filter(condition == levels(condition)[2]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
     data = p1 %>% filter(condition == levels(condition)[2]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   scale_colour_identity() +
   scale_fill_identity() +
   scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
-  labs(x = "Age", y = "Proportion Correct") +
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  
+  labs(title = label, x = "Age", y = "Proportion Correct") + 
+  
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3), clip = "off") +
+  
   theme_minimal(base_size = 13) +
   theme(
-    plot.margin = margin(0, 0, 0, 0, "pt"),
+    plot.margin = margin(0, 0, 0, 10, "pt"),
     axis.ticks.length = unit(0.0, "pt"),
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1), # Hinweis: size ist in neueren ggplot-Versionen 'linewidth'
     strip.text = element_blank(),
     strip.background = element_blank(),
     axis.title = element_text(face = "bold", size = rel(0.8)),
     axis.text = element_text(size = rel(0.8)),
     legend.position = "none",
     panel.grid.minor = element_blank(),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank())
+    # axis.title.y = element_blank(),
+     axis.title.x = element_blank(),
+    
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14) 
+    
+  ) +
+  annotation_custom(
+    grob = image_2_grob, 
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    xmin = 3, xmax = 7,  
+    ymin = 1.45)
 
-# plot 3 #########################
+# plot3 ----------------------
+
+# 1. Label definieren
+label <- paste(levels(d1$condition)[3])
+# 2. Plot erstellen
 plot3 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1229,57 +1247,74 @@ plot3 <- ggplot() +
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
-  # shape 21 uses both fill (inside) and colour (stroke)
   geom_point(
     data = p1 %>% filter(condition == levels(condition)[3]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
-  # constant black overlay: set outside aes()
   geom_point(
     data = p1 %>% filter(condition == levels(condition)[3]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
-  # text: move color/fontface outside aes()
   geom_text(
     data = p1 %>% filter(condition == levels(condition)[3]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
     data = p1 %>% filter(condition == levels(condition)[3]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   scale_colour_identity() +
   scale_fill_identity() +
   scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
-  labs(x = "Age", y = "Proportion Correct") +
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  
+  labs(title = label, x = "Age", y = "Proportion Correct") + 
+  
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3), clip = "off") +
+  
   theme_minimal(base_size = 13) +
   theme(
-    plot.margin = margin(0, 0, 0, 0, "pt"),
+    plot.margin = margin(0, 0, 0, 10, "pt"),
     axis.ticks.length = unit(0.0, "pt"),
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1), # Hinweis: size ist in neueren ggplot-Versionen 'linewidth'
     strip.text = element_blank(),
     strip.background = element_blank(),
     axis.title = element_text(face = "bold", size = rel(0.8)),
     axis.text = element_text(size = rel(0.8)),
     legend.position = "none",
     panel.grid.minor = element_blank(),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank())
+    # axis.title.y = element_blank(),
+     axis.title.x = element_blank(),
+    # HIER OPTIONAL: Styling für den Titel (z. B. fett und zentriert
+    plot.title = element_text(
+        face = "bold", 
+        hjust = 0.5, 
+        size = 14,
+        # t = top, r = right, b = bottom, l = left
+        margin = margin(t = 0, r = 0, b = 60, l = 0, unit = "pt") 
+      )
+    ) +
+  annotation_custom(
+    grob = image_3_grob, 
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    xmin = 3, xmax = 7,  
+    ymin = 1.45)
 
+# plot4 --------------------
 
+# 1. Label definieren
+label <- paste(levels(d1$condition)[4])
 
-# plot 4 #########################
+# 2. Plot erstellen
 plot4 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1295,89 +1330,82 @@ plot4 <- ggplot() +
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
-  # shape 21 uses both fill (inside) and colour (stroke)
   geom_point(
     data = p1 %>% filter(condition == levels(condition)[4]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
-  # constant black overlay: set outside aes()
   geom_point(
     data = p1 %>% filter(condition == levels(condition)[4]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
-  # text: move color/fontface outside aes()
   geom_text(
     data = p1 %>% filter(condition == levels(condition)[4]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
     data = p1 %>% filter(condition == levels(condition)[4]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   scale_colour_identity() +
   scale_fill_identity() +
   scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
-  labs(x = "Age", y = "Proportion Correct") +
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  
+  labs(title = label, x = "Age", y = "Proportion Correct") + 
+  
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3), clip = "off") +
+  
   theme_minimal(base_size = 13) +
   theme(
-    plot.margin = margin(0, 0, 0, 0, "pt"),
+    plot.margin = margin(0, 0, 0, 10, "pt"),
     axis.ticks.length = unit(0.0, "pt"),
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1), # Hinweis: size ist in neueren ggplot-Versionen 'linewidth'
     strip.text = element_blank(),
     strip.background = element_blank(),
     axis.title = element_text(face = "bold", size = rel(0.8)),
     axis.text = element_text(size = rel(0.8)),
     legend.position = "none",
     panel.grid.minor = element_blank(),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank())
+    # axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14) 
+    
+  ) +
+  annotation_custom(
+    grob = image_4_grob, 
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    xmin = 3, xmax = 7,  
+    ymin = 1.45)
+
+# combine -----------------
+library(patchwork)
+S1_complete <- plot1 | plot2 | plot3 | plot4 + 
+  plot_layout(guides = "collect", axes = "collect")
 
 
-# Combine plots #######################
 
-S1_complete <- ggdraw() +
-  draw_plot_label(label = "A", size = 13, x = 0, y = 0.89) +
-  draw_plot_label(label = "B", size = 13, x = 0, y = 0.67) +
-  draw_plot_label(label = "C", size = 13, x = 0, y = 0.275) +
-  draw_plot_label(label = "Target", size = 12, x = 0.02, y = 0.64, angle = 90 ) +
-  draw_plot_label(label = "Cue", size = 12, x = 0.02, y = 0.53, angle = 90) +
-  draw_plot_label(label = "Proportion Correct", size = 12, x = 0.02, y = 0.02, angle = 90) +
-  draw_plot_label(label = "Age in Years", size = 12, x = 0.44, y = 0.038) +
-  draw_plot_label(label = paste(levels(d1$condition)[1]), size = 13, x = 0.06, y = .99) +
-  draw_plot_label(label = paste(levels(d1$condition)[2]), size = 13, x = 0.305, y = .99) +
-  draw_plot_label(label = paste(levels(d1$condition)[3]), size = 13, x = 0.485, y = .99) +
-  draw_plot_label(label = paste(levels(d1$condition)[4]), size = 13, x = 0.7, y = .99) + 
-  # A - Top row example
-  draw_plot(image_1_grob, y = 0.78, x = 0.085, width = .19, height = .2) +
-  draw_plot(image_2_grob, y = 0.78, x = 0.32, width = .19, height = .2) +
-  draw_plot(image_3_grob, y = 0.78, x = 0.565, width = .19, height = .2) +
-  draw_plot(image_4_grob, y = 0.78, x = 0.8, width = .19, height = .2) +
-  # B - Mid Row Stimuli
-  draw_plot(image_1_2_grob, y = 0.49, x =  0.015, width = .32, height = .32) +
-  draw_plot(image_2_2_grob, y = 0.49, x =  0.253, width = .32, height = .32) +
-  draw_plot(image_3_2_grob, y = 0.49, x =  0.495, width = .32, height = .32) +
-  draw_plot(image_4_2_grob, y = 0.49, x =  0.73, width = .32, height = .32) +
-  # C - Bottom Results
-  draw_plot(plot1, y = 0.03, x =  0.04, width = .235, height = .42) +
-  draw_plot(plot2, y = 0.03, x =  0.28, width = .235, height = .42) +
-  draw_plot(plot3, y = 0.03, x =  0.522,  width = .235, height = .42) +
-  draw_plot(plot4, y = 0.03, x =  0.76, width = .235, height = .42) 
+S1_complete[[2]] <- S1_complete[[2]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
+S1_complete[[3]] <- S1_complete[[3]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
+S1_complete[[4]] <- S1_complete[[4]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
 
 
-S1_complete + canvas(width=27, height= 17, units="cm", dpi = 600)
+S1_complete <-S1_complete +
+plot_annotation(
+  caption = "Age in Years", # This acts as your global X label
+  theme = theme(
+    plot.caption = element_text(size = rel(0.9), face = "bold", hjust = 0.52, margin = margin(t = 0))))
 
-
+S1_complete + canvas(width=27, height= 10, units="cm", dpi = 600)
 
 
 # saving images ###############################
@@ -1386,7 +1414,7 @@ ggsave(
   filename = "../illustrations/S1_complete.pdf",
   plot = S1_complete,
   width = 27,
-  height = 16.9,
+  height = 10,
   units = "cm",
   dpi = 600)
 
@@ -1396,7 +1424,7 @@ ggsave(
   filename = "./../illustrations/S1_complete.jpg",
   plot = S1_complete,
   width = 27,
-  height = 16.9,
+  height = 10,
   units = "cm",
   dpi = 600)
 
@@ -1404,7 +1432,7 @@ ggsave(
   filename = "./../illustrations/S1_complete.png",
   plot = S1_complete,
   width = 27,
-  height = 16.9,
+  height = 10,
   units = "cm",
   dpi = 600)
 
@@ -1412,38 +1440,37 @@ ggsave(
   filename = "./../illustrations/S1_complete.svg",
   plot = S1_complete,
   width = 27,
-  height = 16.9,
+  height = 10,
   units = "cm",
   dpi = 600)
 
+
+
+
+
+
 ```
 
-```{r rep_S2_stim_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
+```{r rep_S2_plot_final, echo=FALSE, eval=F, warning = F, message=F}
 
-
-# load images ###################################
 
 # plotexample Representation.png
-image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[1], ".png"))
+image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[1], ".png")) 
 image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[2], ".png"))
-image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[3], ".png"))
-image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[4], ".png"))
-# stimuli Representation.png
-image_1_2 <- image_read(paste0("../illustrations/stimuli ", levels(d2$condition)[1], ".png"))
-image_2_2 <- image_read(paste0("../illustrations/stimuli ", levels(d2$condition)[2], ".png"))
-image_3_3 <- image_read(paste0("../illustrations/stimuli ", levels(d2$condition)[3], ".png"))
-image_4_4 <- image_read(paste0("../illustrations/stimuli ", levels(d2$condition)[4], ".png"))
-# create grobs
+image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[3], ".png")) 
+image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[4], ".png")) 
+
 image_1_grob <- rasterGrob(image_1, interpolate = TRUE)
 image_2_grob <- rasterGrob(image_2, interpolate = TRUE)
 image_3_grob <- rasterGrob(image_3, interpolate = TRUE)
 image_4_grob <- rasterGrob(image_4, interpolate = TRUE)
-image_1_2_grob <- rasterGrob(image_1_2, interpolate = TRUE)
-image_2_2_grob <- rasterGrob(image_2_2, interpolate = TRUE)
-image_3_2_grob <- rasterGrob(image_3_3, interpolate = TRUE)
-image_4_2_grob <- rasterGrob(image_4_4, interpolate = TRUE)
 
-# plot 1 #####################
+# plot1 -----------------------------------------
+
+# 1. Label definieren
+label <- paste(levels(d2$condition)[1])
+
+# 2. Plot erstellen
 plot1 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1459,58 +1486,69 @@ plot1 <- ggplot() +
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
-  # shape 21 uses both fill (inside) and colour (stroke)
   geom_point(
     data = p2 %>% filter(condition == levels(condition)[1]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
-  # constant black overlay: set outside aes()
   geom_point(
     data = p2 %>% filter(condition == levels(condition)[1]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
-  # text: move color/fontface outside aes()
   geom_text(
     data = p2 %>% filter(condition == levels(condition)[1]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
     data = p2 %>% filter(condition == levels(condition)[1]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   scale_colour_identity() +
   scale_fill_identity() +
-  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +labs(x = "Age", y = "Proportion Correct") +
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  
+  labs(title = label, x = "Age", y = "Proportion Correct") + 
+  
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3), clip = "off") +
+  
   theme_minimal(base_size = 13) +
   theme(
     plot.margin = margin(0, 0, 0, 0, "pt"),
     axis.ticks.length = unit(0.0, "pt"),
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1), # Hinweis: size ist in neueren ggplot-Versionen 'linewidth'
     strip.text = element_blank(),
     strip.background = element_blank(),
     axis.title = element_text(face = "bold", size = rel(0.8)),
     axis.text = element_text(size = rel(0.8)),
     legend.position = "none",
     panel.grid.minor = element_blank(),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank())
+    # axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+    
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14) 
+    
+  ) +
+  annotation_custom(
+    grob = image_1_grob, 
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    xmin = 3, xmax = 7,  
+    ymin = 1.45)
 
+# plot2 ---------------
 
-
-plot1
-
-# plot 2 ##################
+# 1. Label definieren
+label <- paste(levels(d2$condition)[2])
+# 2. Plot erstellen
 plot2 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1526,55 +1564,68 @@ plot2 <- ggplot() +
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
-  # shape 21 uses both fill (inside) and colour (stroke)
   geom_point(
     data = p2 %>% filter(condition == levels(condition)[2]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
-  # constant black overlay: set outside aes()
   geom_point(
     data = p2 %>% filter(condition == levels(condition)[2]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
-  # text: move color/fontface outside aes()
   geom_text(
     data = p2 %>% filter(condition == levels(condition)[2]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
     data = p2 %>% filter(condition == levels(condition)[2]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   scale_colour_identity() +
   scale_fill_identity() +
   scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
-  labs(x = "Age", y = "Proportion Correct") +
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  
+  labs(title = label, x = "Age", y = "Proportion Correct") + 
+  
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3), clip = "off") +
+  
   theme_minimal(base_size = 13) +
   theme(
-    plot.margin = margin(0, 0, 0, 0, "pt"),
+    plot.margin = margin(0, 0, 0, 10, "pt"),
     axis.ticks.length = unit(0.0, "pt"),
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1), # Hinweis: size ist in neueren ggplot-Versionen 'linewidth'
     strip.text = element_blank(),
     strip.background = element_blank(),
     axis.title = element_text(face = "bold", size = rel(0.8)),
     axis.text = element_text(size = rel(0.8)),
     legend.position = "none",
     panel.grid.minor = element_blank(),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank())
+    # axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+    
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14) 
+    
+  ) +
+  annotation_custom(
+    grob = image_2_grob, 
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    xmin = 3, xmax = 7,  
+    ymin = 1.45)
 
-# plot 3 #########################
+# plot3 ----------------------
+
+# 1. Label definieren
+label <- paste(levels(d2$condition)[3])
+# 2. Plot erstellen
 plot3 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1590,57 +1641,74 @@ plot3 <- ggplot() +
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
-  # shape 21 uses both fill (inside) and colour (stroke)
   geom_point(
     data = p2 %>% filter(condition == levels(condition)[3]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
-  # constant black overlay: set outside aes()
   geom_point(
     data = p2 %>% filter(condition == levels(condition)[3]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
-  # text: move color/fontface outside aes()
   geom_text(
     data = p2 %>% filter(condition == levels(condition)[3]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
     data = p2 %>% filter(condition == levels(condition)[3]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   scale_colour_identity() +
   scale_fill_identity() +
   scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
-  labs(x = "Age", y = "Proportion Correct") +
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  
+  labs(title = label, x = "Age", y = "Proportion Correct") + 
+  
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3), clip = "off") +
+  
   theme_minimal(base_size = 13) +
   theme(
-    plot.margin = margin(0, 0, 0, 0, "pt"),
+    plot.margin = margin(0, 0, 0, 10, "pt"),
     axis.ticks.length = unit(0.0, "pt"),
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1), # Hinweis: size ist in neueren ggplot-Versionen 'linewidth'
     strip.text = element_blank(),
     strip.background = element_blank(),
     axis.title = element_text(face = "bold", size = rel(0.8)),
     axis.text = element_text(size = rel(0.8)),
     legend.position = "none",
     panel.grid.minor = element_blank(),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank())
+    # axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+    # HIER OPTIONAL: Styling für den Titel (z. B. fett und zentriert
+    plot.title = element_text(
+      face = "bold", 
+      hjust = 0.5, 
+      size = 14,
+      # t = top, r = right, b = bottom, l = left
+      margin = margin(t = 0, r = 0, b = 60, l = 0, unit = "pt") 
+    )
+  ) +
+  annotation_custom(
+    grob = image_3_grob, 
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    xmin = 3, xmax = 7,  
+    ymin = 1.45)
 
+# plot4 --------------------
 
+# 1. Label definieren
+label <- paste(levels(d2$condition)[4])
 
-# plot 4 #########################
+# 2. Plot erstellen
 plot4 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1656,88 +1724,82 @@ plot4 <- ggplot() +
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
-  # shape 21 uses both fill (inside) and colour (stroke)
   geom_point(
     data = p2 %>% filter(condition == levels(condition)[4]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
-  # constant black overlay: set outside aes()
   geom_point(
     data = p2 %>% filter(condition == levels(condition)[4]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
-  # text: move color/fontface outside aes()
   geom_text(
     data = p2 %>% filter(condition == levels(condition)[4]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
     data = p2 %>% filter(condition == levels(condition)[4]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   scale_colour_identity() +
   scale_fill_identity() +
   scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
-  labs(x = "Age", y = "Proportion Correct") +
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  
+  labs(title = label, x = "Age", y = "Proportion Correct") + 
+  
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3), clip = "off") +
+  
   theme_minimal(base_size = 13) +
   theme(
-    plot.margin = margin(0, 0, 0, 0, "pt"),
+    plot.margin = margin(0, 0, 0, 10, "pt"),
     axis.ticks.length = unit(0.0, "pt"),
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1), # Hinweis: size ist in neueren ggplot-Versionen 'linewidth'
     strip.text = element_blank(),
     strip.background = element_blank(),
     axis.title = element_text(face = "bold", size = rel(0.8)),
     axis.text = element_text(size = rel(0.8)),
     legend.position = "none",
     panel.grid.minor = element_blank(),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank())
+    # axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+    
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14) 
+    
+  ) +
+  annotation_custom(
+    grob = image_4_grob, 
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    xmin = 3, xmax = 7,  
+    ymin = 1.45)
+
+# combine -----------------
+library(patchwork)
+S2_complete <- plot1 | plot2 | plot3 | plot4 + 
+  plot_layout(guides = "collect", axes = "collect")
 
 
-# Combine plots #######################
 
-S2_complete <- ggdraw() +
-  draw_plot_label(label = "A", size = 13, x = 0, y = 0.89) +
-  draw_plot_label(label = "B", size = 13, x = 0, y = 0.67) +
-  draw_plot_label(label = "C", size = 13, x = 0, y = 0.275) +
-  draw_plot_label(label = "Target", size = 12, x = 0.02, y = 0.64, angle = 90 ) +
-  draw_plot_label(label = "Cue", size = 12, x = 0.02, y = 0.53, angle = 90) +
-  draw_plot_label(label = "Proportion Correct", size = 12, x = 0.02, y = 0.02, angle = 90) +
-  draw_plot_label(label = "Age in Years", size = 12, x = 0.44, y = 0.038) +
-  draw_plot_label(label = paste(levels(d2$condition)[1]), size = 13, x = 0.045, y = .99) +
-  draw_plot_label(label = paste(levels(d2$condition)[2]), size = 13, x = 0.28, y = .99) +
-  draw_plot_label(label = paste(levels(d2$condition)[3]), size = 13, x = 0.49, y = .99) +
-  draw_plot_label(label = paste(levels(d2$condition)[4]), size = 13, x = 0.72, y = .99) + 
-  # A - Top row example
-  draw_plot(image_1_grob, y = 0.78, x = 0.085, width = .19, height = .2) +
-  draw_plot(image_2_grob, y = 0.78, x = 0.32, width = .19, height = .2) +
-  draw_plot(image_3_grob, y = 0.78, x = 0.565, width = .19, height = .2) +
-  draw_plot(image_4_grob, y = 0.78, x = 0.8, width = .19, height = .2) +
-  # B - Mid Row Stimuli
-  draw_plot(image_1_2_grob, y = 0.49, x =  0.015, width = .32, height = .32) +
-  draw_plot(image_2_2_grob, y = 0.49, x =  0.253, width = .32, height = .32) +
-  draw_plot(image_3_2_grob, y = 0.49, x =  0.495, width = .32, height = .32) +
-  draw_plot(image_4_2_grob, y = 0.49, x =  0.73, width = .32, height = .32) +
-  # C - Bottom Results
-  draw_plot(plot1, y = 0.03, x =  0.04, width = .235, height = .42) +
-  draw_plot(plot2, y = 0.03, x =  0.28, width = .235, height = .42) +
-  draw_plot(plot3, y = 0.03, x =  0.522,  width = .235, height = .42) +
-  draw_plot(plot4, y = 0.03, x =  0.76, width = .235, height = .42) 
+S2_complete[[2]] <- S2_complete[[2]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
+S2_complete[[3]] <- S2_complete[[3]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
+S2_complete[[4]] <- S2_complete[[4]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
 
 
-S2_complete + canvas(width=27, height= 17, units="cm", dpi = 600)
+S2_complete <-S2_complete +
+  plot_annotation(
+    caption = "Age in Years", # This acts as your global X label
+    theme = theme(
+      plot.caption = element_text(size = rel(0.9), face = "bold", hjust = 0.52, margin = margin(t = 0))))
 
+S2_complete + canvas(width=27, height= 10, units="cm", dpi = 600)
 
 
 
@@ -1747,17 +1809,15 @@ ggsave(
   filename = "../illustrations/S2_complete.pdf",
   plot = S2_complete,
   width = 27,
-  height = 16.9,
+  height = 10,
   units = "cm",
   dpi = 600)
-
-# shell.exec("../illustrations/S2_complete.pdf")
 
 ggsave(
   filename = "./../illustrations/S2_complete.jpg",
   plot = S2_complete,
   width = 27,
-  height = 16.9,
+  height = 10,
   units = "cm",
   dpi = 600)
 
@@ -1765,7 +1825,7 @@ ggsave(
   filename = "./../illustrations/S2_complete.png",
   plot = S2_complete,
   width = 27,
-  height = 16.9,
+  height = 10,
   units = "cm",
   dpi = 600)
 
@@ -1773,7 +1833,7 @@ ggsave(
   filename = "./../illustrations/S2_complete.svg",
   plot = S2_complete,
   width = 27,
-  height = 16.9,
+  height = 10,
   units = "cm",
   dpi = 600)
 
@@ -1781,34 +1841,30 @@ ggsave(
 
 
 
+
+
 ```
 
-```{r rep_S3_stim_bayes_fullmodel_plotting_new, echo=FALSE, eval=F, warning = F, message=F}
+```{r rep_S3_plot_final, echo=FALSE, eval=F, warning = F, message=F}
 
-
-# load images ###################################
 
 # plotexample Representation.png
-image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[1], ".png"))
+image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[1], ".png")) 
 image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[2], ".png"))
-image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[3], ".png"))
-image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[4], ".png"))
-# stimuli Representation.png
-image_1_2 <- image_read(paste0("../illustrations/stimuli ", levels(d3$condition)[1], ".png"))
-image_2_2 <- image_read(paste0("../illustrations/stimuli ", levels(d3$condition)[2], ".png"))
-image_3_3 <- image_read(paste0("../illustrations/stimuli ", levels(d3$condition)[3], ".png"))
-image_4_4 <- image_read(paste0("../illustrations/stimuli ", levels(d3$condition)[4], ".png"))
-# create grobs
+image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[3], ".png")) 
+image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[4], ".png")) 
+
 image_1_grob <- rasterGrob(image_1, interpolate = TRUE)
 image_2_grob <- rasterGrob(image_2, interpolate = TRUE)
 image_3_grob <- rasterGrob(image_3, interpolate = TRUE)
 image_4_grob <- rasterGrob(image_4, interpolate = TRUE)
-image_1_2_grob <- rasterGrob(image_1_2, interpolate = TRUE)
-image_2_2_grob <- rasterGrob(image_2_2, interpolate = TRUE)
-image_3_2_grob <- rasterGrob(image_3_3, interpolate = TRUE)
-image_4_2_grob <- rasterGrob(image_4_4, interpolate = TRUE)
 
-# plot 1 #####################
+# plot1 -----------------------------------------
+
+# 1. Label definieren
+label <- paste(levels(d3$condition)[1])
+
+# 2. Plot erstellen
 plot1 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1824,58 +1880,69 @@ plot1 <- ggplot() +
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
-  # shape 21 uses both fill (inside) and colour (stroke)
   geom_point(
     data = p3 %>% filter(condition == levels(condition)[1]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
-  # constant black overlay: set outside aes()
   geom_point(
     data = p3 %>% filter(condition == levels(condition)[1]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
-  # text: move color/fontface outside aes()
   geom_text(
     data = p3 %>% filter(condition == levels(condition)[1]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
     data = p3 %>% filter(condition == levels(condition)[1]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   scale_colour_identity() +
   scale_fill_identity() +
-  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +labs(x = "Age", y = "Proportion Correct") +
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
+  
+  labs(title = label, x = "Age", y = "Proportion Correct") + 
+  
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3), clip = "off") +
+  
   theme_minimal(base_size = 13) +
   theme(
     plot.margin = margin(0, 0, 0, 0, "pt"),
     axis.ticks.length = unit(0.0, "pt"),
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1), # Hinweis: size ist in neueren ggplot-Versionen 'linewidth'
     strip.text = element_blank(),
     strip.background = element_blank(),
     axis.title = element_text(face = "bold", size = rel(0.8)),
     axis.text = element_text(size = rel(0.8)),
     legend.position = "none",
     panel.grid.minor = element_blank(),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank())
+    # axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+    
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14) 
+    
+  ) +
+  annotation_custom(
+    grob = image_1_grob, 
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    xmin = 3, xmax = 7,  
+    ymin = 1.45)
 
+# plot2 ---------------
 
-
-plot1
-
-# plot 2 ##################
+# 1. Label definieren
+label <- paste(levels(d3$condition)[2])
+# 2. Plot erstellen
 plot2 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1891,55 +1958,68 @@ plot2 <- ggplot() +
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
-  # shape 21 uses both fill (inside) and colour (stroke)
   geom_point(
     data = p3 %>% filter(condition == levels(condition)[2]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
-  # constant black overlay: set outside aes()
   geom_point(
     data = p3 %>% filter(condition == levels(condition)[2]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
-  # text: move color/fontface outside aes()
   geom_text(
     data = p3 %>% filter(condition == levels(condition)[2]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
     data = p3 %>% filter(condition == levels(condition)[2]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   scale_colour_identity() +
   scale_fill_identity() +
   scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
-  labs(x = "Age", y = "Proportion Correct") +
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  
+  labs(title = label, x = "Age", y = "Proportion Correct") + 
+  
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3), clip = "off") +
+  
   theme_minimal(base_size = 13) +
   theme(
-    plot.margin = margin(0, 0, 0, 0, "pt"),
+    plot.margin = margin(0, 0, 0, 10, "pt"),
     axis.ticks.length = unit(0.0, "pt"),
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1), # Hinweis: size ist in neueren ggplot-Versionen 'linewidth'
     strip.text = element_blank(),
     strip.background = element_blank(),
     axis.title = element_text(face = "bold", size = rel(0.8)),
     axis.text = element_text(size = rel(0.8)),
     legend.position = "none",
     panel.grid.minor = element_blank(),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank())
+    # axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+    
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14) 
+    
+  ) +
+  annotation_custom(
+    grob = image_2_grob, 
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    xmin = 3, xmax = 7,  
+    ymin = 1.45)
 
-# plot 3 #########################
+# plot3 ----------------------
+
+# 1. Label definieren
+label <- paste(levels(d3$condition)[3])
+# 2. Plot erstellen
 plot3 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -1955,57 +2035,74 @@ plot3 <- ggplot() +
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
-  # shape 21 uses both fill (inside) and colour (stroke)
   geom_point(
     data = p3 %>% filter(condition == levels(condition)[3]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
-  # constant black overlay: set outside aes()
   geom_point(
     data = p3 %>% filter(condition == levels(condition)[3]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
-  # text: move color/fontface outside aes()
   geom_text(
     data = p3 %>% filter(condition == levels(condition)[3]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
     data = p3 %>% filter(condition == levels(condition)[3]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   scale_colour_identity() +
   scale_fill_identity() +
   scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
-  labs(x = "Age", y = "Proportion Correct") +
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  
+  labs(title = label, x = "Age", y = "Proportion Correct") + 
+  
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3), clip = "off") +
+  
   theme_minimal(base_size = 13) +
   theme(
-    plot.margin = margin(0, 0, 0, 0, "pt"),
+    plot.margin = margin(0, 0, 0, 10, "pt"),
     axis.ticks.length = unit(0.0, "pt"),
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1), # Hinweis: size ist in neueren ggplot-Versionen 'linewidth'
     strip.text = element_blank(),
     strip.background = element_blank(),
     axis.title = element_text(face = "bold", size = rel(0.8)),
     axis.text = element_text(size = rel(0.8)),
     legend.position = "none",
     panel.grid.minor = element_blank(),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank())
+    # axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+    # HIER OPTIONAL: Styling für den Titel (z. B. fett und zentriert
+    plot.title = element_text(
+      face = "bold", 
+      hjust = 0.5, 
+      size = 14,
+      # t = top, r = right, b = bottom, l = left
+      margin = margin(t = 0, r = 0, b = 60, l = 0, unit = "pt") 
+    )
+  ) +
+  annotation_custom(
+    grob = image_3_grob, 
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    xmin = 3, xmax = 7,  
+    ymin = 1.45)
 
+# plot4 --------------------
 
+# 1. Label definieren
+label <- paste(levels(d3$condition)[4])
 
-# plot 4 #########################
+# 2. Plot erstellen
 plot4 <- ggplot() +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey70", alpha = 0.75) +
   
@@ -2021,105 +2118,95 @@ plot4 <- ggplot() +
     stat = "identity", alpha = 0.2, linewidth = 0.8
   ) +
   
-  # shape 21 uses both fill (inside) and colour (stroke)
   geom_point(
     data = p3 %>% filter(condition == levels(condition)[4]),
     aes(x = days/365.25, y = 0.5, fill = colour, colour = colour),
     size = 4, shape = 21, stroke = 1
   ) +
   
-  # constant black overlay: set outside aes()
   geom_point(
     data = p3 %>% filter(condition == levels(condition)[4]),
     aes(x = days/365.25, y = 0.5),
     fill = "black", colour = "black", size = 0.5, shape = 21, stroke = 1
   ) +
   
-  # text: move color/fontface outside aes()
   geom_text(
     data = p3 %>% filter(condition == levels(condition)[4]),
     aes(label = months, x = days/365.25, y = 0.13),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   geom_text(
     data = p3 %>% filter(condition == levels(condition)[4]),
     aes(label = "months", x = days/365.25, y = .31),
     color = "black", fontface = "bold",
-    angle = 90, size = 3, vjust = 0.5
+    angle = 90, size = 4, vjust = 0.5
   ) +
   
   scale_colour_identity() +
   scale_fill_identity() +
   scale_y_continuous(labels = function(x) paste0(x*100, "%")) +
-  labs(x = "Age", y = "Proportion Correct") +
-  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3)) +
+  
+  labs(title = label, x = "Age", y = "Proportion Correct") + 
+  
+  coord_cartesian(ylim = c(0, 1), xlim = c(2.7, 7.3), clip = "off") +
+  
   theme_minimal(base_size = 13) +
   theme(
-    plot.margin = margin(0, 0, 0, 0, "pt"),
+    plot.margin = margin(0, 0, 0, 10, "pt"),
     axis.ticks.length = unit(0.0, "pt"),
-    panel.border = element_rect(colour = "grey30", fill = NA, size = 1),
+    panel.border = element_rect(colour = "grey30", fill = NA, linewidth = 1), # Hinweis: size ist in neueren ggplot-Versionen 'linewidth'
     strip.text = element_blank(),
     strip.background = element_blank(),
     axis.title = element_text(face = "bold", size = rel(0.8)),
     axis.text = element_text(size = rel(0.8)),
     legend.position = "none",
     panel.grid.minor = element_blank(),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank())
+    # axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+    
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14) 
+    
+  ) +
+  annotation_custom(
+    grob = image_4_grob, 
+    # Positionierung im Koordinatensystem des Hauptplots (x, y)
+    xmin = 3, xmax = 7,  
+    ymin = 1.45)
+
+# combine -----------------
+library(patchwork)
+S3_complete <- plot1 | plot2 | plot3 | plot4 + 
+  plot_layout(guides = "collect", axes = "collect")
+
+S3_complete[[2]] <- S3_complete[[2]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
+S3_complete[[3]] <- S3_complete[[3]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
+S3_complete[[4]] <- S3_complete[[4]] + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank())
 
 
-# Combine plots #######################
+S3_complete <- S3_complete +
+  plot_annotation(
+    caption = "Age in Years", # This acts as your global X label
+    theme = theme(
+      plot.caption = element_text(size = rel(0.9), face = "bold", hjust = 0.52, margin = margin(t = 0))))
 
-S3_complete <- ggdraw() +
-  draw_plot_label(label = "A", size = 13, x = 0, y = 0.89) +
-  draw_plot_label(label = "B", size = 13, x = 0, y = 0.67) +
-  draw_plot_label(label = "C", size = 13, x = 0, y = 0.275) +
-  draw_plot_label(label = "Target", size = 12, x = 0.02, y = 0.64, angle = 90 ) +
-  draw_plot_label(label = "Cue", size = 12, x = 0.02, y = 0.53, angle = 90) +
-  draw_plot_label(label = "Proportion Correct", size = 12, x = 0.02, y = 0.02, angle = 90) +
-  draw_plot_label(label = "Age in Years", size = 12, x = 0.44, y = 0.038) +
-  draw_plot_label(label = paste(levels(d3$condition)[1]), size = 13, x = 0.074, y = .99) +
-  draw_plot_label(label = paste(levels(d3$condition)[2]), size = 13, x = 0.297, y = .99) +
-  draw_plot_label(label = paste(levels(d3$condition)[3]), size = 13, x = 0.522, y = .99) +
-  draw_plot_label(label = paste(levels(d3$condition)[4]), size = 13, x = 0.745, y = .99) + 
-  # A - Top row example
-  draw_plot(image_1_grob, y = 0.78, x = 0.085, width = .19, height = .2) +
-  draw_plot(image_2_grob, y = 0.78, x = 0.32, width = .19, height = .2) +
-  draw_plot(image_3_grob, y = 0.78, x = 0.565, width = .19, height = .2) +
-  draw_plot(image_4_grob, y = 0.78, x = 0.8, width = .19, height = .2) +
-  # B - Mid Row Stimuli
-  draw_plot(image_1_2_grob, y = 0.49, x =  0.015, width = .32, height = .32) +
-  draw_plot(image_2_2_grob, y = 0.49, x =  0.253, width = .32, height = .32) +
-  draw_plot(image_3_2_grob, y = 0.49, x =  0.495, width = .32, height = .32) +
-  draw_plot(image_4_2_grob, y = 0.49, x =  0.73, width = .32, height = .32) +
-  # C - Bottom Results
-  draw_plot(plot1, y = 0.03, x =  0.04, width = .235, height = .42) +
-  draw_plot(plot2, y = 0.03, x =  0.28, width = .235, height = .42) +
-  draw_plot(plot3, y = 0.03, x =  0.522,  width = .235, height = .42) +
-  draw_plot(plot4, y = 0.03, x =  0.76, width = .235, height = .42) 
+S3_complete + canvas(width=27, height= 10, units="cm", dpi = 600)
 
-
-S3_complete + canvas(width=27, height= 17, units="cm", dpi = 600)
-
-# saving images ###############################
 
 ggsave(
   filename = "../illustrations/S3_complete.pdf",
   plot = S3_complete,
   width = 27,
-  height = 16.9,
+  height = 10,
   units = "cm",
   dpi = 600)
-
-# shell.exec("../illustrations/S3_complete.pdf")
 
 ggsave(
   filename = "./../illustrations/S3_complete.jpg",
   plot = S3_complete,
   width = 27,
-  height = 16.9,
+  height = 10,
   units = "cm",
   dpi = 600)
 
@@ -2127,7 +2214,7 @@ ggsave(
   filename = "./../illustrations/S3_complete.png",
   plot = S3_complete,
   width = 27,
-  height = 16.9,
+  height = 10,
   units = "cm",
   dpi = 600)
 
@@ -2135,7 +2222,124 @@ ggsave(
   filename = "./../illustrations/S3_complete.svg",
   plot = S3_complete,
   width = 27,
-  height = 16.9,
+  height = 10,
+  units = "cm",
+  dpi = 600)
+
+
+
+
+```
+
+```{r rep_S1_stimuli_final, echo=FALSE, eval=F, warning = F, message=F}
+
+
+image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[1], ".png")) %>%
+  image_ggplot() +
+  labs(
+    title = paste(levels(d1$condition)[1]),
+    tag = "A"                                    # 1. Define your label as a tag
+  ) +
+  theme(
+    # 2. Add extra left padding (45pt) so the tag doesn't touch the image
+    plot.margin = margin(10, 10, 10, 10, "pt"),
+
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")),
+
+    # 3. Position the tag relative to the entire plot window
+    plot.tag.position = c(-0.08, 0.35),            # c(X, Y) -> 2% from left, 50% up (perfectly centered)
+    plot.tag = element_text(face = "bold", size = 14, color = "black"))
+ 
+
+image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[2], ".png")) %>%
+  image_ggplot() + 
+  labs(title = paste(levels(d1$condition)[2])) +  
+  theme(
+    plot.margin = margin(10, 10, 10, 10, "pt"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")))
+  
+image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[3], ".png")) %>%
+  image_ggplot() + 
+  labs(title = paste(levels(d1$condition)[3])) +  
+  theme(
+    plot.margin = margin(10, 10, 10, 10, "pt"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")))
+
+image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d1$condition)[4], ".png")) %>%
+  image_ggplot() + 
+  labs(title = paste(levels(d1$condition)[4])) +  
+  theme(
+    plot.margin = margin(10, 10, 10, 10, "pt"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")))
+ 
+
+# stimuli Representation.png
+image_1_1 <- image_read(paste0("../illustrations/stimuli ", levels(d1$condition)[1], ".png")) %>%
+  image_ggplot() +
+  labs(tag = "B") +
+  theme(
+    # 2. Add extra left padding (45pt) so the tag doesn't touch the image
+    plot.margin = margin(0, 0, 0, 0, "pt"),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")),
+    
+    # 3. Position the tag relative to the entire plot window
+    plot.tag.position = c(-0.08, 0.5),            # c(X, Y) -> 2% from left, 50% up (perfectly centered)
+    plot.tag = element_text(face = "bold", size = 14, color = "black"))
+
+
+image_2_2 <- image_read(paste0("../illustrations/stimuli ", levels(d1$condition)[2], ".png")) %>%
+  image_ggplot()
+image_3_3 <- image_read(paste0("../illustrations/stimuli ", levels(d1$condition)[3], ".png")) %>%
+  image_ggplot()
+image_4_4 <- image_read(paste0("../illustrations/stimuli ", levels(d1$condition)[4], ".png")) %>%
+  image_ggplot()
+
+S1_Stimuli <- 
+  image_1 / image_1_1 | 
+  image_2 / image_2_2 | 
+  image_3 / image_3_3 | 
+  image_4 / image_4_4 
+  
+  
+S1_Stimuli + canvas(width=27, height= 9.4, units="cm", dpi = 600)
+
+
+# saving images ###############################
+
+ggsave(
+  filename = "../illustrations/S1_Stimuli.pdf",
+  plot = S1_Stimuli,
+  width = 27,
+  height = 9.4,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S1_Stimuli.jpg",
+  plot = S1_Stimuli,
+  width = 27,
+  height = 9.4,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S1_Stimuli.png",
+  plot = S1_Stimuli,
+  width = 27,
+  height = 9.4,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S1_Stimuli.svg",
+  plot = S1_Stimuli,
+  width = 27,
+  height = 9.4,
   units = "cm",
   dpi = 600)
 
@@ -2144,6 +2348,247 @@ ggsave(
 
 
 ```
+
+```{r rep_S2_stimuli_final, echo=FALSE, eval=F, warning = F, message=F}
+
+
+
+image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[1], ".png")) %>%
+  image_ggplot() +
+  labs(
+    title = paste(levels(d2$condition)[1]),
+    tag = "A"                                    # 1. Define your label as a tag
+  ) +
+  theme(
+    # 2. Add extra left padding (45pt) so the tag doesn't touch the image
+    plot.margin = margin(10, 10, 10, 10, "pt"),
+    
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")),
+    
+    # 3. Position the tag relative to the entire plot window
+    plot.tag.position = c(-0.08, 0.35),            # c(X, Y) -> 2% from left, 50% up (perfectly centered)
+    plot.tag = element_text(face = "bold", size = 14, color = "black"))
+
+
+image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[2], ".png")) %>%
+  image_ggplot() + 
+  labs(title = paste(levels(d2$condition)[2])) +  
+  theme(
+    plot.margin = margin(10, 10, 10, 10, "pt"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")))
+
+image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[3], ".png")) %>%
+  image_ggplot() + 
+  labs(title = paste(levels(d2$condition)[3])) +  
+  theme(
+    plot.margin = margin(10, 10, 10, 10, "pt"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")))
+
+image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d2$condition)[4], ".png")) %>%
+  image_ggplot() + 
+  labs(title = paste(levels(d2$condition)[4])) +  
+  theme(
+    plot.margin = margin(10, 10, 10, 10, "pt"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")))
+
+
+# stimuli Representation.png
+image_1_1 <- image_read(paste0("../illustrations/stimuli ", levels(d2$condition)[1], ".png")) %>%
+  image_ggplot() +
+  labs(tag = "B") +
+  theme(
+    # 2. Add extra left padding (45pt) so the tag doesn't touch the image
+    plot.margin = margin(0, 0, 0, 0, "pt"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")),
+    
+    # 3. Position the tag relative to the entire plot window
+    plot.tag.position = c(-0.08, 0.5),            # c(X, Y) -> 2% from left, 50% up (perfectly centered)
+    plot.tag = element_text(face = "bold", size = 14, color = "black"))
+
+
+image_2_2 <- image_read(paste0("../illustrations/stimuli ", levels(d2$condition)[2], ".png")) %>%
+  image_ggplot()
+image_3_3 <- image_read(paste0("../illustrations/stimuli ", levels(d2$condition)[3], ".png")) %>%
+  image_ggplot()
+image_4_4 <- image_read(paste0("../illustrations/stimuli ", levels(d2$condition)[4], ".png")) %>%
+  image_ggplot()
+
+S2_Stimuli <- 
+  image_1 / image_1_1 | 
+  image_2 / image_2_2 | 
+  image_3 / image_3_3 | 
+  image_4 / image_4_4 
+
+
+S2_Stimuli + canvas(width=27, height= 9.4, units="cm", dpi = 600)
+
+
+# saving images ###############################
+
+ggsave(
+  filename = "../illustrations/S2_Stimuli.pdf",
+  plot = S2_Stimuli,
+  width = 27,
+  height = 9.4,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S2_Stimuli.jpg",
+  plot = S2_Stimuli,
+  width = 27,
+  height = 9.4,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S2_Stimuli.png",
+  plot = S2_Stimuli,
+  width = 27,
+  height = 9.4,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S2_Stimuli.svg",
+  plot = S2_Stimuli,
+  width = 27,
+  height = 9.4,
+  units = "cm",
+  dpi = 600)
+
+
+
+
+
+```
+
+```{r rep_S3_stimuli_final, echo=FALSE, eval=F, warning = F, message=F}
+
+
+image_1 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[1], ".png")) %>%
+  image_ggplot() +
+  labs(
+    title = paste(levels(d3$condition)[1]),
+    tag = "A"                                    # 1. Define your label as a tag
+  ) +
+  theme(
+    # 2. Add extra left padding (45pt) so the tag doesn't touch the image
+    plot.margin = margin(10, 10, 10, 10, "pt"),
+    
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")),
+    
+    # 3. Position the tag relative to the entire plot window
+    plot.tag.position = c(-0.08, 0.35),            # c(X, Y) -> 2% from left, 50% up (perfectly centered)
+    plot.tag = element_text(face = "bold", size = 14, color = "black"))
+
+
+image_2 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[2], ".png")) %>%
+  image_ggplot() + 
+  labs(title = paste(levels(d3$condition)[2])) +  
+  theme(
+    plot.margin = margin(10, 10, 10, 10, "pt"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")))
+
+image_3 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[3], ".png")) %>%
+  image_ggplot() + 
+  labs(title = paste(levels(d3$condition)[3])) +  
+  theme(
+    plot.margin = margin(10, 10, 10, 10, "pt"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")))
+
+image_4 <- image_read(paste0("../illustrations/plotexample ", levels(d3$condition)[4], ".png")) %>%
+  image_ggplot() + 
+  labs(title = paste(levels(d3$condition)[4])) +  
+  theme(
+    plot.margin = margin(10, 10, 10, 10, "pt"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")))
+
+
+# stimuli Representation.png
+image_1_1 <- image_read(paste0("../illustrations/stimuli ", levels(d3$condition)[1], ".png")) %>%
+  image_ggplot() +
+  labs(tag = "B") +
+  theme(
+    # 2. Add extra left padding (45pt) so the tag doesn't touch the image
+    plot.margin = margin(0, 0, 0, 0, "pt"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16,
+                              margin = margin(t = 0, r = 0, b = 10, l = 0, unit = "pt")),
+    
+    # 3. Position the tag relative to the entire plot window
+    plot.tag.position = c(-0.08, 0.5),            # c(X, Y) -> 2% from left, 50% up (perfectly centered)
+    plot.tag = element_text(face = "bold", size = 14, color = "black"))
+
+
+image_2_2 <- image_read(paste0("../illustrations/stimuli ", levels(d3$condition)[2], ".png")) %>%
+  image_ggplot()
+image_3_3 <- image_read(paste0("../illustrations/stimuli ", levels(d3$condition)[3], ".png")) %>%
+  image_ggplot()
+image_4_4 <- image_read(paste0("../illustrations/stimuli ", levels(d3$condition)[4], ".png")) %>%
+  image_ggplot()
+
+S3_Stimuli <- 
+  image_1 / image_1_1 | 
+  image_2 / image_2_2 | 
+  image_3 / image_3_3 | 
+  image_4 / image_4_4 
+
+S3_Stimuli + canvas(width=27, height= 9.4, units="cm", dpi = 600)
+
+
+
+
+# saving images ###############################
+
+ggsave(
+  filename = "../illustrations/S3_Stimuli.pdf",
+  plot = S3_Stimuli,
+  width = 27,
+  height = 9.4,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S3_Stimuli.jpg",
+  plot = S3_Stimuli,
+  width = 27,
+  height = 9.4,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S3_Stimuli.png",
+  plot = S3_Stimuli,
+  width = 27,
+  height = 9.4,
+  units = "cm",
+  dpi = 600)
+
+ggsave(
+  filename = "./../illustrations/S3_Stimuli.svg",
+  plot = S3_Stimuli,
+  width = 27,
+  height = 9.4,
+  units = "cm",
+  dpi = 600)
+
+
+
+
+
+
+
+```
+
 
 <!-- Run additional item models for all three studies (not evaluated to save time) -->
 
@@ -3994,7 +4439,7 @@ knitr::include_graphics(knitr::plot_crop("../illustrations/setup complete.png"))
 
 ```
 
-**ALT-TEXT FIGURE 1** *A set of illustrations labelled A to E with panel A showing how child and experimenter were seated during the study, Panel B and C illustrating how the stimuli were arranged on screen and Panels D and E providing a picture-sequence of the steps in the familiarization and test trials.*
+**ALT-TEXT FIGURE 1** *A set of illustrations labelled A to E with panel A showing how child and experimenter were seated during the study, Panel B showing the stimulus material for a specific trial, panel C illustrating how the stimuli were arranged on screen, and Panels D and E providing a picture-sequence of the steps in the familiarization and test trials.*
 
 *Familiarization.* First, the experimental script introduced a cartoon
 monkey. This character placed two cups on the bottom left and right side
@@ -4083,9 +4528,9 @@ form analogies both supporting children's comprehension in distinct
 ways. In *Simple Form Analogy*, the cues are less dense and therefore
 simpler to grasp, whereas the more complex versions in *Complex Form Analogy* provide more information. For an overview of all stimuli employed in Study 1, see figure \@ref(fig:plot-study1stimuli).
 
-```{r plot-study1stimuli, fig.cap = "*Stimuli for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), and (B) all items of the four conditions.", fig.align = "center", echo = FALSE, out.width = "95%"}
+```{r plot-study1stimuli, fig.cap = "*Stimuli for Study 1.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), and (B) all items of the four conditions with targets in blue and cues as drawings.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
-knitr::include_graphics(knitr::plot_crop("../illustrations/heat_complete.png"))
+knitr::include_graphics(knitr::plot_crop("../illustrations/S1_Stimuli.png"))
 
 ```
 
@@ -4317,9 +4762,9 @@ squares with a salient feature like an opening or a dent. For an
 overview of all stimuli used in Study 2, see figure
 \@ref(fig:plot-study2stimuli).
 
-```{r plot-study2stimuli, fig.cap = "*Stimuli for Study 2.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), and (B) all items of the four conditions.", fig.align = "center", echo = FALSE, out.width = "95%"}
+```{r plot-study2stimuli, fig.cap = "*Stimuli for Study 2.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), and (B) all items of the four conditions with targets in blue and cues as drawings.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
-knitr::include_graphics(knitr::plot_crop("../illustrations/heat_complete.png"))
+knitr::include_graphics(knitr::plot_crop("../illustrations/S2_Stimuli.png"))
 
 ```
 
@@ -4474,9 +4919,9 @@ cues as *Number of Object*. To evoke a sense of quantity in the closed
 forms serving as choice options, the target shapes in *Number of Feature* either had salient protrusions, or partial areas resulting from incisions. For an overview of all stimuli presented in Study 3, see
 figure \@ref(fig:plot-study3stimuli).
 
-```{r plot-study3stimuli, fig.cap = "*Stimuli for Study 3.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), and (B) all items of the four conditions.", fig.align = "center", echo = FALSE, out.width = "95%"}
+```{r plot-study3stimuli, fig.cap = "*Stimuli for Study 3.* Panels illustrate (A) an example stimulus combination (distractor, cue, target), and (B) all items of the four conditions with targets in blue and cues as drawings.", fig.align = "center", echo = FALSE, out.width = "95%"}
 
-knitr::include_graphics(knitr::plot_crop("../illustrations/heat_complete.png"))
+knitr::include_graphics(knitr::plot_crop("../illustrations/S3_Stimuli.png"))
 
 ```
 
@@ -4662,8 +5107,7 @@ discovery of non-obvious matches [@gentner2017analogy]. These findings
 are of practical relevance for early childhood education as they
 showcase children’s ability to use various expressive dimensions in the
 graphic domain and can guide the design of pedagogical materials by
-showing specifically how accessible various ways of conveying meaning in
-graphic design may be. Second, the reduced accuracy in analogy-based and
+showing specifically how accessible various ways of conveying meaning may be. Second, the reduced accuracy in analogy-based and
 feature-referenced tasks are both consistent with evidence that younger
 children tend to focus on surface features rather than relations
 [@richland2006children; @rattermann1998more; @gentner2017analogy],
