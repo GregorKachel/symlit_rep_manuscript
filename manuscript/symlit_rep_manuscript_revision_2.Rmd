@@ -57,7 +57,7 @@ bibliography      : ["library.bib"]
 floatsintext      : yes
 linenumbers       : yes
 draft             : no
-mask              : yes
+mask              : no
 figurelist        : no
 tablelist         : no
 footnotelist      : no
@@ -89,7 +89,7 @@ if (!require(ggthemes)) install.packages('ggthemes'); library(ggthemes) # for tu
 # if (!require(kableExtra)) install.packages('kableExtra'); library(kableExtra) 
 
 # plotting graphic
-if (!require(ggview)) install.packages('ggview'); library(ggthemes) # previewing
+if (!require(ggview)) install.packages('ggview'); library(ggview) # previewing
 library(patchwork)
 library(cowplot)
 library(magick)
